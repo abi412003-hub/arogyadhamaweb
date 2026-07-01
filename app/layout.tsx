@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import Providers from "./providers";
+
+const CONVAI_AGENT_ID = "agent_2001kwf3rd9wewcsmcbt5ysm06az"; // "Prashanthi" voice agent
 
 const SITE_URL = "https://www.svyasaarogyadhama.com";
 const TITLE =
@@ -43,6 +46,13 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>{children}</Providers>
+        {/* ElevenLabs Conversational AI voice agent — "Prashanthi" */}
+        <elevenlabs-convai agent-id={CONVAI_AGENT_ID}></elevenlabs-convai>
+        <Script
+          src="https://elevenlabs.io/convai-widget/index.js"
+          strategy="afterInteractive"
+          async
+        />
       </body>
     </html>
   );
