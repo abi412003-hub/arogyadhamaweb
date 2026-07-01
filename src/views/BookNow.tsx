@@ -3,6 +3,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "@/lib/router-compat";
 import Layout from "@/components/Layout";
+import { ACCOMMODATION_PHOTOS } from "@/lib/accommodation-photos";
 import {
   ChevronRight, ChevronLeft, Building2, Stethoscope, Video,
   CheckCircle2, User, Phone, Calendar, BedDouble, ClipboardList, Send
@@ -16,14 +17,13 @@ interface PersonalDetails { name: string; age: string; gender: Gender; phone: st
 interface MedicalDetails { condition: string; duration: string; previousTreatments: string; medications: string; }
 interface StayDetails { preferredDate: string; weeks: string; roomPreference: string; }
 
-const ROOMS = [
-  "Dormitory (Pushpa/Ashwini) — from ₹6,600/week",
-  "Single Room (Ashirwad) — from ₹13,200/week",
-  "Double Sharing (Maitri) — from ₹11,000/week per person",
-  "Single Deluxe (Sheshadri Bhavan) — from ₹27,500/week",
-  "Double Deluxe (Sheshadri Bhavan) — from ₹22,000/week per person",
-  "Suite Sharing — from ₹30,800/week per person",
-  "No preference",
+const ROOM_OPTIONS = [
+  { slug: "dormitory", name: "Dormitory", sub: "Pushpa / Ashwini Ward", price: "₹6,600 / week", label: "Dormitory (Pushpa/Ashwini) — from ₹6,600/week" },
+  { slug: "ashirwad", name: "Single Room", sub: "Ashirwad Block", price: "₹13,200 / week", label: "Single Room (Ashirwad) — from ₹13,200/week" },
+  { slug: "maitri", name: "Double Sharing", sub: "Maitri Block", price: "₹11,000 / week · pp", label: "Double Sharing (Maitri) — from ₹11,000/week per person" },
+  { slug: "sheshadri", name: "Single Deluxe", sub: "Sheshadri Bhavan", price: "₹27,500 / week", label: "Single Deluxe (Sheshadri Bhavan) — from ₹27,500/week" },
+  { slug: "semi-deluxe", name: "Double Deluxe", sub: "Sheshadri Bhavan", price: "₹22,000 / week · pp", label: "Double Deluxe (Sheshadri Bhavan) — from ₹22,000/week per person" },
+  { slug: "suites", name: "Suite Sharing", sub: "Premium Block", price: "₹30,800 / week · pp", label: "Suite Sharing — from ₹30,800/week per person" },
 ];
 
 const STEP_TITLES = ["Choose Type", "Personal Details", "Medical Details", "Stay Details", "Confirm"];
@@ -162,12 +162,41 @@ function StepFour({ data, onChange }: { data: StayDetails; onChange: (d: StayDet
       </div>
       <div>
         <Label>Room Preference</Label>
-        <select value={data.roomPreference} onChange={(e) => set("roomPreference", e.target.value)}
-          className="w-full px-4 py-3 rounded-xl border border-border font-body text-sm text-forest outline-none focus:border-gold transition-colors bg-white">
-          <option value="">Select…</option>
-          {ROOMS.map((r) => <option key={r} value={r}>{r}</option>)}
-        </select>
-        <p className="font-body text-xs text-sage mt-1">Room allocation subject to availability at time of confirmation.</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {ROOM_OPTIONS.map((r) => {
+            const selected = data.roomPreference === r.label;
+            const photo = ACCOMMODATION_PHOTOS[r.slug]?.[0];
+            return (
+              <button
+                key={r.slug}
+                type="button"
+                onClick={() => set("roomPreference", r.label)}
+                className="relative flex gap-3 text-left rounded-xl border-2 p-2.5 bg-white transition-all hover:shadow-card"
+                style={{ borderColor: selected ? "hsl(var(--gold))" : "hsl(var(--border))" }}
+              >
+                <div className="h-16 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-forest/5">
+                  {photo && <img src={photo} alt={r.name} className="h-full w-full object-cover" loading="lazy" />}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="font-display font-semibold text-forest text-sm leading-tight">{r.name}</div>
+                  <div className="font-body text-[11px] text-sage leading-tight">{r.sub}</div>
+                  <div className="font-body text-xs font-semibold text-gold mt-1">{r.price}</div>
+                </div>
+                {selected && <CheckCircle2 size={18} className="absolute top-2 right-2 text-gold" />}
+              </button>
+            );
+          })}
+          <button
+            type="button"
+            onClick={() => set("roomPreference", "No preference")}
+            className="rounded-xl border-2 p-3 text-left bg-white transition-all hover:shadow-card"
+            style={{ borderColor: data.roomPreference === "No preference" ? "hsl(var(--gold))" : "hsl(var(--border))" }}
+          >
+            <div className="font-display font-semibold text-forest text-sm">No preference</div>
+            <div className="font-body text-[11px] text-sage mt-0.5">Let our team recommend the best room for you</div>
+          </button>
+        </div>
+        <p className="font-body text-xs text-sage mt-2">Tap a room to select it. Photos and full details are on the Accommodation page. Room allocation is subject to availability at confirmation.</p>
       </div>
     </div>
   );

@@ -62,7 +62,7 @@ function ScienceSection() {
         <p className="font-quote italic text-cream/85 text-lg md:text-xl leading-relaxed">
           "Yoga therapy at Arogyadhama is not about touching your toes. It's about understanding what your nervous system needs to heal — and giving it exactly that, systematically, scientifically."
         </p>
-        <div className="mt-4 font-body text-gold/80 text-sm">— Dr. R. Nagarathna, Chief Medical Director</div>
+        <div className="mt-4 font-body text-gold/80 text-sm">— Dr. R. Nagarathna, Medical Director</div>
       </div>
     </div>
   );

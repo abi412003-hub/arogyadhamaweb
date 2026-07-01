@@ -1,0 +1,86 @@
+// Auto-generated from public/accommodation/*. Web-optimized room photos.
+export const ACCOMMODATION_PHOTOS: Record<string, string[]> = {
+  "dormitory": [
+    "/accommodation/dormitory/01.jpg",
+    "/accommodation/dormitory/02.jpg",
+    "/accommodation/dormitory/03.jpg",
+    "/accommodation/dormitory/04.jpg",
+    "/accommodation/dormitory/05.jpg",
+    "/accommodation/dormitory/06.jpg",
+    "/accommodation/dormitory/07.jpg",
+    "/accommodation/dormitory/08.jpg"
+  ],
+  "ashirwad": [
+    "/accommodation/ashirwad/01.jpg",
+    "/accommodation/ashirwad/02.jpg",
+    "/accommodation/ashirwad/03.jpg",
+    "/accommodation/ashirwad/04.jpg"
+  ],
+  "maitri": [
+    "/accommodation/maitri/01.jpg",
+    "/accommodation/maitri/02.jpg",
+    "/accommodation/maitri/03.jpg",
+    "/accommodation/maitri/04.jpg",
+    "/accommodation/maitri/05.jpg",
+    "/accommodation/maitri/06.jpg",
+    "/accommodation/maitri/07.jpg",
+    "/accommodation/maitri/08.jpg",
+    "/accommodation/maitri/09.jpg",
+    "/accommodation/maitri/10.jpg",
+    "/accommodation/maitri/11.jpg",
+    "/accommodation/maitri/12.jpg",
+    "/accommodation/maitri/13.jpg",
+    "/accommodation/maitri/14.jpg",
+    "/accommodation/maitri/15.jpg"
+  ],
+  "semi-deluxe": [
+    "/accommodation/semi-deluxe/01.jpg",
+    "/accommodation/semi-deluxe/02.jpg",
+    "/accommodation/semi-deluxe/03.jpg",
+    "/accommodation/semi-deluxe/04.jpg",
+    "/accommodation/semi-deluxe/05.jpg",
+    "/accommodation/semi-deluxe/06.jpg",
+    "/accommodation/semi-deluxe/07.jpg"
+  ],
+  "sheshadri": [
+    "/accommodation/sheshadri/01.jpg",
+    "/accommodation/sheshadri/02.jpg",
+    "/accommodation/sheshadri/03.jpg",
+    "/accommodation/sheshadri/04.jpg",
+    "/accommodation/sheshadri/05.jpg",
+    "/accommodation/sheshadri/06.jpg",
+    "/accommodation/sheshadri/07.jpg",
+    "/accommodation/sheshadri/08.jpg",
+    "/accommodation/sheshadri/09.jpg",
+    "/accommodation/sheshadri/10.jpg",
+    "/accommodation/sheshadri/11.jpg",
+    "/accommodation/sheshadri/12.jpg",
+    "/accommodation/sheshadri/13.jpg",
+    "/accommodation/sheshadri/14.jpg",
+    "/accommodation/sheshadri/15.jpg",
+    "/accommodation/sheshadri/16.jpg",
+    "/accommodation/sheshadri/17.jpg",
+    "/accommodation/sheshadri/18.jpg",
+    "/accommodation/sheshadri/19.jpg"
+  ],
+  "suites": [
+    "/accommodation/suites/01.jpg",
+    "/accommodation/suites/02.jpg",
+    "/accommodation/suites/03.jpg",
+    "/accommodation/suites/04.jpg",
+    "/accommodation/suites/05.jpg",
+    "/accommodation/suites/06.jpg",
+    "/accommodation/suites/07.jpg",
+    "/accommodation/suites/08.jpg",
+    "/accommodation/suites/09.jpg",
+    "/accommodation/suites/10.jpg",
+    "/accommodation/suites/11.jpg",
+    "/accommodation/suites/12.jpg",
+    "/accommodation/suites/13.jpg",
+    "/accommodation/suites/14.jpg",
+    "/accommodation/suites/15.jpg",
+    "/accommodation/suites/16.jpg",
+    "/accommodation/suites/17.jpg",
+    "/accommodation/suites/18.jpg"
+  ]
+};

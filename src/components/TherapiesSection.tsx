@@ -1,12 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
-import dynamic from "next/dynamic";
 import { Link } from "@/lib/router-compat";
-
-const ModalitiesBlob = dynamic(() => import("@/components/three/ModalitiesBlob"), {
-  ssr: false,
-  loading: () => <SceneFallback />,
-});
+import { Leaf, Droplets, Zap, Activity, Brain, Wind, Flower2 } from "lucide-react";
 
 const therapies = [
   {
@@ -14,59 +9,51 @@ const therapies = [
     href: "/therapies/yoga",
     tagline: "Ancient practices backed by modern research for mind-body harmony",
     hex: "#2D5A3D",
+    Icon: Flower2,
   },
   {
     name: "Ayurveda",
     href: "/therapies/ayurveda",
     tagline: "Time-tested herbal healing science for restoring natural balance",
     hex: "#52796F",
+    Icon: Leaf,
   },
   {
     name: "Naturopathy",
     href: "/therapies/naturopathy",
     tagline: "Nature's healing through mud therapy, hydrotherapy & therapeutic diet",
     hex: "#1D9E75",
+    Icon: Droplets,
   },
   {
     name: "Acupuncture",
     href: "/therapies/acupuncture",
     tagline: "Precise energy point therapy for pain relief & systemic healing",
     hex: "#C2703E",
+    Icon: Zap,
   },
   {
     name: "Physiotherapy",
     href: "/therapies/physiotherapy",
     tagline: "Rehabilitative exercises for mobility & strength restoration",
     hex: "#C9A961",
+    Icon: Activity,
   },
   {
     name: "Yogic Counselling & Psychotherapy",
     href: "/therapies/yogic-counselling",
     tagline: "Mind-centred dialogue rooted in yoga psychology and modern therapeutic science",
     hex: "#7F77DD",
+    Icon: Brain,
   },
   {
     name: "Ozone Therapy",
     href: "/therapies/ozone",
     tagline: "Medical oxygen-ozone therapy for oxygenation, detox and immune support",
     hex: "#378ADD",
+    Icon: Wind,
   },
 ];
-
-function SceneFallback() {
-  return (
-    <div className="absolute inset-0 flex items-center justify-center">
-      <div
-        className="w-40 h-40 rounded-full animate-float"
-        style={{
-          background:
-            "radial-gradient(circle at 40% 35%, hsl(150 35% 30%), hsl(150 50% 11%))",
-          boxShadow: "0 0 80px hsl(43 89% 38% / 0.25)",
-        }}
-      />
-    </div>
-  );
-}
 
 export default function TherapiesSection() {
   return (
@@ -76,7 +63,7 @@ export default function TherapiesSection() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
         <motion.div
-          className="text-center mb-10 sm:mb-12"
+          className="text-center mb-12 sm:mb-14"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
@@ -88,47 +75,44 @@ export default function TherapiesSection() {
             <em className="not-italic text-gold">Your Wellness</em>
           </h2>
           <p className="font-body text-forest/60 mt-4 max-w-xl mx-auto text-base">
-            Hover a glowing orb to explore each modality. Every path is practiced by trained
-            specialists and woven into a personalized, research-backed protocol.
+            Each modality is practiced by trained specialists and integrated into a
+            personalized treatment protocol backed by decades of research.
           </p>
         </motion.div>
 
-        {/* 3D scene — carries the seven modalities (desktop / tablet) */}
-        <div className="relative mx-auto hidden md:block h-[440px] lg:h-[520px] w-full max-w-4xl">
-          <ModalitiesBlob
-            modalities={therapies.map((t) => ({ name: t.name, href: t.href, color: t.hex }))}
-          />
-        </div>
-
-        {/* Secondary list — always present (mobile primary + accessible/crawlable) */}
-        <div className="mt-6 md:mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {therapies.map((therapy, i) => (
             <motion.div
               key={therapy.name}
               className={i === therapies.length - 1 ? "lg:col-start-2" : ""}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.45, delay: i * 0.06 }}
             >
               <Link
                 to={therapy.href}
-                className="group flex items-start gap-3 rounded-xl border border-border bg-white p-4 hover:shadow-card-hover transition-all"
+                className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-white p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover"
               >
+                {/* top color accent */}
                 <span
-                  className="mt-1.5 h-2.5 w-2.5 flex-shrink-0 rounded-full"
+                  className="absolute left-0 top-0 h-1 w-full"
                   style={{ background: therapy.hex }}
                 />
-                <span className="min-w-0">
-                  <span className="block font-display font-semibold text-forest text-base leading-snug">
-                    {therapy.name}
-                  </span>
-                  <span className="block font-body text-forest/55 text-xs mt-0.5 leading-relaxed">
-                    {therapy.tagline}
-                  </span>
-                  <span className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold font-body text-gold group-hover:gap-2.5 transition-all">
-                    Learn More <span>→</span>
-                  </span>
+                <span
+                  className="mb-5 flex h-14 w-14 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-105"
+                  style={{ background: `${therapy.hex}1A`, color: therapy.hex }}
+                >
+                  <therapy.Icon size={26} strokeWidth={1.6} />
+                </span>
+                <h3 className="font-display text-xl font-semibold text-forest">
+                  {therapy.name}
+                </h3>
+                <p className="mt-2 flex-1 font-body text-sm leading-relaxed text-forest/60">
+                  {therapy.tagline}
+                </p>
+                <span className="mt-5 inline-flex items-center gap-1.5 font-body text-sm font-semibold text-gold transition-all group-hover:gap-3">
+                  Learn More <span>→</span>
                 </span>
               </Link>
             </motion.div>

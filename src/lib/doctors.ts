@@ -11,7 +11,7 @@ export const slugify = (name: string) =>
   name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 export const doctors: Member[] = [
-  { name: "Dr. R. Nagarathna", qualifications: "MBBS, MD, FRCP (London, UK)", designation: "Chief Medical Director", ledBy: true },
+  { name: "Dr. R. Nagarathna", qualifications: "MBBS, MD, FRCP (London, UK)", designation: "Medical Director", ledBy: true },
   { name: "Dr. Amit Singh", qualifications: "BAMS, MD, PhD", designation: "Medical Superintendent", ledBy: true },
   { name: "Padmini Tekur", qualifications: "MBBS, PhD" },
   { name: "Apar Saoji", qualifications: "BNYS, PhD" },

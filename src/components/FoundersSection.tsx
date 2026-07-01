@@ -258,7 +258,7 @@ export const founders = [
     prefix: undefined,
     name: "Dr. R. Nagarathna",
     qualifications: "MBBS, MD, FRCP (London, UK)",
-    title: "Chief Medical Director",
+    title: "Medical Director",
     institution: "Arogyadhama, S-VYASA",
     quote:
       "When a patient arrives with diabetes and leaves having transformed their lifestyle, their stress response, their relationship with their body — that is not just medicine. That is true healing.",
@@ -285,7 +285,7 @@ export const founders = [
       },
     ],
     bio: [
-      "Dr. R. Nagarathna is the clinical heart of Arogyadhama. As Chief Medical Director, she has, for over four decades, translated the institution's research excellence into real-world healing for tens of thousands of patients. Her qualifications span both worlds: an MBBS and MD from conventional medicine, and a Fellowship from the Royal College of Physicians in London — among the most prestigious medical credentials in the world.",
+      "Dr. R. Nagarathna is the clinical heart of Arogyadhama. As Medical Director, she has, for over four decades, translated the institution's research excellence into real-world healing for tens of thousands of patients. Her qualifications span both worlds: an MBBS and MD from conventional medicine, and a Fellowship from the Royal College of Physicians in London — among the most prestigious medical credentials in the world.",
       "Dr. Nagarathna co-founded the institution alongside Dr. Nagendra in 1981, but where he provided the scientific framework, she provided the clinical vision. Her specialisation in integrative approaches to Non-Communicable Diseases — particularly diabetes, hypertension, and respiratory disorders — has produced some of Arogyadhama's most cited research.",
       "Her landmark work demonstrating Yoga's measurable effects on blood glucose in Type 2 diabetes — published in peer-reviewed journals — has been cited worldwide and influenced clinical guidelines. She is one of the few clinicians globally to have conducted large-scale, randomised controlled trials on Yoga therapy.",
       "In 2019, the Government of Karnataka honoured her with the Kannada Rajyotsava Award for distinguished contributions to medicine. Under her clinical leadership, Arogyadhama's treatment protocols have maintained an exceptional safety record while pioneering a new paradigm of evidence-based integrative care.",

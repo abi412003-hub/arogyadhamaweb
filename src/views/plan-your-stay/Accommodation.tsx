@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "@/lib/router-compat";
 import Layout from "@/components/Layout";
@@ -6,19 +7,16 @@ import {
   ChevronRight, Wifi, Wind, Coffee, Utensils, ShowerHead, BedDouble,
   Star, Users, Check, X
 } from "lucide-react";
-import dormitoryImg from "@/assets/accommodation/dormitory.jpg";
-import singleImg from "@/assets/accommodation/single.jpg";
-import doubleSharingImg from "@/assets/accommodation/double-sharing.jpg";
-import doubleDeluxeImg from "@/assets/accommodation/double-deluxe.jpg";
-import suiteImg from "@/assets/accommodation/suite.jpg";
+import { ACCOMMODATION_PHOTOS } from "@/lib/accommodation-photos";
 
-const ROOM_IMAGES: Record<string, string> = {
-  dormitory: dormitoryImg,
-  single: singleImg,
-  "double-sharing": doubleSharingImg,
-  "single-deluxe": singleImg,
-  "double-deluxe": doubleDeluxeImg,
-  suite: suiteImg,
+// Maps each room to its real photo folder in public/accommodation
+const PHOTO_SLUG: Record<string, string> = {
+  dormitory: "dormitory",
+  single: "ashirwad",
+  "double-sharing": "maitri",
+  "single-deluxe": "sheshadri",
+  "double-deluxe": "semi-deluxe",
+  suite: "suites",
 };
 
 /* ── Data ── */
@@ -272,6 +270,54 @@ function RoomIllustration({ room }: { room: typeof ROOMS[0] }) {
   );
 }
 
+/* ── Room Photo Gallery ── */
+function RoomGallery({ photos, alt, tier, tierBg, accentBg }: {
+  photos: string[]; alt: string; tier: string; tierBg: string; accentBg: string;
+}) {
+  const [active, setActive] = useState(0);
+  return (
+    <div className="flex flex-col" style={{ background: accentBg, minHeight: "240px" }}>
+      <div className="relative flex-1 overflow-hidden" style={{ minHeight: "240px" }}>
+        {photos.length > 0 && (
+          <img
+            src={photos[active]}
+            alt={alt}
+            className="absolute inset-0 w-full h-full object-cover"
+            loading="lazy"
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent" />
+        <div className="absolute top-4 right-4">
+          <span className="font-body text-[10px] tracking-[0.2em] uppercase font-semibold px-3 py-1.5 rounded-full text-cream"
+            style={{ background: tierBg }}>
+            {tier}
+          </span>
+        </div>
+        {photos.length > 1 && (
+          <div className="absolute bottom-3 left-3 font-body text-[10px] text-white/90 px-2 py-0.5 rounded-full bg-black/40">
+            {active + 1} / {photos.length}
+          </div>
+        )}
+      </div>
+      {photos.length > 1 && (
+        <div className="flex gap-1.5 p-2 overflow-x-auto bg-white/85">
+          {photos.map((p, i) => (
+            <button
+              key={p}
+              onClick={() => setActive(i)}
+              aria-label={`View photo ${i + 1}`}
+              className="h-11 w-16 flex-shrink-0 overflow-hidden rounded-md border-2 transition-colors"
+              style={{ borderColor: i === active ? "hsl(var(--gold))" : "transparent" }}
+            >
+              <img src={p} alt="" className="w-full h-full object-cover" loading="lazy" />
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ── Room Card ── */
 function RoomCard({ room, i }: { room: typeof ROOMS[0]; i: number }) {
   function fmt(n: number) { return "₹" + n.toLocaleString("en-IN"); }
@@ -284,22 +330,14 @@ function RoomCard({ room, i }: { room: typeof ROOMS[0]; i: number }) {
       viewport={{ once: true }} transition={{ delay: i * 0.07 }}
     >
       <div className="grid grid-cols-1 lg:grid-cols-[420px_1fr]">
-        {/* Photo */}
-        <div className="relative h-56 lg:h-auto overflow-hidden" style={{ background: room.accentBg, minHeight: "220px" }}>
-          <img
-            src={ROOM_IMAGES[room.key]}
-            alt={`${room.name} – ${room.subName}`}
-            className="absolute inset-0 w-full h-full object-cover"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-          <div className="absolute top-4 right-4">
-            <span className="font-body text-[10px] tracking-[0.2em] uppercase font-semibold px-3 py-1.5 rounded-full text-cream"
-              style={{ background: room.tierBg }}>
-              {room.tier}
-            </span>
-          </div>
-        </div>
+        {/* Photo gallery */}
+        <RoomGallery
+          photos={ACCOMMODATION_PHOTOS[PHOTO_SLUG[room.key]] || []}
+          alt={`${room.name} – ${room.subName}`}
+          tier={room.tier}
+          tierBg={room.tierBg}
+          accentBg={room.accentBg}
+        />
 
         {/* Content */}
         <div className="p-7 flex flex-col">

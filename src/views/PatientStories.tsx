@@ -174,34 +174,17 @@ function TestimonialCard({ t, i }: { t: typeof TESTIMONIALS[0]; i: number }) {
 /* ── Featured video placeholder ── */
 function FeaturedVideo() {
   return (
-    <div className="relative rounded-3xl overflow-hidden border border-border shadow-card-hover aspect-video max-h-[480px] bg-forest flex items-center justify-center">
-      <svg viewBox="0 0 800 450" className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <radialGradient id="vidGrad" cx="50%" cy="50%" r="70%">
-            <stop offset="0%" stopColor="hsl(150 35% 22%)" />
-            <stop offset="100%" stopColor="hsl(150 50% 10%)" />
-          </radialGradient>
-        </defs>
-        <rect width="800" height="450" fill="url(#vidGrad)" />
-        {[180, 140, 100, 60].map((r) => (
-          <circle key={r} cx="400" cy="225" r={r} fill="none" stroke="hsl(51 97% 94%)" strokeWidth="0.5" opacity="0.07" />
-        ))}
-        <text x="400" y="200" textAnchor="middle" fontFamily="serif" fontSize="22"
-          fill="hsl(51 97% 94%)" opacity="0.5">Arogyadhama Patient Testimonials</text>
-        <text x="400" y="230" textAnchor="middle" fontFamily="serif" fontSize="14"
-          fill="hsl(43 89% 65%)" opacity="0.6">Stories of transformation from around the world</text>
-      </svg>
-      {/* Play button */}
-      <button className="relative z-10 w-20 h-20 rounded-full flex items-center justify-center border-2 border-white/40 hover:bg-white/20 transition-colors"
-        style={{ background: "hsl(var(--gold) / 0.25)" }}>
-        <Play size={28} fill="white" className="text-white ml-1" />
-      </button>
-      <div className="absolute bottom-6 left-6 right-6">
-        <p className="font-display italic text-cream/80 text-lg leading-snug">
-          "The peace of Prashanti Kutiram is itself a medicine that no prescription can replicate."
-        </p>
-        <p className="font-body text-gold/70 text-sm mt-1">— Multiple Arogyadhama Patients</p>
-      </div>
+    <div className="relative rounded-3xl overflow-hidden border border-border shadow-card-hover bg-forest">
+      <video
+        controls
+        playsInline
+        preload="metadata"
+        poster="/testimonials/patient-testimonial-poster.jpg"
+        className="w-full h-auto max-h-[560px] bg-forest"
+      >
+        <source src="/testimonials/patient-testimonial.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
     </div>
   );
 }
