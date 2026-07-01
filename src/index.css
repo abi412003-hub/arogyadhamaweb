@@ -1,0 +1,280 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =====================================================
+   AROGYADHAMA DESIGN SYSTEM
+   Palette: Forest Green, Warm Gold, Sage, Cream, Terracotta
+   Fonts: Playfair Display, Source Sans 3, Cormorant Garamond
+   ===================================================== */
+
+@layer base {
+  :root {
+    /* Brand Colors - All HSL */
+    --forest: 150 43% 16%;       /* #1B4332 Deep Forest Green */
+    --forest-light: 150 35% 22%; /* Lighter forest */
+    --forest-dark: 150 50% 11%;  /* Darker forest */
+    --gold: 43 89% 38%;          /* #B8860B Warm Gold */
+    --gold-light: 43 85% 48%;    /* Lighter gold */
+    --gold-pale: 43 80% 90%;     /* Very pale gold */
+    --sage: 168 19% 39%;         /* #52796F Sage Green */
+    --sage-light: 168 20% 55%;   /* Lighter sage */
+    --cream: 51 97% 94%;         /* #FEFAE0 Cream */
+    --cream-dark: 45 60% 88%;    /* Slightly darker cream */
+    --terracotta: 27 55% 64%;    /* #D4A574 Terracotta */
+    --terracotta-dark: 27 45% 50%; /* Darker terracotta */
+
+    /* Shadcn system mapped to brand */
+    --background: 51 97% 94%;    /* Cream */
+    --foreground: 150 43% 16%;   /* Forest green text */
+
+    --card: 0 0% 100%;
+    --card-foreground: 150 43% 16%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 150 43% 16%;
+
+    --primary: 150 43% 16%;      /* Forest green */
+    --primary-foreground: 51 97% 94%; /* Cream */
+
+    --secondary: 168 19% 39%;    /* Sage */
+    --secondary-foreground: 51 97% 94%;
+
+    --muted: 168 15% 92%;
+    --muted-foreground: 168 19% 39%;
+
+    --accent: 43 89% 38%;        /* Gold */
+    --accent-foreground: 51 97% 94%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 168 20% 82%;
+    --input: 168 20% 82%;
+    --ring: 150 43% 16%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 150 43% 16%;
+    --sidebar-foreground: 51 97% 94%;
+    --sidebar-primary: 43 89% 38%;
+    --sidebar-primary-foreground: 150 43% 16%;
+    --sidebar-accent: 150 35% 22%;
+    --sidebar-accent-foreground: 51 97% 94%;
+    --sidebar-border: 150 35% 25%;
+    --sidebar-ring: 43 89% 38%;
+  }
+
+  .dark {
+    --background: 150 43% 8%;
+    --foreground: 51 97% 94%;
+    --card: 150 43% 12%;
+    --card-foreground: 51 97% 94%;
+    --popover: 150 43% 12%;
+    --popover-foreground: 51 97% 94%;
+    --primary: 43 89% 38%;
+    --primary-foreground: 150 43% 8%;
+    --secondary: 168 19% 25%;
+    --secondary-foreground: 51 97% 94%;
+    --muted: 150 35% 18%;
+    --muted-foreground: 168 20% 65%;
+    --accent: 43 89% 38%;
+    --accent-foreground: 150 43% 8%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 150 35% 22%;
+    --input: 150 35% 22%;
+    --ring: 43 89% 38%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Source Sans 3', system-ui, sans-serif;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+
+  .font-display {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+
+  .font-body {
+    font-family: 'Source Sans 3', system-ui, sans-serif;
+  }
+
+  .font-quote {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+}
+
+@layer components {
+  /* Section Label Style */
+  .section-label {
+    @apply text-xs font-semibold tracking-[0.25em] uppercase;
+    color: hsl(var(--gold));
+    font-family: 'Source Sans 3', sans-serif;
+  }
+
+  /* Decorative line after section label */
+  .section-label::after {
+    content: '';
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    background: hsl(var(--gold));
+    margin-left: 0.75rem;
+    vertical-align: middle;
+  }
+
+  /* Section label before line */
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    background: hsl(var(--gold));
+    margin-right: 0.75rem;
+    vertical-align: middle;
+  }
+
+  /* Gold gradient text */
+  .text-gold-gradient {
+    background: linear-gradient(135deg, hsl(var(--gold)), hsl(var(--terracotta)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Forest gradient background */
+  .bg-forest-gradient {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--forest-dark)) 0%,
+      hsl(var(--forest)) 40%,
+      hsl(var(--forest-light)) 70%,
+      hsl(var(--sage)) 100%
+    );
+  }
+
+  /* Sage gradient */
+  .bg-sage-gradient {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--sage)) 0%,
+      hsl(168 25% 45%) 100%
+    );
+  }
+
+  /* Therapy card hover */
+  .therapy-card {
+    @apply relative overflow-hidden rounded-xl transition-all duration-500 cursor-pointer;
+    background: hsl(0 0% 100%);
+    border: 1px solid hsl(var(--border));
+  }
+
+  .therapy-card:hover {
+    @apply shadow-2xl;
+    transform: translateY(-6px);
+    border-top: 3px solid hsl(var(--gold));
+  }
+
+  /* Stats number style */
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    color: hsl(var(--gold));
+    font-weight: 700;
+  }
+
+  /* Pulse animation for WhatsApp */
+  .pulse-gold {
+    animation: pulseGold 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulseGold {
+    0%, 100% {
+      box-shadow: 0 0 0 0 hsl(var(--gold) / 0.7);
+    }
+    50% {
+      box-shadow: 0 0 0 12px hsl(var(--gold) / 0);
+    }
+  }
+
+  /* Lotus mandala background pattern */
+  .lotus-bg {
+    background-image: radial-gradient(circle at 20% 50%, hsl(var(--sage) / 0.15) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, hsl(var(--gold) / 0.1) 0%, transparent 40%),
+                      radial-gradient(circle at 50% 80%, hsl(var(--forest-light) / 0.2) 0%, transparent 50%);
+  }
+
+  /* Timeline dot */
+  .timeline-dot {
+    @apply w-4 h-4 rounded-full border-2 flex-shrink-0;
+    background: hsl(var(--gold));
+    border-color: hsl(var(--gold-pale));
+  }
+
+  /* Department card hover overlay */
+  .dept-card {
+    @apply relative overflow-hidden rounded-xl;
+    background: hsl(0 0% 100%);
+    border: 1px solid hsl(var(--border));
+    transition: all 0.3s ease;
+  }
+
+  .dept-card:hover {
+    @apply shadow-xl;
+  }
+
+  .dept-card .dept-overlay {
+    @apply absolute inset-0 flex items-end p-4 opacity-0;
+    background: linear-gradient(to top, hsl(var(--forest)) 0%, hsl(var(--forest) / 0.8) 60%, transparent 100%);
+    transition: opacity 0.3s ease;
+  }
+
+  .dept-card:hover .dept-overlay {
+    opacity: 1;
+  }
+
+  /* Navigation styles */
+  .nav-transparent {
+    background: linear-gradient(to bottom, hsl(var(--forest-dark) / 0.85) 0%, hsl(var(--forest-dark) / 0.55) 70%, transparent 100%);
+    backdrop-filter: blur(6px);
+  }
+
+  .nav-scrolled {
+    background: hsl(0 0% 100% / 0.97);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 1px 20px hsl(var(--forest) / 0.08);
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--cream-dark));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--sage));
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--forest));
+  }
+}
