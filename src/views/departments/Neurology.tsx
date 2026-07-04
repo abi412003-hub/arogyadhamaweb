@@ -1,5 +1,6 @@
 "use client";
 import DepartmentPageTemplate, { SectionHeading, ConditionGrid, IntegrativeCard, TeamCard } from "@/components/DepartmentPageTemplate";
+import neurologyHero from "@/assets/departments/neurology-hero.jpg";
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 
@@ -124,6 +125,9 @@ export default function Neurology() {
       deptKey: "neurology",
       breadcrumbLabel: "Neurology",
       heroGradient: "linear-gradient(135deg, hsl(258 60% 15%) 0%, hsl(258 50% 22%) 50%, hsl(220 40% 25%) 100%)",
+      heroImage: neurologyHero,
+      heroImageAlt: "Doctor holding a model of the human brain",
+      heroImageBlend: "258 60% 15%",
       heroTagline: "Brain & Nervous System · Integrative Neurology",
       heroTitle: "Department of Neurology",
       heroSubtitle: "Comprehensive integrative care for epilepsy, stroke rehabilitation, Parkinson's, dementias, and the full spectrum of neurological conditions — combining Yoga therapy, Ayurveda, and conventional diagnostics.",

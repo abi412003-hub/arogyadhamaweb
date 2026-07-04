@@ -24,6 +24,10 @@ export interface DeptPageConfig {
   heroTitle: string;
   heroSubtitle: string;
   heroTagline: string;
+  heroImage?: string;
+  heroImageAlt?: string;
+  /** HSL components (e.g. "258 60% 15%") the hero image fades into — should match the heroGradient's start colour. */
+  heroImageBlend?: string;
   sections: DeptSection[];
 }
 
@@ -260,20 +264,38 @@ export default function DepartmentPageTemplate({ config }: { config: DeptPageCon
       {/* Hero */}
       <section className="relative pt-28 pb-16 overflow-hidden" style={{ background: config.heroGradient }}>
         <div className="absolute left-0 top-0 h-1 w-full" style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)), transparent)" }} />
-        {/* Mandala watermark */}
-        <div className="absolute inset-0 flex items-center justify-end pointer-events-none">
-          <svg viewBox="0 0 400 400" className="w-64 h-64 opacity-[0.07] mr-8" fill="none">
-            {[180, 140, 100, 60].map((r) => (
-              <circle key={r} cx="200" cy="200" r={r} stroke="hsl(51 97% 94%)" strokeWidth="0.7" />
-            ))}
-            {[0, 45, 90, 135, 180, 225, 270, 315].map((a) => (
-              <line key={a} x1="200" y1="200"
-                x2={200 + Math.cos((a * Math.PI) / 180) * 185}
-                y2={200 + Math.sin((a * Math.PI) / 180) * 185}
-                stroke="hsl(51 97% 94%)" strokeWidth="0.4" />
-            ))}
-          </svg>
-        </div>
+        {config.heroImage ? (
+          /* Hero photo — blended into the gradient on its left edge */
+          (() => {
+            const blend = config.heroImageBlend ?? "var(--forest-dark)";
+            return (
+              <div className="absolute inset-y-0 right-0 w-[48%] hidden md:block pointer-events-none">
+                <img src={config.heroImage} alt={config.heroImageAlt ?? ""} className="w-full h-full object-cover" />
+                <div className="absolute inset-0" style={{
+                  background: `linear-gradient(90deg, hsl(${blend}) 0%, hsl(${blend} / 0.8) 18%, transparent 60%)`,
+                }} />
+                <div className="absolute inset-0" style={{
+                  background: `linear-gradient(180deg, hsl(${blend} / 0.35) 0%, transparent 30%, transparent 75%, hsl(${blend} / 0.4) 100%)`,
+                }} />
+              </div>
+            );
+          })()
+        ) : (
+          /* Mandala watermark */
+          <div className="absolute inset-0 flex items-center justify-end pointer-events-none">
+            <svg viewBox="0 0 400 400" className="w-64 h-64 opacity-[0.07] mr-8" fill="none">
+              {[180, 140, 100, 60].map((r) => (
+                <circle key={r} cx="200" cy="200" r={r} stroke="hsl(51 97% 94%)" strokeWidth="0.7" />
+              ))}
+              {[0, 45, 90, 135, 180, 225, 270, 315].map((a) => (
+                <line key={a} x1="200" y1="200"
+                  x2={200 + Math.cos((a * Math.PI) / 180) * 185}
+                  y2={200 + Math.sin((a * Math.PI) / 180) * 185}
+                  stroke="hsl(51 97% 94%)" strokeWidth="0.4" />
+              ))}
+            </svg>
+          </div>
+        )}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <Breadcrumb label={config.breadcrumbLabel} />
