@@ -1,5 +1,6 @@
 "use client";
 import DepartmentPageTemplate, { SectionHeading, ConditionGrid, IntegrativeCard, TeamCard } from "@/components/DepartmentPageTemplate";
+import oncologyHero from "@/assets/departments/oncology-hero.jpg";
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 
@@ -84,6 +85,9 @@ export default function Oncology() {
       deptKey: "oncology",
       breadcrumbLabel: "Oncology",
       heroGradient: "linear-gradient(135deg, hsl(340 60% 15%) 0%, hsl(340 50% 22%) 50%, hsl(300 30% 25%) 100%)",
+      heroImage: oncologyHero,
+      heroImageAlt: "Cancer cells and DNA strands",
+      heroImageBlend: "340 60% 15%",
       heroTagline: "Cancer Care & Support · Integrative Oncology",
       heroTitle: "Department of Oncology",
       heroSubtitle: "Comprehensive complementary cancer care — reducing treatment side effects, restoring quality of life, and supporting the complete cancer journey through integrative medicine.",
