@@ -146,7 +146,7 @@ function EnquiryForm() {
       <div className="flex flex-col items-center justify-center py-16 text-center">
         <CheckCircle2 size={48} className="text-gold mb-4" />
         <h3 className="font-display font-bold text-forest text-2xl mb-2">Message Received!</h3>
-        <p className="font-body text-sage max-w-sm">Our team will contact you within 24 hours to follow up on your enquiry.</p>
+        <p className="font-body text-sage max-w-sm">Thank you for contacting Arogyadhama. Our team has received your enquiry and will get in touch with you shortly.</p>
       </div>
     );
   }
