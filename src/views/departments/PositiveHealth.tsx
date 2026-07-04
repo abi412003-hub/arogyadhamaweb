@@ -1,5 +1,6 @@
 "use client";
 import DepartmentPageTemplate, { SectionHeading, ConditionGrid, IntegrativeCard } from "@/components/DepartmentPageTemplate";
+import positiveHealthHero from "@/assets/departments/positive-health-hero.jpg";
 import { motion } from "framer-motion";
 import { CheckCircle2, Sun, Heart, Brain, Activity, Zap } from "lucide-react";
 
@@ -110,6 +111,9 @@ export default function PositiveHealth() {
       deptKey: "positive-health",
       breadcrumbLabel: "Positive Health",
       heroGradient: "linear-gradient(135deg, hsl(150 43% 11%) 0%, hsl(150 40% 18%) 50%, hsl(168 35% 24%) 100%)",
+      heroImage: positiveHealthHero,
+      heroImageAlt: "Hands holding a smiling yellow ball",
+      heroImageBlend: "150 43% 11%",
       heroTagline: "Holistic Wellness · Prevention · Thriving",
       heroTitle: "Promotion of Positive Health",
       heroSubtitle: "Beyond the absence of disease — building radiant physical health, mental resilience, immune strength, and spiritual wellbeing for a life truly lived at its fullest.",
