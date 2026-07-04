@@ -268,15 +268,14 @@ export default function DepartmentPageTemplate({ config }: { config: DeptPageCon
           /* Hero photo — blended into the gradient on its left edge */
           (() => {
             const blend = config.heroImageBlend ?? "var(--forest-dark)";
+            // Mask fade (not a painted overlay) so the photo dissolves into the hero
+            // gradient without a visible seam at the panel's left edge.
+            const mask = "linear-gradient(90deg, transparent 0%, black 55%)";
             return (
-              <div className="absolute inset-y-0 right-0 w-[48%] hidden md:block pointer-events-none">
+              <div className="absolute inset-y-0 right-0 w-[48%] hidden md:block pointer-events-none"
+                style={{ WebkitMaskImage: mask, maskImage: mask }}>
                 <img src={config.heroImage} alt={config.heroImageAlt ?? ""} className="w-full h-full object-cover" />
-                <div className="absolute inset-0" style={{
-                  background: `linear-gradient(90deg, hsl(${blend}) 0%, hsl(${blend} / 0.8) 18%, transparent 60%)`,
-                }} />
-                <div className="absolute inset-0" style={{
-                  background: `linear-gradient(180deg, hsl(${blend} / 0.35) 0%, transparent 30%, transparent 75%, hsl(${blend} / 0.4) 100%)`,
-                }} />
+                <div className="absolute inset-0" style={{ background: `hsl(${blend} / 0.25)` }} />
               </div>
             );
           })()
