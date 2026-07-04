@@ -1,5 +1,6 @@
 "use client";
 import DepartmentPageTemplate, { SectionHeading, ConditionGrid, IntegrativeCard, TeamCard } from "@/components/DepartmentPageTemplate";
+import diabetesHero from "@/assets/departments/diabetes-hero.jpg";
 
 const CONDITIONS = [
   { name: "Type 2 Diabetes Mellitus", icon: "🔬", desc: "Yoga-based blood sugar reversal" },
@@ -64,6 +65,9 @@ export default function Diabetes() {
       deptKey: "diabetes",
       breadcrumbLabel: "Diabetes & Metabolic",
       heroGradient: "linear-gradient(135deg, hsl(43 70% 13%) 0%, hsl(43 65% 20%) 50%, hsl(27 50% 24%) 100%)",
+      heroImage: diabetesHero,
+      heroImageAlt: "Pancreas affected by diabetes",
+      heroImageBlend: "43 70% 13%",
       heroTagline: "Metabolic Health · 56,000 Patients Treated",
       heroTitle: "Diabetes & Metabolic Department",
       heroSubtitle: "India's most researched integrative diabetes programme — S-VYASA's landmark studies, 56,000 patients, and 30+ years of Yoga-based metabolic reversal form the foundation of our care.",

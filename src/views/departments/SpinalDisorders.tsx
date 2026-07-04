@@ -1,5 +1,6 @@
 "use client";
 import DepartmentPageTemplate, { SectionHeading, ConditionGrid, IntegrativeCard, TeamCard } from "@/components/DepartmentPageTemplate";
+import spinalHero from "@/assets/departments/spinal-hero.jpg";
 
 const CONDITIONS = [
   { name: "Chronic Low Back Pain", icon: "🦴", desc: "CLBP — yoga-based relief" },
@@ -58,6 +59,9 @@ export default function SpinalDisorders() {
       deptKey: "spinal",
       breadcrumbLabel: "Spinal Disorders",
       heroGradient: "linear-gradient(135deg, hsl(27 60% 15%) 0%, hsl(27 55% 22%) 50%, hsl(43 40% 25%) 100%)",
+      heroImage: spinalHero,
+      heroImageAlt: "Glowing spine highlighted in a human back",
+      heroImageBlend: "27 60% 15%",
       heroTagline: "Spine & Back · CLBP · Pain Management",
       heroTitle: "Department of Spinal Disorders",
       heroSubtitle: "Evidence-based integrative spinal care — yoga therapy, Ayurvedic Kati Basti, and physiotherapy for chronic low back pain, disc disorders, and complete spinal rehabilitation.",
