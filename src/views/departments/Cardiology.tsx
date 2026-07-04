@@ -1,5 +1,6 @@
 "use client";
 import DepartmentPageTemplate, { SectionHeading, ConditionGrid, IntegrativeCard, TeamCard } from "@/components/DepartmentPageTemplate";
+import cardiologyHero from "@/assets/departments/cardiology-hero.jpg";
 
 const CONDITIONS = [
   { name: "Hypertension", icon: "❤️", desc: "Yoga proven to reduce BP by 10-15 mmHg" },
@@ -60,6 +61,9 @@ export default function Cardiology() {
       deptKey: "cardiology",
       breadcrumbLabel: "Cardiology",
       heroGradient: "linear-gradient(135deg, hsl(0 60% 15%) 0%, hsl(0 55% 22%) 50%, hsl(27 40% 25%) 100%)",
+      heroImage: cardiologyHero,
+      heroImageAlt: "Doctor holding a model of the human heart",
+      heroImageBlend: "0 60% 15%",
       heroTagline: "Heart Health · Cardiac Rehabilitation",
       heroTitle: "Department of Cardiology",
       heroSubtitle: "Lifestyle-based cardiovascular medicine — using Yoga therapy, Ayurvedic cardioprotective herbs, and therapeutic diet to manage, rehabilitate, and reverse heart disease.",
