@@ -24,7 +24,8 @@ export interface DeptPageConfig {
   heroTitle: string;
   heroSubtitle: string;
   heroTagline: string;
-  heroImage?: string;
+  /** One image, or several — multiple images crossfade in a slow slideshow. */
+  heroImage?: string | string[];
   heroImageAlt?: string;
   /** HSL components (e.g. "258 60% 15%") the hero image fades into — should match the heroGradient's start colour. */
   heroImageBlend?: string;
@@ -271,10 +272,21 @@ export default function DepartmentPageTemplate({ config }: { config: DeptPageCon
             // Mask fade (not a painted overlay) so the photo dissolves into the hero
             // gradient without a visible seam at the panel's left edge.
             const mask = "linear-gradient(90deg, transparent 0%, black 55%)";
+            const images = Array.isArray(config.heroImage) ? config.heroImage : [config.heroImage!];
+            const slot = 5; // seconds each image is shown
+            const cycle = images.length * slot;
+            const slotPct = 100 / images.length;
             return (
               <div className="absolute inset-y-0 right-0 w-[48%] hidden md:block pointer-events-none"
                 style={{ WebkitMaskImage: mask, maskImage: mask }}>
-                <img src={config.heroImage} alt={config.heroImageAlt ?? ""} className="w-full h-full object-cover" />
+                {images.length > 1 && (
+                  <style>{`@keyframes deptHeroFade { 0% { opacity: 0; } 4% { opacity: 1; } ${slotPct.toFixed(2)}% { opacity: 1; } ${(slotPct + 4).toFixed(2)}% { opacity: 0; } 100% { opacity: 0; } }`}</style>
+                )}
+                <img src={images[0]} alt={config.heroImageAlt ?? ""} className="w-full h-full object-cover" />
+                {images.slice(1).map((src, i) => (
+                  <img key={src} src={src} alt="" className="absolute inset-0 w-full h-full object-cover"
+                    style={{ opacity: 0, animation: `deptHeroFade ${cycle}s linear infinite`, animationDelay: `${(i + 1) * slot}s` }} />
+                ))}
                 <div className="absolute inset-0" style={{ background: `hsl(${blend} / 0.25)` }} />
               </div>
             );

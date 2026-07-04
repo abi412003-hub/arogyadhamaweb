@@ -1,5 +1,8 @@
 "use client";
 import DepartmentPageTemplate, { SectionHeading, ConditionGrid, IntegrativeCard, TeamCard } from "@/components/DepartmentPageTemplate";
+import rheumaHero1 from "@/assets/departments/rheumatology-hero-1.jpg";
+import rheumaHero2 from "@/assets/departments/rheumatology-hero-2.jpg";
+import rheumaHero3 from "@/assets/departments/rheumatology-hero-3.jpg";
 
 const CONDITIONS = [
   { name: "Osteoarthritis", icon: "🦴", desc: "Joint mobility & pain relief" },
@@ -52,6 +55,9 @@ export default function Rheumatology() {
       deptKey: "rheumatology",
       breadcrumbLabel: "Rheumatology",
       heroGradient: "linear-gradient(135deg, hsl(168 40% 13%) 0%, hsl(168 38% 20%) 50%, hsl(150 35% 25%) 100%)",
+      heroImage: [rheumaHero1, rheumaHero2, rheumaHero3],
+      heroImageAlt: "Glowing inflamed joints — elbow, knee and ankle",
+      heroImageBlend: "168 40% 13%",
       heroTagline: "Joints & Musculoskeletal · Anti-Inflammatory Medicine",
       heroTitle: "Department of Rheumatology",
       heroSubtitle: "Integrative rheumatology — reducing joint inflammation, restoring mobility, and managing autoimmune conditions through Yoga therapy, Ayurvedic Panchakarma, and naturopathic anti-inflammatory protocols.",
