@@ -1,5 +1,6 @@
 "use client";
 import DepartmentPageTemplate, { SectionHeading, ConditionGrid, IntegrativeCard, TeamCard } from "@/components/DepartmentPageTemplate";
+import psychiatryHero from "@/assets/departments/psychiatry-hero.jpg";
 
 const CONDITIONS = [
   { name: "Anxiety Disorders", icon: "😰", desc: "Pranayama & meditation protocols" },
@@ -58,6 +59,9 @@ export default function Psychiatry() {
       deptKey: "psychiatry",
       breadcrumbLabel: "Psychiatry",
       heroGradient: "linear-gradient(135deg, hsl(270 50% 13%) 0%, hsl(270 45% 20%) 50%, hsl(240 35% 25%) 100%)",
+      heroImage: psychiatryHero,
+      heroImageAlt: "Human head profile with glowing brain and nerve pathways",
+      heroImageBlend: "270 50% 13%",
       heroTagline: "Mind & Emotions · Adhi-Vyadhi Framework",
       heroTitle: "Department of Psychiatry",
       heroSubtitle: "Mind-body psychiatry rooted in the ancient Adhi-Vyadhi concept — combining yoga therapy, Ayurvedic nervines, and conventional psychotherapy to heal anxiety, depression, and psychosomatic disorders.",

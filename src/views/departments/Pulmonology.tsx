@@ -1,5 +1,6 @@
 "use client";
 import DepartmentPageTemplate, { SectionHeading, ConditionGrid, IntegrativeCard, TeamCard } from "@/components/DepartmentPageTemplate";
+import pulmonologyHero from "@/assets/departments/pulmonology-hero.jpg";
 
 const CONDITIONS = [
   { name: "Bronchial Asthma", icon: "🌬️", desc: "Pranayama-based asthma reversal" },
@@ -58,6 +59,9 @@ export default function Pulmonology() {
       deptKey: "pulmonology",
       breadcrumbLabel: "Pulmonology",
       heroGradient: "linear-gradient(135deg, hsl(200 60% 14%) 0%, hsl(200 50% 20%) 50%, hsl(180 35% 25%) 100%)",
+      heroImage: pulmonologyHero,
+      heroImageAlt: "Glowing lungs inside a translucent human body",
+      heroImageBlend: "200 60% 14%",
       heroTagline: "Respiratory Health · Pranayama Therapy",
       heroTitle: "Department of Pulmonology",
       heroSubtitle: "Breathing new life — integrative respiratory medicine using pranayama, Ayurvedic herbs, and naturopathic therapies to heal asthma, COPD, and chronic respiratory conditions.",
