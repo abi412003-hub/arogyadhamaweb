@@ -256,7 +256,6 @@ export default function Contact() {
             <div className="mb-6">
               <div className="w-6 h-0.5 rounded mb-3" style={{ background: "hsl(var(--gold))" }} />
               <h2 className="font-display font-bold text-forest text-2xl">Send an Enquiry</h2>
-              <p className="font-body text-sage text-sm mt-1">We respond within 24 hours.</p>
             </div>
             <EnquiryForm />
           </motion.div>
