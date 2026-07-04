@@ -1,5 +1,6 @@
 "use client";
 import DepartmentPageTemplate, { SectionHeading, ConditionGrid, IntegrativeCard, TeamCard } from "@/components/DepartmentPageTemplate";
+import endocrinologyHero from "@/assets/departments/endocrinology-hero.jpg";
 
 const CONDITIONS = [
   { name: "Hypothyroidism", icon: "🐢", desc: "Thyroid stimulation & hormone balance" },
@@ -52,6 +53,9 @@ export default function Endocrinology() {
       deptKey: "endocrinology",
       breadcrumbLabel: "Endocrinology",
       heroGradient: "linear-gradient(135deg, hsl(43 55% 13%) 0%, hsl(43 50% 20%) 50%, hsl(43 40% 26%) 100%)",
+      heroImage: endocrinologyHero,
+      heroImageAlt: "Glowing thyroid gland in a translucent human body",
+      heroImageBlend: "43 55% 13%",
       heroTagline: "Hormonal Health · HPA Axis · Lifestyle Medicine",
       heroTitle: "Department of Endocrinology",
       heroSubtitle: "Integrative hormonal medicine — addressing thyroid disorders, PCOS, adrenal fatigue, and metabolic endocrine conditions through yoga therapy, Ayurvedic adaptogens, and lifestyle medicine.",

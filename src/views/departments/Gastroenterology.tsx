@@ -1,5 +1,6 @@
 "use client";
 import DepartmentPageTemplate, { SectionHeading, ConditionGrid, IntegrativeCard, TeamCard } from "@/components/DepartmentPageTemplate";
+import gastroenterologyHero from "@/assets/departments/gastroenterology-hero.jpg";
 
 const CONDITIONS = [
   { name: "Irritable Bowel Syndrome (IBS)", icon: "🫃", desc: "Gut-brain axis therapy" },
@@ -52,6 +53,9 @@ export default function Gastroenterology() {
       deptKey: "gastroenterology",
       breadcrumbLabel: "Gastroenterology",
       heroGradient: "linear-gradient(135deg, hsl(150 50% 12%) 0%, hsl(150 45% 19%) 50%, hsl(168 35% 24%) 100%)",
+      heroImage: gastroenterologyHero,
+      heroImageAlt: "Glowing stomach and digestive tract",
+      heroImageBlend: "150 50% 12%",
       heroTagline: "Gut Health · Agni Framework · Digestive Medicine",
       heroTitle: "Department of Gastroenterology",
       heroSubtitle: "Integrative gut health — healing IBS, liver conditions, and digestive disorders through the Ayurvedic Agni framework, therapeutic fasting, and yoga-based abdominal therapies.",
