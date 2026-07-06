@@ -13,7 +13,7 @@ export interface TherapySection {
 }
 
 export interface TherapyPageConfig {
-  therapyKey: "yoga" | "ayurveda" | "naturopathy" | "acupuncture" | "physiotherapy" | "yogic-counselling" | "ozone";
+  therapyKey: "yoga" | "ayurveda" | "naturopathy" | "acupuncture" | "physiotherapy" | "yogic-counselling" | "ozone" | "diet-and-nutrition";
   breadcrumbLabel: string;
   heroGradient: string;
   heroTitle: string;
@@ -77,6 +77,7 @@ const ALL_THERAPIES = [
   { key: "physiotherapy", label: "Physiotherapy", href: "/therapies/physiotherapy", desc: "Rehabilitative movement science", color: "bg-gold/10" },
   { key: "yogic-counselling", label: "Yogic Counselling & Psychotherapy", href: "/therapies/yogic-counselling", desc: "Mind-centred dialogue rooted in yoga psychology", color: "bg-forest/8" },
   { key: "ozone", label: "Ozone Therapy", href: "/therapies/ozone", desc: "Medical oxygen-ozone for oxygenation & detox", color: "bg-blue-50" },
+  { key: "diet-and-nutrition", label: "Diet & Nutrition", href: "/therapies/diet-and-nutrition", desc: "Personalized nutrition for holistic wellness", color: "bg-green-500/10" },
 ];
 
 function RelatedTherapies({ current }: { current: string }) {

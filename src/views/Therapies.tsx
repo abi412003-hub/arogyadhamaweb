@@ -36,7 +36,7 @@ const INNER_R = 62, OUTER_R = 155, OUTER_HOVER_R = 162;
 const LABEL_R = 182;
 const GAP = 3;
 
-const SEG_SIZE = 360 / 7; // ≈ 51.4286
+const SEG_SIZE = 360 / 8; // 45° per segment (8 therapies)
 const HALF = SEG_SIZE / 2;
 const START_MID = -90; // first segment centered at top
 
@@ -110,6 +110,16 @@ const SEGMENTS = [
     mid: START_MID + 6 * SEG_SIZE,
     fill: "#3A7CA5",
     hoverFill: "#5BA0CC",
+  },
+  {
+    key: "diet-and-nutrition",
+    label: "Diet &\nNutrition",
+    href: "/therapies/diet-and-nutrition",
+    a1: START_MID + 7 * SEG_SIZE - HALF + GAP / 2,
+    a2: START_MID + 7 * SEG_SIZE + HALF - GAP / 2,
+    mid: START_MID + 7 * SEG_SIZE,
+    fill: "#5FA83E",
+    hoverFill: "#7CC65A",
   },
 ];
 
@@ -345,6 +355,21 @@ const therapyCards = [
     ],
     borderColor: "hsl(200 60% 45%)",
   },
+  {
+    key: "diet-and-nutrition",
+    title: "Diet & Nutrition",
+    href: "/therapies/diet-and-nutrition",
+    color: "text-green-600",
+    iconBg: "hsl(105 46% 45% / 0.1)",
+    tagline: "Personalized nutrition plans for holistic health and wellness",
+    details: [
+      "Individualised diet charts based on your constitution",
+      "Therapeutic & sattvic meal planning",
+      "Nutrition support for chronic-disease management",
+      "Guidance rooted in Ayurveda and modern dietetics",
+    ],
+    borderColor: "hsl(105 46% 45%)",
+  },
 ];
 
 /* ─── Main Therapies Overview Page ─── */
@@ -364,7 +389,7 @@ export default function Therapies() {
               Our Integrative<br />Healing Modalities
             </h1>
             <p className="font-body text-cream/85 mt-4 max-w-xl" style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)" }}>
-              Seven integrative sciences, one modern approach to complete wellness — united around the patient at the centre.
+              Eight integrative sciences, one modern approach to complete wellness — united around the patient at the centre.
             </p>
           </motion.div>
         </div>
@@ -446,7 +471,7 @@ export default function Therapies() {
           >
             <span className="section-label">Explore Each Modality</span>
             <h2 className="font-display text-display-md text-forest mt-4">
-              Seven Paths to <em className="not-italic text-gold">Wholeness</em>
+              Eight Paths to <em className="not-italic text-gold">Wholeness</em>
             </h2>
           </motion.div>
 

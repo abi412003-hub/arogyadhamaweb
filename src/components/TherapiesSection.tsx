@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { Link } from "@/lib/router-compat";
-import { Leaf, Droplets, Zap, Activity, Brain, Wind, Flower2 } from "lucide-react";
+import { Leaf, Droplets, Zap, Activity, Brain, Wind, Flower2, Salad } from "lucide-react";
 
 const therapies = [
   {
@@ -53,6 +53,13 @@ const therapies = [
     hex: "#378ADD",
     Icon: Wind,
   },
+  {
+    name: "Diet & Nutrition",
+    href: "/therapies/diet-and-nutrition",
+    tagline: "Personalized nutrition plans for holistic health and wellness",
+    hex: "#5FA83E",
+    Icon: Salad,
+  },
 ];
 
 export default function TherapiesSection() {
@@ -71,7 +78,7 @@ export default function TherapiesSection() {
         >
           <span className="section-label">Our Healing Modalities</span>
           <h2 className="font-display text-display-md text-forest mt-4 max-w-2xl mx-auto">
-            Seven Paths, One Destination —{" "}
+            Eight Paths, One Destination —{" "}
             <em className="not-italic text-gold">Your Wellness</em>
           </h2>
           <p className="font-body text-forest/60 mt-4 max-w-xl mx-auto text-base">
@@ -84,7 +91,7 @@ export default function TherapiesSection() {
           {therapies.map((therapy, i) => (
             <motion.div
               key={therapy.name}
-              className={i === therapies.length - 1 ? "lg:col-start-2" : ""}
+              className={therapies.length % 3 === 1 && i === therapies.length - 1 ? "lg:col-start-2" : ""}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}

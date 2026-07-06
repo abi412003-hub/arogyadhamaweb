@@ -23,6 +23,7 @@ const navItems = [
       { label: "Naturopathy", href: "/therapies/naturopathy" },
       { label: "Acupuncture", href: "/therapies/acupuncture" },
       { label: "Physiotherapy", href: "/therapies/physiotherapy" },
+      { label: "Diet & Nutrition", href: "/therapies/diet-and-nutrition" },
     ],
   },
   {
