@@ -46,10 +46,13 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>{children}</Providers>
-        {/* ElevenLabs Conversational AI voice agent — "Prashanthi" */}
+        {/* ElevenLabs Conversational AI voice agent — "Prashanthi".
+            Uses the current maintained embed package; the legacy
+            elevenlabs.io/convai-widget/index.js script would greet and then
+            drop the conversation with an error. */}
         <elevenlabs-convai agent-id={CONVAI_AGENT_ID}></elevenlabs-convai>
         <Script
-          src="https://elevenlabs.io/convai-widget/index.js"
+          src="https://unpkg.com/@elevenlabs/convai-widget-embed"
           strategy="afterInteractive"
           async
         />
