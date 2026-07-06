@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import "./globals.css";
 import Providers from "./providers";
+import VoiceAssistant from "@/components/VoiceAssistant";
 
 const CONVAI_AGENT_ID = "agent_2001kwf3rd9wewcsmcbt5ysm06az"; // "Prashanthi" voice agent
 
@@ -46,13 +46,8 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>{children}</Providers>
-        {/* ElevenLabs Conversational AI voice agent — "Prashanthi" */}
-        <elevenlabs-convai agent-id={CONVAI_AGENT_ID}></elevenlabs-convai>
-        <Script
-          src="https://elevenlabs.io/convai-widget/index.js"
-          strategy="afterInteractive"
-          async
-        />
+        {/* Custom voice assistant — "Prashanthi" (language picker + ElevenLabs SDK) */}
+        <VoiceAssistant agentId={CONVAI_AGENT_ID} />
       </body>
     </html>
   );
