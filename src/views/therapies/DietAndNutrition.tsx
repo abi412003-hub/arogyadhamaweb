@@ -32,15 +32,15 @@ function ApproachSection() {
     <div>
       <SectionHeading
         label="Food as Medicine"
-        title={<>Personalised <em className="not-italic text-gold">Nutrition for Healing</em></>}
-        subtitle="At Arogyadhama, diet is not an afterthought — it is a therapy in its own right. Every meal is designed to support your body's return to balance, guided by both Ayurvedic wisdom and modern clinical nutrition."
+        title={<>A Dietary Plan Built <em className="not-italic text-gold">Around You</em></>}
+        subtitle="An individualized dietary plan designed to support each person's unique body, health needs, and recovery journey."
       />
       <div className="space-y-4 font-body text-forest/70 leading-relaxed mb-8">
         <p>
-          What you eat shapes how you heal. Non-communicable diseases — diabetes, hypertension, obesity, digestive and metabolic disorders — are deeply influenced by nutrition. Our dietitians work alongside the clinical team to translate your diagnosis into a practical, sustainable eating plan.
+          No two bodies are the same. Your constitution, your diagnosis, your digestion, and the stage of your recovery all shape what nourishment your body actually needs. At Arogyadhama, we treat diet as a personalised prescription — never a fixed, one-size-fits-all menu.
         </p>
         <p>
-          Each plan begins with an assessment of your constitution (Prakriti), current condition, and lifestyle. From there we build a sattvic, wholesome diet — light, nourishing, and tailored to your therapy protocol — that complements your Yoga, Ayurveda, and Naturopathy treatments rather than working against them.
+          Every plan begins with a careful assessment of your body type (Prakriti), current health condition, lifestyle, and where you are on your healing journey. From there, our dietitians and physicians craft a diet that is truly yours — and that keeps evolving, adjusting as your body responds and recovers.
         </p>
       </div>
     </div>
@@ -53,17 +53,17 @@ function OfferingsSection() {
     <div>
       <SectionHeading
         label="What We Offer"
-        title={<>A Complete <em className="not-italic text-gold">Nutrition Programme</em></>}
-        subtitle="From individual diet charts to hands-on guidance, our nutrition support covers every stage of your healing journey."
+        title={<>Nutrition Tailored to <em className="not-italic text-gold">Your Needs</em></>}
+        subtitle="Every element of your plan is shaped to your body, your condition, and the stage of your recovery — not a generic template."
       />
       <BulletList
         items={[
-          "Individualised diet charts based on your body constitution and diagnosis",
-          "Therapeutic, sattvic meal planning — three balanced meals prepared daily",
-          "Nutrition counselling for diabetes, hypertension, obesity and thyroid disorders",
-          "Gut-health and digestion support through easily assimilated, seasonal foods",
-          "Weight-management and detox nutrition aligned with your treatment protocol",
-          "Practical guidance to carry the diet forward at home after discharge",
+          "A one-to-one dietary assessment of your body type, condition, and recovery stage",
+          "A fully individualized diet chart — built for your needs, never a generic template",
+          "Therapeutic, sattvic meals matched to your diagnosis and prepared fresh each day",
+          "Ongoing adjustments as your body responds through the course of your stay",
+          "Guidance for special requirements — diabetic, cardiac, renal, and weight-management diets",
+          "A practical, personalised plan to continue your recovery diet at home",
         ]}
       />
     </div>
@@ -88,8 +88,8 @@ function ConditionsSection() {
     <div>
       <SectionHeading
         label="Conditions Supported"
-        title={<>Nutrition for <em className="not-italic text-gold">Everyday Healing</em></>}
-        subtitle="Dietary therapy plays a central role in managing and reversing many lifestyle and metabolic conditions."
+        title={<>Tailored to <em className="not-italic text-gold">Your Condition</em></>}
+        subtitle="Whatever you are healing from, your diet is shaped to your body's specific needs and recovery — a central part of managing and reversing many lifestyle and metabolic conditions."
       />
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {conditions.map((c, i) => (
@@ -115,15 +115,15 @@ function IntegrationSection() {
     <div>
       <SectionHeading
         label="Integrative Advantage"
-        title={<>Nutrition + <em className="not-italic text-gold">Every Other Therapy</em></>}
-        subtitle="Diet is the thread that ties every modality together — the right food makes every other treatment work better."
+        title={<>One Plan, <em className="not-italic text-gold">Your Whole Recovery</em></>}
+        subtitle="Because it is built around your body, your individualized diet supports every other therapy and every stage of your healing journey."
       />
       <div className="space-y-5">
         {[
-          { t: "Fuels Yoga & Physiotherapy", d: "A light, sattvic diet keeps the body agile and energised, so asana practice and rehabilitation exercises are more effective and recovery is faster." },
-          { t: "Completes Ayurvedic Treatment", d: "Ayurveda considers diet (Ahara) the first medicine. Our nutrition plans are built on Tridosha principles so they reinforce your Ayurvedic protocol." },
-          { t: "Amplifies Naturopathy & Detox", d: "Therapeutic foods and fasting protocols support the body's own cleansing processes, deepening the benefit of naturopathic treatments." },
-          { t: "Sustains Results at Home", d: "Healing doesn't end at discharge. We equip you with a practical eating plan so the progress you make here continues in daily life." },
+          { t: "Personalised to Your Body", d: "Built on your constitution and diagnosis, your plan is designed so the food works with your Yoga, Ayurveda, and Naturopathy treatments — reinforcing them rather than working against them." },
+          { t: "Matched to Your Recovery Stage", d: "As you progress, your diet is reviewed and adjusted so nourishment always fits exactly where your body is on its healing journey." },
+          { t: "Fuels Every Other Therapy", d: "The right food keeps you energised for asana practice, physiotherapy, and detox — making each session more effective and recovery faster." },
+          { t: "Sustains Results at Home", d: "Healing doesn't end at discharge. You leave with a plan built for your life and needs, so the recovery you begin here continues long after your stay." },
         ].map((p) => (
           <div key={p.t} className="flex gap-4">
             <CheckCircle2 size={20} className="text-gold mt-0.5 flex-shrink-0" />
