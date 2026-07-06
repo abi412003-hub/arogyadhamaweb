@@ -18,12 +18,12 @@ interface MedicalDetails { condition: string; duration: string; previousTreatmen
 interface StayDetails { preferredDate: string; weeks: string; roomPreference: string; }
 
 const ROOM_OPTIONS = [
-  { slug: "dormitory", name: "Dormitory", sub: "Pushpa / Ashwini Ward", price: "₹6,600 / week", label: "Dormitory (Pushpa/Ashwini) — from ₹6,600/week" },
-  { slug: "ashirwad", name: "Single Room", sub: "Ashirwad Block", price: "₹13,200 / week", label: "Single Room (Ashirwad) — from ₹13,200/week" },
-  { slug: "maitri", name: "Double Sharing", sub: "Maitri Block", price: "₹11,000 / week · pp", label: "Double Sharing (Maitri) — from ₹11,000/week per person" },
-  { slug: "sheshadri", name: "Single Deluxe", sub: "Sheshadri Bhavan", price: "₹27,500 / week", label: "Single Deluxe (Sheshadri Bhavan) — from ₹27,500/week" },
-  { slug: "semi-deluxe", name: "Double Deluxe", sub: "Sheshadri Bhavan", price: "₹22,000 / week · pp", label: "Double Deluxe (Sheshadri Bhavan) — from ₹22,000/week per person" },
-  { slug: "suites", name: "Suite Sharing", sub: "Premium Block", price: "₹30,800 / week · pp", label: "Suite Sharing — from ₹30,800/week per person" },
+  { slug: "dormitory", name: "Dormitory", sub: "Pushpa / Ashwini Ward", price: "$250 / week", label: "Dormitory (Pushpa/Ashwini) — from $250/week" },
+  { slug: "ashirwad", name: "Single Room", sub: "Ashirwad Block", price: "$500 / week", label: "Single Room (Ashirwad) — from $500/week" },
+  { slug: "maitri", name: "Double Sharing", sub: "Maitri Block", price: "$450 / week · pp", label: "Double Sharing (Maitri) — from $450/week per person" },
+  { slug: "sheshadri", name: "Single Deluxe", sub: "Sheshadri Bhavan", price: "$850 / week", label: "Single Deluxe (Sheshadri Bhavan) — from $850/week" },
+  { slug: "semi-deluxe", name: "Double Deluxe", sub: "Sheshadri Bhavan", price: "$750 / week · pp", label: "Double Deluxe (Sheshadri Bhavan) — from $750/week per person" },
+  { slug: "suites", name: "Suite Sharing", sub: "Premium Block", price: "$1,000 / week · pp", label: "Suite Sharing — from $1,000/week per person" },
 ];
 
 const STEP_TITLES = ["Choose Type", "Personal Details", "Medical Details", "Stay Details", "Confirm"];

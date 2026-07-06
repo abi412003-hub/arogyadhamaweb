@@ -25,7 +25,7 @@ const ROOMS = [
     key: "dormitory",
     name: "Dormitory",
     subName: "Pushpa / Ashwini Ward",
-    weeklyRate: 6600,
+    weeklyRate: 250,
     capacity: "Shared (8–12 beds)",
     desc: "A warm, community-oriented dormitory for patients who want the full Arogyadhama healing experience in a budget-friendly setting. The shared environment fosters camaraderie and the spirit of Maitri (friendship).",
     amenities: [
@@ -47,7 +47,7 @@ const ROOMS = [
     key: "single",
     name: "Single Room",
     subName: "Ashirwad Block",
-    weeklyRate: 13200,
+    weeklyRate: 500,
     capacity: "Single occupancy",
     desc: "A private, peaceful room with attached bathroom — ideal for patients who value solitude for rest and recovery. The Ashirwad block is situated close to the main therapy centres.",
     amenities: [
@@ -69,7 +69,7 @@ const ROOMS = [
     key: "double-sharing",
     name: "Double Sharing",
     subName: "Maitri Block",
-    weeklyRate: 11000,
+    weeklyRate: 450,
     capacity: "2 persons (per person rate)",
     desc: "Designed for couples or companions healing together, the Maitri Block's double rooms offer the benefits of privacy with the warmth of a shared experience. Named after the Sanskrit concept of compassionate friendship.",
     amenities: [
@@ -91,7 +91,7 @@ const ROOMS = [
     key: "single-deluxe",
     name: "Single Deluxe",
     subName: "Sheshadri Bhavan",
-    weeklyRate: 27500,
+    weeklyRate: 850,
     capacity: "Single occupancy (Premium)",
     desc: "Premium private accommodation in the flagship Sheshadri Bhavan — Arogyadhama's most refined residential block. Upgraded furnishings, garden views, and priority access to all facilities.",
     amenities: [
@@ -113,7 +113,7 @@ const ROOMS = [
     key: "double-deluxe",
     name: "Double Deluxe",
     subName: "Sheshadri Bhavan",
-    weeklyRate: 22000,
+    weeklyRate: 750,
     capacity: "2 persons (per person rate)",
     desc: "The deluxe shared option — all the premium amenities of Sheshadri Bhavan at a per-person rate for two. Spacious enough for two to heal comfortably without compromise.",
     amenities: [
@@ -135,7 +135,7 @@ const ROOMS = [
     key: "suite",
     name: "Suite Sharing",
     subName: "Premium Block",
-    weeklyRate: 30800,
+    weeklyRate: 1000,
     capacity: "2 persons (per person rate)",
     desc: "The pinnacle of comfort at Arogyadhama — a suite shared between two, offering the highest quality accommodation, services, and attention available on campus.",
     amenities: [
@@ -320,7 +320,7 @@ function RoomGallery({ photos, alt, tier, tierBg, accentBg }: {
 
 /* ── Room Card ── */
 function RoomCard({ room, i }: { room: typeof ROOMS[0]; i: number }) {
-  function fmt(n: number) { return "₹" + n.toLocaleString("en-IN"); }
+  function fmt(n: number) { return "$" + n.toLocaleString("en-US"); }
 
   return (
     <motion.div
@@ -411,7 +411,7 @@ function ComparisonTable() {
     suite: [false, true, true, true, true, true],
   };
 
-  function fmt(n: number) { return "₹" + n.toLocaleString("en-IN"); }
+  function fmt(n: number) { return "$" + n.toLocaleString("en-US"); }
 
   return (
     <div className="overflow-x-auto rounded-2xl border border-border shadow-card">
@@ -473,7 +473,7 @@ export default function Accommodation() {
               From peaceful dormitories to premium suites — find the accommodation that matches your comfort needs and budget at Prashanti Kutiram.
             </p>
             <div className="flex flex-wrap gap-6 mt-8">
-              {[["6 Types", "of rooms"], ["₹6,600", "starting / week"], ["All inclusive", "meals & yoga"]].map(([n, l]) => (
+              {[["6 Types", "of rooms"], ["$250", "starting / week"], ["All inclusive", "meals & yoga"]].map(([n, l]) => (
                 <div key={l}>
                   <div className="font-display font-bold text-gold text-xl">{n}</div>
                   <div className="font-body text-cream/60 text-xs">{l}</div>

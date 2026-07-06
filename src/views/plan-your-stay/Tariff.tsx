@@ -6,12 +6,13 @@ import Layout from "@/components/Layout";
 import { ChevronRight, CheckCircle2, Info, Calendar, Table2, Calculator } from "lucide-react";
 
 /* ── Data ── */
+// prices: [1 week, 2 weeks, 3 weeks, 4 weeks] in USD — non-linear (longer stays discounted)
 const ROOMS = [
   {
     key: "dormitory",
     name: "Dormitory",
     subName: "Pushpa / Ashwini Ward",
-    baseWeekly: 6600,
+    prices: [250, 490, 730, 970],
     emoji: "🏨",
     desc: "Shared dormitory accommodation with basic amenities. Ideal for budget-conscious patients seeking the full healing experience.",
     amenities: ["Shared bathroom", "Basic furnishings", "Common lounge", "Yoga kit provided"],
@@ -20,7 +21,7 @@ const ROOMS = [
     key: "single",
     name: "Single Room",
     subName: "Ashirwad Block",
-    baseWeekly: 13200,
+    prices: [500, 900, 1300, 1600],
     emoji: "🛏️",
     desc: "Private single room with attached bathroom. Comfortable, quiet, and well-suited for solo travellers requiring privacy.",
     amenities: ["Attached bathroom", "Study table", "Wardrobe", "Room service meals"],
@@ -29,7 +30,7 @@ const ROOMS = [
     key: "double-sharing",
     name: "Double Sharing",
     subName: "Maitri Block",
-    baseWeekly: 11000,
+    prices: [450, 800, 1150, 1450],
     emoji: "👥",
     desc: "Shared double room per person. Perfect for couples or companions travelling together for healing.",
     amenities: ["Shared attached bathroom", "Two beds", "Wardrobe", "Room service meals"],
@@ -39,7 +40,7 @@ const ROOMS = [
     key: "single-deluxe",
     name: "Single Deluxe",
     subName: "Sheshadri Bhavan",
-    baseWeekly: 27500,
+    prices: [850, 1550, 2150, 2750],
     emoji: "⭐",
     desc: "Premium single room in the flagship Sheshadri Bhavan block with upgraded furnishings and garden views.",
     amenities: ["Deluxe attached bathroom", "AC room", "Garden view", "Premium furnishings", "Priority consultations"],
@@ -48,7 +49,7 @@ const ROOMS = [
     key: "double-deluxe",
     name: "Double Deluxe",
     subName: "Sheshadri Bhavan",
-    baseWeekly: 22000,
+    prices: [750, 1350, 1900, 2400],
     emoji: "🌟",
     desc: "Premium shared double room in Sheshadri Bhavan. Superior comfort with all deluxe amenities per person.",
     amenities: ["Deluxe attached bathroom", "AC room", "Upgraded décor", "Premium furnishings"],
@@ -58,7 +59,7 @@ const ROOMS = [
     key: "suite",
     name: "Suite Sharing",
     subName: "Premium Block",
-    baseWeekly: 30800,
+    prices: [1000, 1800, 2550, 3200],
     emoji: "👑",
     desc: "The most luxurious option — a suite shared between two, offering the highest comfort level at Arogyadhama.",
     amenities: ["Luxury bathroom", "AC suite", "Sitting area", "Priority everything", "Concierge support"],
@@ -75,7 +76,11 @@ const ADD_ONS = [
   { key: "physio-cat2", label: "Physiotherapy / Acupuncture Category 2", weeklyRate: 4000, color: "hsl(var(--terracotta))" },
 ];
 
-function fmt(n: number) {
+// Accommodation packages are priced in USD; therapy add-ons remain in INR.
+function fmtUSD(n: number) {
+  return "$" + n.toLocaleString("en-US");
+}
+function fmtINR(n: number) {
   return "₹" + n.toLocaleString("en-IN");
 }
 
@@ -98,8 +103,8 @@ function TableView() {
                 <div className="font-display font-semibold text-forest text-sm">{r.name}</div>
                 <div className="font-body text-sage text-xs">{r.subName}{r.perPerson ? " · per person" : ""}</div>
               </td>
-              {DURATIONS.map((w) => (
-                <td key={w} className="px-5 py-4 font-body text-forest text-sm font-medium">{fmt(r.baseWeekly * w)}</td>
+              {DURATIONS.map((w, wi) => (
+                <td key={w} className="px-5 py-4 font-body text-forest text-sm font-medium">{fmtUSD(r.prices[wi])}</td>
               ))}
             </tr>
           ))}
@@ -125,12 +130,11 @@ export default function Tariff() {
   const [addOns, setAddOns] = useState<Set<string>>(new Set());
 
   const room = ROOMS.find((r) => r.key === selectedRoom);
-  const accomTotal = room ? room.baseWeekly * weeks : 0;
+  const accomTotal = room ? room.prices[weeks - 1] : 0; // USD, non-linear per duration
   const addOnTotal = Array.from(addOns).reduce((sum, key) => {
     const ao = ADD_ONS.find((a) => a.key === key);
     return sum + (ao ? ao.weeklyRate * weeks : 0);
-  }, 0);
-  const grandTotal = accomTotal + addOnTotal;
+  }, 0); // INR — therapies billed separately, never summed with the USD accommodation total
 
   function toggleAddOn(key: string) {
     setAddOns((prev) => {
@@ -194,7 +198,7 @@ export default function Tariff() {
           ))}
           {view === "calculator" && selectedRoom && (
             <div className="ml-auto font-display font-bold text-gold text-lg">
-              Total: {fmt(grandTotal)}
+              Total: {fmtUSD(accomTotal)}
             </div>
           )}
         </div>
@@ -235,7 +239,7 @@ export default function Tariff() {
                             <div className="font-body text-sage text-xs">{r.subName}{r.perPerson ? " · per person" : ""}</div>
                           </div>
                           <div className="text-right">
-                            <div className="font-display font-bold text-gold text-lg">{fmt(r.baseWeekly)}</div>
+                            <div className="font-display font-bold text-gold text-lg">{fmtUSD(r.prices[0])}</div>
                             <div className="font-body text-sage text-xs">/week</div>
                           </div>
                         </div>
@@ -265,7 +269,7 @@ export default function Tariff() {
                         <h2 className="font-display font-bold text-forest text-xl">Choose Your Duration</h2>
                       </div>
                       <div className="flex flex-wrap gap-3">
-                        {DURATIONS.map((w) => (
+                        {DURATIONS.map((w, wi) => (
                           <button key={w} onClick={() => { setWeeks(w); setStep(Math.max(step, 3)); }}
                             className="rounded-xl border-2 px-6 py-4 text-center transition-all duration-200 min-w-[120px]"
                             style={{
@@ -277,7 +281,7 @@ export default function Tariff() {
                             <div className="font-body text-sm">{w === 1 ? "Week" : "Weeks"}</div>
                             {selectedRoom && (
                               <div className="font-body text-xs mt-1 opacity-70">
-                                {fmt(ROOMS.find(r => r.key === selectedRoom)!.baseWeekly * w)}
+                                {fmtUSD(ROOMS.find(r => r.key === selectedRoom)!.prices[wi])}
                               </div>
                             )}
                           </button>
@@ -316,10 +320,10 @@ export default function Tariff() {
                             </div>
                             <div className="flex-1">
                               <div className="font-body font-semibold text-forest text-sm">{ao.label}</div>
-                              <div className="font-body text-sage text-xs">{fmt(ao.weeklyRate)}/week</div>
+                              <div className="font-body text-sage text-xs">{fmtINR(ao.weeklyRate)}/week · billed separately</div>
                             </div>
                             <div className="text-right font-display font-bold" style={{ color: ao.color }}>
-                              {fmt(ao.weeklyRate * weeks)}
+                              {fmtINR(ao.weeklyRate * weeks)}
                               <div className="font-body font-normal text-xs text-sage">for {weeks} wk{weeks > 1 ? "s" : ""}</div>
                             </div>
                           </button>
@@ -336,29 +340,32 @@ export default function Tariff() {
                   <div className="rounded-2xl overflow-hidden shadow-card-hover border border-border">
                     <div className="p-5" style={{ background: "hsl(var(--forest))" }}>
                       <div className="font-body text-xs tracking-[0.2em] uppercase text-gold/70 mb-1">Your Estimate</div>
-                      <div className="font-display font-bold text-cream text-4xl">{fmt(grandTotal)}</div>
-                      {weeks > 0 && <div className="font-body text-cream/60 text-xs mt-1">for {weeks} week{weeks > 1 ? "s" : ""}</div>}
+                      <div className="font-display font-bold text-cream text-4xl">{fmtUSD(accomTotal)}</div>
+                      {weeks > 0 && <div className="font-body text-cream/60 text-xs mt-1">accommodation · for {weeks} week{weeks > 1 ? "s" : ""}</div>}
                     </div>
                     <div className="bg-white p-5 space-y-3">
                       {room ? (
                         <>
                           <div className="flex justify-between font-body text-sm">
                             <span className="text-forest/60">{room.name} × {weeks}wk{weeks > 1 ? "s" : ""}</span>
-                            <span className="font-semibold text-forest">{fmt(accomTotal)}</span>
+                            <span className="font-semibold text-forest">{fmtUSD(accomTotal)}</span>
                           </div>
-                          {Array.from(addOns).map((key) => {
-                            const ao = ADD_ONS.find((a) => a.key === key);
-                            return ao ? (
-                              <div key={key} className="flex justify-between font-body text-sm">
-                                <span className="text-forest/60 text-xs leading-tight max-w-[200px]">{ao.label} × {weeks}wk</span>
-                                <span className="font-semibold text-forest">{fmt(ao.weeklyRate * weeks)}</span>
-                              </div>
-                            ) : null;
-                          })}
                           {addOns.size > 0 && (
-                            <div className="border-t border-border pt-3 flex justify-between font-body font-bold">
-                              <span className="text-forest">Grand Total</span>
-                              <span className="text-gold">{fmt(grandTotal)}</span>
+                            <div className="border-t border-border pt-3 space-y-2">
+                              <div className="font-body text-[11px] uppercase tracking-wide text-sage">Therapies — billed separately (₹)</div>
+                              {Array.from(addOns).map((key) => {
+                                const ao = ADD_ONS.find((a) => a.key === key);
+                                return ao ? (
+                                  <div key={key} className="flex justify-between font-body text-sm">
+                                    <span className="text-forest/60 text-xs leading-tight max-w-[200px]">{ao.label} × {weeks}wk</span>
+                                    <span className="font-semibold text-forest">{fmtINR(ao.weeklyRate * weeks)}</span>
+                                  </div>
+                                ) : null;
+                              })}
+                              <div className="flex justify-between font-body font-bold pt-1">
+                                <span className="text-forest">Therapies subtotal</span>
+                                <span className="text-sage">{fmtINR(addOnTotal)}</span>
+                              </div>
                             </div>
                           )}
                         </>
