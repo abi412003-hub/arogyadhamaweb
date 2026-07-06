@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Link } from "@/lib/router-compat";
 import Layout from "@/components/Layout";
@@ -275,8 +275,37 @@ function RoomGallery({ photos, alt, tier, tierBg, accentBg }: {
   photos: string[]; alt: string; tier: string; tierBg: string; accentBg: string;
 }) {
   const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const stripRef = useRef<HTMLDivElement>(null);
+
+  // Auto-advance through the photos so every room is seen without clicking.
+  useEffect(() => {
+    if (photos.length <= 1 || paused) return;
+    const id = setInterval(() => {
+      setActive((a) => (a + 1) % photos.length);
+    }, 3500);
+    return () => clearInterval(id);
+  }, [photos.length, paused]);
+
+  // Keep the active thumbnail in view as the gallery advances.
+  useEffect(() => {
+    const strip = stripRef.current;
+    const thumb = strip?.children[active] as HTMLElement | undefined;
+    if (strip && thumb) {
+      strip.scrollTo({
+        left: thumb.offsetLeft - strip.clientWidth / 2 + thumb.clientWidth / 2,
+        behavior: "smooth",
+      });
+    }
+  }, [active]);
+
   return (
-    <div className="flex flex-col" style={{ background: accentBg, minHeight: "240px" }}>
+    <div
+      className="flex flex-col"
+      style={{ background: accentBg, minHeight: "240px" }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
       <div className="relative flex-1 overflow-hidden" style={{ minHeight: "240px" }}>
         {photos.length > 0 && (
           <img
@@ -300,7 +329,7 @@ function RoomGallery({ photos, alt, tier, tierBg, accentBg }: {
         )}
       </div>
       {photos.length > 1 && (
-        <div className="flex gap-1.5 p-2 overflow-x-auto bg-white/85">
+        <div ref={stripRef} className="flex gap-1.5 p-2 overflow-x-auto bg-white/85">
           {photos.map((p, i) => (
             <button
               key={p}
