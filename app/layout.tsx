@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import Providers from "./providers";
 
-// Voice bot (ElevenLabs "Prashanthi") temporarily HIDDEN — the ElevenLabs
-// account is out of Conversational-AI quota, so it errored for visitors.
-// To restore: re-add `import Script from "next/script";` above, uncomment the
-// const below, and restore the two elements in <body> (see the comment there).
-// const CONVAI_AGENT_ID = "agent_2001kwf3rd9wewcsmcbt5ysm06az"; // "Prashanthi" voice agent
+const CONVAI_AGENT_ID = "agent_2001kwf3rd9wewcsmcbt5ysm06az"; // "Prashanthi" voice agent
 
 const SITE_URL = "https://www.svyasaarogyadhama.com";
 const TITLE =
@@ -49,11 +46,13 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>{children}</Providers>
-        {/* Voice bot (ElevenLabs "Prashanthi") temporarily hidden here — the
-            ElevenLabs account ran out of Conversational-AI quota, so it errored
-            for visitors. To restore, re-add the elevenlabs-convai element and
-            the convai-widget Script tag (plus the CONVAI_AGENT_ID const and the
-            next/script import), per git history commit 26221ad. */}
+        {/* ElevenLabs Conversational AI voice agent — "Prashanthi" */}
+        <elevenlabs-convai agent-id={CONVAI_AGENT_ID}></elevenlabs-convai>
+        <Script
+          src="https://elevenlabs.io/convai-widget/index.js"
+          strategy="afterInteractive"
+          async
+        />
       </body>
     </html>
   );
