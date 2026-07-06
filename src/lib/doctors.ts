@@ -47,11 +47,9 @@ export const yogaTherapists: Member[] = [
   { name: "Surjit Kar", qualifications: "BSc, MSc" },
   { name: "Sidda Nagaraju", qualifications: "MSc, PhD (Scholar)" },
   { name: "Shankar D", qualifications: "MA, PGDYT, MSc Yoga" },
-  { name: "Nabranjan Panda", qualifications: "BSc, MSc" },
   { name: "Tankeshwar Meher", qualifications: "BSc, MSc" },
   { name: "Suresh Babu", qualifications: "MSc Yoga" },
   { name: "Subarna Surajita Mohanty", qualifications: "MSc Yoga" },
-  { name: "Niranjan Mishra", qualifications: "BSc, MSc Yoga" },
   { name: "Kamkhaya Narayan", qualifications: "MSc Yoga" },
   { name: "Vikash Kumar", qualifications: "BSc, MSc" },
   { name: "Yogendra Kumar", qualifications: "BSc Yoga" },
@@ -76,7 +74,6 @@ export const ayurvedaTherapists: Member[] = [
   { name: "Rinki Kumari", qualifications: "Ayurveda Therapist" },
   { name: "Shanbhu Kumar", qualifications: "Ayurveda Therapist" },
   { name: "Umesh Kumar", qualifications: "Ayurveda Therapist" },
-  { name: "Devendra Kumar", qualifications: "Ayurveda Therapist" },
 ];
 
 export const naturopathyTherapists: Member[] = [
@@ -91,7 +88,6 @@ export const naturopathyTherapists: Member[] = [
   { name: "Swati", qualifications: "Naturopathy Therapist" },
   { name: "Vikash Kumar Yadav", qualifications: "Naturopathy Therapist" },
   { name: "Vishal Kumar", qualifications: "Naturopathy Therapist" },
-  { name: "Ganesh", qualifications: "Naturopathy Therapist" },
 ];
 
 export const physiotherapists: Member[] = [
