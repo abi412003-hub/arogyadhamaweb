@@ -20,7 +20,6 @@ import naveenShankar from "@/assets/team/naveen-shankar.jpg";
 import navyaShenoy from "@/assets/team/navya-shenoy.jpg";
 import nibedita from "@/assets/team/nibedita.jpg";
 import padminiTekur from "@/assets/team/padmini-tekur.jpg";
-import pallaviV from "@/assets/team/pallavi-v.jpg";
 import praveenKumarTR from "@/assets/team/praveen-kumar-t-r.jpg";
 import promilaChoudhary from "@/assets/team/promila-choudhary.jpg";
 import prashanthVMangalvedhe from "@/assets/team/prashanth-v-mangalvedhe.png";
@@ -311,7 +310,6 @@ const FALLBACKS: Record<string, string> = {
   "navya-shenoy": navyaShenoy,
   "nibedita": nibedita,
   "padmini-tekur": padminiTekur,
-  "pallavi-v": pallaviV,
   "praveen-kumar-t-r": praveenKumarTR,
   "promila-choudhary": promilaChoudhary,
   "prashanth-v-mangalvedhe": prashanthVMangalvedhe,
