@@ -9,6 +9,21 @@ import {
   TestTube, Syringe, Zap, Sun, Microscope, ArrowRight
 } from "lucide-react";
 
+import neurologyImg from "@/assets/departments/neurology-hero.jpg";
+import oncologyImg from "@/assets/departments/oncology-hero.jpg";
+import cardiologyImg from "@/assets/departments/cardiology-hero.jpg";
+import pulmonologyImg from "@/assets/departments/pulmonology-hero.jpg";
+import psychiatryImg from "@/assets/departments/psychiatry-hero.jpg";
+import rheumatologyImg from "@/assets/departments/rheumatology-hero-1.jpg";
+import spinalImg from "@/assets/departments/spinal-hero.jpg";
+import diabetesImg from "@/assets/departments/diabetes-hero.jpg";
+import gastroImg from "@/assets/departments/gastroenterology-hero.jpg";
+import endocrinologyImg from "@/assets/departments/endocrinology-hero.jpg";
+import positiveHealthImg from "@/assets/departments/positive-health-hero.jpg";
+
+// "hsl(258 60% 30%)" -> "hsl(258 60% 30% / a)" for department-tinted scrims
+const tint = (c: string, a: number) => c.replace(/\)$/, ` / ${a})`);
+
 const DEPT_FILTERS = ["All", "Chronic Conditions", "Lifestyle Diseases", "Mental Health", "Pain & Mobility"];
 
 const DEPARTMENTS = [
@@ -16,6 +31,7 @@ const DEPARTMENTS = [
     key: "neurology",
     href: "/departments/neurology",
     icon: Brain,
+    image: neurologyImg,
     name: "Neurology",
     tag: "Brain & Nervous System",
     filters: ["Chronic Conditions"],
@@ -28,6 +44,7 @@ const DEPARTMENTS = [
     key: "oncology",
     href: "/departments/oncology",
     icon: Microscope,
+    image: oncologyImg,
     name: "Oncology",
     tag: "Cancer Care & Support",
     filters: ["Chronic Conditions"],
@@ -40,6 +57,7 @@ const DEPARTMENTS = [
     key: "cardiology",
     href: "/departments/cardiology",
     icon: Heart,
+    image: cardiologyImg,
     name: "Cardiology",
     tag: "Heart Health",
     filters: ["Lifestyle Diseases", "Chronic Conditions"],
@@ -52,6 +70,7 @@ const DEPARTMENTS = [
     key: "pulmonology",
     href: "/departments/pulmonology",
     icon: Wind,
+    image: pulmonologyImg,
     name: "Pulmonology",
     tag: "Respiratory Health",
     filters: ["Chronic Conditions", "Lifestyle Diseases"],
@@ -64,6 +83,7 @@ const DEPARTMENTS = [
     key: "psychiatry",
     href: "/departments/psychiatry",
     icon: Smile,
+    image: psychiatryImg,
     name: "Psychiatry",
     tag: "Mind & Emotional Wellness",
     filters: ["Mental Health"],
@@ -76,6 +96,7 @@ const DEPARTMENTS = [
     key: "rheumatology",
     href: "/departments/rheumatology",
     icon: Bone,
+    image: rheumatologyImg,
     name: "Rheumatology",
     tag: "Joints & Musculoskeletal",
     filters: ["Pain & Mobility", "Chronic Conditions"],
@@ -88,6 +109,7 @@ const DEPARTMENTS = [
     key: "spinal",
     href: "/departments/spinal",
     icon: Activity,
+    image: spinalImg,
     name: "Spinal Disorders",
     tag: "Spine & Back",
     filters: ["Pain & Mobility"],
@@ -100,6 +122,7 @@ const DEPARTMENTS = [
     key: "diabetes",
     href: "/departments/diabetes",
     icon: TestTube,
+    image: diabetesImg,
     name: "Diabetes & Metabolic",
     tag: "Metabolic Health",
     filters: ["Lifestyle Diseases"],
@@ -112,6 +135,7 @@ const DEPARTMENTS = [
     key: "gastroenterology",
     href: "/departments/gastroenterology",
     icon: Syringe,
+    image: gastroImg,
     name: "Gastroenterology",
     tag: "Gut & Digestive Health",
     filters: ["Lifestyle Diseases", "Chronic Conditions"],
@@ -124,6 +148,7 @@ const DEPARTMENTS = [
     key: "endocrinology",
     href: "/departments/endocrinology",
     icon: Zap,
+    image: endocrinologyImg,
     name: "Endocrinology",
     tag: "Hormonal Health",
     filters: ["Lifestyle Diseases"],
@@ -136,6 +161,7 @@ const DEPARTMENTS = [
     key: "positive-health",
     href: "/departments/positive-health",
     icon: Sun,
+    image: positiveHealthImg,
     name: "Positive Health",
     tag: "Holistic Wellness",
     filters: ["Lifestyle Diseases", "Mental Health"],
@@ -224,38 +250,56 @@ export default function Departments() {
                 >
                   <Link
                     to={dept.href}
-                    className="group relative block bg-white rounded-2xl border border-border shadow-card overflow-hidden hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 h-full"
+                    className="group relative block rounded-2xl border border-black/5 shadow-card overflow-hidden hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 h-full min-h-[19rem]"
                   >
+                    {/* Background photo */}
+                    <img
+                      src={dept.image}
+                      alt=""
+                      aria-hidden
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                    />
+                    {/* Base scrim: bottom-weighted black (guarantees text legibility over any photo)
+                        + department-tinted gradient (brand identity). Photo stays visible toward the top. */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        background: `linear-gradient(to top, ${tint(dept.color, 0.82)} 0%, ${tint(dept.color, 0.35)} 45%, ${tint(dept.color, 0)} 100%)`,
+                      }}
+                    />
+
                     {/* Normal state */}
-                    <div className="p-6 h-full transition-opacity duration-300 group-hover:opacity-0">
-                      <div className="mb-4">
-                        <div className="font-body text-[10px] tracking-[0.2em] uppercase font-semibold mb-0.5" style={{ color: dept.color }}>
+                    <div className="absolute inset-0 p-6 flex flex-col justify-end transition-opacity duration-300 group-hover:opacity-0">
+                      <div className="mb-3">
+                        <div className="font-body text-[10px] tracking-[0.2em] uppercase font-semibold mb-0.5 text-white/75">
                           {dept.tag}
                         </div>
-                        <h3 className="font-display font-bold text-forest text-xl">{dept.name}</h3>
+                        <h3 className="font-display font-bold text-white text-xl drop-shadow-sm">{dept.name}</h3>
                       </div>
-                      <ul className="space-y-2 mb-5">
+                      <ul className="space-y-1.5 mb-4">
                         {dept.conditions.map((c) => (
-                          <li key={c} className="flex items-start gap-2 font-body text-sm text-forest/65">
-                            <span className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style={{ background: dept.color }} />
+                          <li key={c} className="flex items-start gap-2 font-body text-[13px] text-white/85">
+                            <span className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 bg-gold" />
                             {c}
                           </li>
                         ))}
                       </ul>
-                      <div className="flex items-center gap-1.5 font-body text-sm font-semibold" style={{ color: dept.color }}>
+                      <div className="flex items-center gap-1.5 font-body text-sm font-semibold text-white">
                         Explore <ArrowRight size={14} />
                       </div>
                     </div>
 
                     {/* Hover overlay */}
                     <div
-                      className="absolute inset-0 p-6 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                      style={{ background: dept.color }}
+                      className="absolute inset-0 p-6 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                      style={{ background: `linear-gradient(to top, ${tint(dept.color, 0.97)} 10%, ${tint(dept.color, 0.8)} 100%)` }}
                     >
                       <div>
                         <div className="font-body text-[10px] tracking-[0.2em] uppercase font-semibold text-white/60 mb-3">{dept.tag}</div>
                         <h3 className="font-display font-bold text-white text-2xl mb-3">{dept.name}</h3>
-                        <p className="font-body text-white/80 text-sm leading-relaxed">{dept.description}</p>
+                        <p className="font-body text-white/85 text-sm leading-relaxed">{dept.description}</p>
                       </div>
                       <div className="mt-5 flex items-center gap-1.5 text-white font-body font-semibold text-sm">
                         Explore <ArrowRight size={14} />
