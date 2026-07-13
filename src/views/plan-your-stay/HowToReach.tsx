@@ -191,18 +191,18 @@ export default function HowToReach() {
               Arogyadhama-associated cab services can arrange pick-up from the airport, railway station, or bus stand. Advance booking recommended.
             </p>
             <div className="font-body text-sm text-forest font-semibold">Shree Sangameshwar Tours and Travels</div>
-            <div className="font-body text-xs text-sage mb-3">Anil SB</div>
+            <div className="font-body text-xs text-forest font-bold mb-3">Anil SB</div>
             <div className="space-y-2">
               <div className="flex items-center gap-3">
                 <Phone size={14} className="text-gold flex-shrink-0" />
                 <a href="tel:9902180006" className="font-body font-semibold text-forest hover:text-gold transition-colors">
-                  990-218-0006
+                  9902180006
                 </a>
               </div>
               <div className="flex items-center gap-3">
                 <Phone size={14} className="text-gold flex-shrink-0" />
                 <a href="tel:7349029157" className="font-body font-semibold text-forest hover:text-gold transition-colors">
-                  734-902-9157
+                  7349029157
                 </a>
               </div>
             </div>
