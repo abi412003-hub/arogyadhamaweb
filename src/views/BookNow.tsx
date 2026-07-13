@@ -162,7 +162,7 @@ function StepFour({ data, onChange }: { data: StayDetails; onChange: (d: StayDet
                 onClick={() => set("roomPreference", r.label)}
                 onMouseEnter={() => setHovered(r.slug)}
                 onMouseLeave={() => setHovered((h) => (h === r.slug ? null : h))}
-                className="relative flex gap-3 text-left rounded-xl border-2 p-2.5 bg-white transition-all hover:shadow-card"
+                className="relative flex gap-3 text-left rounded-xl border-2 p-2.5 bg-white transition-all duration-200 hover:shadow-card-hover hover:-translate-y-0.5 hover:scale-[1.03] hover:z-10"
                 style={{ borderColor: selected ? "hsl(var(--gold))" : "hsl(var(--border))" }}
               >
                 <RoomThumb photos={ACCOMMODATION_PHOTOS[r.slug] || []} alt={r.name} active={hovered === r.slug} />
