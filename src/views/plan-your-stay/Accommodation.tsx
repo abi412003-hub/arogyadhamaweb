@@ -19,6 +19,15 @@ const PHOTO_SLUG: Record<string, string> = {
   suite: "suites",
 };
 
+// Room prices are stored in USD; INR is converted from a live daily rate.
+type Currency = "USD" | "INR";
+const FALLBACK_RATE = 90; // used only before the live rate loads / if the source is down
+function fmtPrice(usd: number, currency: Currency, rate: number | null) {
+  return currency === "USD"
+    ? "$" + usd.toLocaleString("en-US")
+    : "₹" + Math.round(usd * (rate ?? FALLBACK_RATE)).toLocaleString("en-IN"); // 250 × 95 → ₹23,750
+}
+
 /* ── Data ── */
 const ROOMS = [
   {
@@ -348,9 +357,7 @@ function RoomGallery({ photos, alt, tier, tierBg, accentBg }: {
 }
 
 /* ── Room Card ── */
-function RoomCard({ room, i }: { room: typeof ROOMS[0]; i: number }) {
-  function fmt(n: number) { return "$" + n.toLocaleString("en-US"); }
-
+function RoomCard({ room, i, currency, rate }: { room: typeof ROOMS[0]; i: number; currency: Currency; rate: number | null }) {
   return (
     <motion.div
       id={room.key}
@@ -377,7 +384,7 @@ function RoomCard({ room, i }: { room: typeof ROOMS[0]; i: number }) {
             </div>
             <div className="text-right flex-shrink-0">
               <div className="font-display font-bold text-2xl" style={{ color: room.color }}>
-                {fmt(room.weeklyRate)}
+                {fmtPrice(room.weeklyRate, currency, rate)}
               </div>
               <div className="font-body text-xs text-sage">per week{room.perPerson ? " / person" : ""}</div>
             </div>
@@ -422,7 +429,7 @@ function RoomCard({ room, i }: { room: typeof ROOMS[0]; i: number }) {
 }
 
 /* ── Comparison Table ── */
-function ComparisonTable() {
+function ComparisonTable({ currency, rate }: { currency: Currency; rate: number | null }) {
   const features = [
     "Private room",
     "Attached bathroom",
@@ -440,8 +447,6 @@ function ComparisonTable() {
     suite: [false, true, true, true, true, true],
   };
 
-  function fmt(n: number) { return "$" + n.toLocaleString("en-US"); }
-
   return (
     <div className="overflow-x-auto rounded-2xl border border-border shadow-card">
       <table className="w-full" style={{ minWidth: "720px" }}>
@@ -451,7 +456,7 @@ function ComparisonTable() {
             {ROOMS.map((r) => (
               <th key={r.key} className="font-body font-semibold text-cream text-xs px-4 py-4 text-center">
                 <div>{r.name}</div>
-                <div className="text-gold/80 font-normal mt-0.5">{fmt(r.weeklyRate)}/wk</div>
+                <div className="text-gold/80 font-normal mt-0.5">{fmtPrice(r.weeklyRate, currency, rate)}/wk</div>
               </th>
             ))}
           </tr>
@@ -480,6 +485,23 @@ function ComparisonTable() {
 
 /* ── Main ── */
 export default function Accommodation() {
+  const [currency, setCurrency] = useState<Currency>("USD");
+  const [rate, setRate] = useState<number | null>(null); // live USD -> INR, null until fetched
+
+  // Fetch today's USD -> INR rate once on mount (cached daily server-side).
+  useEffect(() => {
+    let active = true;
+    fetch("/api/exchange-rate")
+      .then((r) => r.json())
+      .then((d) => {
+        if (active && typeof d?.rate === "number" && d.rate > 0) setRate(d.rate);
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
+
   return (
     <Layout>
       {/* Hero */}
@@ -523,12 +545,29 @@ export default function Accommodation() {
               {r.name}
             </a>
           ))}
+          {/* Currency selector — converts every room price to the chosen currency */}
+          <label className="ml-auto flex items-center gap-2 font-body text-sm text-forest/70 whitespace-nowrap pl-3">
+            {currency === "INR" && (
+              <span className="hidden md:inline text-xs text-sage">
+                1 USD = ₹{(rate ?? FALLBACK_RATE).toLocaleString("en-IN", { maximumFractionDigits: 2 })}{rate ? "" : " (approx.)"}
+              </span>
+            )}
+            <select
+              value={currency}
+              onChange={(e) => setCurrency(e.target.value as Currency)}
+              aria-label="Display currency"
+              className="rounded-lg border border-border bg-white px-3 py-1.5 font-body text-sm font-semibold text-forest focus:outline-none focus:ring-2 focus:ring-forest/30 cursor-pointer"
+            >
+              <option value="USD">$ US Dollar</option>
+              <option value="INR">₹ Indian Rupee</option>
+            </select>
+          </label>
         </div>
       </div>
 
       {/* Room Cards */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 space-y-8">
-        {ROOMS.map((r, i) => <RoomCard key={r.key} room={r} i={i} />)}
+        {ROOMS.map((r, i) => <RoomCard key={r.key} room={r} i={i} currency={currency} rate={rate} />)}
       </div>
 
       {/* Comparison Table */}
@@ -537,7 +576,7 @@ export default function Accommodation() {
           <div className="w-6 h-0.5 rounded" style={{ background: "hsl(var(--gold))" }} />
           <span className="font-body text-xs tracking-[0.25em] uppercase font-semibold text-gold">Room Comparison</span>
         </div>
-        <ComparisonTable />
+        <ComparisonTable currency={currency} rate={rate} />
       </div>
 
       {/* CTA */}

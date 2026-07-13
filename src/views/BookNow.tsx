@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "@/lib/router-compat";
 import Layout from "@/components/Layout";
@@ -97,8 +97,34 @@ function StepThree({ data, onChange }: { data: MedicalDetails; onChange: (d: Med
   );
 }
 
+// Thumbnail that cross-fades through a room's photos while the card is hovered.
+function RoomThumb({ photos, alt, active }: { photos: string[]; alt: string; active: boolean }) {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    if (!active || photos.length <= 1) { setIdx(0); return; }
+    const id = setInterval(() => setIdx((i) => (i + 1) % photos.length), 900);
+    return () => clearInterval(id);
+  }, [active, photos.length]);
+
+  return (
+    <div className="relative h-16 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-forest/5">
+      {photos.map((p, i) => (
+        <img
+          key={p}
+          src={p}
+          alt={alt}
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover transition-opacity duration-500"
+          style={{ opacity: i === idx ? 1 : 0 }}
+        />
+      ))}
+    </div>
+  );
+}
+
 function StepFour({ data, onChange }: { data: StayDetails; onChange: (d: StayDetails) => void }) {
   function set<K extends keyof StayDetails>(k: K, v: string) { onChange({ ...data, [k]: v }); }
+  const [hovered, setHovered] = useState<string | null>(null);
   const today = new Date().toISOString().split("T")[0];
   return (
     <div className="space-y-5">
@@ -129,18 +155,17 @@ function StepFour({ data, onChange }: { data: StayDetails; onChange: (d: StayDet
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {ROOM_OPTIONS.map((r) => {
             const selected = data.roomPreference === r.label;
-            const photo = ACCOMMODATION_PHOTOS[r.slug]?.[0];
             return (
               <button
                 key={r.slug}
                 type="button"
                 onClick={() => set("roomPreference", r.label)}
+                onMouseEnter={() => setHovered(r.slug)}
+                onMouseLeave={() => setHovered((h) => (h === r.slug ? null : h))}
                 className="relative flex gap-3 text-left rounded-xl border-2 p-2.5 bg-white transition-all hover:shadow-card"
                 style={{ borderColor: selected ? "hsl(var(--gold))" : "hsl(var(--border))" }}
               >
-                <div className="h-16 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-forest/5">
-                  {photo && <img src={photo} alt={r.name} className="h-full w-full object-cover" loading="lazy" />}
-                </div>
+                <RoomThumb photos={ACCOMMODATION_PHOTOS[r.slug] || []} alt={r.name} active={hovered === r.slug} />
                 <div className="min-w-0 flex-1">
                   <div className="font-display font-semibold text-forest text-sm leading-tight">{r.name}</div>
                   <div className="font-body text-[11px] text-sage leading-tight">{r.sub}</div>
