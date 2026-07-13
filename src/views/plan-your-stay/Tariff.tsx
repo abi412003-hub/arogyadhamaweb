@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "@/lib/router-compat";
 import Layout from "@/components/Layout";
@@ -84,8 +84,18 @@ function fmtINR(n: number) {
   return "₹" + n.toLocaleString("en-IN");
 }
 
+type Currency = "USD" | "INR";
+// Only used before the live daily rate finishes loading (or if the source is down).
+const FALLBACK_RATE = 90;
+// Show an accommodation price (stored in USD) in the visitor's chosen currency.
+function fmtPrice(usd: number, currency: Currency, rate: number | null) {
+  return currency === "USD"
+    ? fmtUSD(usd)
+    : fmtINR(Math.round(usd * (rate ?? FALLBACK_RATE))); // e.g. 250 × 95 → ₹23,750
+}
+
 /* ── Table View ── */
-function TableView() {
+function TableView({ currency, rate }: { currency: Currency; rate: number | null }) {
   return (
     <div className="overflow-x-auto rounded-2xl border border-border shadow-card">
       <table className="w-full min-w-[640px]">
@@ -104,7 +114,7 @@ function TableView() {
                 <div className="font-body text-sage text-xs">{r.subName}{r.perPerson ? " · per person" : ""}</div>
               </td>
               {DURATIONS.map((w, wi) => (
-                <td key={w} className="px-5 py-4 font-body text-forest text-sm font-medium">{fmtUSD(r.prices[wi])}</td>
+                <td key={w} className="px-5 py-4 font-body text-forest text-sm font-medium">{fmtPrice(r.prices[wi], currency, rate)}</td>
               ))}
             </tr>
           ))}
@@ -128,6 +138,22 @@ export default function Tariff() {
   const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
   const [weeks, setWeeks] = useState(1);
   const [addOns, setAddOns] = useState<Set<string>>(new Set());
+  const [currency, setCurrency] = useState<Currency>("USD");
+  const [rate, setRate] = useState<number | null>(null); // live USD -> INR, null until fetched
+
+  // Fetch today's USD -> INR rate once on mount (cached daily server-side).
+  useEffect(() => {
+    let active = true;
+    fetch("/api/exchange-rate")
+      .then((r) => r.json())
+      .then((d) => {
+        if (active && typeof d?.rate === "number" && d.rate > 0) setRate(d.rate);
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const room = ROOMS.find((r) => r.key === selectedRoom);
   const accomTotal = room ? room.prices[weeks - 1] : 0; // USD, non-linear per duration
@@ -196,9 +222,22 @@ export default function Tariff() {
               <Icon size={15} /> {label}
             </button>
           ))}
+          {/* Currency selector — visible in both views, applies to all accommodation prices */}
+          <label className="ml-auto flex items-center gap-2 font-body text-sm text-forest/70">
+            <span className="hidden sm:inline">Currency</span>
+            <select
+              value={currency}
+              onChange={(e) => setCurrency(e.target.value as Currency)}
+              aria-label="Display currency"
+              className="rounded-lg border border-border bg-white px-3 py-2 font-body text-sm font-semibold text-forest focus:outline-none focus:ring-2 focus:ring-forest/30 cursor-pointer"
+            >
+              <option value="USD">$ US Dollar</option>
+              <option value="INR">₹ Indian Rupee</option>
+            </select>
+          </label>
           {view === "calculator" && selectedRoom && (
-            <div className="ml-auto font-display font-bold text-gold text-lg">
-              Total: {fmtUSD(accomTotal)}
+            <div className="font-display font-bold text-gold text-lg">
+              Total: {fmtPrice(accomTotal, currency, rate)}
             </div>
           )}
         </div>
@@ -208,7 +247,7 @@ export default function Tariff() {
         <AnimatePresence mode="wait">
           {view === "table" ? (
             <motion.div key="table" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-              <TableView />
+              <TableView currency={currency} rate={rate} />
             </motion.div>
           ) : (
             <motion.div key="calc" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
@@ -219,10 +258,16 @@ export default function Tariff() {
 
                 {/* Step 1: Accommodation */}
                 <div>
-                  <div className="flex items-center gap-3 mb-6">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-6">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center font-body font-bold text-sm text-cream"
                       style={{ background: "hsl(var(--forest))" }}>1</div>
                     <h2 className="font-display font-bold text-forest text-xl">Choose Your Accommodation</h2>
+                    {currency === "INR" && (
+                      <span className="w-full sm:w-auto sm:ml-1 font-body text-xs text-sage">
+                        Converted at 1 USD = ₹{(rate ?? FALLBACK_RATE).toLocaleString("en-IN", { maximumFractionDigits: 2 })}
+                        {rate ? " · live daily rate" : " · approx."}
+                      </span>
+                    )}
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {ROOMS.map((r) => (
@@ -239,7 +284,7 @@ export default function Tariff() {
                             <div className="font-body text-sage text-xs">{r.subName}{r.perPerson ? " · per person" : ""}</div>
                           </div>
                           <div className="text-right">
-                            <div className="font-display font-bold text-gold text-lg">{fmtUSD(r.prices[0])}</div>
+                            <div className="font-display font-bold text-gold text-lg">{fmtPrice(r.prices[0], currency, rate)}</div>
                             <div className="font-body text-sage text-xs">/week</div>
                           </div>
                         </div>
@@ -281,7 +326,7 @@ export default function Tariff() {
                             <div className="font-body text-sm">{w === 1 ? "Week" : "Weeks"}</div>
                             {selectedRoom && (
                               <div className="font-body text-xs mt-1 opacity-70">
-                                {fmtUSD(ROOMS.find(r => r.key === selectedRoom)!.prices[wi])}
+                                {fmtPrice(ROOMS.find(r => r.key === selectedRoom)!.prices[wi], currency, rate)}
                               </div>
                             )}
                           </button>
@@ -340,7 +385,7 @@ export default function Tariff() {
                   <div className="rounded-2xl overflow-hidden shadow-card-hover border border-border">
                     <div className="p-5" style={{ background: "hsl(var(--forest))" }}>
                       <div className="font-body text-xs tracking-[0.2em] uppercase text-gold/70 mb-1">Your Estimate</div>
-                      <div className="font-display font-bold text-cream text-4xl">{fmtUSD(accomTotal)}</div>
+                      <div className="font-display font-bold text-cream text-4xl">{fmtPrice(accomTotal, currency, rate)}</div>
                       {weeks > 0 && <div className="font-body text-cream/60 text-xs mt-1">accommodation · for {weeks} week{weeks > 1 ? "s" : ""}</div>}
                     </div>
                     <div className="bg-white p-5 space-y-3">
@@ -348,7 +393,7 @@ export default function Tariff() {
                         <>
                           <div className="flex justify-between font-body text-sm">
                             <span className="text-forest/60">{room.name} × {weeks}wk{weeks > 1 ? "s" : ""}</span>
-                            <span className="font-semibold text-forest">{fmtUSD(accomTotal)}</span>
+                            <span className="font-semibold text-forest">{fmtPrice(accomTotal, currency, rate)}</span>
                           </div>
                           {addOns.size > 0 && (
                             <div className="border-t border-border pt-3 space-y-2">
