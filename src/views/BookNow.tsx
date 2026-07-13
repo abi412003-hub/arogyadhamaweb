@@ -107,15 +107,15 @@ function RoomThumb({ photos, alt, active }: { photos: string[]; alt: string; act
   }, [active, photos.length]);
 
   return (
-    <div className="relative h-16 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-forest/5">
+    <div className="relative h-28 w-36 flex-shrink-0 overflow-hidden rounded-lg bg-forest/5">
       {photos.map((p, i) => (
         <img
           key={p}
           src={p}
           alt={alt}
           loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover transition-opacity duration-500"
-          style={{ opacity: i === idx ? 1 : 0 }}
+          className="absolute inset-0 h-full w-full object-cover transition-all duration-500 ease-out"
+          style={{ opacity: i === idx ? 1 : 0, transform: active ? "scale(1.15)" : "scale(1)" }}
         />
       ))}
     </div>
@@ -162,7 +162,7 @@ function StepFour({ data, onChange }: { data: StayDetails; onChange: (d: StayDet
                 onClick={() => set("roomPreference", r.label)}
                 onMouseEnter={() => setHovered(r.slug)}
                 onMouseLeave={() => setHovered((h) => (h === r.slug ? null : h))}
-                className="relative flex gap-3 text-left rounded-xl border-2 p-2.5 bg-white transition-all duration-200 hover:shadow-card-hover hover:-translate-y-0.5 hover:scale-[1.03] hover:z-10"
+                className="relative flex gap-4 items-center text-left rounded-xl border-2 p-3.5 bg-white transition-all duration-200 hover:shadow-card-hover"
                 style={{ borderColor: selected ? "hsl(var(--gold))" : "hsl(var(--border))" }}
               >
                 <RoomThumb photos={ACCOMMODATION_PHOTOS[r.slug] || []} alt={r.name} active={hovered === r.slug} />
