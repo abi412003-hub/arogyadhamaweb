@@ -20,14 +20,25 @@ interface PersonalDetails { name: string; age: string; gender: Gender; phone: st
 interface MedicalDetails { condition: string; }
 interface StayDetails { preferredDate: string; weeks: string; roomPreference: string; }
 
+// usd = weekly price (used for the live currency conversion on the card); pp = per person.
+// `label` is the value stored/submitted — kept in USD for backend consistency.
 const ROOM_OPTIONS = [
-  { slug: "dormitory", name: "Dormitory", sub: "Pushpa / Ashwini Ward", price: "$250 / week", label: "Dormitory (Pushpa/Ashwini) — from $250/week" },
-  { slug: "ashirwad", name: "Single Room", sub: "Ashirwad Block", price: "$500 / week", label: "Single Room (Ashirwad) — from $500/week" },
-  { slug: "maitri", name: "Double Sharing", sub: "Maitri Block", price: "$450 / week · pp", label: "Double Sharing (Maitri) — from $450/week per person" },
-  { slug: "sheshadri", name: "Single Deluxe", sub: "Sheshadri Bhavan", price: "$850 / week", label: "Single Deluxe (Sheshadri Bhavan) — from $850/week" },
-  { slug: "semi-deluxe", name: "Double Deluxe", sub: "Sheshadri Bhavan", price: "$750 / week · pp", label: "Double Deluxe (Sheshadri Bhavan) — from $750/week per person" },
-  { slug: "suites", name: "Suite Sharing", sub: "Premium Block", price: "$1,000 / week · pp", label: "Suite Sharing — from $1,000/week per person" },
+  { slug: "dormitory", name: "Dormitory", sub: "Pushpa / Ashwini Ward", usd: 250, pp: false, label: "Dormitory (Pushpa/Ashwini) — from $250/week" },
+  { slug: "ashirwad", name: "Single Room", sub: "Ashirwad Block", usd: 500, pp: false, label: "Single Room (Ashirwad) — from $500/week" },
+  { slug: "maitri", name: "Double Sharing", sub: "Maitri Block", usd: 450, pp: true, label: "Double Sharing (Maitri) — from $450/week per person" },
+  { slug: "sheshadri", name: "Single Deluxe", sub: "Sheshadri Bhavan", usd: 850, pp: false, label: "Single Deluxe (Sheshadri Bhavan) — from $850/week" },
+  { slug: "semi-deluxe", name: "Double Deluxe", sub: "Sheshadri Bhavan", usd: 750, pp: true, label: "Double Deluxe (Sheshadri Bhavan) — from $750/week per person" },
+  { slug: "suites", name: "Suite Sharing", sub: "Premium Block", usd: 1000, pp: true, label: "Suite Sharing — from $1,000/week per person" },
 ];
+
+// Room prices are stored in USD; INR is converted from a live daily rate.
+type Currency = "USD" | "INR";
+const FALLBACK_RATE = 90; // used only before the live rate loads / if the source is down
+function fmtPrice(usd: number, currency: Currency, rate: number | null) {
+  return currency === "USD"
+    ? "$" + usd.toLocaleString("en-US")
+    : "₹" + Math.round(usd * (rate ?? FALLBACK_RATE)).toLocaleString("en-IN"); // 250 × 95 → ₹23,750
+}
 
 const STEP_TITLES = ["Personal Details", "Reason for Visit", "Stay Details", "Confirm"];
 
@@ -125,7 +136,24 @@ function RoomThumb({ photos, alt, active }: { photos: string[]; alt: string; act
 function StepFour({ data, onChange }: { data: StayDetails; onChange: (d: StayDetails) => void }) {
   function set<K extends keyof StayDetails>(k: K, v: string) { onChange({ ...data, [k]: v }); }
   const [hovered, setHovered] = useState<string | null>(null);
+  const [currency, setCurrency] = useState<Currency>("USD");
+  const [rate, setRate] = useState<number | null>(null); // live USD -> INR, null until fetched
   const today = new Date().toISOString().split("T")[0];
+
+  // Fetch today's USD -> INR rate once on mount (cached daily server-side).
+  useEffect(() => {
+    let active = true;
+    fetch("/api/exchange-rate")
+      .then((r) => r.json())
+      .then((d) => {
+        if (active && typeof d?.rate === "number" && d.rate > 0) setRate(d.rate);
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
+
   return (
     <div className="space-y-5">
       <div>
@@ -134,7 +162,26 @@ function StepFour({ data, onChange }: { data: StayDetails; onChange: (d: StayDet
         <p className="font-body text-xs text-sage mt-1">IPD admissions are on Tuesdays. Minimum 6-night stay required.</p>
       </div>
       <div>
-        <Label>Preferred Duration</Label>
+        <div className="flex items-center justify-between gap-3 flex-wrap mb-1.5">
+          <Label>Preferred Duration</Label>
+          {/* Currency selector — converts the room-preference card prices below */}
+          <label className="flex items-center gap-2 font-body text-xs text-forest/70">
+            {currency === "INR" && (
+              <span className="hidden sm:inline text-sage">
+                1 USD = ₹{(rate ?? FALLBACK_RATE).toLocaleString("en-IN", { maximumFractionDigits: 2 })}{rate ? "" : " (approx.)"}
+              </span>
+            )}
+            <select
+              value={currency}
+              onChange={(e) => setCurrency(e.target.value as Currency)}
+              aria-label="Display currency"
+              className="rounded-lg border border-border bg-white px-2.5 py-1.5 font-body text-xs font-semibold text-forest focus:outline-none focus:ring-2 focus:ring-forest/30 cursor-pointer"
+            >
+              <option value="USD">$ US Dollar</option>
+              <option value="INR">₹ Indian Rupee</option>
+            </select>
+          </label>
+        </div>
         <div className="flex gap-3 flex-wrap">
           {["1 Week", "2 Weeks", "3 Weeks", "4 Weeks"].map((w) => (
             <button key={w} onClick={() => set("weeks", w)}
@@ -169,7 +216,7 @@ function StepFour({ data, onChange }: { data: StayDetails; onChange: (d: StayDet
                 <div className="min-w-0 flex-1">
                   <div className="font-display font-semibold text-forest text-sm leading-tight">{r.name}</div>
                   <div className="font-body text-[11px] text-sage leading-tight">{r.sub}</div>
-                  <div className="font-body text-xs font-semibold text-gold mt-1">{r.price}</div>
+                  <div className="font-body text-xs font-semibold text-gold mt-1">{fmtPrice(r.usd, currency, rate)} / week{r.pp ? " · pp" : ""}</div>
                 </div>
                 {selected && <CheckCircle2 size={18} className="absolute top-2 right-2 text-gold" />}
               </button>
@@ -226,7 +273,7 @@ function StepFive({ personal, medical, stay }: {
         <div className="flex items-start gap-3">
           <CheckCircle2 size={18} className="text-gold flex-shrink-0 mt-0.5" />
           <p className="font-body text-sm text-forest/75 leading-relaxed">
-            Our team will contact you within <strong className="text-forest">24 hours</strong> to confirm your booking and discuss your personalised treatment plan. For urgent enquiries, call <a href="tel:+919972871777" className="text-gold font-semibold hover:underline">997-287-1777</a>.
+            We have received your request and are processing your reservation. Expect a confirmation shortly!
           </p>
         </div>
       </div>
@@ -363,14 +410,9 @@ export default function BookNow() {
               <CheckCircle2 size={40} className="text-gold" />
             </div>
             <h2 className="font-display font-bold text-forest text-3xl mb-3">Request Submitted!</h2>
-            <p className="font-body text-sage max-w-sm mx-auto mb-4 leading-relaxed">
-              Thank you. Our team will contact you within <strong className="text-forest">24 hours</strong> to confirm your booking and discuss your personalised treatment plan.
+            <p className="font-body text-sage max-w-md mx-auto leading-relaxed">
+              Thank you. Our team will contact you shortly to confirm your booking and discuss your personalised treatment plan.
             </p>
-            <p className="font-body text-sm text-sage">For urgent enquiries, please call us directly:</p>
-            <div className="flex justify-center gap-4 mt-3">
-              <a href="tel:+919972871777" className="font-body font-semibold text-forest hover:text-gold transition-colors">997-287-1777</a>
-              <a href="tel:+919880598017" className="font-body font-semibold text-forest hover:text-gold transition-colors">988-059-8017</a>
-            </div>
             <Link to="/" className="inline-block mt-8 px-6 py-3 rounded-xl font-body font-semibold text-sm transition-colors"
               style={{ background: "hsl(var(--forest))", color: "hsl(var(--cream))" }}>
               Return to Home
