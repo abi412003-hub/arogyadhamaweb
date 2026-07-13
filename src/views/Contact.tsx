@@ -297,8 +297,7 @@ export default function Contact() {
                 ))}
                 <div className="pt-3 border-t border-border">
                   <div className="font-body text-xs text-sage font-semibold uppercase tracking-widest mb-2">Cab Services</div>
-                  <div className="font-body text-sm text-forest font-semibold">Shree Sangameshwar Tours and Travels</div>
-                  <div className="font-body text-xs text-forest font-bold mb-2">Anil SB</div>
+                  <div className="font-body text-sm text-forest font-semibold mb-2">Shree Sangameshwar Tours and Travels</div>
                   <div className="flex gap-4">
                     <a href="tel:9902180006" className="font-body text-forest text-sm font-semibold hover:text-gold transition-colors">9902180006</a>
                     <a href="tel:7349029157" className="font-body text-forest text-sm font-semibold hover:text-gold transition-colors">7349029157</a>

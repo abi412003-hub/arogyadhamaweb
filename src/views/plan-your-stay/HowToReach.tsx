@@ -190,8 +190,7 @@ export default function HowToReach() {
             <p className="font-body text-sm text-sage leading-relaxed mb-4">
               Arogyadhama-associated cab services can arrange pick-up from the airport, railway station, or bus stand. Advance booking recommended.
             </p>
-            <div className="font-body text-sm text-forest font-semibold">Shree Sangameshwar Tours and Travels</div>
-            <div className="font-body text-xs text-forest font-bold mb-3">Anil SB</div>
+            <div className="font-body text-sm text-forest font-semibold mb-3">Shree Sangameshwar Tours and Travels</div>
             <div className="space-y-2">
               <div className="flex items-center gap-3">
                 <Phone size={14} className="text-gold flex-shrink-0" />
