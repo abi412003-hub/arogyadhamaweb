@@ -215,12 +215,12 @@ function ProgressBar({ current }: { current: number }) {
 
   return (
     <div className="mb-10">
-      <div className="flex items-center gap-0">
+      <div className="flex items-center justify-center gap-0">
         {steps.map((title, i) => {
           const isDone = i < current;
           const isActive = i === current;
           return (
-            <div key={title} className="flex items-center flex-1 min-w-0">
+            <div key={title} className="flex items-center">
               <div className="flex flex-col items-center flex-shrink-0">
                 <div className="w-8 h-8 rounded-full flex items-center justify-center font-body text-xs font-bold transition-all duration-300"
                   style={{
@@ -236,7 +236,7 @@ function ProgressBar({ current }: { current: number }) {
                 </div>
               </div>
               {i < steps.length - 1 && (
-                <div className="h-0.5 flex-1 mx-1 transition-all duration-300"
+                <div className="h-0.5 w-10 sm:w-16 mx-2 transition-all duration-300"
                   style={{ background: isDone ? "hsl(var(--forest))" : "hsl(var(--border))" }} />
               )}
             </div>
