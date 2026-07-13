@@ -5,16 +5,19 @@ import { Link } from "@/lib/router-compat";
 import Layout from "@/components/Layout";
 import { ACCOMMODATION_PHOTOS } from "@/lib/accommodation-photos";
 import {
-  ChevronRight, ChevronLeft, Building2, Stethoscope, Video,
-  CheckCircle2, User, Phone, Calendar, BedDouble, ClipboardList, Send
+  ChevronRight, ChevronLeft,
+  CheckCircle2, Phone, Send
 } from "lucide-react";
 
 /* ── Types ── */
-type BookingType = "ipd" | "opd" | "virtual" | null;
 type Gender = "male" | "female" | "other" | "";
 
+// Booking type is fixed to IPD — the type chooser was removed, but the booking
+// API still requires a valid type and the ERPNext mapping keys off it.
+const BOOKING_TYPE = "ipd";
+
 interface PersonalDetails { name: string; age: string; gender: Gender; phone: string; email: string; city: string; }
-interface MedicalDetails { condition: string; duration: string; previousTreatments: string; medications: string; }
+interface MedicalDetails { condition: string; }
 interface StayDetails { preferredDate: string; weeks: string; roomPreference: string; }
 
 const ROOM_OPTIONS = [
@@ -26,7 +29,7 @@ const ROOM_OPTIONS = [
   { slug: "suites", name: "Suite Sharing", sub: "Premium Block", price: "$1,000 / week · pp", label: "Suite Sharing — from $1,000/week per person" },
 ];
 
-const STEP_TITLES = ["Choose Type", "Personal Details", "Medical Details", "Stay Details", "Confirm"];
+const STEP_TITLES = ["Personal Details", "Reason for Visit", "Stay Details", "Confirm"];
 
 /* ── Helpers ── */
 function Label({ children }: { children: React.ReactNode }) {
@@ -56,36 +59,6 @@ function Textarea({ value, onChange, placeholder, maxLength = 1000 }: { value: s
 }
 
 /* ── Steps ── */
-function StepOne({ selected, onSelect }: { selected: BookingType; onSelect: (t: BookingType) => void }) {
-  const types = [
-    { key: "ipd" as const, icon: Building2, title: "IPD — Inpatient", subtitle: "Residential healing programme", desc: "Stay at Prashanti Kutiram for 1–4 weeks. Includes accommodation, meals, daily yoga, medical consultations, and personalised therapy protocol.", color: "hsl(var(--forest))", bg: "hsl(var(--forest) / 0.06)" },
-    { key: "opd" as const, icon: Stethoscope, title: "OPD — Outpatient", subtitle: "Day visit consultations", desc: "Visit for OPD consultations without residential stay. Morning hours: 10:30 AM – 12:00 PM & 2:00 PM – 3:30 PM.", color: "hsl(var(--gold))", bg: "hsl(var(--gold) / 0.06)" },
-    { key: "virtual" as const, icon: Video, title: "Virtual Consultation", subtitle: "Online with our doctors", desc: "Speak with Arogyadhama's integrative physicians from anywhere in the world. By appointment via 997-287-1777.", color: "hsl(200 55% 35%)", bg: "hsl(200 55% 35% / 0.06)" },
-  ];
-  return (
-    <div className="space-y-4">
-      {types.map((t) => (
-        <button key={t.key} onClick={() => onSelect(t.key)}
-          className="w-full text-left rounded-2xl border-2 p-6 flex gap-5 items-start transition-all duration-200 hover:shadow-card"
-          style={{
-            borderColor: selected === t.key ? t.color : "hsl(var(--border))",
-            background: selected === t.key ? t.bg : "white",
-          }}>
-          <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: t.bg }}>
-            <t.icon size={22} style={{ color: t.color }} />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="font-display font-bold text-forest text-lg leading-tight">{t.title}</div>
-            <div className="font-body text-xs font-semibold uppercase tracking-widest mt-0.5 mb-2" style={{ color: t.color }}>{t.subtitle}</div>
-            <p className="font-body text-forest/60 text-sm leading-relaxed">{t.desc}</p>
-          </div>
-          {selected === t.key && <CheckCircle2 size={20} className="flex-shrink-0 mt-1" style={{ color: t.color }} />}
-        </button>
-      ))}
-    </div>
-  );
-}
-
 function StepTwo({ data, onChange }: { data: PersonalDetails; onChange: (d: PersonalDetails) => void }) {
   function set<K extends keyof PersonalDetails>(k: K, v: PersonalDetails[K]) { onChange({ ...data, [k]: v }); }
   return (
@@ -110,24 +83,15 @@ function StepTwo({ data, onChange }: { data: PersonalDetails; onChange: (d: Pers
 }
 
 function StepThree({ data, onChange }: { data: MedicalDetails; onChange: (d: MedicalDetails) => void }) {
-  function set<K extends keyof MedicalDetails>(k: K, v: string) { onChange({ ...data, [k]: v }); }
   return (
     <div className="space-y-5">
       <div>
-        <Label>Primary Condition / Reason for Visit *</Label>
-        <Input value={data.condition} onChange={(v) => set("condition", v)} placeholder="e.g. Diabetes, Chronic Back Pain, Anxiety…" required />
-      </div>
-      <div>
-        <Label>Duration of Illness</Label>
-        <Input value={data.duration} onChange={(v) => set("duration", v)} placeholder="e.g. 2 years, since 2018…" />
-      </div>
-      <div>
-        <Label>Previous Treatments / Surgeries</Label>
-        <Textarea value={data.previousTreatments} onChange={(v) => set("previousTreatments", v)} placeholder="Briefly describe any previous treatments, medications, surgeries…" />
-      </div>
-      <div>
-        <Label>Current Medications</Label>
-        <Textarea value={data.medications} onChange={(v) => set("medications", v)} placeholder="List any medications you are currently taking…" />
+        <Label>Reason for Visit *</Label>
+        <Textarea
+          value={data.condition}
+          onChange={(v) => onChange({ condition: v })}
+          placeholder="Describe the reason for your visit — your condition, symptoms, or what you'd like help with…"
+        />
       </div>
     </div>
   );
@@ -202,23 +166,19 @@ function StepFour({ data, onChange }: { data: StayDetails; onChange: (d: StayDet
   );
 }
 
-function StepFive({ bookingType, personal, medical, stay }: {
-  bookingType: BookingType; personal: PersonalDetails; medical: MedicalDetails; stay: StayDetails;
+function StepFive({ personal, medical, stay }: {
+  personal: PersonalDetails; medical: MedicalDetails; stay: StayDetails;
 }) {
-  const label: Record<string, string> = { ipd: "IPD — Inpatient", opd: "OPD — Outpatient", virtual: "Virtual Consultation" };
   const rows = [
-    { label: "Booking Type", value: bookingType ? label[bookingType] : "" },
     { label: "Name", value: personal.name },
     { label: "Age / Gender", value: `${personal.age} / ${personal.gender}` },
     { label: "Phone", value: personal.phone },
     { label: "Email", value: personal.email },
     { label: "City / Country", value: personal.city },
-    { label: "Primary Condition", value: medical.condition },
-    ...(bookingType === "ipd" ? [
-      { label: "Preferred Date", value: stay.preferredDate },
-      { label: "Duration", value: stay.weeks },
-      { label: "Room Preference", value: stay.roomPreference },
-    ] : []),
+    { label: "Reason for Visit", value: medical.condition },
+    { label: "Preferred Date", value: stay.preferredDate },
+    { label: "Duration", value: stay.weeks },
+    { label: "Room Preference", value: stay.roomPreference },
   ].filter((r) => r.value);
 
   return (
@@ -250,20 +210,15 @@ function StepFive({ bookingType, personal, medical, stay }: {
 }
 
 /* ── Progress Bar ── */
-function ProgressBar({ current, total, bookingType }: { current: number; total: number; bookingType: BookingType }) {
-  const steps = bookingType === "ipd"
-    ? STEP_TITLES
-    : STEP_TITLES.filter((_, i) => i !== 3);
-  const totalSteps = steps.length;
-  const currentStep = bookingType === "ipd" ? current : (current >= 4 ? current - 1 : current);
+function ProgressBar({ current }: { current: number }) {
+  const steps = STEP_TITLES;
 
   return (
     <div className="mb-10">
       <div className="flex items-center gap-0">
         {steps.map((title, i) => {
-          const stepNum = bookingType === "ipd" ? i + 1 : (i >= 3 ? i + 2 : i + 1);
-          const isDone = stepNum < current + 1;
-          const isActive = stepNum === current + 1 || (bookingType !== "ipd" && stepNum === 5 && current === 4);
+          const isDone = i < current;
+          const isActive = i === current;
           return (
             <div key={title} className="flex items-center flex-1 min-w-0">
               <div className="flex flex-col items-center flex-shrink-0">
@@ -294,35 +249,29 @@ function ProgressBar({ current, total, bookingType }: { current: number; total: 
 
 /* ── Main ── */
 export default function BookNow() {
-  const [step, setStep] = useState(0); // 0-indexed
-  const [bookingType, setBookingType] = useState<BookingType>(null);
+  // Steps (0-indexed): 0 Personal · 1 Reason for Visit · 2 Stay Details · 3 Confirm
+  const [step, setStep] = useState(0);
   const [personal, setPersonal] = useState<PersonalDetails>({ name: "", age: "", gender: "", phone: "", email: "", city: "" });
-  const [medical, setMedical] = useState<MedicalDetails>({ condition: "", duration: "", previousTreatments: "", medications: "" });
+  const [medical, setMedical] = useState<MedicalDetails>({ condition: "" });
   const [stay, setStay] = useState<StayDetails>({ preferredDate: "", weeks: "", roomPreference: "" });
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const maxStep = bookingType === "ipd" ? 4 : 3; // last step index (confirm)
-
-  // For non-IPD, step 3 = Medical, step 4 = Confirm (skip Stay)
-  const displayStep = step; // 0=type,1=personal,2=medical,3=stay(IPD only)/confirm,4=confirm(IPD)
+  const CONFIRM_STEP = STEP_TITLES.length - 1; // 3
 
   function canProceed() {
-    if (step === 0) return !!bookingType;
-    if (step === 1) return !!(personal.name.trim() && personal.age && personal.gender && personal.phone.trim() && personal.email.trim() && personal.city.trim());
-    if (step === 2) return !!medical.condition.trim();
+    if (step === 0) return !!(personal.name.trim() && personal.age && personal.gender && personal.phone.trim() && personal.email.trim() && personal.city.trim());
+    if (step === 1) return !!medical.condition.trim();
     return true;
   }
 
   function nextStep() {
-    if (step === 0 && !bookingType) return;
-    if (bookingType !== "ipd" && step === 2) { setStep(4); return; } // skip stay details
-    setStep((s) => Math.min(s + 1, 4));
+    if (!canProceed()) return;
+    setStep((s) => Math.min(s + 1, CONFIRM_STEP));
   }
 
   function prevStep() {
-    if (bookingType !== "ipd" && step === 4) { setStep(2); return; }
     setStep((s) => Math.max(s - 1, 0));
   }
 
@@ -334,7 +283,7 @@ export default function BookNow() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          bookingType,
+          bookingType: BOOKING_TYPE,
           ...personal,
           ...medical,
           ...stay,
@@ -349,9 +298,6 @@ export default function BookNow() {
       setSubmitting(false);
     }
   }
-
-  const isConfirmStep = step === 4 || (bookingType !== "ipd" && step === 4);
-  const isStayStep = step === 3 && bookingType === "ipd";
 
   return (
     <Layout>
@@ -407,7 +353,7 @@ export default function BookNow() {
           </motion.div>
         ) : (
           <div className="bg-white rounded-3xl border border-border shadow-card-hover p-8">
-            <ProgressBar current={step} total={5} bookingType={bookingType} />
+            <ProgressBar current={step} />
 
             <AnimatePresence mode="wait">
               <motion.div key={step}
@@ -418,25 +364,17 @@ export default function BookNow() {
                 <div className="mb-6">
                   <div className="w-6 h-0.5 rounded mb-2" style={{ background: "hsl(var(--gold))" }} />
                   <h2 className="font-display font-bold text-forest text-2xl">
-                    {step === 0 && "What type of consultation are you looking for?"}
-                    {step === 1 && "Your Personal Details"}
-                    {step === 2 && "About Your Health"}
-                    {step === 3 && bookingType === "ipd" && "Plan Your Inpatient Stay"}
-                    {(step === 4 || (step === 3 && bookingType !== "ipd")) && "Review & Confirm"}
+                    {step === 0 && "Your Personal Details"}
+                    {step === 1 && "Reason for Your Visit"}
+                    {step === 2 && "Plan Your Inpatient Stay"}
+                    {step === 3 && "Review & Confirm"}
                   </h2>
                 </div>
 
-                {step === 0 && <StepOne selected={bookingType} onSelect={setBookingType} />}
-                {step === 1 && <StepTwo data={personal} onChange={setPersonal} />}
-                {step === 2 && <StepThree data={medical} onChange={setMedical} />}
-                {step === 3 && bookingType === "ipd" && <StepFour data={stay} onChange={setStay} />}
-                {(step === 4 || (step === 3 && bookingType !== "ipd" && false)) && (
-                  <StepFive bookingType={bookingType} personal={personal} medical={medical} stay={stay} />
-                )}
-                {/* Non-IPD confirm */}
-                {step === 4 && bookingType !== "ipd" && (
-                  <StepFive bookingType={bookingType} personal={personal} medical={medical} stay={stay} />
-                )}
+                {step === 0 && <StepTwo data={personal} onChange={setPersonal} />}
+                {step === 1 && <StepThree data={medical} onChange={setMedical} />}
+                {step === 2 && <StepFour data={stay} onChange={setStay} />}
+                {step === 3 && <StepFive personal={personal} medical={medical} stay={stay} />}
               </motion.div>
             </AnimatePresence>
 
@@ -449,7 +387,7 @@ export default function BookNow() {
                 </button>
               ) : <div />}
 
-              {step < 4 && !(bookingType !== "ipd" && step === 4) ? (
+              {step < CONFIRM_STEP ? (
                 <button onClick={nextStep} disabled={!canProceed()}
                   className="flex items-center gap-2 px-6 py-3 rounded-xl font-body font-semibold text-sm transition-all"
                   style={{
@@ -457,7 +395,7 @@ export default function BookNow() {
                     color: canProceed() ? "hsl(var(--cream))" : "hsl(var(--sage))",
                     cursor: canProceed() ? "pointer" : "not-allowed",
                   }}>
-                  {step === 0 ? "Continue" : step === 3 ? "Review Booking" : "Next Step"} <ChevronRight size={16} />
+                  {step === 2 ? "Review Booking" : "Next Step"} <ChevronRight size={16} />
                 </button>
               ) : (
                 <div className="flex flex-col items-end gap-2">
