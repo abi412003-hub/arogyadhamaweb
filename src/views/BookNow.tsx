@@ -40,7 +40,7 @@ function fmtPrice(usd: number, currency: Currency, rate: number | null) {
     : "₹" + Math.round(usd * (rate ?? FALLBACK_RATE)).toLocaleString("en-IN"); // 250 × 95 → ₹23,750
 }
 
-const STEP_TITLES = ["Personal Details", "Reason for Visit", "Stay Details", "Confirm"];
+const STEP_TITLES = ["Personal Details", "Stay Details", "Confirm"];
 
 /* ── Helpers ── */
 function Label({ children }: { children: React.ReactNode }) {
@@ -321,7 +321,7 @@ function ProgressBar({ current }: { current: number }) {
 
 /* ── Main ── */
 export default function BookNow() {
-  // Steps (0-indexed): 0 Personal · 1 Reason for Visit · 2 Stay Details · 3 Confirm
+  // Steps (0-indexed): 0 Personal (incl. Reason for Visit) · 1 Stay Details · 2 Confirm
   const [step, setStep] = useState(0);
   const [personal, setPersonal] = useState<PersonalDetails>({ name: "", age: "", gender: "", phone: "", email: "", city: "" });
   const [medical, setMedical] = useState<MedicalDetails>({ condition: "" });
@@ -333,8 +333,7 @@ export default function BookNow() {
   const CONFIRM_STEP = STEP_TITLES.length - 1; // 3
 
   function canProceed() {
-    if (step === 0) return !!(personal.name.trim() && personal.age && personal.gender && personal.phone.trim() && personal.email.trim() && personal.city.trim());
-    if (step === 1) return !!medical.condition.trim();
+    if (step === 0) return !!(personal.name.trim() && personal.age && personal.gender && personal.phone.trim() && personal.email.trim() && personal.city.trim() && medical.condition.trim());
     return true;
   }
 
@@ -432,16 +431,19 @@ export default function BookNow() {
                   <div className="w-6 h-0.5 rounded mb-2" style={{ background: "hsl(var(--gold))" }} />
                   <h2 className="font-display font-bold text-forest text-2xl">
                     {step === 0 && "Your Personal Details"}
-                    {step === 1 && "Reason for Your Visit"}
-                    {step === 2 && "Plan Your Inpatient Stay"}
-                    {step === 3 && "Review & Confirm"}
+                    {step === 1 && "Plan Your Inpatient Stay"}
+                    {step === 2 && "Review & Confirm"}
                   </h2>
                 </div>
 
-                {step === 0 && <StepTwo data={personal} onChange={setPersonal} />}
-                {step === 1 && <StepThree data={medical} onChange={setMedical} />}
-                {step === 2 && <StepFour data={stay} onChange={setStay} />}
-                {step === 3 && <StepFive personal={personal} medical={medical} stay={stay} />}
+                {step === 0 && (
+                  <div className="space-y-6">
+                    <StepTwo data={personal} onChange={setPersonal} />
+                    <StepThree data={medical} onChange={setMedical} />
+                  </div>
+                )}
+                {step === 1 && <StepFour data={stay} onChange={setStay} />}
+                {step === 2 && <StepFive personal={personal} medical={medical} stay={stay} />}
               </motion.div>
             </AnimatePresence>
 
@@ -462,7 +464,7 @@ export default function BookNow() {
                     color: canProceed() ? "hsl(var(--cream))" : "hsl(var(--sage))",
                     cursor: canProceed() ? "pointer" : "not-allowed",
                   }}>
-                  {step === 2 ? "Review Booking" : "Next Step"} <ChevronRight size={16} />
+                  {step === 1 ? "Review Booking" : "Next Step"} <ChevronRight size={16} />
                 </button>
               ) : (
                 <div className="flex flex-col items-end gap-2">
