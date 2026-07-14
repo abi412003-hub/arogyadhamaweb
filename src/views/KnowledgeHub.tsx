@@ -428,9 +428,9 @@ export default function KnowledgeHub() {
                 </div>
               ))}
               <div className="p-6 bg-cream/20 text-center">
-                <a href="https://pubmed.ncbi.nlm.nih.gov/?query=S-VYASA" target="_blank" rel="noopener noreferrer"
+                <a href="/research-publications.pdf" target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 font-body text-sm font-semibold text-forest hover:text-gold transition-colors">
-                  View all papers on PubMed <ExternalLink size={13} />
+                  View all papers <ExternalLink size={13} />
                 </a>
               </div>
             </div>
