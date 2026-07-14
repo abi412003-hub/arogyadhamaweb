@@ -133,26 +133,13 @@ function RoomThumb({ photos, alt, active }: { photos: string[]; alt: string; act
   );
 }
 
-function StepFour({ data, onChange }: { data: StayDetails; onChange: (d: StayDetails) => void }) {
+function StepFour({ data, onChange, currency, setCurrency, rate }: {
+  data: StayDetails; onChange: (d: StayDetails) => void;
+  currency: Currency; setCurrency: (c: Currency) => void; rate: number | null;
+}) {
   function set<K extends keyof StayDetails>(k: K, v: string) { onChange({ ...data, [k]: v }); }
   const [hovered, setHovered] = useState<string | null>(null);
-  const [currency, setCurrency] = useState<Currency>("USD");
-  const [rate, setRate] = useState<number | null>(null); // live USD -> INR, null until fetched
   const today = new Date().toISOString().split("T")[0];
-
-  // Fetch today's USD -> INR rate once on mount (cached daily server-side).
-  useEffect(() => {
-    let active = true;
-    fetch("/api/exchange-rate")
-      .then((r) => r.json())
-      .then((d) => {
-        if (active && typeof d?.rate === "number" && d.rate > 0) setRate(d.rate);
-      })
-      .catch(() => {});
-    return () => {
-      active = false;
-    };
-  }, []);
 
   return (
     <div className="space-y-5">
@@ -238,9 +225,16 @@ function StepFour({ data, onChange }: { data: StayDetails; onChange: (d: StayDet
   );
 }
 
-function StepFive({ personal, medical, stay }: {
+function StepFive({ personal, medical, stay, currency, rate }: {
   personal: PersonalDetails; medical: MedicalDetails; stay: StayDetails;
+  currency: Currency; rate: number | null;
 }) {
+  // Show the room-preference price in the currency chosen on the Stay Details step.
+  const room = ROOM_OPTIONS.find((o) => o.label === stay.roomPreference);
+  const roomPreferenceDisplay = room
+    ? `${room.label.split(" — from ")[0]} — from ${fmtPrice(room.usd, currency, rate)}/week${room.pp ? " per person" : ""}`
+    : stay.roomPreference; // e.g. "No preference"
+
   const rows = [
     { label: "Name", value: personal.name },
     { label: "Age / Gender", value: `${personal.age} / ${personal.gender}` },
@@ -250,7 +244,7 @@ function StepFive({ personal, medical, stay }: {
     { label: "Reason for Visit", value: medical.condition },
     { label: "Preferred Date", value: stay.preferredDate },
     { label: "Duration", value: stay.weeks },
-    { label: "Room Preference", value: stay.roomPreference },
+    { label: "Room Preference", value: roomPreferenceDisplay },
   ].filter((r) => r.value);
 
   return (
@@ -329,6 +323,23 @@ export default function BookNow() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  // Currency lives here (not inside StepFour) so the choice persists to the Confirm step.
+  const [currency, setCurrency] = useState<Currency>("USD");
+  const [rate, setRate] = useState<number | null>(null); // live USD -> INR, null until fetched
+
+  // Fetch today's USD -> INR rate once on mount (cached daily server-side).
+  useEffect(() => {
+    let active = true;
+    fetch("/api/exchange-rate")
+      .then((r) => r.json())
+      .then((d) => {
+        if (active && typeof d?.rate === "number" && d.rate > 0) setRate(d.rate);
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const CONFIRM_STEP = STEP_TITLES.length - 1; // 3
 
@@ -442,8 +453,8 @@ export default function BookNow() {
                     <StepThree data={medical} onChange={setMedical} />
                   </div>
                 )}
-                {step === 1 && <StepFour data={stay} onChange={setStay} />}
-                {step === 2 && <StepFive personal={personal} medical={medical} stay={stay} />}
+                {step === 1 && <StepFour data={stay} onChange={setStay} currency={currency} setCurrency={setCurrency} rate={rate} />}
+                {step === 2 && <StepFive personal={personal} medical={medical} stay={stay} currency={currency} rate={rate} />}
               </motion.div>
             </AnimatePresence>
 
