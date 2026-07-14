@@ -45,10 +45,7 @@ const STEP_TITLES = ["Personal Details", "Stay Details", "Confirm"];
 /* ── Validators (mirror app/api/booking/route.ts) ── */
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const isValidEmail = (v: string) => EMAIL_RE.test(v.trim());
-const isValidPhone = (v: string) => {
-  const digits = v.replace(/\D/g, "");
-  return /^[\d\s+\-()]{7,20}$/.test(v.trim()) && digits.length >= 10 && digits.length <= 15;
-};
+const isValidPhone = (v: string) => v.replace(/\D/g, "").length === 10;
 
 /* ── Helpers ── */
 function Label({ children }: { children: React.ReactNode }) {
@@ -98,8 +95,8 @@ function StepTwo({ data, onChange }: { data: PersonalDetails; onChange: (d: Pers
       </div>
       <div>
         <Label>Phone Number *</Label>
-        <Input value={data.phone} onChange={(v) => set("phone", v)} type="tel" maxLength={20} required invalid={phoneInvalid} />
-        {phoneInvalid && <p className="mt-1 font-body text-xs text-red-500">Enter a valid phone number (10–15 digits).</p>}
+        <Input value={data.phone} onChange={(v) => set("phone", v.replace(/\D/g, "").slice(0, 10))} type="tel" maxLength={10} required invalid={phoneInvalid} />
+        {phoneInvalid && <p className="mt-1 font-body text-xs text-red-500">Enter a valid 10-digit phone number.</p>}
       </div>
       <div>
         <Label>Email Address *</Label>
