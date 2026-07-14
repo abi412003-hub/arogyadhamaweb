@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { Link } from "@/lib/router-compat";
 import Layout from "@/components/Layout";
-import { ChevronRight, FlaskConical, ExternalLink, Download } from "lucide-react";
+import { ChevronRight, FlaskConical, ExternalLink } from "lucide-react";
 
 /* ── Data (from the Arogyadhama / S-VYASA research publications list) ── */
 type Paper = { title: string; authors: string; journal: string; year: string; doi?: string };
@@ -107,13 +107,9 @@ export default function ResearchPapers() {
           </div>
         ))}
 
-        {/* Footer: PDF download */}
+        {/* Footer */}
         <div className="text-center pt-2">
-          <a href="/research-publications.pdf" target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 font-body text-sm font-semibold text-forest hover:text-gold transition-colors">
-            <Download size={14} /> Download the full publications list (PDF)
-          </a>
-          <p className="font-body text-xs text-sage mt-2">{TOTAL} publications listed.</p>
+          <p className="font-body text-xs text-sage">{TOTAL} publications listed.</p>
         </div>
       </div>
     </Layout>
