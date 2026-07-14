@@ -42,18 +42,26 @@ function fmtPrice(usd: number, currency: Currency, rate: number | null) {
 
 const STEP_TITLES = ["Personal Details", "Stay Details", "Confirm"];
 
+/* ── Validators (mirror app/api/booking/route.ts) ── */
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const isValidEmail = (v: string) => EMAIL_RE.test(v.trim());
+const isValidPhone = (v: string) => {
+  const digits = v.replace(/\D/g, "");
+  return /^[\d\s+\-()]{7,20}$/.test(v.trim()) && digits.length >= 10 && digits.length <= 15;
+};
+
 /* ── Helpers ── */
 function Label({ children }: { children: React.ReactNode }) {
   return <label className="block font-body text-xs font-semibold uppercase tracking-widest text-sage mb-1.5">{children}</label>;
 }
-function Input({ value, onChange, placeholder, type = "text", maxLength = 255, required = false }: {
-  value: string; onChange: (v: string) => void; placeholder?: string; type?: string; maxLength?: number; required?: boolean;
+function Input({ value, onChange, placeholder, type = "text", maxLength = 255, required = false, invalid = false }: {
+  value: string; onChange: (v: string) => void; placeholder?: string; type?: string; maxLength?: number; required?: boolean; invalid?: boolean;
 }) {
   return (
     <input
       type={type} value={value} placeholder={placeholder} maxLength={maxLength} required={required}
       onChange={(e) => onChange(e.target.value)}
-      className="w-full px-4 py-3 rounded-xl border border-border font-body text-sm text-forest outline-none focus:border-gold transition-colors bg-white"
+      className={`w-full px-4 py-3 rounded-xl border font-body text-sm text-forest outline-none transition-colors bg-white ${invalid ? "border-red-400 focus:border-red-500" : "border-border focus:border-gold"}`}
     />
   );
 }
@@ -72,6 +80,8 @@ function Textarea({ value, onChange, placeholder, maxLength = 1000 }: { value: s
 /* ── Steps ── */
 function StepTwo({ data, onChange }: { data: PersonalDetails; onChange: (d: PersonalDetails) => void }) {
   function set<K extends keyof PersonalDetails>(k: K, v: PersonalDetails[K]) { onChange({ ...data, [k]: v }); }
+  const phoneInvalid = data.phone.length > 0 && !isValidPhone(data.phone);
+  const emailInvalid = data.email.length > 0 && !isValidEmail(data.email);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
       <div className="sm:col-span-2"><Label>Full Name *</Label><Input value={data.name} onChange={(v) => set("name", v)} required /></div>
@@ -86,8 +96,16 @@ function StepTwo({ data, onChange }: { data: PersonalDetails; onChange: (d: Pers
           <option value="other">Other</option>
         </select>
       </div>
-      <div><Label>Phone Number *</Label><Input value={data.phone} onChange={(v) => set("phone", v)} type="tel" maxLength={20} required /></div>
-      <div><Label>Email Address *</Label><Input value={data.email} onChange={(v) => set("email", v)} type="email" required /></div>
+      <div>
+        <Label>Phone Number *</Label>
+        <Input value={data.phone} onChange={(v) => set("phone", v)} type="tel" maxLength={20} required invalid={phoneInvalid} />
+        {phoneInvalid && <p className="mt-1 font-body text-xs text-red-500">Enter a valid phone number (10–15 digits).</p>}
+      </div>
+      <div>
+        <Label>Email Address *</Label>
+        <Input value={data.email} onChange={(v) => set("email", v)} type="email" required invalid={emailInvalid} />
+        {emailInvalid && <p className="mt-1 font-body text-xs text-red-500">Enter a valid email address.</p>}
+      </div>
       <div className="sm:col-span-2"><Label>City / Country *</Label><Input value={data.city} onChange={(v) => set("city", v)} required /></div>
     </div>
   );
@@ -344,7 +362,7 @@ export default function BookNow() {
   const CONFIRM_STEP = STEP_TITLES.length - 1; // 3
 
   function canProceed() {
-    if (step === 0) return !!(personal.name.trim() && personal.age && personal.gender && personal.phone.trim() && personal.email.trim() && personal.city.trim() && medical.condition.trim());
+    if (step === 0) return !!(personal.name.trim() && personal.age && personal.gender && isValidPhone(personal.phone) && isValidEmail(personal.email) && personal.city.trim() && medical.condition.trim());
     return true;
   }
 
