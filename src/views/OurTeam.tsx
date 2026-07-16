@@ -140,8 +140,12 @@ function getDesignation(member: Member): string {
   if (q.includes("MPT") || q.includes("BPT")) return "Physiotherapist";
   if (q.includes("BAMS")) return "Ayurveda Consultant";
   if (q.includes("MBBS")) return "Senior Medical Consultant";
-  if (q.includes("YOGA")) return "Yoga Therapist";
+  // BNYS is checked before the generic YOGA match: a BNYS physician whose
+  // qualifications mention Yoga (e.g. "BNYS, MD (Yoga)") is a naturopathy &
+  // yoga consultant physician, not a yoga therapist. Yoga-only quals
+  // (e.g. "MSc Yoga") still fall through to Yoga Therapist.
   if (q.includes("BNYS")) return "Consultant Physician — Naturopathy & Yoga";
+  if (q.includes("YOGA")) return "Yoga Therapist";
   return "Consultant";
 }
 
