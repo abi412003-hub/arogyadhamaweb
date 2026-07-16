@@ -157,26 +157,15 @@ function FeaturedArticle() {
       className="relative rounded-3xl overflow-hidden border border-border shadow-card-hover"
       initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2">
-        {/* Illustration */}
-        {/* The banner is wider (1.88:1) than this panel, so it's shown with object-contain to
-            avoid cropping its text/icons. A zoomed, blurred copy fills the leftover space so the
-            letterbox reads as a soft continuation of the artwork instead of flat bars. */}
-        <div className="relative h-56 lg:h-auto overflow-hidden">
-          <img
-            src={researchBanner}
-            alt=""
-            aria-hidden
-            className="absolute inset-0 w-full h-full object-cover scale-125 blur-2xl"
-          />
-          <div
-            className="absolute inset-0"
-            style={{ background: "linear-gradient(180deg, rgba(74,20,24,.35) 0%, rgba(74,20,24,.05) 45%, rgba(74,20,24,.35) 100%)" }}
-          />
+      <div className="flex flex-col">
+        {/* Banner — full card width at its natural 1.88:1 shape, so it is never cropped and
+            never letterboxed at any breakpoint (a side-by-side panel went square at lg, which
+            forced ugly filler bands above/below the artwork). */}
+        <div className="relative">
           <img
             src={researchBanner}
             alt="400+ research papers published in PubMed"
-            className="relative w-full h-full object-contain"
+            className="block w-full h-auto"
           />
           <div className="absolute top-4 left-4">
             <span className="font-body text-[10px] tracking-[0.2em] uppercase font-semibold px-3 py-1 rounded-full"
@@ -197,10 +186,11 @@ function FeaturedArticle() {
                 <Clock size={11} /> {article.readTime}
               </span>
             </div>
-            <h2 className="font-display font-bold text-forest text-2xl md:text-3xl leading-tight mb-4">
+            <h2 className="font-display font-bold text-forest text-2xl md:text-3xl leading-tight mb-4 max-w-4xl">
               {article.title}
             </h2>
-            <p className="font-body text-forest/65 leading-relaxed mb-6">{article.excerpt}</p>
+            {/* capped for a readable line length now that the card is full-width */}
+            <p className="font-body text-forest/65 leading-relaxed mb-6 max-w-3xl">{article.excerpt}</p>
             <div className="flex flex-wrap gap-2 mb-6">
               {article.tags.map((t) => (
                 <span key={t} className="font-body text-xs px-2.5 py-1 rounded-full bg-muted text-sage">{t}</span>
