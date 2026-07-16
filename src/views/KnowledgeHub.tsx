@@ -168,7 +168,7 @@ function FeaturedArticle() {
               matching the article column, and cover crops only the extended filler */}
           <img
             src={researchBanner}
-            alt="400+ research papers published in PubMed"
+            alt="400+ research papers published"
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div className="absolute top-4 left-4">
