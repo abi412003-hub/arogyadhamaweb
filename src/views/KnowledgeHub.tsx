@@ -7,6 +7,7 @@ import {
   ChevronRight, BookOpen, FlaskConical, Leaf, Droplets, Heart,
   Lightbulb, Users, ArrowRight, Mail, ExternalLink, Clock, Tag
 } from "lucide-react";
+import researchBanner from "@/assets/research-papers-banner.png";
 
 /* ── Data ── */
 const CATEGORIES = [
@@ -158,39 +159,18 @@ function FeaturedArticle() {
     >
       <div className="grid grid-cols-1 lg:grid-cols-2">
         {/* Illustration */}
-        <div className="relative h-56 lg:h-auto" style={{ background: "hsl(var(--forest))" }}>
-          <svg viewBox="0 0 500 400" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
-            <defs>
-              <radialGradient id="featGrad" cx="50%" cy="50%" r="60%">
-                <stop offset="0%" stopColor="hsl(150 35% 25%)" />
-                <stop offset="100%" stopColor="hsl(150 50% 11%)" />
-              </radialGradient>
-            </defs>
-            <rect width="500" height="400" fill="url(#featGrad)" />
-            {/* Abstract circles — DNA/research motif */}
-            {[180, 140, 100, 60, 25].map((r, i) => (
-              <circle key={r} cx="250" cy="200" r={r} fill="none"
-                stroke="hsl(51 97% 94%)" strokeWidth="0.5" opacity={0.08 + i * 0.04} />
-            ))}
-            {/* Connecting lines */}
-            {Array.from({ length: 12 }, (_, i) => i * 30).map((a) => (
-              <line key={a} x1="250" y1="200"
-                x2={250 + Math.cos(a * Math.PI / 180) * 175}
-                y2={200 + Math.sin(a * Math.PI / 180) * 175}
-                stroke="hsl(43 89% 60%)" strokeWidth="0.6" opacity="0.25" />
-            ))}
-            {/* Glowing nodes */}
-            {[[80, 80], [420, 100], [100, 300], [400, 300], [250, 50], [250, 350]].map(([x, y], i) => (
-              <circle key={i} cx={x} cy={y} r="6" fill="hsl(43 89% 65%)" opacity="0.5" />
-            ))}
-            <text x="250" y="195" textAnchor="middle" fontFamily="serif" fontSize="18"
-              fill="hsl(51 97% 94%)" opacity="0.5">400+ Research Papers</text>
-            <text x="250" y="218" textAnchor="middle" fontFamily="serif" fontSize="11"
-              fill="hsl(43 89% 70%)" opacity="0.7">Published in PubMed</text>
-          </svg>
+        {/* Backdrop gradient is sampled from the banner's own top/bottom edge colours so the
+            object-contain letterbox bars blend into the artwork. */}
+        <div className="relative h-56 lg:h-auto flex items-center justify-center"
+          style={{ background: "linear-gradient(180deg, #C69B89 0%, #9A7167 100%)" }}>
+          <img
+            src={researchBanner}
+            alt="400+ research papers published in PubMed"
+            className="w-full h-full object-contain"
+          />
           <div className="absolute top-4 left-4">
             <span className="font-body text-[10px] tracking-[0.2em] uppercase font-semibold px-3 py-1 rounded-full"
-              style={{ background: "hsl(var(--gold) / 0.25)", color: "hsl(var(--gold-light))" }}>
+              style={{ background: "hsl(var(--forest))", color: "hsl(var(--cream))" }}>
               Featured
             </span>
           </div>
