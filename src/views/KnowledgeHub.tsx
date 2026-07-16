@@ -159,14 +159,24 @@ function FeaturedArticle() {
     >
       <div className="grid grid-cols-1 lg:grid-cols-2">
         {/* Illustration */}
-        {/* Backdrop gradient is sampled from the banner's own top/bottom edge colours so the
-            object-contain letterbox bars blend into the artwork. */}
-        <div className="relative h-56 lg:h-auto flex items-center justify-center"
-          style={{ background: "linear-gradient(180deg, #C69B89 0%, #9A7167 100%)" }}>
+        {/* The banner is wider (1.88:1) than this panel, so it's shown with object-contain to
+            avoid cropping its text/icons. A zoomed, blurred copy fills the leftover space so the
+            letterbox reads as a soft continuation of the artwork instead of flat bars. */}
+        <div className="relative h-56 lg:h-auto overflow-hidden">
+          <img
+            src={researchBanner}
+            alt=""
+            aria-hidden
+            className="absolute inset-0 w-full h-full object-cover scale-125 blur-2xl"
+          />
+          <div
+            className="absolute inset-0"
+            style={{ background: "linear-gradient(180deg, rgba(74,20,24,.35) 0%, rgba(74,20,24,.05) 45%, rgba(74,20,24,.35) 100%)" }}
+          />
           <img
             src={researchBanner}
             alt="400+ research papers published in PubMed"
-            className="w-full h-full object-contain"
+            className="relative w-full h-full object-contain"
           />
           <div className="absolute top-4 left-4">
             <span className="font-body text-[10px] tracking-[0.2em] uppercase font-semibold px-3 py-1 rounded-full"
