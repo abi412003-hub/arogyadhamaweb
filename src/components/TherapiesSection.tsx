@@ -1,7 +1,22 @@
 "use client";
 import { motion } from "framer-motion";
 import { Link } from "@/lib/router-compat";
-import { Leaf, Droplets, Zap, Activity, Brain, Wind, Flower2, Salad } from "lucide-react";
+
+import yogaImg from "@/assets/therapies/yoga-card.jpg";
+import ayurvedaImg from "@/assets/therapies/ayurveda-card.jpg";
+import naturopathyImg from "@/assets/therapies/naturopathy-card.jpg";
+import acupunctureImg from "@/assets/therapies/acupuncture-card.jpg";
+import physiotherapyImg from "@/assets/therapies/physiotherapy-card.jpg";
+
+// Darken #rrggbb toward black, optionally with alpha.
+// These brand hexes are vivid, so tinting a photo with them at full strength
+// washes it out; the scrim uses a darkened cast to keep white text readable.
+const shade = (hex: string, pct: number, alpha?: number) => {
+  const n = parseInt(hex.slice(1), 16);
+  const c = (sh: number) => Math.round(((n >> sh) & 255) * (1 - pct));
+  const rgb = `${c(16)} ${c(8)} ${c(0)}`;
+  return alpha === undefined ? `rgb(${rgb})` : `rgb(${rgb} / ${alpha})`;
+};
 
 const therapies = [
   {
@@ -9,56 +24,54 @@ const therapies = [
     href: "/therapies/yoga",
     tagline: "Ancient practices backed by modern research for mind-body harmony",
     hex: "#2D5A3D",
-    Icon: Flower2,
+    image: yogaImg,
   },
   {
     name: "Ayurveda",
     href: "/therapies/ayurveda",
     tagline: "Time-tested herbal healing science for restoring natural balance",
     hex: "#52796F",
-    Icon: Leaf,
+    image: ayurvedaImg,
   },
   {
     name: "Naturopathy",
     href: "/therapies/naturopathy",
     tagline: "Nature's healing through mud therapy, hydrotherapy & therapeutic diet",
     hex: "#1D9E75",
-    Icon: Droplets,
+    image: naturopathyImg,
   },
   {
     name: "Acupuncture",
     href: "/therapies/acupuncture",
     tagline: "Precise energy point therapy for pain relief & systemic healing",
     hex: "#C2703E",
-    Icon: Zap,
+    image: acupunctureImg,
+    focal: "60% center",
   },
   {
     name: "Physiotherapy",
     href: "/therapies/physiotherapy",
     tagline: "Rehabilitative exercises for mobility & strength restoration",
     hex: "#C9A961",
-    Icon: Activity,
+    image: physiotherapyImg,
   },
   {
     name: "Yogic Counselling & Psychotherapy",
     href: "/therapies/yogic-counselling",
     tagline: "Mind-centred dialogue rooted in yoga psychology and modern therapeutic science",
     hex: "#7F77DD",
-    Icon: Brain,
   },
   {
     name: "Ozone Therapy",
     href: "/therapies/ozone",
     tagline: "Medical oxygen-ozone therapy for oxygenation, detox and immune support",
     hex: "#378ADD",
-    Icon: Wind,
   },
   {
     name: "Diet & Nutrition",
     href: "/therapies/diet-and-nutrition",
     tagline: "Personalized nutrition plans for holistic health and wellness",
     hex: "#5FA83E",
-    Icon: Salad,
   },
 ];
 
@@ -99,28 +112,52 @@ export default function TherapiesSection() {
             >
               <Link
                 to={therapy.href}
-                className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-white p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover"
+                className="group relative flex h-full min-h-[18rem] flex-col justify-end overflow-hidden rounded-2xl border border-black/5 p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover"
               >
+                {/* Backdrop: photo where we have one, brand gradient otherwise */}
+                {therapy.image ? (
+                  <img
+                    src={therapy.image}
+                    alt=""
+                    aria-hidden
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                    style={{ objectPosition: therapy.focal ?? "center" }}
+                  />
+                ) : (
+                  <div
+                    className="absolute inset-0"
+                    style={{ background: `linear-gradient(145deg, ${therapy.hex} 0%, ${shade(therapy.hex, 0.45)} 100%)` }}
+                  />
+                )}
+
+                {/* Bottom-weighted black scrim keeps the text legible over any photo,
+                    then a brand-tinted gradient carries each therapy's colour. */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background: `linear-gradient(to top, ${shade(therapy.hex, 0.45, 0.82)} 0%, ${shade(therapy.hex, 0.45, 0.35)} 45%, ${shade(therapy.hex, 0.45, 0)} 100%)`,
+                  }}
+                />
+
                 {/* top color accent */}
                 <span
                   className="absolute left-0 top-0 h-1 w-full"
                   style={{ background: therapy.hex }}
                 />
-                <span
-                  className="mb-5 flex h-14 w-14 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-105"
-                  style={{ background: `${therapy.hex}1A`, color: therapy.hex }}
-                >
-                  <therapy.Icon size={26} strokeWidth={1.6} />
-                </span>
-                <h3 className="font-display text-xl font-semibold text-forest">
-                  {therapy.name}
-                </h3>
-                <p className="mt-2 flex-1 font-body text-sm leading-relaxed text-forest/60">
-                  {therapy.tagline}
-                </p>
-                <span className="mt-5 inline-flex items-center gap-1.5 font-body text-sm font-semibold text-gold transition-all group-hover:gap-3">
-                  Learn More <span>→</span>
-                </span>
+
+                <div className="relative">
+                  <h3 className="font-display text-xl font-semibold text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.55)]">
+                    {therapy.name}
+                  </h3>
+                  <p className="mt-2 font-body text-sm leading-relaxed text-white/90 drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]">
+                    {therapy.tagline}
+                  </p>
+                  <span className="mt-5 inline-flex items-center gap-1.5 font-body text-sm font-semibold text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)] transition-all group-hover:gap-3">
+                    Learn More <span>→</span>
+                  </span>
+                </div>
               </Link>
             </motion.div>
           ))}
