@@ -2,7 +2,7 @@
 import TherapyPageTemplate from "@/components/TherapyPageTemplate";
 import { motion } from "framer-motion";
 import { CheckCircle2, Activity } from "lucide-react";
-import physiotherapyHero from "@/assets/therapies/physiotherapy-hero.jpg";
+import physiotherapyHero from "@/assets/therapies/physiotherapy-card.jpg";
 
 function SectionHeading({ label, title, subtitle }: { label: string; title: React.ReactNode; subtitle?: string }) {
   return (
@@ -180,8 +180,6 @@ export default function Physiotherapy() {
         heroTitle: "Physiotherapy",
         heroSubtitle: "Evidence-based movement medicine for rehabilitation, mobility restoration, and post-surgical recovery — integrated with Yoga therapy for complete physical healing.",
         heroImage: physiotherapyHero,
-        // Both men's heads sit near the top edge — centring decapitates them at 2560.
-        heroImagePosition: "center 30%",
         sections: [
           { id: "approach", label: "Our Approach", content: <ApproachSection /> },
           { id: "techniques", label: "Techniques", content: <TechniquesSection /> },

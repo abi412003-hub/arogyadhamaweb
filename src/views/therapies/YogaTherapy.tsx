@@ -2,7 +2,7 @@
 import { Flower2, Brain, Heart, Zap, BookOpen, FlaskConical, CheckCircle2 } from "lucide-react";
 import TherapyPageTemplate from "@/components/TherapyPageTemplate";
 import { motion } from "framer-motion";
-import yogaHero from "@/assets/therapies/yoga-hero.jpg";
+import yogaHero from "@/assets/therapies/yoga-card.jpg";
 
 /* ─── Shared section sub-components ─── */
 function SectionHeading({ label, title, subtitle }: { label: string; title: React.ReactNode; subtitle?: string }) {
@@ -250,9 +250,6 @@ export default function YogaTherapy() {
         heroTitle: "Yoga Therapy",
         heroSubtitle: "Ancient mind-body science applied with clinical precision — backed by decades of peer-reviewed research for Non-Communicable Disease management.",
         heroImage: yogaHero,
-        // She sits high in the frame; centring cuts the top of her head once the
-        // hero widens past ~1700px. Measured to clear at both 1920 and 2560.
-        heroImagePosition: "center 35%",
         sections: [
           { id: "science", label: "The Science", content: <ScienceSection /> },
           { id: "techniques", label: "Techniques", content: <TechniquesSection /> },
