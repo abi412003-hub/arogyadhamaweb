@@ -236,23 +236,19 @@ export default function TherapyPageTemplate({ config }: { config: TherapyPageCon
     <Layout>
       {/* Hero */}
       <section
-        className={`relative ${config.heroImage ? "pt-28 pb-32 md:pb-48 lg:pb-56 min-h-[640px]" : "pt-28 pb-14"} overflow-hidden bg-forest-dark`}
+        className={`relative ${config.heroImage ? "pt-28 pb-32 md:pb-48 lg:pb-56 min-h-[640px] xl:min-h-[740px] 2xl:min-h-[820px]" : "pt-28 pb-14"} overflow-hidden bg-forest-dark`}
       >
-        {/* Blurred background photo */}
+        {/* Background photo */}
         {config.heroImage && (
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            {/* Blurred fill background (only when image fills the hero) */}
+            {/* Fill background (only when the image fills the hero) */}
             {config.heroImageFit !== "contain" && (
               <img
                 src={config.heroImage}
                 alt=""
                 aria-hidden
                 className="absolute inset-0 w-full h-full object-cover"
-                style={{
-                  objectPosition: config.heroImagePosition ?? "center",
-                  filter: "blur(6px)",
-                  transform: "scale(1.08)",
-                }}
+                style={{ objectPosition: config.heroImagePosition ?? "center" }}
               />
             )}
             {/* Foreground image (contained when requested) */}
@@ -265,8 +261,19 @@ export default function TherapyPageTemplate({ config }: { config: TherapyPageCon
                 style={{ objectPosition: config.heroImagePosition ?? "center" }}
               />
             )}
-            {/* Subtle dark overlay for text legibility */}
-            <div className="absolute inset-0 bg-forest-dark/35" />
+            {/* Legibility scrim. The photo is unblurred, so this is what carries the
+                text -- but the headline sits top-LEFT while the subjects sit centre,
+                so a flat or top-weighted wash would dim the very faces it should show.
+                Narrow screens: text spans the full width, so scrim evenly.
+                Wide screens: weight it left, behind the text, leaving the subject clear. */}
+            <div className="absolute inset-0 bg-forest-dark/60 lg:hidden" />
+            <div
+              className="absolute inset-0 hidden lg:block"
+              style={{
+                background:
+                  "linear-gradient(to right, hsl(var(--forest-dark) / 0.85) 0%, hsl(var(--forest-dark) / 0.55) 38%, hsl(var(--forest-dark) / 0.18) 68%, hsl(var(--forest-dark) / 0.08) 100%)",
+              }}
+            />
           </div>
         )}
 

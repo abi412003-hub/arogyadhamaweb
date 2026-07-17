@@ -2,7 +2,7 @@
 import TherapyPageTemplate from "@/components/TherapyPageTemplate";
 import { motion } from "framer-motion";
 import { CheckCircle2, Droplets } from "lucide-react";
-import naturopathyHero from "@/assets/therapies/naturopathy-card.jpg";
+import naturopathyHero from "@/assets/therapies/naturopathy-hero.jpg";
 
 function SectionHeading({ label, title, subtitle }: { label: string; title: React.ReactNode; subtitle?: string }) {
   return (
@@ -185,6 +185,8 @@ export default function Naturopathy() {
         heroTitle: "Naturopathy",
         heroSubtitle: "Healing through nature's own medicines — water, earth, sunlight, and therapeutic diet — activating the body's profound innate capacity for self-healing.",
         heroImage: naturopathyHero,
+        // Deliberately left centred, unlike the other therapy heroes: the subject here
+        // is the foot bath low in the frame, so raising the crop loses it to the foliage.
         sections: [
           { id: "approach", label: "Our Approach", content: <ApproachSection /> },
           { id: "treatments", label: "Treatments", content: <TreatmentsSection /> },

@@ -2,7 +2,7 @@
 import TherapyPageTemplate from "@/components/TherapyPageTemplate";
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
-import acupunctureHero from "@/assets/therapies/acupuncture-card.jpg";
+import acupunctureHero from "@/assets/therapies/acupuncture-hero.jpg";
 
 function SectionHeading({ label, title, subtitle }: { label: string; title: React.ReactNode; subtitle?: string }) {
   return (
@@ -163,6 +163,8 @@ export default function Acupuncture() {
         heroTitle: "Acupuncture",
         heroSubtitle: "Ancient Chinese medicine meets modern neuroscience — precise energy point therapy for pain relief, neurological healing, and systemic wellness restoration.",
         heroImage: acupunctureHero,
+        // Keeps her face and the needles clear of the top crop on wide screens.
+        heroImagePosition: "center 30%",
         sections: [
           { id: "approach", label: "Meridian Theory", content: <ApproachSection /> },
           { id: "techniques", label: "Techniques", content: <TechniquesSection /> },

@@ -2,7 +2,7 @@
 import TherapyPageTemplate from "@/components/TherapyPageTemplate";
 import { motion } from "framer-motion";
 import { CheckCircle2, Leaf, FlaskConical } from "lucide-react";
-import ayurvedaHero from "@/assets/therapies/ayurveda-card.jpg";
+import ayurvedaHero from "@/assets/therapies/ayurveda-hero.jpg";
 
 function SectionHeading({ label, title, subtitle }: { label: string; title: React.ReactNode; subtitle?: string }) {
   return (
@@ -181,6 +181,8 @@ export default function Ayurveda() {
         breadcrumbLabel: "Ayurveda",
         heroGradient: "linear-gradient(135deg, hsl(168 25% 18%) 0%, hsl(168 25% 28%) 50%, hsl(168 19% 35%) 100%)",
         heroImage: ayurvedaHero,
+        // Keeps his head and the therapist's hands clear of the top crop on wide screens.
+        heroImagePosition: "center 30%",
         
         heroTagline: "Tridosha · Panchakarma · Prakriti",
         heroTitle: "Ayurveda",
