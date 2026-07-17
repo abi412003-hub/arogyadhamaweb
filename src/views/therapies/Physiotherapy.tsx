@@ -2,7 +2,7 @@
 import TherapyPageTemplate from "@/components/TherapyPageTemplate";
 import { motion } from "framer-motion";
 import { CheckCircle2, Activity } from "lucide-react";
-import physiotherapyHero from "@/assets/therapies/physiotherapy-card.jpg";
+import physiotherapyHero from "@/assets/therapy-physiotherapy.jpg";
 
 function SectionHeading({ label, title, subtitle }: { label: string; title: React.ReactNode; subtitle?: string }) {
   return (

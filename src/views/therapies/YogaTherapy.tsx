@@ -2,7 +2,7 @@
 import { Flower2, Brain, Heart, Zap, BookOpen, FlaskConical, CheckCircle2 } from "lucide-react";
 import TherapyPageTemplate from "@/components/TherapyPageTemplate";
 import { motion } from "framer-motion";
-import yogaHero from "@/assets/therapies/yoga-card.jpg";
+import yogaHero from "@/assets/therapy-yoga.jpg";
 
 /* ─── Shared section sub-components ─── */
 function SectionHeading({ label, title, subtitle }: { label: string; title: React.ReactNode; subtitle?: string }) {

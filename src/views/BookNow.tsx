@@ -417,7 +417,7 @@ export default function BookNow() {
               Begin Your Healing Journey
             </h1>
             <p className="font-body text-cream/70 mt-4 max-w-lg">
-              Complete the form below and our team will contact you within 24 hours to confirm and discuss your personalised treatment plan.
+              Complete the form below and our team will contact you shortly to confirm and discuss your personalised treatment plan.
             </p>
             <div className="flex flex-wrap gap-4 mt-6">
               <a href="tel:+919972871777" className="flex items-center gap-2 font-body text-cream/80 text-sm hover:text-gold transition-colors">
