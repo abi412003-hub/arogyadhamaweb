@@ -7,6 +7,9 @@ import ayurvedaImg from "@/assets/therapies/ayurveda-card.jpg";
 import naturopathyImg from "@/assets/therapies/naturopathy-card.jpg";
 import acupunctureImg from "@/assets/therapies/acupuncture-card.jpg";
 import physiotherapyImg from "@/assets/therapies/physiotherapy-card.jpg";
+import yogicCounsellingImg from "@/assets/therapies/yogic-counselling-card.jpg";
+import ozoneImg from "@/assets/therapies/ozone-card.jpg";
+import dietImg from "@/assets/therapies/diet-and-nutrition-card.jpg";
 
 // Darken #rrggbb toward black, optionally with alpha.
 // These brand hexes are vivid, so tinting a photo with them at full strength
@@ -60,18 +63,21 @@ const therapies = [
     href: "/therapies/yogic-counselling",
     tagline: "Mind-centred dialogue rooted in yoga psychology and modern therapeutic science",
     hex: "#7F77DD",
+    image: yogicCounsellingImg,
   },
   {
     name: "Ozone Therapy",
     href: "/therapies/ozone",
     tagline: "Medical oxygen-ozone therapy for oxygenation, detox and immune support",
     hex: "#378ADD",
+    image: ozoneImg,
   },
   {
     name: "Diet & Nutrition",
     href: "/therapies/diet-and-nutrition",
     tagline: "Personalized nutrition plans for holistic health and wellness",
     hex: "#5FA83E",
+    image: dietImg,
   },
 ];
 
