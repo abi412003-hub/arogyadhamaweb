@@ -2,6 +2,7 @@
 import TherapyPageTemplate from "@/components/TherapyPageTemplate";
 import { motion } from "framer-motion";
 import { CheckCircle2, Droplets } from "lucide-react";
+import naturopathyHero from "@/assets/therapies/naturopathy-card.jpg";
 
 function SectionHeading({ label, title, subtitle }: { label: string; title: React.ReactNode; subtitle?: string }) {
   return (
@@ -183,7 +184,7 @@ export default function Naturopathy() {
         heroTagline: "Hydrotherapy · Mud Therapy · Fasting",
         heroTitle: "Naturopathy",
         heroSubtitle: "Healing through nature's own medicines — water, earth, sunlight, and therapeutic diet — activating the body's profound innate capacity for self-healing.",
-        heroImagePosition: "top right",
+        heroImage: naturopathyHero,
         sections: [
           { id: "approach", label: "Our Approach", content: <ApproachSection /> },
           { id: "treatments", label: "Treatments", content: <TreatmentsSection /> },

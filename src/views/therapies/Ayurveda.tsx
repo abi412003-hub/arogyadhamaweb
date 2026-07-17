@@ -2,7 +2,7 @@
 import TherapyPageTemplate from "@/components/TherapyPageTemplate";
 import { motion } from "framer-motion";
 import { CheckCircle2, Leaf, FlaskConical } from "lucide-react";
-import shirodharaImg from "@/assets/ayurveda-shirodhara.jpg";
+import ayurvedaHero from "@/assets/therapies/ayurveda-card.jpg";
 
 function SectionHeading({ label, title, subtitle }: { label: string; title: React.ReactNode; subtitle?: string }) {
   return (
@@ -180,7 +180,7 @@ export default function Ayurveda() {
         therapyKey: "ayurveda",
         breadcrumbLabel: "Ayurveda",
         heroGradient: "linear-gradient(135deg, hsl(168 25% 18%) 0%, hsl(168 25% 28%) 50%, hsl(168 19% 35%) 100%)",
-        heroImage: shirodharaImg,
+        heroImage: ayurvedaHero,
         
         heroTagline: "Tridosha · Panchakarma · Prakriti",
         heroTitle: "Ayurveda",
