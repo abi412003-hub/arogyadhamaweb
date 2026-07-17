@@ -3,6 +3,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "@/lib/router-compat";
 import Layout from "@/components/Layout";
+import { MAPS_EMBED_SRC } from "@/lib/location";
 import {
   ChevronRight, Phone, Mail, MapPin, Clock, Calendar,
   Video, Send, CheckCircle2
@@ -268,7 +269,7 @@ export default function Contact() {
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <iframe
                 title="Arogyadhama Location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.734!2d77.6522!3d12.7825!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae6bfd4b5e5555%3A0x0!2sPrashanti+Kutiram%2C+Vivekananda+Road%2C+Kalluballu%2C+Anekal%2C+Karnataka+560105!5e0!3m2!1sen!2sin!4v1700000000000"
+                src={MAPS_EMBED_SRC}
                 className="w-full h-full"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

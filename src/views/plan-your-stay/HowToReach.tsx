@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { Link } from "@/lib/router-compat";
 import Layout from "@/components/Layout";
+import { MAPS_EMBED_SRC, MAPS_PLACE_URL, WAZE_URL } from "@/lib/location";
 import {
   ChevronRight, MapPin, Car, Train, Bus, Phone,
   Navigation, Clock, Info
@@ -103,7 +104,7 @@ export default function HowToReach() {
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <iframe
               title="Prashanti Kutiram – Arogyadhama Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15559.453!2d77.6452!3d12.7935!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae697e24a75c5f%3A0x7e0a2cc38b4dcd8!2sPrashanti%20Kutiram%2C%20Vivekananda%20Road%2C%20Kalluballu%20Post%2C%20Jigani%2C%20Anekal%2C%20Bengaluru%2C%20Karnataka%20560105!5e0!3m2!1sen!2sin!4v1700000000000"
+              src={MAPS_EMBED_SRC}
               className="w-full h-full"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -111,13 +112,13 @@ export default function HowToReach() {
             />
           </motion.div>
           <div className="mt-3 flex flex-wrap gap-4">
-            <a href="https://maps.google.com/?q=Prashanti+Kutiram+Vivekananda+Road+Kalluballu+Anekal+Bengaluru+560105"
+            <a href={MAPS_PLACE_URL}
               target="_blank" rel="noopener noreferrer"
               className="flex items-center gap-2 font-body text-sm font-semibold transition-colors"
               style={{ color: "hsl(var(--forest))" }}>
               <Navigation size={14} /> Open in Google Maps
             </a>
-            <a href="https://waze.com/ul?q=Prashanti+Kutiram+Anekal+Bengaluru"
+            <a href={WAZE_URL}
               target="_blank" rel="noopener noreferrer"
               className="flex items-center gap-2 font-body text-sm font-semibold transition-colors text-sage">
               <Car size={14} /> Open in Waze
