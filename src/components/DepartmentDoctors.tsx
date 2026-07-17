@@ -13,11 +13,13 @@ import naveenShankar from "@/assets/team/naveen-shankar.jpg";
 import navyaShenoy from "@/assets/team/navya-shenoy.jpg";
 import nibedita from "@/assets/team/nibedita.jpg";
 import padminiTekur from "@/assets/team/padmini-tekur.jpg";
+import promilaChoudhary from "@/assets/team/promila-choudhary.jpg";
 import ranjiniMurthy from "@/assets/team/ranjini-murthy.jpg";
 import sharadChaudhari from "@/assets/team/sharad-shivajirao-chaudhari.jpg";
 import shishiraR from "@/assets/team/shishira-r.png";
 import shriramaDongre from "@/assets/team/shrirama-dongre.jpg";
 import sushmitaCT from "@/assets/team/sushmita-c-t.png";
+import vaddeVenkataKarthik from "@/assets/team/vadde-venkata-karthik.png";
 import vaishaliMathapati from "@/assets/team/vaishali-mathapati.jpg";
 import vishwasPapanna from "@/assets/team/vishwas-papanna.jpg";
 
@@ -32,11 +34,13 @@ const FALLBACKS: Record<string, string> = {
   "navya-shenoy": navyaShenoy,
   "nibedita": nibedita,
   "padmini-tekur": padminiTekur,
+  "promila-choudhary": promilaChoudhary,
   "ranjini-murthy": ranjiniMurthy,
   "sharad-shivajirao-chaudhari": sharadChaudhari,
   "shishira-r": shishiraR,
   "shrirama-dongre": shriramaDongre,
   "sushmita-c-t": sushmitaCT,
+  "vadde-venkata-karthik": vaddeVenkataKarthik,
   "vaishali-mathapati": vaishaliMathapati,
   "vishwas-papanna": vishwasPapanna,
 };
@@ -69,7 +73,7 @@ export const DEPT_DOCTORS_BY_KEY: Record<string, string[]> = {
   oncology: ["Sharad Chaudhary", "Navya", "Sushmitha"],
   pulmonology: ["Titty George", "Moodal Giri Shankara", "Prajwal Rao"],
   cardiology: ["Titty George", "Moodal Giri Shankara", "Prajwal Rao"],
-  psychiatry: ["Ranjitha Raghunath", "Vaishali Matapathi"],
+  psychiatry: ["Promila Choudhary", "Vaishali Matapathi", "Vadde Venkata Karthik"],
   rheumatology: ["Arundhati", "Naveen Sankar", "Nagachaitanya"],
   spinal: ["Padmini Tekur", "Sriram Dongre", "Moulya Appanna", "Vishwas Papanna"],
   diabetes: ["Ankita Mishra", "Amshuman R Yadav"],
