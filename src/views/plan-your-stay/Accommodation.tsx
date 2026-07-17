@@ -14,27 +14,31 @@ const PHOTO_SLUG: Record<string, string> = {
   dormitory: "dormitory",
   single: "ashirwad",
   "double-sharing": "maitri",
+  "semi-deluxe": "semi-deluxe",
+  // Both deluxe rooms are the same Sheshadri Bhavan room, at single vs double occupancy.
   "single-deluxe": "sheshadri",
-  "double-deluxe": "semi-deluxe",
+  "double-deluxe": "sheshadri",
   suite: "suites",
 };
 
-// Room prices are stored in USD; INR is converted from a live daily rate.
+// Room prices are the official INR chart; USD is derived from a live daily rate.
 type Currency = "USD" | "INR";
 const FALLBACK_RATE = 90; // used only before the live rate loads / if the source is down
-function fmtPrice(usd: number, currency: Currency, rate: number | null) {
-  return currency === "USD"
-    ? "$" + usd.toLocaleString("en-US")
-    : "₹" + Math.round(usd * (rate ?? FALLBACK_RATE)).toLocaleString("en-IN"); // 250 × 95 → ₹23,750
+function fmtPrice(inr: number, currency: Currency, rate: number | null) {
+  return currency === "INR"
+    ? "₹" + inr.toLocaleString("en-IN")
+    : "$" + Math.round(inr / (rate ?? FALLBACK_RATE)).toLocaleString("en-US"); // 6,600 ÷ 95 → $69
 }
 
 /* ── Data ── */
+// weeklyRate: INR per person, from the official "Yoga Therapy Charges" card
+// (effective 13 Aug 2024). Row order follows the printed chart.
 const ROOMS = [
   {
     key: "dormitory",
     name: "Dormitory",
     subName: "Pushpa / Ashwini Ward",
-    weeklyRate: 250,
+    weeklyRate: 6600,
     capacity: "Shared (8–12 beds)",
     desc: "A warm, community-oriented dormitory for patients who want the full Arogyadhama healing experience in a budget-friendly setting. The shared environment fosters camaraderie and the spirit of Maitri (friendship).",
     amenities: [
@@ -56,7 +60,7 @@ const ROOMS = [
     key: "single",
     name: "Single Room",
     subName: "Ashirwad Block",
-    weeklyRate: 500,
+    weeklyRate: 13200,
     capacity: "Single occupancy",
     desc: "A private, peaceful room with attached bathroom — ideal for patients who value solitude for rest and recovery. The Ashirwad block is situated close to the main therapy centres.",
     amenities: [
@@ -78,7 +82,7 @@ const ROOMS = [
     key: "double-sharing",
     name: "Double Sharing",
     subName: "Maitri Block",
-    weeklyRate: 450,
+    weeklyRate: 11000,
     capacity: "2 persons (per person rate)",
     desc: "Designed for couples or companions healing together, the Maitri Block's double rooms offer the benefits of privacy with the warmth of a shared experience. Named after the Sanskrit concept of compassionate friendship.",
     amenities: [
@@ -97,10 +101,32 @@ const ROOMS = [
     tierBg: "hsl(27 50% 40%)",
   },
   {
+    key: "semi-deluxe",
+    name: "Semi Deluxe",
+    subName: "Sheshadri Bhavan",
+    weeklyRate: 17600,
+    capacity: "2 persons, AC (per person rate)",
+    desc: "An air-conditioned double bedroom shared between two — a step up from standard sharing, with climate control for patients who rest better in cooler comfort.",
+    amenities: [
+      { icon: BedDouble, label: "Two beds with quality linen" },
+      { icon: ShowerHead, label: "Attached bathroom" },
+      { icon: Wind, label: "Air conditioning" },
+      { icon: Utensils, label: "Dining hall meals" },
+    ],
+    highlights: ["Air-conditioned throughout", "Wardrobe for each person", "Ideal for companions"],
+    color: "hsl(210 45% 36%)",
+    accentBg: "hsl(210 45% 36% / 0.06)",
+    svgPrimary: "hsl(210 45% 28%)",
+    svgSecondary: "hsl(210 35% 58%)",
+    perPerson: true,
+    tier: "Semi Deluxe",
+    tierBg: "hsl(210 45% 36%)",
+  },
+  {
     key: "single-deluxe",
     name: "Single Deluxe",
     subName: "Sheshadri Bhavan",
-    weeklyRate: 850,
+    weeklyRate: 27500,
     capacity: "Single occupancy (Premium)",
     desc: "Premium private accommodation in the flagship Sheshadri Bhavan — Arogyadhama's most refined residential block. Upgraded furnishings, garden views, and priority access to all facilities.",
     amenities: [
@@ -122,16 +148,16 @@ const ROOMS = [
     key: "double-deluxe",
     name: "Double Deluxe",
     subName: "Sheshadri Bhavan",
-    weeklyRate: 750,
-    capacity: "2 persons (per person rate)",
-    desc: "The deluxe shared option — all the premium amenities of Sheshadri Bhavan at a per-person rate for two. Spacious enough for two to heal comfortably without compromise.",
+    weeklyRate: 22000,
+    capacity: "Double occupancy (Premium)",
+    desc: "The same premium Sheshadri Bhavan deluxe room, shared by two — every deluxe amenity at a per-person rate. Spacious enough for two to heal comfortably without compromise.",
     amenities: [
       { icon: BedDouble, label: "Two deluxe beds with premium linen" },
       { icon: ShowerHead, label: "Luxury attached bathroom" },
       { icon: Wind, label: "Air conditioning" },
       { icon: Utensils, label: "Dining hall meals" },
     ],
-    highlights: ["Garden / nature view", "Upgraded décor", "Priority consultations"],
+    highlights: ["Garden / nature view", "Premium furnishings", "Priority consultations", "Daily housekeeping"],
     color: "hsl(200 55% 32%)",
     accentBg: "hsl(200 55% 32% / 0.06)",
     svgPrimary: "hsl(200 55% 25%)",
@@ -144,7 +170,7 @@ const ROOMS = [
     key: "suite",
     name: "Suite Sharing",
     subName: "Premium Block",
-    weeklyRate: 1000,
+    weeklyRate: 30800,
     capacity: "2 persons (per person rate)",
     desc: "The pinnacle of comfort at Arogyadhama — a suite shared between two, offering the highest quality accommodation, services, and attention available on campus.",
     amenities: [
@@ -438,10 +464,13 @@ function ComparisonTable({ currency, rate }: { currency: Currency; rate: number 
     "Priority consultations",
     "Sitting area",
   ];
+  // One entry per ROOMS key, in `features` order. A key missing here used to crash
+  // the whole page (undefined[fi]), so the lookup below is guarded.
   const roomFeatures: Record<string, boolean[]> = {
     dormitory: [false, false, false, false, false, false],
     single: [true, true, false, false, false, false],
     "double-sharing": [false, true, false, false, false, false],
+    "semi-deluxe": [false, true, true, false, false, false],
     "single-deluxe": [true, true, true, true, true, false],
     "double-deluxe": [false, true, true, true, true, false],
     suite: [false, true, true, true, true, true],
@@ -467,7 +496,7 @@ function ComparisonTable({ currency, rate }: { currency: Currency; rate: number 
               <td className="font-body text-sm text-forest px-5 py-3.5">{feat}</td>
               {ROOMS.map((r) => (
                 <td key={r.key} className="px-4 py-3.5 text-center">
-                  {roomFeatures[r.key][fi]
+                  {roomFeatures[r.key]?.[fi]
                     ? <Check size={16} className="text-gold mx-auto" />
                     : <X size={16} className="text-forest/20 mx-auto" />}
                 </td>
@@ -485,7 +514,7 @@ function ComparisonTable({ currency, rate }: { currency: Currency; rate: number 
 
 /* ── Main ── */
 export default function Accommodation() {
-  const [currency, setCurrency] = useState<Currency>("USD");
+  const [currency, setCurrency] = useState<Currency>("INR"); // INR is the official chart figure
   const [rate, setRate] = useState<number | null>(null); // live USD -> INR, null until fetched
 
   // Fetch today's USD -> INR rate once on mount (cached daily server-side).
@@ -524,7 +553,12 @@ export default function Accommodation() {
               From peaceful dormitories to premium suites — find the accommodation that matches your comfort needs and budget at Prashanti Kutiram.
             </p>
             <div className="flex flex-wrap gap-6 mt-8">
-              {[["6 Types", "of rooms"], ["$250", "starting / week"], ["All inclusive", "meals & yoga"]].map(([n, l]) => (
+              {/* Derived from ROOMS so the count and starting price can't drift out of date. */}
+              {[
+                [`${ROOMS.length} Types`, "of rooms"],
+                [fmtPrice(Math.min(...ROOMS.map((r) => r.weeklyRate)), currency, rate), "starting / week"],
+                ["All inclusive", "meals & yoga"],
+              ].map(([n, l]) => (
                 <div key={l}>
                   <div className="font-display font-bold text-gold text-xl">{n}</div>
                   <div className="font-body text-cream/60 text-xs">{l}</div>
@@ -547,7 +581,7 @@ export default function Accommodation() {
           ))}
           {/* Currency selector — converts every room price to the chosen currency */}
           <label className="ml-auto flex items-center gap-2 font-body text-sm text-forest/70 whitespace-nowrap pl-3">
-            {currency === "INR" && (
+            {currency === "USD" && (
               <span className="hidden md:inline text-xs text-sage">
                 1 USD = ₹{(rate ?? FALLBACK_RATE).toLocaleString("en-IN", { maximumFractionDigits: 2 })}{rate ? "" : " (approx.)"}
               </span>

@@ -6,13 +6,15 @@ import Layout from "@/components/Layout";
 import { ChevronRight, CheckCircle2, Info, Calendar, Table2, Calculator } from "lucide-react";
 
 /* ── Data ── */
-// prices: [1 week, 2 weeks, 3 weeks, 4 weeks] in USD — non-linear (longer stays discounted)
+// prices: [1 week, 2 weeks, 3 weeks, 4 weeks] in INR, per person — verbatim from the
+// official "Yoga Therapy Charges" card (effective 13 Aug 2024). Non-linear: longer
+// stays are discounted. Row order follows the printed chart.
 const ROOMS = [
   {
     key: "dormitory",
     name: "Dormitory",
     subName: "Pushpa / Ashwini Ward",
-    prices: [250, 490, 730, 970],
+    prices: [6600, 12200, 17800, 23400],
     emoji: "🏨",
     desc: "Shared dormitory accommodation with basic amenities. Ideal for budget-conscious patients seeking the full healing experience.",
     amenities: ["Shared bathroom", "Basic furnishings", "Common lounge", "Yoga kit provided"],
@@ -21,7 +23,7 @@ const ROOMS = [
     key: "single",
     name: "Single Room",
     subName: "Ashirwad Block",
-    prices: [500, 900, 1300, 1600],
+    prices: [13200, 25400, 37600, 49800],
     emoji: "🛏️",
     desc: "Private single room with attached bathroom. Comfortable, quiet, and well-suited for solo travellers requiring privacy.",
     amenities: ["Attached bathroom", "Study table", "Wardrobe", "Room service meals"],
@@ -30,17 +32,27 @@ const ROOMS = [
     key: "double-sharing",
     name: "Double Sharing",
     subName: "Maitri Block",
-    prices: [450, 800, 1150, 1450],
+    prices: [11000, 21000, 31000, 41000],
     emoji: "👥",
     desc: "Shared double room per person. Perfect for couples or companions travelling together for healing.",
     amenities: ["Shared attached bathroom", "Two beds", "Wardrobe", "Room service meals"],
     perPerson: true,
   },
   {
+    key: "semi-deluxe",
+    name: "Semi Deluxe",
+    subName: "Sheshadri Bhavan",
+    prices: [17600, 34200, 50800, 67400],
+    emoji: "❄️",
+    desc: "Air-conditioned double bedroom shared per person. A step up from standard sharing, with climate control for a more comfortable stay.",
+    amenities: ["Attached bathroom", "Air conditioning", "Two beds", "Wardrobe"],
+    perPerson: true,
+  },
+  {
     key: "single-deluxe",
     name: "Single Deluxe",
     subName: "Sheshadri Bhavan",
-    prices: [850, 1550, 2150, 2750],
+    prices: [27500, 54000, 80500, 107000],
     emoji: "⭐",
     desc: "Premium single room in the flagship Sheshadri Bhavan block with upgraded furnishings and garden views.",
     amenities: ["Deluxe attached bathroom", "AC room", "Garden view", "Premium furnishings", "Priority consultations"],
@@ -49,17 +61,17 @@ const ROOMS = [
     key: "double-deluxe",
     name: "Double Deluxe",
     subName: "Sheshadri Bhavan",
-    prices: [750, 1350, 1900, 2400],
+    prices: [22000, 43000, 64000, 85000],
     emoji: "🌟",
-    desc: "Premium shared double room in Sheshadri Bhavan. Superior comfort with all deluxe amenities per person.",
-    amenities: ["Deluxe attached bathroom", "AC room", "Upgraded décor", "Premium furnishings"],
+    desc: "The same premium Sheshadri Bhavan deluxe room at double occupancy — all the deluxe amenities, charged per person.",
+    amenities: ["Deluxe attached bathroom", "AC room", "Garden view", "Premium furnishings", "Priority consultations"],
     perPerson: true,
   },
   {
     key: "suite",
     name: "Suite Sharing",
     subName: "Premium Block",
-    prices: [1000, 1800, 2550, 3200],
+    prices: [30800, 60600, 90400, 120200],
     emoji: "👑",
     desc: "The most luxurious option — a suite shared between two, offering the highest comfort level at Arogyadhama.",
     amenities: ["Luxury bathroom", "AC suite", "Sitting area", "Priority everything", "Concierge support"],
@@ -76,7 +88,7 @@ const ADD_ONS = [
   { key: "physio-cat2", label: "Physiotherapy / Acupuncture Category 2", weeklyRate: 4000, color: "hsl(var(--terracotta))" },
 ];
 
-// Accommodation packages are priced in USD; therapy add-ons remain in INR.
+// Accommodation packages and therapy add-ons are both priced in INR.
 function fmtUSD(n: number) {
   return "$" + n.toLocaleString("en-US");
 }
@@ -87,11 +99,11 @@ function fmtINR(n: number) {
 type Currency = "USD" | "INR";
 // Only used before the live daily rate finishes loading (or if the source is down).
 const FALLBACK_RATE = 90;
-// Show an accommodation price (stored in USD) in the visitor's chosen currency.
-function fmtPrice(usd: number, currency: Currency, rate: number | null) {
-  return currency === "USD"
-    ? fmtUSD(usd)
-    : fmtINR(Math.round(usd * (rate ?? FALLBACK_RATE))); // e.g. 250 × 95 → ₹23,750
+// The INR chart is the source of truth; USD is derived from the live daily rate.
+function fmtPrice(inr: number, currency: Currency, rate: number | null) {
+  return currency === "INR"
+    ? fmtINR(inr)
+    : fmtUSD(Math.round(inr / (rate ?? FALLBACK_RATE))); // e.g. 6,600 ÷ 95 → $69
 }
 
 /* ── Table View ── */
@@ -138,7 +150,7 @@ export default function Tariff() {
   const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
   const [weeks, setWeeks] = useState(1);
   const [addOns, setAddOns] = useState<Set<string>>(new Set());
-  const [currency, setCurrency] = useState<Currency>("USD");
+  const [currency, setCurrency] = useState<Currency>("INR"); // INR is the official chart figure
   const [rate, setRate] = useState<number | null>(null); // live USD -> INR, null until fetched
 
   // Fetch today's USD -> INR rate once on mount (cached daily server-side).
@@ -156,11 +168,11 @@ export default function Tariff() {
   }, []);
 
   const room = ROOMS.find((r) => r.key === selectedRoom);
-  const accomTotal = room ? room.prices[weeks - 1] : 0; // USD, non-linear per duration
+  const accomTotal = room ? room.prices[weeks - 1] : 0; // INR, non-linear per duration
   const addOnTotal = Array.from(addOns).reduce((sum, key) => {
     const ao = ADD_ONS.find((a) => a.key === key);
     return sum + (ao ? ao.weeklyRate * weeks : 0);
-  }, 0); // INR — therapies billed separately, never summed with the USD accommodation total
+  }, 0); // INR — therapies are billed separately, so they stay out of the accommodation total
 
   function toggleAddOn(key: string) {
     setAddOns((prev) => {
@@ -262,7 +274,7 @@ export default function Tariff() {
                     <div className="w-8 h-8 rounded-full flex items-center justify-center font-body font-bold text-sm text-cream"
                       style={{ background: "hsl(var(--forest))" }}>1</div>
                     <h2 className="font-display font-bold text-forest text-xl">Choose Your Accommodation</h2>
-                    {currency === "INR" && (
+                    {currency === "USD" && (
                       <span className="w-full sm:w-auto sm:ml-1 font-body text-xs text-sage">
                         Converted at 1 USD = ₹{(rate ?? FALLBACK_RATE).toLocaleString("en-IN", { maximumFractionDigits: 2 })}
                         {rate ? " · live daily rate" : " · approx."}
