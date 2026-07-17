@@ -12,9 +12,6 @@ import {
   FlaskConical,
   TreePine,
   BarChart3,
-  History,
-  Milestone,
-  Camera,
 } from "lucide-react";
 
 /* ─── Breadcrumb ─── */
@@ -419,58 +416,6 @@ function NumbersSection() {
   );
 }
 
-/* ─── Sub-page links ─── */
-function SubpageLinks() {
-  const pages = [
-    { icon: History, label: "Our History", desc: "A chronological journey through four decades of milestones", href: "/about/history" },
-    { icon: Milestone, label: "Milestones", desc: "Key achievements, awards, and landmark research moments", href: "/about/history" },
-    { icon: Camera, label: "Campus Tour", desc: "Explore Prashanti Kutiram — gardens, halls, and healing spaces", href: "/about" },
-  ];
-
-  return (
-    <section className="py-20 bg-cream">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          <span className="section-label">Explore Further</span>
-          <h2 className="font-display text-display-md text-forest mt-4">Dive Deeper</h2>
-        </motion.div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {pages.map((p, i) => (
-            <motion.div
-              key={p.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.4 }}
-            >
-              <Link
-                to={p.href}
-                className="group block bg-white rounded-2xl p-7 border border-border shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 h-full"
-              >
-                <div className="w-12 h-12 rounded-2xl mb-5 flex items-center justify-center group-hover:scale-110 transition-transform"
-                  style={{ background: "hsl(var(--forest) / 0.08)" }}>
-                  <p.icon size={22} className="text-forest" />
-                </div>
-                <h3 className="font-display font-semibold text-forest text-lg mb-2">{p.label}</h3>
-                <p className="font-body text-forest/55 text-sm leading-relaxed">{p.desc}</p>
-                <div className="mt-5 flex items-center gap-1 text-sm font-semibold font-body text-gold group-hover:gap-3 transition-all">
-                  <span>Explore</span><span>→</span>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ─── Main Page ─── */
 export default function About() {
   return (
@@ -481,7 +426,6 @@ export default function About() {
       <ApproachSection />
       <CampusSection />
       <NumbersSection />
-      <SubpageLinks />
     </Layout>
   );
 }

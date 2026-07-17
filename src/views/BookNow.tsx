@@ -421,8 +421,8 @@ export default function BookNow() {
               <a href="tel:+919972871777" className="flex items-center gap-2 font-body text-cream/80 text-sm hover:text-gold transition-colors">
                 <Phone size={14} /> IPD: 997-287-1777
               </a>
-              <a href="tel:+919880598017" className="flex items-center gap-2 font-body text-cream/80 text-sm hover:text-gold transition-colors">
-                <Phone size={14} /> OPD/Virtual: 988-059-8017
+              <a href="tel:+919972871777" className="flex items-center gap-2 font-body text-cream/80 text-sm hover:text-gold transition-colors">
+                <Phone size={14} /> OPD/Virtual: 997-287-1777
               </a>
             </div>
           </motion.div>
@@ -520,7 +520,7 @@ export default function BookNow() {
             Prefer to speak with someone?{" "}
             <a href="tel:+919972871777" className="text-forest font-semibold hover:text-gold transition-colors">Call 997-287-1777</a>
             {" "}(IPD) or{" "}
-            <a href="tel:+919880598017" className="text-forest font-semibold hover:text-gold transition-colors">988-059-8017</a>
+            <a href="tel:+919972871777" className="text-forest font-semibold hover:text-gold transition-colors">997-287-1777</a>
             {" "}(OPD/Virtual)
           </p>
         </div>

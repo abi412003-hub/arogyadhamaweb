@@ -1,24 +1,14 @@
 "use client";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Link } from "@/lib/router-compat";
 import Layout from "@/components/Layout";
 import {
-  ChevronRight, BookOpen, FlaskConical, Leaf, Droplets, Heart,
-  Lightbulb, Users, ArrowRight, Mail, ExternalLink, Clock, Tag
+  ChevronRight, FlaskConical, ArrowRight, Mail, ExternalLink, Clock
 } from "lucide-react";
 import researchBanner from "@/assets/research-papers-banner.jpg";
 
 /* ── Data ── */
-const CATEGORIES = [
-  { key: "all", label: "All", icon: BookOpen },
-  { key: "research", label: "Research", icon: FlaskConical },
-  { key: "yoga", label: "Yoga & Meditation", icon: Leaf },
-  { key: "ayurveda", label: "Ayurveda", icon: Droplets },
-  { key: "naturopathy", label: "Naturopathy", icon: Heart },
-  { key: "wellness", label: "Wellness Tips", icon: Lightbulb },
-  { key: "case-studies", label: "Case Studies", icon: Users },
-];
 
 const ARTICLES = [
   {
@@ -210,43 +200,6 @@ function FeaturedArticle() {
   );
 }
 
-/* ── Article Card ── */
-function ArticleCard({ article, i }: { article: typeof ARTICLES[0]; i: number }) {
-  return (
-    <motion.div
-      className="group bg-white rounded-2xl border border-border shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden"
-      initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
-    >
-      {/* Coloured top strip */}
-      <div className="h-1.5 w-full" style={{ background: article.color }} />
-      <div className="p-6 flex flex-col flex-1">
-        <div className="flex items-center gap-2 mb-3">
-          <Tag size={11} style={{ color: article.color }} />
-          <span className="font-body text-[10px] font-semibold uppercase tracking-widest" style={{ color: article.color }}>
-            {CATEGORIES.find(c => c.key === article.category)?.label}
-          </span>
-          <span className="text-border ml-auto font-body text-xs text-sage flex items-center gap-1">
-            <Clock size={10} /> {article.readTime}
-          </span>
-        </div>
-        <h3 className="font-display font-bold text-forest text-lg leading-snug mb-3 group-hover:text-gold transition-colors">
-          {article.title}
-        </h3>
-        <p className="font-body text-forest/60 text-sm leading-relaxed flex-1 line-clamp-3">{article.excerpt}</p>
-        <div className="flex flex-wrap gap-1.5 mt-4 mb-4">
-          {article.tags.map((t) => (
-            <span key={t} className="font-body text-[10px] px-2 py-0.5 rounded-full bg-muted text-sage">{t}</span>
-          ))}
-        </div>
-        <button className="flex items-center gap-1.5 font-body text-sm font-semibold transition-colors"
-          style={{ color: article.color }}>
-          Read More <ArrowRight size={13} />
-        </button>
-      </div>
-    </motion.div>
-  );
-}
-
 /* ── Newsletter ── */
 function Newsletter() {
   const [email, setEmail] = useState("");
@@ -295,12 +248,6 @@ function Newsletter() {
 
 /* ── Main ── */
 export default function KnowledgeHub() {
-  const [activeCategory, setActiveCategory] = useState("all");
-
-  const filtered = activeCategory === "all"
-    ? ARTICLES.slice(1)
-    : ARTICLES.slice(1).filter((a) => a.category === activeCategory);
-
   return (
     <Layout>
       {/* Hero */}
@@ -337,40 +284,6 @@ export default function KnowledgeHub() {
             <span className="font-body text-xs tracking-[0.25em] uppercase font-semibold text-gold">Featured Article</span>
           </div>
           <FeaturedArticle />
-        </div>
-
-        {/* Category Filters */}
-        <div>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-6 h-0.5 rounded" style={{ background: "hsl(var(--gold))" }} />
-            <span className="font-body text-xs tracking-[0.25em] uppercase font-semibold text-gold">Browse Articles</span>
-          </div>
-          <div className="flex flex-wrap gap-2 mb-10">
-            {CATEGORIES.map(({ key, label, icon: Icon }) => (
-              <button key={key} onClick={() => setActiveCategory(key)}
-                className="flex items-center gap-2 px-4 py-2 rounded-full font-body text-sm transition-all duration-200 border"
-                style={{
-                  background: activeCategory === key ? "hsl(var(--forest))" : "white",
-                  color: activeCategory === key ? "hsl(var(--cream))" : "hsl(var(--forest) / 0.6)",
-                  borderColor: activeCategory === key ? "hsl(var(--forest))" : "hsl(var(--border))",
-                  fontWeight: activeCategory === key ? "600" : "400",
-                }}>
-                <Icon size={13} /> {label}
-              </button>
-            ))}
-          </div>
-
-          <AnimatePresence mode="popLayout">
-            <motion.div layout className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {filtered.map((a, i) => (
-                <motion.div key={a.title} layout
-                  initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.96 }} transition={{ delay: i * 0.04 }}>
-                  <ArticleCard article={a} i={i} />
-                </motion.div>
-              ))}
-            </motion.div>
-          </AnimatePresence>
         </div>
 
         {/* Research Publications */}

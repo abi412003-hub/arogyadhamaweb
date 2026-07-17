@@ -30,7 +30,7 @@ const patientResources = [
   { label: "Daily Schedule", href: "/plan-your-stay/schedule" },
   { label: "Accommodation", href: "/plan-your-stay/accommodation" },
   { label: "Patient Stories", href: "/patient-stories" },
-  { label: "FAQs", href: "/knowledge-hub" },
+  { label: "FAQs", static: true },
 ];
 
 export default function Footer() {
@@ -94,14 +94,21 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5">
               {patientResources.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    to={link.href}
-                    className="font-body text-sm text-cream/60 hover:text-gold transition-colors flex items-center gap-1.5"
-                  >
-                    <span className="w-1 h-1 rounded-full bg-gold/40 flex-shrink-0" />
-                    {link.label}
-                  </Link>
+                <li key={link.label}>
+                  {"static" in link && link.static ? (
+                    <span className="font-body text-sm text-cream/60 flex items-center gap-1.5">
+                      <span className="w-1 h-1 rounded-full bg-gold/40 flex-shrink-0" />
+                      {link.label}
+                    </span>
+                  ) : (
+                    <Link
+                      to={link.href}
+                      className="font-body text-sm text-cream/60 hover:text-gold transition-colors flex items-center gap-1.5"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-gold/40 flex-shrink-0" />
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
