@@ -150,30 +150,6 @@ function HealingWheel() {
         className="w-full max-w-[500px]"
         style={{ overflow: "visible" }}
       >
-        {/* Per-segment image fills. Each pattern is a square centered on the
-            segment's centroid so the wedge shows the middle of its photo. */}
-        <defs>
-          {SEGMENTS.map((s) => {
-            const c = polarToCartesian(CX, CY, (INNER_R + OUTER_R) / 2, s.mid);
-            const size = 170;
-            const x = c.x - size / 2;
-            const y = c.y - size / 2;
-            return (
-              <pattern
-                key={s.key + "-pat"}
-                id={`wheel-img-${s.key}`}
-                patternUnits="userSpaceOnUse"
-                x={x}
-                y={y}
-                width={size}
-                height={size}
-              >
-                <image href={s.img} x={x} y={y} width={size} height={size} preserveAspectRatio="xMidYMid slice" />
-              </pattern>
-            );
-          })}
-        </defs>
-
         {/* Subtle outer ring decoration */}
         <circle cx={CX} cy={CY} r={OUTER_R + 30} stroke="hsl(var(--sage) / 0.15)" strokeWidth="1" fill="none" strokeDasharray="4 6" />
         <circle cx={CX} cy={CY} r={OUTER_R + 48} stroke="hsl(var(--gold) / 0.08)" strokeWidth="1" fill="none" strokeDasharray="2 8" />
@@ -202,14 +178,26 @@ function HealingWheel() {
           const labelPos = polarToCartesian(CX, CY, LABEL_R + (isHov ? 14 : 8), s.mid);
           const lines = s.label.split("\n");
 
+          // Photo box centered on the segment centroid, sized to cover the whole
+          // wedge (incl. hover expansion) so the clipped image fills the section.
+          const c = polarToCartesian(CX, CY, (INNER_R + OUTER_R) / 2, s.mid);
+          const S = 150;
+
           return (
             <g key={s.key}>
               <Link to={s.href}>
-                <path
-                  d={path}
-                  fill={`url(#wheel-img-${s.key})`}
-                  stroke="hsl(51 97% 94% / 0.1)"
-                  strokeWidth="1"
+                {/* Clip the photo to the exact wedge shape */}
+                <clipPath id={`wheel-clip-${s.key}`}>
+                  <path d={path} />
+                </clipPath>
+                <image
+                  href={s.img}
+                  x={c.x - S / 2}
+                  y={c.y - S / 2}
+                  width={S}
+                  height={S}
+                  preserveAspectRatio="xMidYMid slice"
+                  clipPath={`url(#wheel-clip-${s.key})`}
                   style={{
                     transition: "all 0.3s ease",
                     filter: isHov ? `drop-shadow(0 4px 12px ${s.fill}80)` : "none",
@@ -218,16 +206,14 @@ function HealingWheel() {
                   onMouseEnter={() => setHovered(s.key)}
                   onMouseLeave={() => setHovered(null)}
                 />
-                {/* Brand-colour tint over the photo — lifts on hover to reveal the image */}
+                {/* Light brand tint + separating border — lifts on hover, non-interactive */}
                 <path
                   d={path}
                   fill={s.fill}
-                  stroke="none"
-                  style={{
-                    transition: "all 0.3s ease",
-                    opacity: isHov ? 0.12 : 0.38,
-                    pointerEvents: "none",
-                  }}
+                  fillOpacity={isHov ? 0.06 : 0.16}
+                  stroke="hsl(51 97% 94% / 0.4)"
+                  strokeWidth="1"
+                  style={{ transition: "all 0.3s ease", pointerEvents: "none" }}
                 />
               </Link>
 
