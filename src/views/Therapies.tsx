@@ -5,6 +5,15 @@ import { Link } from "@/lib/router-compat";
 import Layout from "@/components/Layout";
 import { ChevronRight } from "lucide-react";
 
+import yogaImg from "@/assets/therapies/yoga-card.jpg";
+import ayurvedaImg from "@/assets/therapies/ayurveda-card.jpg";
+import naturopathyImg from "@/assets/therapies/naturopathy-card.jpg";
+import acupunctureImg from "@/assets/therapies/acupuncture-card.jpg";
+import physiotherapyImg from "@/assets/therapies/physiotherapy-card.jpg";
+import yogicCounsellingImg from "@/assets/therapies/yogic-counselling-card.jpg";
+import ozoneImg from "@/assets/therapies/ozone-card.jpg";
+import dietImg from "@/assets/therapies/diet-and-nutrition-card.jpg";
+
 /* ─── Breadcrumb ─── */
 function Breadcrumb() {
   return (
@@ -50,6 +59,7 @@ const SEGMENTS = [
     mid: START_MID,
     fill: "#1B4332",
     hoverFill: "#2D6A4F",
+    img: yogaImg,
   },
   {
     key: "ayurveda",
@@ -60,6 +70,7 @@ const SEGMENTS = [
     mid: START_MID + SEG_SIZE,
     fill: "#52796F",
     hoverFill: "#6A9E94",
+    img: ayurvedaImg,
   },
   {
     key: "naturopathy",
@@ -70,6 +81,7 @@ const SEGMENTS = [
     mid: START_MID + 2 * SEG_SIZE,
     fill: "#2C6E49",
     hoverFill: "#3D9966",
+    img: naturopathyImg,
   },
   {
     key: "acupuncture",
@@ -80,6 +92,7 @@ const SEGMENTS = [
     mid: START_MID + 3 * SEG_SIZE,
     fill: "#B8860B",
     hoverFill: "#D4A820",
+    img: acupunctureImg,
   },
   {
     key: "physiotherapy",
@@ -90,6 +103,7 @@ const SEGMENTS = [
     mid: START_MID + 4 * SEG_SIZE,
     fill: "#D4A574",
     hoverFill: "#E8C9A0",
+    img: physiotherapyImg,
   },
   {
     key: "yogic-counselling",
@@ -100,6 +114,7 @@ const SEGMENTS = [
     mid: START_MID + 5 * SEG_SIZE,
     fill: "#3D5A4A",
     hoverFill: "#5A8070",
+    img: yogicCounsellingImg,
   },
   {
     key: "ozone",
@@ -110,6 +125,7 @@ const SEGMENTS = [
     mid: START_MID + 6 * SEG_SIZE,
     fill: "#3A7CA5",
     hoverFill: "#5BA0CC",
+    img: ozoneImg,
   },
   {
     key: "diet-and-nutrition",
@@ -120,6 +136,7 @@ const SEGMENTS = [
     mid: START_MID + 7 * SEG_SIZE,
     fill: "#5FA83E",
     hoverFill: "#7CC65A",
+    img: dietImg,
   },
 ];
 
@@ -133,6 +150,30 @@ function HealingWheel() {
         className="w-full max-w-[500px]"
         style={{ overflow: "visible" }}
       >
+        {/* Per-segment image fills. Each pattern is a square centered on the
+            segment's centroid so the wedge shows the middle of its photo. */}
+        <defs>
+          {SEGMENTS.map((s) => {
+            const c = polarToCartesian(CX, CY, (INNER_R + OUTER_R) / 2, s.mid);
+            const size = 170;
+            const x = c.x - size / 2;
+            const y = c.y - size / 2;
+            return (
+              <pattern
+                key={s.key + "-pat"}
+                id={`wheel-img-${s.key}`}
+                patternUnits="userSpaceOnUse"
+                x={x}
+                y={y}
+                width={size}
+                height={size}
+              >
+                <image href={s.img} x={x} y={y} width={size} height={size} preserveAspectRatio="xMidYMid slice" />
+              </pattern>
+            );
+          })}
+        </defs>
+
         {/* Subtle outer ring decoration */}
         <circle cx={CX} cy={CY} r={OUTER_R + 30} stroke="hsl(var(--sage) / 0.15)" strokeWidth="1" fill="none" strokeDasharray="4 6" />
         <circle cx={CX} cy={CY} r={OUTER_R + 48} stroke="hsl(var(--gold) / 0.08)" strokeWidth="1" fill="none" strokeDasharray="2 8" />
@@ -166,7 +207,7 @@ function HealingWheel() {
               <Link to={s.href}>
                 <path
                   d={path}
-                  fill={isHov ? s.hoverFill : s.fill}
+                  fill={`url(#wheel-img-${s.key})`}
                   stroke="hsl(51 97% 94% / 0.1)"
                   strokeWidth="1"
                   style={{
@@ -176,6 +217,17 @@ function HealingWheel() {
                   }}
                   onMouseEnter={() => setHovered(s.key)}
                   onMouseLeave={() => setHovered(null)}
+                />
+                {/* Brand-colour tint over the photo — lifts on hover to reveal the image */}
+                <path
+                  d={path}
+                  fill={s.fill}
+                  stroke="none"
+                  style={{
+                    transition: "all 0.3s ease",
+                    opacity: isHov ? 0.12 : 0.38,
+                    pointerEvents: "none",
+                  }}
                 />
               </Link>
 
