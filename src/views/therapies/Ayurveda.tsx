@@ -2,7 +2,7 @@
 import TherapyPageTemplate from "@/components/TherapyPageTemplate";
 import { motion } from "framer-motion";
 import { CheckCircle2, Leaf, FlaskConical } from "lucide-react";
-import shirodharaImg from "@/assets/ayurveda-shirodhara.jpg";
+import shirodharaImg from "@/assets/therapies/ayurveda-card.jpg";
 
 function SectionHeading({ label, title, subtitle }: { label: string; title: React.ReactNode; subtitle?: string }) {
   return (

@@ -2,7 +2,7 @@
 import TherapyPageTemplate from "@/components/TherapyPageTemplate";
 import { motion } from "framer-motion";
 import { CheckCircle2, Droplets } from "lucide-react";
-import naturopathyHero from "@/assets/therapies/naturopathy-hero.jpg";
+import naturopathyHero from "@/assets/therapies/naturopathy-card.jpg";
 
 function SectionHeading({ label, title, subtitle }: { label: string; title: React.ReactNode; subtitle?: string }) {
   return (
