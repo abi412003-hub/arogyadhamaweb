@@ -7,6 +7,7 @@ import amshumanYadav from "@/assets/team/amshuman-r-yadav.jpg";
 import ankitaMishra from "@/assets/team/ankita-mishra.jpg";
 import arundatiGoley from "@/assets/team/arundati-goley.jpg";
 import medhiniShirsat from "@/assets/team/medhini-shirsat.jpg";
+import moodalGiriShankara from "@/assets/team/moodal-giri-shankara.jpg";
 import moulyaAppanna from "@/assets/team/moulya-appanna.jpg";
 import nagachaitanya from "@/assets/team/nagachaitanya.jpg";
 import naveenShankar from "@/assets/team/naveen-shankar.jpg";
@@ -14,12 +15,14 @@ import navyaShenoy from "@/assets/team/navya-shenoy.jpg";
 import nibedita from "@/assets/team/nibedita.jpg";
 import padminiTekur from "@/assets/team/padmini-tekur.jpg";
 import pallaviV from "@/assets/team/pallavi-v.jpg";
+import prajwalRao from "@/assets/team/prajwal-rao.jpg";
 import promilaChoudhary from "@/assets/team/promila-choudhary.jpg";
 import ranjiniMurthy from "@/assets/team/ranjini-murthy.jpg";
 import sharadChaudhari from "@/assets/team/sharad-shivajirao-chaudhari.jpg";
 import shishiraR from "@/assets/team/shishira-r.png";
 import shriramaDongre from "@/assets/team/shrirama-dongre.jpg";
 import sushmitaCT from "@/assets/team/sushmita-c-t.png";
+import tittyGeorge from "@/assets/team/titty-george.jpg";
 import vaddeVenkataKarthik from "@/assets/team/vadde-venkata-karthik.png";
 import vaishaliMathapati from "@/assets/team/vaishali-mathapati.jpg";
 import vishwasPapanna from "@/assets/team/vishwas-papanna.jpg";
@@ -29,6 +32,7 @@ const FALLBACKS: Record<string, string> = {
   "ankita-mishra": ankitaMishra,
   "arundati-goley": arundatiGoley,
   "medhini-shirsat": medhiniShirsat,
+  "moodal-giri-shankara": moodalGiriShankara,
   "moulya-appanna": moulyaAppanna,
   "nagachaitanya": nagachaitanya,
   "naveen-shankar": naveenShankar,
@@ -36,12 +40,14 @@ const FALLBACKS: Record<string, string> = {
   "nibedita": nibedita,
   "padmini-tekur": padminiTekur,
   "pallavi-v": pallaviV,
+  "prajwal-rao": prajwalRao,
   "promila-choudhary": promilaChoudhary,
   "ranjini-murthy": ranjiniMurthy,
   "sharad-shivajirao-chaudhari": sharadChaudhari,
   "shishira-r": shishiraR,
   "shrirama-dongre": shriramaDongre,
   "sushmita-c-t": sushmitaCT,
+  "titty-george": tittyGeorge,
   "vadde-venkata-karthik": vaddeVenkataKarthik,
   "vaishali-mathapati": vaishaliMathapati,
   "vishwas-papanna": vishwasPapanna,
