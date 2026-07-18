@@ -35,7 +35,7 @@ const patientResources = [
 
 export default function Footer() {
   return (
-    <footer className="bg-forest-dark text-cream/80">
+    <footer className="bg-maroon-dark text-cream/80">
       {/* Main footer */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
@@ -69,7 +69,7 @@ export default function Footer() {
 
           {/* Column 2: Quick Links */}
           <div>
-            <h4 className="font-display font-semibold text-cream text-base mb-5 pb-2 border-b border-forest-light/40">
+            <h4 className="font-display font-semibold text-cream text-base mb-5 pb-2 border-b border-maroon-light/40">
               Quick Links
             </h4>
             <ul className="space-y-2.5">
@@ -89,7 +89,7 @@ export default function Footer() {
 
           {/* Column 3: Patient Resources */}
           <div>
-            <h4 className="font-display font-semibold text-cream text-base mb-5 pb-2 border-b border-forest-light/40">
+            <h4 className="font-display font-semibold text-cream text-base mb-5 pb-2 border-b border-maroon-light/40">
               Patient Resources
             </h4>
             <ul className="space-y-2.5">
@@ -116,7 +116,7 @@ export default function Footer() {
 
           {/* Column 4: Connect */}
           <div>
-            <h4 className="font-display font-semibold text-cream text-base mb-5 pb-2 border-b border-forest-light/40">
+            <h4 className="font-display font-semibold text-cream text-base mb-5 pb-2 border-b border-maroon-light/40">
               Connect
             </h4>
             <div className="space-y-3 mb-6">
@@ -134,19 +134,19 @@ export default function Footer() {
                   key={label}
                   href="#"
                   aria-label={label}
-                  className="w-9 h-9 rounded-lg bg-forest-light/40 flex items-center justify-center text-cream/60 hover:text-gold hover:bg-forest-light transition-all"
+                  className="w-9 h-9 rounded-lg bg-maroon-light/40 flex items-center justify-center text-cream/60 hover:text-gold hover:bg-maroon-light transition-all"
                 >
                   <Icon size={16} />
                 </a>
               ))}
             </div>
-            <div className="bg-forest-light/30 rounded-xl p-4">
+            <div className="bg-maroon-light/30 rounded-xl p-4">
               <p className="font-body text-xs text-cream/60 mb-2">Subscribe for wellness insights</p>
               <div className="flex gap-2">
                 <input
                   type="email"
                   placeholder="Your email"
-                  className="flex-1 bg-forest-light/40 text-cream text-xs font-body px-3 py-2 rounded-lg border border-forest-light/50 focus:outline-none focus:border-gold/50 placeholder:text-cream/30"
+                  className="flex-1 bg-maroon-light/40 text-cream text-xs font-body px-3 py-2 rounded-lg border border-maroon-light/50 focus:outline-none focus:border-gold/50 placeholder:text-cream/30"
                 />
                 <button className="bg-gold text-forest-dark text-xs font-semibold font-body px-3 py-2 rounded-lg hover:bg-gold-light transition-colors">
                   Go
@@ -158,7 +158,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-forest-light/30">
+      <div className="border-t border-maroon-light/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 pb-12 sm:pb-14 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="font-body text-xs text-cream/40 text-center">
             © 2026 Arogyadhama, S-VYASA, Bengaluru. All Rights Reserved.

@@ -20,7 +20,7 @@ export default function NewsletterSection() {
       className="py-20 relative overflow-hidden"
       style={{
         background:
-          "linear-gradient(135deg, hsl(var(--sage)) 0%, hsl(168 22% 42%) 50%, hsl(var(--forest-light)) 100%)",
+          "linear-gradient(135deg, hsl(var(--maroon-muted)) 0%, hsl(345 22% 42%) 50%, hsl(var(--maroon-light)) 100%)",
       }}
     >
       {/* Decorative leaves */}

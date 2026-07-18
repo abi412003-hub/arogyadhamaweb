@@ -83,7 +83,7 @@ function FounderCard(props: FounderProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.7, delay: index * 0.1 }}
-      style={{ background: index % 2 === 0 ? "hsl(var(--cream))" : "hsl(168 15% 97%)" }}
+      style={{ background: index % 2 === 0 ? "hsl(var(--cream))" : "hsl(345 15% 97%)" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className={`grid grid-cols-1 lg:grid-cols-2 gap-14 items-start ${reversed ? "lg:[&>*:first-child]:order-2 lg:[&>*:last-child]:order-1" : ""}`}>
@@ -97,7 +97,7 @@ function FounderCard(props: FounderProps) {
                 {/* Gold top accent */}
                 <div className="absolute top-0 left-0 right-0 h-1.5 z-20" style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)))" }} />
                 {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-forest-dark via-forest-dark/80 via-40% to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-maroon-dark via-maroon-dark/80 via-40% to-transparent" />
 
                 {/* Text content over gradient */}
                 <div className="absolute inset-x-0 bottom-0 p-7 sm:p-8 z-10">

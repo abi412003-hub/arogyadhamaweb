@@ -102,7 +102,7 @@ function TableView({ currency, rate }: { currency: Currency; rate: number | null
     <div className="overflow-x-auto rounded-2xl border border-border shadow-card">
       <table className="w-full min-w-[640px]">
         <thead>
-          <tr style={{ background: "hsl(var(--forest))" }}>
+          <tr style={{ background: "hsl(var(--maroon))" }}>
             {["Accommodation Type", "Per Week", "2 Weeks", "3 Weeks", "4 Weeks"].map((h) => (
               <th key={h} className="font-body font-semibold text-cream text-sm px-5 py-4 text-left">{h}</th>
             ))}
@@ -217,8 +217,8 @@ export default function Tariff() {
             <button key={v} onClick={() => setView(v as "calculator" | "table")}
               className="flex items-center gap-2 px-4 py-2 rounded-lg font-body text-sm transition-all"
               style={{
-                background: view === v ? "hsl(var(--forest))" : "transparent",
-                color: view === v ? "hsl(var(--cream))" : "hsl(var(--forest) / 0.6)",
+                background: view === v ? "hsl(var(--maroon))" : "transparent",
+                color: view === v ? "hsl(var(--cream))" : "hsl(var(--maroon) / 0.6)",
                 fontWeight: view === v ? "600" : "400",
               }}>
               <Icon size={15} /> {label}
@@ -231,7 +231,7 @@ export default function Tariff() {
               value={currency}
               onChange={(e) => setCurrency(e.target.value as Currency)}
               aria-label="Display currency"
-              className="rounded-lg border border-border bg-white px-3 py-2 font-body text-sm font-semibold text-forest focus:outline-none focus:ring-2 focus:ring-forest/30 cursor-pointer"
+              className="rounded-lg border border-border bg-white px-3 py-2 font-body text-sm font-semibold text-forest focus:outline-none focus:ring-2 focus:ring-maroon/30 cursor-pointer"
             >
               <option value="USD">$ US Dollar</option>
               <option value="INR">₹ Indian Rupee</option>
@@ -262,7 +262,7 @@ export default function Tariff() {
                 <div>
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-6">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center font-body font-bold text-sm text-cream"
-                      style={{ background: "hsl(var(--forest))" }}>1</div>
+                      style={{ background: "hsl(var(--maroon))" }}>1</div>
                     <h2 className="font-display font-bold text-forest text-xl">Choose Your Accommodation</h2>
                     {currency === "USD" && (
                       <span className="w-full sm:w-auto sm:ml-1 font-body text-xs text-sage">
@@ -276,8 +276,8 @@ export default function Tariff() {
                       <button key={r.key} onClick={() => { setSelectedRoom(r.key); setStep(Math.max(step, 2)); }}
                         className="text-left rounded-2xl border-2 p-5 transition-all duration-200 hover:shadow-card"
                         style={{
-                          borderColor: selectedRoom === r.key ? "hsl(var(--forest))" : "hsl(var(--border))",
-                          background: selectedRoom === r.key ? "hsl(var(--forest) / 0.04)" : "white",
+                          borderColor: selectedRoom === r.key ? "hsl(var(--maroon))" : "hsl(var(--border))",
+                          background: selectedRoom === r.key ? "hsl(var(--maroon) / 0.04)" : "white",
                         }}>
                         <div className="flex items-start justify-between mb-3">
                           <div>
@@ -312,7 +312,7 @@ export default function Tariff() {
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
                       <div className="flex items-center gap-3 mb-6">
                         <div className="w-8 h-8 rounded-full flex items-center justify-center font-body font-bold text-sm text-cream"
-                          style={{ background: "hsl(var(--forest))" }}>2</div>
+                          style={{ background: "hsl(var(--maroon))" }}>2</div>
                         <h2 className="font-display font-bold text-forest text-xl">Choose Your Duration</h2>
                       </div>
                       <div className="flex flex-wrap gap-3">
@@ -320,9 +320,9 @@ export default function Tariff() {
                           <button key={w} onClick={() => { setWeeks(w); setStep(Math.max(step, 3)); }}
                             className="rounded-xl border-2 px-6 py-4 text-center transition-all duration-200 min-w-[120px]"
                             style={{
-                              borderColor: weeks === w ? "hsl(var(--forest))" : "hsl(var(--border))",
-                              background: weeks === w ? "hsl(var(--forest))" : "white",
-                              color: weeks === w ? "hsl(var(--cream))" : "hsl(var(--forest))",
+                              borderColor: weeks === w ? "hsl(var(--maroon))" : "hsl(var(--border))",
+                              background: weeks === w ? "hsl(var(--maroon))" : "white",
+                              color: weeks === w ? "hsl(var(--cream))" : "hsl(var(--maroon))",
                             }}>
                             <div className="font-display font-bold text-xl">{w}</div>
                             <div className="font-body text-sm">{w === 1 ? "Week" : "Weeks"}</div>
@@ -347,7 +347,7 @@ export default function Tariff() {
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
                       <div className="flex items-center gap-3 mb-6">
                         <div className="w-8 h-8 rounded-full flex items-center justify-center font-body font-bold text-sm text-cream"
-                          style={{ background: "hsl(var(--forest))" }}>3</div>
+                          style={{ background: "hsl(var(--maroon))" }}>3</div>
                         <h2 className="font-display font-bold text-forest text-xl">Add Therapies <span className="font-body font-normal text-sage text-base">(Optional)</span></h2>
                       </div>
                       <div className="space-y-3">
@@ -385,7 +385,7 @@ export default function Tariff() {
               <div>
                 <div className="sticky top-28">
                   <div className="rounded-2xl overflow-hidden shadow-card-hover border border-border">
-                    <div className="p-5" style={{ background: "hsl(var(--forest))" }}>
+                    <div className="p-5" style={{ background: "hsl(var(--maroon))" }}>
                       <div className="font-body text-xs tracking-[0.2em] uppercase text-gold/70 mb-1">Your Estimate</div>
                       <div className="font-display font-bold text-cream text-4xl">{fmtPrice(accomTotal, currency, rate)}</div>
                       {weeks > 0 && <div className="font-body text-cream/60 text-xs mt-1">accommodation · for {weeks} week{weeks > 1 ? "s" : ""}</div>}
@@ -444,7 +444,7 @@ export default function Tariff() {
                     </div>
 
                     {/* Notes */}
-                    <div className="bg-forest/5 px-5 py-4">
+                    <div className="bg-maroon/5 px-5 py-4">
                       <p className="font-body text-[10px] text-sage leading-relaxed">
                         Bill settlement required one day before discharge. Tariff runs Tuesday–Monday.
                         Charges are per person. Minimum stay: 6 nights.

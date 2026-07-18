@@ -100,8 +100,8 @@ const DEPARTMENTS = [
     name: "Rheumatology",
     tag: "Joints & Musculoskeletal",
     filters: ["Pain & Mobility", "Chronic Conditions"],
-    color: "hsl(168 40% 22%)",
-    bg: "hsl(168 40% 22% / 0.08)",
+    color: "hsl(345 40% 22%)",
+    bg: "hsl(345 40% 22% / 0.08)",
     conditions: ["Osteoarthritis & Rheumatoid arthritis", "Gouty arthritis", "Autoimmune musculoskeletal conditions"],
     description: "Integrative rheumatology using anti-inflammatory Ayurvedic Panchakarma, specific yoga therapy for joint mobility, and naturopathic diet to reduce systemic inflammation.",
   },
@@ -139,8 +139,8 @@ const DEPARTMENTS = [
     name: "Gastroenterology",
     tag: "Gut & Digestive Health",
     filters: ["Lifestyle Diseases", "Chronic Conditions"],
-    color: "hsl(150 50% 22%)",
-    bg: "hsl(150 50% 22% / 0.08)",
+    color: "hsl(345 50% 22%)",
+    bg: "hsl(345 50% 22% / 0.08)",
     conditions: ["IBS, IBD & functional gut disorders", "Fatty liver & hepatic conditions", "GERD & peptic disorders"],
     description: "Gut health through the Ayurvedic Agni (digestive fire) framework — combining therapeutic fasting, Triphala protocols, abdominal yoga practices, and naturopathic diet.",
   },
@@ -165,8 +165,8 @@ const DEPARTMENTS = [
     name: "Positive Health",
     tag: "Holistic Wellness",
     filters: ["Lifestyle Diseases", "Mental Health"],
-    color: "hsl(150 43% 20%)",
-    bg: "hsl(150 43% 20% / 0.08)",
+    color: "hsl(345 43% 20%)",
+    bg: "hsl(345 43% 20% / 0.08)",
     conditions: ["Immune system strengthening", "Stamina & vitality optimisation", "Mental wellness & resilience"],
     description: "Preventive and promotive health — building positive physical health, emotional resilience, and spiritual wellbeing for those who seek to thrive, not merely survive.",
   },
@@ -184,7 +184,7 @@ export default function Departments() {
       {/* Hero */}
       <section
         className="relative pt-28 pb-16 overflow-hidden"
-        style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 60%, hsl(var(--forest-light)) 100%)" }}
+        style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 60%, hsl(var(--maroon-light)) 100%)" }}
       >
         <div className="absolute left-0 top-0 h-1 w-full" style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)), transparent)" }} />
         <div className="absolute inset-0 flex items-center justify-end pointer-events-none opacity-[0.06]">
@@ -224,9 +224,9 @@ export default function Departments() {
                 onClick={() => setActiveFilter(f)}
                 className="font-body text-sm px-4 py-2 rounded-full transition-all duration-200 border"
                 style={{
-                  background: activeFilter === f ? "hsl(var(--forest))" : "white",
-                  color: activeFilter === f ? "hsl(var(--cream))" : "hsl(var(--forest) / 0.6)",
-                  borderColor: activeFilter === f ? "hsl(var(--forest))" : "hsl(var(--border))",
+                  background: activeFilter === f ? "hsl(var(--maroon))" : "white",
+                  color: activeFilter === f ? "hsl(var(--cream))" : "hsl(var(--maroon) / 0.6)",
+                  borderColor: activeFilter === f ? "hsl(var(--maroon))" : "hsl(var(--border))",
                   fontWeight: activeFilter === f ? "600" : "400",
                 }}
               >
@@ -316,7 +316,7 @@ export default function Departments() {
       
 
       {/* CTA */}
-      <section className="py-16" style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 60%, hsl(var(--sage)) 100%)" }}>
+      <section className="py-16" style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 60%, hsl(var(--maroon-muted)) 100%)" }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="font-display text-3xl md:text-4xl text-cream font-bold mb-4">Not Sure Which Department?</h2>

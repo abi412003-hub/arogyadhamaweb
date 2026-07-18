@@ -180,7 +180,7 @@ export default function Naturopathy() {
       config={{
         therapyKey: "naturopathy",
         breadcrumbLabel: "Naturopathy",
-        heroGradient: "linear-gradient(135deg, hsl(200 50% 15%) 0%, hsl(200 40% 22%) 50%, hsl(168 25% 30%) 100%)",
+        heroGradient: "linear-gradient(135deg, hsl(200 50% 15%) 0%, hsl(200 40% 22%) 50%, hsl(345 25% 30%) 100%)",
         heroTagline: "Hydrotherapy · Mud Therapy · Fasting",
         heroTitle: "Naturopathy",
         heroSubtitle: "Healing through nature's own medicines — water, earth, sunlight, and therapeutic diet — activating the body's profound innate capacity for self-healing.",

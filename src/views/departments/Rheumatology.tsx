@@ -54,7 +54,7 @@ export default function Rheumatology() {
     <DepartmentPageTemplate config={{
       deptKey: "rheumatology",
       breadcrumbLabel: "Rheumatology",
-      heroGradient: "linear-gradient(135deg, hsl(168 40% 13%) 0%, hsl(168 38% 20%) 50%, hsl(150 35% 25%) 100%)",
+      heroGradient: "linear-gradient(135deg, hsl(345 40% 13%) 0%, hsl(345 38% 20%) 50%, hsl(345 35% 25%) 100%)",
       heroImage: [rheumaHero1, rheumaHero2, rheumaHero3],
       heroImageAlt: "Glowing inflamed joints — elbow, knee and ankle",
       heroImageBlend: "168 40% 13%",

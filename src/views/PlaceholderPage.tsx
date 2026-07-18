@@ -26,7 +26,7 @@ export default function PlaceholderPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="w-20 h-20 rounded-full bg-forest/8 flex items-center justify-center mx-auto mb-6" style={{ background: "hsl(var(--forest) / 0.08)" }}>
+          <div className="w-20 h-20 rounded-full bg-maroon/8 flex items-center justify-center mx-auto mb-6" style={{ background: "hsl(var(--maroon) / 0.08)" }}>
             <Flower2 size={36} className="text-forest" />
           </div>
           <span className="section-label text-sm mb-4 block">{pathLabel || "Page"}</span>
@@ -38,7 +38,7 @@ export default function PlaceholderPage() {
           </p>
           <Link
             to="/"
-            className="inline-flex items-center gap-2 bg-forest text-cream font-body font-semibold px-6 py-3 rounded-xl hover:bg-forest-light transition-colors"
+            className="inline-flex items-center gap-2 bg-maroon text-cream font-body font-semibold px-6 py-3 rounded-xl hover:bg-maroon-light transition-colors"
           >
             ← Return to Home
           </Link>

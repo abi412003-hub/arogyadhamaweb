@@ -20,7 +20,7 @@ const ARTICLES = [
     tags: ["Diabetes", "Research", "RCT"],
     featured: true,
     color: "hsl(var(--forest))",
-    bg: "hsl(var(--forest) / 0.06)",
+    bg: "hsl(var(--maroon) / 0.06)",
   },
   {
     category: "yoga",
@@ -53,7 +53,7 @@ const ARTICLES = [
     tags: ["Pranayama", "Stress", "Breathing"],
     featured: false,
     color: "hsl(var(--forest))",
-    bg: "hsl(var(--forest) / 0.06)",
+    bg: "hsl(var(--maroon) / 0.06)",
   },
   {
     category: "research",
@@ -74,8 +74,8 @@ const ARTICLES = [
     readTime: "6 min read",
     tags: ["Naturopathy", "Gut Health", "IBS"],
     featured: false,
-    color: "hsl(150 45% 28%)",
-    bg: "hsl(150 45% 28% / 0.06)",
+    color: "hsl(345 45% 28%)",
+    bg: "hsl(345 45% 28% / 0.06)",
   },
   {
     category: "case-studies",
@@ -108,7 +108,7 @@ const ARTICLES = [
     tags: ["MSRT", "Anxiety", "RCT"],
     featured: false,
     color: "hsl(var(--forest))",
-    bg: "hsl(var(--forest) / 0.06)",
+    bg: "hsl(var(--maroon) / 0.06)",
   },
 ];
 
@@ -163,7 +163,7 @@ function FeaturedArticle() {
           />
           <div className="absolute top-4 left-4">
             <span className="font-body text-[10px] tracking-[0.2em] uppercase font-semibold px-3 py-1 rounded-full"
-              style={{ background: "hsl(var(--forest))", color: "hsl(var(--cream))" }}>
+              style={{ background: "hsl(var(--maroon))", color: "hsl(var(--cream))" }}>
               Featured
             </span>
           </div>
@@ -191,7 +191,7 @@ function FeaturedArticle() {
             </div>
           </div>
           <button className="self-start flex items-center gap-2 font-body font-semibold text-sm px-5 py-2.5 rounded-xl transition-colors"
-            style={{ background: "hsl(var(--forest))", color: "hsl(var(--cream))" }}>
+            style={{ background: "hsl(var(--maroon))", color: "hsl(var(--cream))" }}>
             Read Article <ArrowRight size={14} />
           </button>
         </div>
@@ -213,7 +213,7 @@ function Newsletter() {
   }
 
   return (
-    <section className="py-20" style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 60%, hsl(var(--sage)) 100%)" }}>
+    <section className="py-20" style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 60%, hsl(var(--maroon-muted)) 100%)" }}>
       <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <Mail size={32} className="text-gold mx-auto mb-4" />
@@ -252,7 +252,7 @@ export default function KnowledgeHub() {
     <Layout>
       {/* Hero */}
       <section className="relative pt-28 pb-14 overflow-hidden"
-        style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 55%, hsl(168 35% 24%) 100%)" }}>
+        style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 55%, hsl(345 35% 24%) 100%)" }}>
         <div className="absolute left-0 top-0 h-1 w-full" style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)), transparent)" }} />
         <div className="absolute inset-0 pointer-events-none opacity-[0.05] flex items-center justify-end">
           <svg viewBox="0 0 500 500" className="w-80 h-80 mr-4" fill="none">
@@ -293,7 +293,7 @@ export default function KnowledgeHub() {
             <span className="font-body text-xs tracking-[0.25em] uppercase font-semibold text-gold">Research Publications</span>
           </div>
           <div className="rounded-3xl overflow-hidden border border-border shadow-card">
-            <div className="p-8" style={{ background: "hsl(var(--forest))" }}>
+            <div className="p-8" style={{ background: "hsl(var(--maroon))" }}>
               <div className="grid grid-cols-3 gap-6 text-center mb-6">
                 {[["400+", "Papers in PubMed"], ["40+", "Years of Research"], ["30+", "International Journals"]].map(([n, l]) => (
                   <div key={l}>

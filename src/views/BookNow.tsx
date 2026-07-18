@@ -135,7 +135,7 @@ function RoomThumb({ photos, alt, active }: { photos: string[]; alt: string; act
   }, [active, photos.length]);
 
   return (
-    <div className="relative h-28 w-36 flex-shrink-0 overflow-hidden rounded-lg bg-forest/5">
+    <div className="relative h-28 w-36 flex-shrink-0 overflow-hidden rounded-lg bg-maroon/5">
       {photos.map((p, i) => (
         <img
           key={p}
@@ -179,7 +179,7 @@ function StepFour({ data, onChange, currency, setCurrency, rate }: {
               value={currency}
               onChange={(e) => setCurrency(e.target.value as Currency)}
               aria-label="Display currency"
-              className="rounded-lg border border-border bg-white px-2.5 py-1.5 font-body text-xs font-semibold text-forest focus:outline-none focus:ring-2 focus:ring-forest/30 cursor-pointer"
+              className="rounded-lg border border-border bg-white px-2.5 py-1.5 font-body text-xs font-semibold text-forest focus:outline-none focus:ring-2 focus:ring-maroon/30 cursor-pointer"
             >
               <option value="USD">$ US Dollar</option>
               <option value="INR">₹ Indian Rupee</option>
@@ -191,9 +191,9 @@ function StepFour({ data, onChange, currency, setCurrency, rate }: {
             <button key={w} onClick={() => set("weeks", w)}
               className="px-5 py-2.5 rounded-xl border-2 font-body text-sm transition-all"
               style={{
-                borderColor: data.weeks === w ? "hsl(var(--forest))" : "hsl(var(--border))",
-                background: data.weeks === w ? "hsl(var(--forest))" : "white",
-                color: data.weeks === w ? "hsl(var(--cream))" : "hsl(var(--forest))",
+                borderColor: data.weeks === w ? "hsl(var(--maroon))" : "hsl(var(--border))",
+                background: data.weeks === w ? "hsl(var(--maroon))" : "white",
+                color: data.weeks === w ? "hsl(var(--cream))" : "hsl(var(--maroon))",
                 fontWeight: data.weeks === w ? "600" : "400",
               }}>
               {w}
@@ -268,7 +268,7 @@ function StepFive({ personal, medical, stay, currency, rate }: {
     <div className="space-y-6">
       <div className="rounded-2xl border border-border overflow-hidden">
         <div className="p-4 font-body text-xs font-semibold uppercase tracking-widest text-gold border-b border-border"
-          style={{ background: "hsl(var(--forest) / 0.04)" }}>
+          style={{ background: "hsl(var(--maroon) / 0.04)" }}>
           Booking Summary
         </div>
         <div className="divide-y divide-border">
@@ -307,20 +307,20 @@ function ProgressBar({ current }: { current: number }) {
               <div className="flex flex-col items-center flex-shrink-0">
                 <div className="w-8 h-8 rounded-full flex items-center justify-center font-body text-xs font-bold transition-all duration-300"
                   style={{
-                    background: isDone || isActive ? "hsl(var(--forest))" : "white",
-                    color: isDone || isActive ? "hsl(var(--cream))" : "hsl(var(--forest) / 0.4)",
+                    background: isDone || isActive ? "hsl(var(--maroon))" : "white",
+                    color: isDone || isActive ? "hsl(var(--cream))" : "hsl(var(--maroon) / 0.4)",
                     border: isDone || isActive ? "none" : "2px solid hsl(var(--border))",
                   }}>
                   {isDone ? <CheckCircle2 size={14} /> : i + 1}
                 </div>
                 <div className="font-body text-[10px] mt-1 text-center hidden sm:block whitespace-nowrap"
-                  style={{ color: isActive ? "hsl(var(--forest))" : "hsl(var(--sage))", fontWeight: isActive ? "600" : "400" }}>
+                  style={{ color: isActive ? "hsl(var(--maroon))" : "hsl(var(--maroon-muted))", fontWeight: isActive ? "600" : "400" }}>
                   {title}
                 </div>
               </div>
               {i < steps.length - 1 && (
                 <div className="h-0.5 w-10 sm:w-16 mx-2 transition-all duration-300"
-                  style={{ background: isDone ? "hsl(var(--forest))" : "hsl(var(--border))" }} />
+                  style={{ background: isDone ? "hsl(var(--maroon))" : "hsl(var(--border))" }} />
               )}
             </div>
           );
@@ -402,7 +402,7 @@ export default function BookNow() {
     <Layout>
       {/* Hero */}
       <section className="relative pt-28 pb-14 overflow-hidden"
-        style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 60%, hsl(168 35% 24%) 100%)" }}>
+        style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 60%, hsl(345 35% 24%) 100%)" }}>
         <div className="absolute left-0 top-0 h-1 w-full" style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)), transparent)" }} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
@@ -433,7 +433,7 @@ export default function BookNow() {
         {submitted ? (
           <motion.div className="text-center py-16" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}>
             <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6"
-              style={{ background: "hsl(var(--forest) / 0.1)" }}>
+              style={{ background: "hsl(var(--maroon) / 0.1)" }}>
               <CheckCircle2 size={40} className="text-gold" />
             </div>
             <h2 className="font-display font-bold text-forest text-3xl mb-3">Request Submitted!</h2>
@@ -441,7 +441,7 @@ export default function BookNow() {
               Thank you. Our team will contact you shortly to confirm your booking and discuss your personalised treatment plan.
             </p>
             <Link to="/" className="inline-block mt-8 px-6 py-3 rounded-xl font-body font-semibold text-sm transition-colors"
-              style={{ background: "hsl(var(--forest))", color: "hsl(var(--cream))" }}>
+              style={{ background: "hsl(var(--maroon))", color: "hsl(var(--cream))" }}>
               Return to Home
             </Link>
           </motion.div>
@@ -488,8 +488,8 @@ export default function BookNow() {
                 <button onClick={nextStep} disabled={!canProceed()}
                   className="flex items-center gap-2 px-6 py-3 rounded-xl font-body font-semibold text-sm transition-all"
                   style={{
-                    background: canProceed() ? "hsl(var(--forest))" : "hsl(var(--border))",
-                    color: canProceed() ? "hsl(var(--cream))" : "hsl(var(--sage))",
+                    background: canProceed() ? "hsl(var(--maroon))" : "hsl(var(--border))",
+                    color: canProceed() ? "hsl(var(--cream))" : "hsl(var(--maroon-muted))",
                     cursor: canProceed() ? "pointer" : "not-allowed",
                   }}>
                   {step === 1 ? "Review Booking" : "Next Step"} <ChevronRight size={16} />
@@ -503,7 +503,7 @@ export default function BookNow() {
                     className="flex items-center gap-2 px-7 py-3 rounded-xl font-body font-semibold text-sm transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                     style={{ background: "hsl(var(--gold))", color: "hsl(var(--forest-dark))" }}>
                     {submitting ? (
-                      <><span className="w-4 h-4 border-2 border-forest-dark/30 border-t-forest-dark rounded-full animate-spin" /> Submitting…</>
+                      <><span className="w-4 h-4 border-2 border-maroon-dark/30 border-t-forest-dark rounded-full animate-spin" /> Submitting…</>
                     ) : (
                       <><Send size={15} /> Submit Booking Request</>
                     )}

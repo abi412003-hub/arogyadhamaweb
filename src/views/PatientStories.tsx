@@ -74,7 +74,7 @@ const TESTIMONIALS = [
     therapies: ["Integrated Programme", "Cyclic Meditation", "Ayurveda"],
     highlight: "Healing on every level",
     avatar: "V",
-    avatarBg: "hsl(150 40% 28%)",
+    avatarBg: "hsl(345 40% 28%)",
   },
   {
     id: 5,
@@ -174,13 +174,13 @@ function TestimonialCard({ t, i }: { t: typeof TESTIMONIALS[0]; i: number }) {
 /* ── Featured video placeholder ── */
 function FeaturedVideo() {
   return (
-    <div className="relative rounded-3xl overflow-hidden border border-border shadow-card-hover bg-forest">
+    <div className="relative rounded-3xl overflow-hidden border border-border shadow-card-hover bg-maroon">
       <video
         controls
         playsInline
         preload="metadata"
         poster="/testimonials/patient-testimonial-poster.jpg"
-        className="w-full h-auto max-h-[560px] bg-forest"
+        className="w-full h-auto max-h-[560px] bg-maroon"
       >
         <source src="/testimonials/patient-testimonial.mp4" type="video/mp4" />
         Your browser does not support the video tag.
@@ -192,7 +192,7 @@ function FeaturedVideo() {
 /* ── Share Story CTA ── */
 function ShareStoryCTA() {
   return (
-    <section className="py-16" style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 60%, hsl(var(--sage)) 100%)" }}>
+    <section className="py-16" style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 60%, hsl(var(--maroon-muted)) 100%)" }}>
       <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <Heart size={32} className="text-gold mx-auto mb-4" />
@@ -228,7 +228,7 @@ export default function PatientStories() {
     <Layout>
       {/* Hero */}
       <section className="relative pt-28 pb-14 overflow-hidden"
-        style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(27 40% 18%) 55%, hsl(var(--terracotta-dark)) 100%)" }}>
+        style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(27 40% 18%) 55%, hsl(var(--terracotta-dark)) 100%)" }}>
         <div className="absolute left-0 top-0 h-1 w-full" style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)), transparent)" }} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
@@ -277,9 +277,9 @@ export default function PatientStories() {
                 <button key={key} onClick={() => setActiveFilter(key)}
                   className="font-body text-sm px-4 py-1.5 rounded-full transition-all border"
                   style={{
-                    background: activeFilter === key ? "hsl(var(--forest))" : "white",
-                    color: activeFilter === key ? "hsl(var(--cream))" : "hsl(var(--forest) / 0.6)",
-                    borderColor: activeFilter === key ? "hsl(var(--forest))" : "hsl(var(--border))",
+                    background: activeFilter === key ? "hsl(var(--maroon))" : "white",
+                    color: activeFilter === key ? "hsl(var(--cream))" : "hsl(var(--maroon) / 0.6)",
+                    borderColor: activeFilter === key ? "hsl(var(--maroon))" : "hsl(var(--border))",
                     fontWeight: activeFilter === key ? "600" : "400",
                   }}>
                   {label}

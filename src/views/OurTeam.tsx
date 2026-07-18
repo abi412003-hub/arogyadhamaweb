@@ -103,7 +103,7 @@ function PageHero() {
   return (
     <section
       className="relative pt-28 pb-14 overflow-hidden"
-      style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 55%, hsl(var(--forest-light)) 100%)" }}
+      style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 55%, hsl(var(--maroon-light)) 100%)" }}
     >
       <div className="absolute left-0 top-0 h-1 w-full" style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)), transparent)" }} />
       <div className="absolute right-12 top-1/2 -translate-y-1/2 w-56 h-56 rounded-full border border-gold/15 hidden lg:block" />
@@ -171,10 +171,10 @@ function MemberCard({ member, index, onOpen }: { member: Member; index: number; 
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: (index % 4) * 0.05 }}
-      className="bg-cream border border-forest/10 rounded-2xl p-3 sm:p-6 text-center hover:shadow-lg hover:border-gold/40 transition-all text-left w-full focus:outline-none focus:ring-2 focus:ring-gold/50"
+      className="bg-cream border border-maroon/10 rounded-2xl p-3 sm:p-6 text-center hover:shadow-lg hover:border-gold/40 transition-all text-left w-full focus:outline-none focus:ring-2 focus:ring-gold/50"
     >
       <div
-        className="mx-auto bg-forest/5 border-2 border-gold/30 flex items-center justify-center overflow-hidden mb-4 w-[120px] h-[150px] sm:w-[200px] sm:h-[240px]"
+        className="mx-auto bg-maroon/5 border-2 border-gold/30 flex items-center justify-center overflow-hidden mb-4 w-[120px] h-[150px] sm:w-[200px] sm:h-[240px]"
         style={{ borderRadius: 12 }}
       >
         {member.image ? (
@@ -192,7 +192,7 @@ function MemberCard({ member, index, onOpen }: { member: Member; index: number; 
       {member.designation && (
         <p className="font-body text-xs text-gold font-medium mt-1 text-center">{member.designation}</p>
       )}
-      <div className="mt-3 pt-3 border-t border-forest/10">
+      <div className="mt-3 pt-3 border-t border-maroon/10">
         <p className="font-body text-sm text-forest/60 text-center">{member.qualifications}</p>
       </div>
     </motion.button>
@@ -240,13 +240,13 @@ function BioModal({ member, onClose }: { member: Member | null; onClose: () => v
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="absolute top-3 right-3 p-2 rounded-full text-forest/60 hover:text-forest hover:bg-forest/5 transition-colors z-10"
+              className="absolute top-3 right-3 p-2 rounded-full text-forest/60 hover:text-forest hover:bg-maroon/5 transition-colors z-10"
             >
               <X size={20} />
             </button>
             {member.image && (
               <div
-                className="mx-auto bg-forest/5 border-2 border-gold/30 flex items-center justify-center overflow-hidden mb-5 w-[160px] h-[200px]"
+                className="mx-auto bg-maroon/5 border-2 border-gold/30 flex items-center justify-center overflow-hidden mb-5 w-[160px] h-[200px]"
                 style={{ borderRadius: 12 }}
               >
                 <img
@@ -262,7 +262,7 @@ function BioModal({ member, onClose }: { member: Member | null; onClose: () => v
             <p className="font-body text-sm text-gold font-semibold uppercase tracking-wider mt-1 text-center">
               {getDesignation(member)}
             </p>
-            <div className="mt-4 pt-4 border-t border-forest/10">
+            <div className="mt-4 pt-4 border-t border-maroon/10">
               <p className="font-body text-[15px] text-forest/80 leading-relaxed">{getBio(member)}</p>
             </div>
           </motion.div>
@@ -402,13 +402,13 @@ export default function OurTeam() {
         <TeamSection title="Our Guiding Physicians" subtitle="Clinical Leadership" members={leaders} onOpen={setSelected} />
       )}
       <TeamSection title="Doctors & Consultants" subtitle="Our Consultants" members={otherDoctors} onOpen={setSelected} />
-      <div className="bg-forest/5 h-px max-w-7xl mx-auto" />
+      <div className="bg-maroon/5 h-px max-w-7xl mx-auto" />
       <TeamSection title="Yoga Therapists" subtitle="Practice & Therapy" members={enrich(yogaBase)} onOpen={setSelected} />
-      <div className="bg-forest/5 h-px max-w-7xl mx-auto" />
+      <div className="bg-maroon/5 h-px max-w-7xl mx-auto" />
       <TeamSection title="Ayurveda Therapists" subtitle="Panchakarma & Therapy" members={enrich(ayurvedaBase)} onOpen={setSelected} />
-      <div className="bg-forest/5 h-px max-w-7xl mx-auto" />
+      <div className="bg-maroon/5 h-px max-w-7xl mx-auto" />
       <TeamSection title="Naturopathy Therapists" subtitle="Naturopathy & Therapy" members={enrich(naturopathyBase)} onOpen={setSelected} />
-      <div className="bg-forest/5 h-px max-w-7xl mx-auto" />
+      <div className="bg-maroon/5 h-px max-w-7xl mx-auto" />
       <TeamSection title="Physiotherapists" subtitle="Physiotherapy & Rehabilitation" members={enrich(physioBase)} onOpen={setSelected} />
       <BioModal member={selected} onClose={() => setSelected(null)} />
     </Layout>

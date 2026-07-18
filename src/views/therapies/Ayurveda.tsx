@@ -43,7 +43,7 @@ function ApproachSection() {
           <motion.div key={d.name}
             className="bg-white rounded-2xl p-6 border border-border shadow-card"
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.4 }}>
-            <div className="w-10 h-10 rounded-xl bg-sage/10 flex items-center justify-center mb-4">
+            <div className="w-10 h-10 rounded-xl bg-maroon-muted/10 flex items-center justify-center mb-4">
               <Leaf size={18} className="text-sage" />
             </div>
             <h4 className="font-display font-bold text-forest text-lg mb-1">{d.name}</h4>
@@ -53,7 +53,7 @@ function ApproachSection() {
           </motion.div>
         ))}
       </div>
-      <div className="bg-sage rounded-2xl p-6">
+      <div className="bg-maroon-muted rounded-2xl p-6">
         <p className="font-quote italic text-cream/90 text-lg">
           "Ayurveda at Arogyadhama is the foundation of healing. Before any Yoga technique is prescribed, before any naturopathic treatment begins, we must understand the patient's constitution."
         </p>
@@ -102,7 +102,7 @@ function TreatmentsSection() {
       <h3 className="font-display font-semibold text-forest text-lg mb-5">Key Herbal Formulations</h3>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {herbals.map((h) => (
-          <div key={h.name} className="bg-sage/5 rounded-xl p-4 border border-sage/20">
+          <div key={h.name} className="bg-maroon-muted/5 rounded-xl p-4 border border-maroon-muted/20">
             <div className="font-display font-semibold text-forest text-sm mb-1">{h.name}</div>
             <div className="font-body text-sage text-xs leading-relaxed">{h.use}</div>
           </div>
@@ -137,7 +137,7 @@ function ConditionsSection() {
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {conditions.map((c, i) => (
           <motion.div key={c.name}
-            className="bg-white rounded-xl p-4 border border-border shadow-card text-center hover:border-sage/30 transition-colors"
+            className="bg-white rounded-xl p-4 border border-border shadow-card text-center hover:border-maroon-muted/30 transition-colors"
             initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.04, duration: 0.3 }}>
             <div className="font-display font-semibold text-forest text-sm leading-tight">{c.name}</div>
           </motion.div>
@@ -179,7 +179,7 @@ export default function Ayurveda() {
       config={{
         therapyKey: "ayurveda",
         breadcrumbLabel: "Ayurveda",
-        heroGradient: "linear-gradient(135deg, hsl(168 25% 18%) 0%, hsl(168 25% 28%) 50%, hsl(168 19% 35%) 100%)",
+        heroGradient: "linear-gradient(135deg, hsl(345 25% 18%) 0%, hsl(345 25% 28%) 50%, hsl(345 19% 35%) 100%)",
         heroImage: shirodharaImg,
         
         heroTagline: "Tridosha · Panchakarma · Prakriti",

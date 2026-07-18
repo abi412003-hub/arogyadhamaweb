@@ -52,7 +52,7 @@ export default function Gastroenterology() {
     <DepartmentPageTemplate config={{
       deptKey: "gastroenterology",
       breadcrumbLabel: "Gastroenterology",
-      heroGradient: "linear-gradient(135deg, hsl(150 50% 12%) 0%, hsl(150 45% 19%) 50%, hsl(168 35% 24%) 100%)",
+      heroGradient: "linear-gradient(135deg, hsl(345 50% 12%) 0%, hsl(345 45% 19%) 50%, hsl(345 35% 24%) 100%)",
       heroImage: gastroenterologyHero,
       heroImageAlt: "Glowing stomach and digestive tract",
       heroImageBlend: "150 50% 12%",

@@ -23,6 +23,10 @@
     --cream-dark: 45 60% 88%;    /* Slightly darker cream */
     --terracotta: 27 55% 64%;    /* #D4A574 Terracotta */
     --terracotta-dark: 27 45% 50%; /* Darker terracotta */
+    --maroon: 345 56% 20%;       /* #4F1622 Deep Maroon (backgrounds) */
+    --maroon-dark: 345 60% 12%;  /* Darker maroon */
+    --maroon-light: 345 43% 28%; /* Lighter maroon */
+    --maroon-muted: 345 24% 42%; /* Muted maroon — replaces sage in backgrounds */
 
     /* Shadcn system mapped to brand */
     --background: 51 97% 94%;    /* Cream */
@@ -34,10 +38,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 150 43% 16%;
 
-    --primary: 150 43% 16%;      /* Forest green */
+    --primary: 345 56% 20%;      /* Maroon (bg) */
     --primary-foreground: 51 97% 94%; /* Cream */
 
-    --secondary: 168 19% 39%;    /* Sage */
+    --secondary: 345 24% 42%;    /* Muted maroon (bg) */
     --secondary-foreground: 51 97% 94%;
 
     --muted: 168 15% 92%;
@@ -51,17 +55,17 @@
 
     --border: 168 20% 82%;
     --input: 168 20% 82%;
-    --ring: 150 43% 16%;
+    --ring: 345 56% 20%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 150 43% 16%;
+    --sidebar-background: 345 56% 20%;
     --sidebar-foreground: 51 97% 94%;
     --sidebar-primary: 43 89% 38%;
     --sidebar-primary-foreground: 150 43% 16%;
-    --sidebar-accent: 150 35% 22%;
+    --sidebar-accent: 345 43% 28%;
     --sidebar-accent-foreground: 51 97% 94%;
-    --sidebar-border: 150 35% 25%;
+    --sidebar-border: 345 40% 30%;
     --sidebar-ring: 43 89% 38%;
   }
 
@@ -162,10 +166,10 @@
   .bg-forest-gradient {
     background: linear-gradient(
       135deg,
-      hsl(var(--forest-dark)) 0%,
-      hsl(var(--forest)) 40%,
-      hsl(var(--forest-light)) 70%,
-      hsl(var(--sage)) 100%
+      hsl(var(--maroon-dark)) 0%,
+      hsl(var(--maroon)) 40%,
+      hsl(var(--maroon-light)) 70%,
+      hsl(var(--maroon-muted)) 100%
     );
   }
 
@@ -173,8 +177,8 @@
   .bg-sage-gradient {
     background: linear-gradient(
       135deg,
-      hsl(var(--sage)) 0%,
-      hsl(168 25% 45%) 100%
+      hsl(var(--maroon-muted)) 0%,
+      hsl(345 30% 34%) 100%
     );
   }
 
@@ -214,9 +218,9 @@
 
   /* Lotus mandala background pattern */
   .lotus-bg {
-    background-image: radial-gradient(circle at 20% 50%, hsl(var(--sage) / 0.15) 0%, transparent 50%),
+    background-image: radial-gradient(circle at 20% 50%, hsl(var(--maroon-muted) / 0.15) 0%, transparent 50%),
                       radial-gradient(circle at 80% 20%, hsl(var(--gold) / 0.1) 0%, transparent 40%),
-                      radial-gradient(circle at 50% 80%, hsl(var(--forest-light) / 0.2) 0%, transparent 50%);
+                      radial-gradient(circle at 50% 80%, hsl(var(--maroon-light) / 0.2) 0%, transparent 50%);
   }
 
   /* Timeline dot */
@@ -240,7 +244,7 @@
 
   .dept-card .dept-overlay {
     @apply absolute inset-0 flex items-end p-4 opacity-0;
-    background: linear-gradient(to top, hsl(var(--forest)) 0%, hsl(var(--forest) / 0.8) 60%, transparent 100%);
+    background: linear-gradient(to top, hsl(var(--maroon)) 0%, hsl(var(--maroon) / 0.8) 60%, transparent 100%);
     transition: opacity 0.3s ease;
   }
 
@@ -250,14 +254,14 @@
 
   /* Navigation styles */
   .nav-transparent {
-    background: linear-gradient(to bottom, hsl(var(--forest-dark) / 0.85) 0%, hsl(var(--forest-dark) / 0.55) 70%, transparent 100%);
+    background: linear-gradient(to bottom, hsl(var(--maroon-dark) / 0.85) 0%, hsl(var(--maroon-dark) / 0.55) 70%, transparent 100%);
     backdrop-filter: blur(6px);
   }
 
   .nav-scrolled {
     background: hsl(0 0% 100% / 0.97);
     backdrop-filter: blur(12px);
-    box-shadow: 0 1px 20px hsl(var(--forest) / 0.08);
+    box-shadow: 0 1px 20px hsl(var(--maroon) / 0.08);
   }
 
   /* Custom scrollbar */
@@ -270,11 +274,11 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: hsl(var(--sage));
+    background: hsl(var(--maroon-muted));
     border-radius: 3px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--forest));
+    background: hsl(var(--maroon));
   }
 }

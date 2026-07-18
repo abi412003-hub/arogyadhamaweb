@@ -41,7 +41,7 @@ export default function FloatingActions() {
             exit={{ opacity: 0, scale: 0.5, y: 10 }}
             onClick={scrollToTop}
             className="w-11 h-11 rounded-full flex items-center justify-center shadow-lg transition-colors"
-            style={{ background: "hsl(var(--forest))", color: "hsl(var(--cream))" }}
+            style={{ background: "hsl(var(--maroon))", color: "hsl(var(--cream))" }}
             aria-label="Scroll to top"
             title="Back to top"
           >
@@ -79,12 +79,12 @@ export default function FloatingActions() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 8 }}
               className="absolute right-16 top-1/2 -translate-y-1/2 whitespace-nowrap rounded-xl px-3 py-2 shadow-lg pointer-events-none"
-              style={{ background: "hsl(var(--forest-dark))" }}>
+              style={{ background: "hsl(var(--maroon-dark))" }}>
               <p className="font-body text-xs text-cream font-semibold">Chat on WhatsApp</p>
               <p className="font-body text-[10px] text-cream/60">+91 997-287-1777</p>
               {/* Arrow */}
               <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-0 h-0"
-                style={{ borderTop: "6px solid transparent", borderBottom: "6px solid transparent", borderLeft: "6px solid hsl(var(--forest-dark))" }} />
+                style={{ borderTop: "6px solid transparent", borderBottom: "6px solid transparent", borderLeft: "6px solid hsl(var(--maroon-dark))" }} />
             </motion.div>
           )}
         </AnimatePresence>

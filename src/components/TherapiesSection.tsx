@@ -26,21 +26,21 @@ const therapies = [
     name: "Yoga Therapy",
     href: "/therapies/yoga",
     tagline: "Ancient practices backed by modern research for mind-body harmony",
-    hex: "#2D5A3D",
+    hex: "#5A2231",
     image: yogaImg,
   },
   {
     name: "Ayurveda",
     href: "/therapies/ayurveda",
     tagline: "Time-tested herbal healing science for restoring natural balance",
-    hex: "#52796F",
+    hex: "#7A5560",
     image: ayurvedaImg,
   },
   {
     name: "Naturopathy",
     href: "/therapies/naturopathy",
     tagline: "Nature's healing through mud therapy, hydrotherapy & therapeutic diet",
-    hex: "#1D9E75",
+    hex: "#9E2B4A",
     image: naturopathyImg,
   },
   {
@@ -76,7 +76,7 @@ const therapies = [
     name: "Diet & Nutrition",
     href: "/therapies/diet-and-nutrition",
     tagline: "Personalized nutrition plans for holistic health and wellness",
-    hex: "#5FA83E",
+    hex: "#A6425A",
     image: dietImg,
   },
 ];
@@ -85,7 +85,7 @@ export default function TherapiesSection() {
   return (
     <section
       className="py-20 sm:py-24 relative overflow-hidden"
-      style={{ background: "hsl(168 15% 97%)" }}
+      style={{ background: "hsl(345 15% 97%)" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
         <motion.div

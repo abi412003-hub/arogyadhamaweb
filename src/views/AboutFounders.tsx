@@ -28,7 +28,7 @@ function PageHero() {
   return (
     <section
       className="relative pt-28 pb-14 overflow-hidden"
-      style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 55%, hsl(var(--forest-light)) 100%)" }}
+      style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 55%, hsl(var(--maroon-light)) 100%)" }}
     >
       <div className="absolute left-0 top-0 h-1 w-full" style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)), transparent)" }} />
       {/* Gold decorative circle */}
@@ -75,7 +75,7 @@ export default function AboutFounders() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/about/history"
-                className="bg-forest text-cream font-body font-semibold px-7 py-3 rounded-xl hover:bg-forest-light transition-colors"
+                className="bg-maroon text-cream font-body font-semibold px-7 py-3 rounded-xl hover:bg-maroon-light transition-colors"
               >
                 Our History →
               </Link>

@@ -70,20 +70,20 @@ function useSectionSpy(ids: string[]) {
 
 /* ─── Related Therapies ─── */
 const ALL_THERAPIES = [
-  { key: "yoga", label: "Yoga Therapy", href: "/therapies/yoga", desc: "Mind-body harmony through ancient practices", color: "bg-forest/8" },
-  { key: "ayurveda", label: "Ayurveda", href: "/therapies/ayurveda", desc: "Time-tested herbal science for balance", color: "bg-sage/10" },
+  { key: "yoga", label: "Yoga Therapy", href: "/therapies/yoga", desc: "Mind-body harmony through ancient practices", color: "bg-maroon/8" },
+  { key: "ayurveda", label: "Ayurveda", href: "/therapies/ayurveda", desc: "Time-tested herbal science for balance", color: "bg-maroon-muted/10" },
   { key: "naturopathy", label: "Naturopathy", href: "/therapies/naturopathy", desc: "Nature's healing through water, mud & diet", color: "bg-blue-50" },
   { key: "acupuncture", label: "Acupuncture", href: "/therapies/acupuncture", desc: "Meridian therapy for pain & energy flow", color: "bg-terracotta/10" },
   { key: "physiotherapy", label: "Physiotherapy", href: "/therapies/physiotherapy", desc: "Rehabilitative movement science", color: "bg-gold/10" },
-  { key: "yogic-counselling", label: "Yogic Counselling & Psychotherapy", href: "/therapies/yogic-counselling", desc: "Mind-centred dialogue rooted in yoga psychology", color: "bg-forest/8" },
+  { key: "yogic-counselling", label: "Yogic Counselling & Psychotherapy", href: "/therapies/yogic-counselling", desc: "Mind-centred dialogue rooted in yoga psychology", color: "bg-maroon/8" },
   { key: "ozone", label: "Ozone Therapy", href: "/therapies/ozone", desc: "Medical oxygen-ozone for oxygenation & detox", color: "bg-blue-50" },
-  { key: "diet-and-nutrition", label: "Diet & Nutrition", href: "/therapies/diet-and-nutrition", desc: "Personalized nutrition for holistic wellness", color: "bg-green-500/10" },
+  { key: "diet-and-nutrition", label: "Diet & Nutrition", href: "/therapies/diet-and-nutrition", desc: "Personalized nutrition for holistic wellness", color: "bg-maroon/10" },
 ];
 
 function RelatedTherapies({ current }: { current: string }) {
   const related = ALL_THERAPIES.filter((t) => t.key !== current);
   return (
-    <section className="py-20" style={{ background: "hsl(168 15% 97%)" }}>
+    <section className="py-20" style={{ background: "hsl(345 15% 97%)" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <motion.div
           className="text-center mb-10"
@@ -127,7 +127,7 @@ function BookCTABanner() {
   return (
     <section
       className="py-16 relative overflow-hidden"
-      style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 60%, hsl(var(--sage)) 100%)" }}
+      style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 60%, hsl(var(--maroon-muted)) 100%)" }}
     >
       <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center relative">
         <motion.div
@@ -185,14 +185,14 @@ function StickySidebar({ sections, active }: { sections: TherapySection[]; activ
                 }}
                 className="flex items-center gap-2.5 px-3 py-2 rounded-lg font-body text-sm transition-all duration-200"
                 style={{
-                  background: active === s.id ? "hsl(var(--forest) / 0.08)" : "transparent",
-                  color: active === s.id ? "hsl(var(--forest))" : "hsl(var(--forest) / 0.55)",
+                  background: active === s.id ? "hsl(var(--maroon) / 0.08)" : "transparent",
+                  color: active === s.id ? "hsl(var(--maroon))" : "hsl(var(--maroon) / 0.55)",
                   fontWeight: active === s.id ? "600" : "400",
                 }}
               >
                 <span
                   className="w-1.5 h-1.5 rounded-full flex-shrink-0 transition-colors"
-                  style={{ background: active === s.id ? "hsl(var(--gold))" : "hsl(var(--forest) / 0.2)" }}
+                  style={{ background: active === s.id ? "hsl(var(--gold))" : "hsl(var(--maroon) / 0.2)" }}
                 />
                 {s.label}
               </a>
@@ -203,7 +203,7 @@ function StickySidebar({ sections, active }: { sections: TherapySection[]; activ
         {/* Compact Book CTA */}
         <div
           className="rounded-2xl p-5 text-center"
-          style={{ background: "linear-gradient(135deg, hsl(var(--forest)), hsl(var(--sage)))" }}
+          style={{ background: "linear-gradient(135deg, hsl(var(--maroon)), hsl(var(--maroon-muted)))" }}
         >
           <div className="font-display font-bold text-cream text-base mb-1">Ready to Heal?</div>
           <p className="font-body text-cream/70 text-xs mb-4 leading-relaxed">
@@ -236,7 +236,7 @@ export default function TherapyPageTemplate({ config }: { config: TherapyPageCon
     <Layout>
       {/* Hero */}
       <section
-        className={`relative ${config.heroImage ? "pt-28 pb-32 md:pb-48 lg:pb-56 min-h-[640px]" : "pt-28 pb-14"} overflow-hidden bg-forest-dark`}
+        className={`relative ${config.heroImage ? "pt-28 pb-32 md:pb-48 lg:pb-56 min-h-[640px]" : "pt-28 pb-14"} overflow-hidden bg-maroon-dark`}
       >
         {/* Blurred background photo */}
         {config.heroImage && (
@@ -266,7 +266,7 @@ export default function TherapyPageTemplate({ config }: { config: TherapyPageCon
               />
             )}
             {/* Subtle dark overlay for text legibility */}
-            <div className="absolute inset-0 bg-forest-dark/35" />
+            <div className="absolute inset-0 bg-maroon-dark/35" />
           </div>
         )}
 

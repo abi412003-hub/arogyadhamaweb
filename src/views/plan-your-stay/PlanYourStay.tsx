@@ -22,7 +22,7 @@ const QUICK_LINKS = [
     title: "Accommodation",
     desc: "From dormitories to suites — explore every room type with amenities and pricing at Prashanti Kutiram.",
     color: "hsl(var(--forest))",
-    bg: "hsl(var(--forest) / 0.08)",
+    bg: "hsl(var(--maroon) / 0.08)",
   },
   {
     href: "/plan-your-stay/schedule",
@@ -30,7 +30,7 @@ const QUICK_LINKS = [
     title: "Daily Schedule",
     desc: "A beautiful visual timeline of your day — from 5:30 AM Om Meditation to 8:15 PM Happy Assembly.",
     color: "hsl(var(--sage))",
-    bg: "hsl(var(--sage) / 0.08)",
+    bg: "hsl(var(--maroon-muted) / 0.08)",
   },
   {
     href: "/plan-your-stay/what-to-bring",
@@ -72,7 +72,7 @@ export default function PlanYourStay() {
       {/* Hero */}
       <section
         className="relative pt-28 pb-16 overflow-hidden"
-        style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 60%, hsl(150 35% 28%) 100%)" }}
+        style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 60%, hsl(150 35% 28%) 100%)" }}
       >
         <div className="absolute left-0 top-0 h-1 w-full" style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)), transparent)" }} />
         {/* Decorative mandala */}
@@ -165,7 +165,7 @@ export default function PlanYourStay() {
       </section>
 
       {/* Campus Highlight */}
-      <section className="py-20" style={{ background: "hsl(168 15% 97%)" }}>
+      <section className="py-20" style={{ background: "hsl(345 15% 97%)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
@@ -251,7 +251,7 @@ export default function PlanYourStay() {
       </section>
 
       {/* Book CTA */}
-      <section className="py-16" style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 60%, hsl(var(--sage)) 100%)" }}>
+      <section className="py-16" style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 60%, hsl(var(--maroon-muted)) 100%)" }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="font-display text-3xl md:text-4xl text-cream font-bold mb-4">Ready to Begin?</h2>

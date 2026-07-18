@@ -56,7 +56,7 @@ function IntegrativeSection() {
         <IntegrativeCard therapy="Psycho-Oncology" color="hsl(270 50% 40%)"
           desc="Group therapy sessions using Maitri Milan create powerful social support networks. Individual counselling addresses fear, existential distress, and family communication challenges." />
       </div>
-      <div className="bg-forest rounded-2xl p-6">
+      <div className="bg-maroon rounded-2xl p-6">
         <p className="font-quote italic text-cream/85 text-lg leading-relaxed">
           "Our cancer patients do not just survive treatment — they reclaim their quality of life. Yoga gives them agency in their healing journey at a time when they can feel utterly powerless."
         </p>

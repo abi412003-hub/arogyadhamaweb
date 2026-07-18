@@ -39,7 +39,7 @@ function PageHero() {
   return (
     <section
       className="relative pt-28 pb-14 overflow-hidden"
-      style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 60%, hsl(var(--forest-light)) 100%)" }}
+      style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 60%, hsl(var(--maroon-light)) 100%)" }}
     >
       {/* Mandala watermark */}
       <div className="absolute inset-0 flex items-center justify-end pointer-events-none">
@@ -102,10 +102,10 @@ function useCountUp(target: number, inView: boolean, duration = 2000) {
 /* ─── Legacy Section ─── */
 function LegacySection() {
   const milestones = [
-    { year: "1981", label: "VK YOCTAS Founded", color: "bg-sage" },
-    { year: "1986", label: "Renamed VKYOGAS", color: "bg-forest-light" },
-    { year: "2000", label: "Renamed VYASA", color: "bg-forest" },
-    { year: "2002", label: "S-VYASA, Bengaluru", color: "bg-forest-dark" },
+    { year: "1981", label: "VK YOCTAS Founded", color: "bg-maroon-muted" },
+    { year: "1986", label: "Renamed VKYOGAS", color: "bg-maroon-light" },
+    { year: "2000", label: "Renamed VYASA", color: "bg-maroon" },
+    { year: "2002", label: "S-VYASA, Bengaluru", color: "bg-maroon-dark" },
   ];
 
   return (
@@ -185,7 +185,7 @@ function ApproachSection() {
   ];
 
   return (
-    <section className="py-20" style={{ background: "hsl(168 15% 97%)" }}>
+    <section className="py-20" style={{ background: "hsl(345 15% 97%)" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <motion.div
           className="text-center mb-14"
@@ -261,7 +261,7 @@ function CampusSection() {
             transition={{ duration: 0.7 }}
           >
             {/* Campus photo carousel with cross-fade transition */}
-            <div className="relative rounded-3xl overflow-hidden aspect-[4/3] bg-forest-dark shadow-elegant">
+            <div className="relative rounded-3xl overflow-hidden aspect-[4/3] bg-maroon-dark shadow-elegant">
               <AnimatePresence mode="sync">
                 <motion.img
                   key={imgIdx}
@@ -275,10 +275,10 @@ function CampusSection() {
                 />
               </AnimatePresence>
               {/* Gradient overlay for legibility */}
-              <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/85 via-forest-dark/20 to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-maroon-dark/85 via-maroon-dark/20 to-transparent pointer-events-none" />
               {/* Overlay text */}
               <div className="absolute inset-0 flex flex-col justify-end p-8">
-                <div className="bg-forest-dark/70 backdrop-blur-sm rounded-2xl p-5 border border-gold/20">
+                <div className="bg-maroon-dark/70 backdrop-blur-sm rounded-2xl p-5 border border-gold/20">
                   <div className="font-body text-xs tracking-widest uppercase text-gold/80 mb-1">Prashanti Kutiram</div>
                   <div className="font-display text-cream font-semibold text-lg">Abode of Peace &amp; Spiritual Serenity</div>
                   <div className="font-body text-cream/60 text-xs mt-1">35 km from Bengaluru Central · Adjacent to Bannerghatta Hills</div>
@@ -361,7 +361,7 @@ function NumbersSection() {
   }
 
   return (
-    <section ref={ref} className="py-20" style={{ background: "hsl(var(--forest-dark))" }}>
+    <section ref={ref} className="py-20" style={{ background: "hsl(var(--maroon-dark))" }}>
       {/* Lotus tile overlay */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.04]">
         <svg className="w-full h-full">

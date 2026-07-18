@@ -50,7 +50,7 @@ export default function ResearchPapers() {
     <Layout>
       {/* Hero */}
       <section className="relative pt-28 pb-14 overflow-hidden"
-        style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 60%, hsl(200 40% 26%) 100%)" }}>
+        style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 60%, hsl(200 40% 26%) 100%)" }}>
         <div className="absolute left-0 top-0 h-1 w-full" style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)), transparent)" }} />
         <div className="max-w-5xl mx-auto px-4 sm:px-6 relative">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>

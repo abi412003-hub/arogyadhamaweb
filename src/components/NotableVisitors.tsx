@@ -26,7 +26,7 @@ const VISITORS = [
     title: "Chairman Emeritus, Tata Sons",
     context: "Visited Prashanti Kutiram and interacted with the healing community. Shri Tata's interest in Arogyadhama reflects the institution's standing among India's foremost thought leaders.",
     isAward: false,
-    color: "hsl(168 30% 28%)",
+    color: "hsl(345 30% 28%)",
   },
   {
     year: "2017",
@@ -50,7 +50,7 @@ const VISITORS = [
     title: "Union Health Minister, Government of India",
     context: "The former Union Health Minister visited Prashanti Kutiram, underscoring the government's recognition of Arogyadhama's contribution to India's integrative healthcare ecosystem.",
     isAward: false,
-    color: "hsl(150 43% 20%)",
+    color: "hsl(345 43% 20%)",
   },
   {
     year: "2014",
@@ -81,7 +81,7 @@ export default function NotableVisitors() {
 
   return (
     <section className="py-20 relative overflow-hidden"
-      style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 55%, hsl(150 35% 20%) 100%)" }}>
+      style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 55%, hsl(345 35% 20%) 100%)" }}>
       {/* Mandala watermark */}
       <div className="absolute right-0 top-0 h-full flex items-center pointer-events-none opacity-[0.04]">
         <svg viewBox="0 0 500 500" className="w-96 h-96 mr-[-3rem]" fill="none">
@@ -134,7 +134,7 @@ export default function NotableVisitors() {
               className="flex-shrink-0 w-72 rounded-2xl border flex flex-col"
               style={{
                 borderColor: `${v.color}40`,
-                background: "hsl(150 43% 10% / 0.6)",
+                background: "hsl(345 56% 12% / 0.6)",
                 backdropFilter: "blur(12px)",
               }}
             >

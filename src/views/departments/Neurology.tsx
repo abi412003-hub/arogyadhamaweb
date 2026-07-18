@@ -29,7 +29,7 @@ function AboutSection() {
         <p>What makes Arogyadhama's approach unique is the recognition that the nervous system responds profoundly to integrative interventions. Research from S-VYASA demonstrates measurable changes in brain activity, autonomic nervous system function, and neuroplasticity through specific yoga techniques — changes that complement and enhance conventional neurological care.</p>
         <p>The department also specialises in neurological rehabilitation — improving quality of life, functional independence, and cognitive performance for patients living with chronic neurological conditions.</p>
       </div>
-      <div className="bg-forest rounded-2xl p-6">
+      <div className="bg-maroon rounded-2xl p-6">
         <p className="font-quote italic text-cream/85 text-lg leading-relaxed">
           "The nervous system is more plastic than medicine once believed. Yoga therapy, practised with precision and intention, rewires the brain's response to disease and stress — creating healing from within."
         </p>
@@ -107,7 +107,7 @@ function CaseStudiesSection() {
           <motion.div key={c.condition} className="bg-white rounded-2xl p-6 border border-border shadow-card"
             initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
             <div className="flex flex-wrap gap-2 mb-3">
-              <span className="font-body text-xs bg-forest/8 text-forest px-3 py-1 rounded-full font-semibold">{c.condition}</span>
+              <span className="font-body text-xs bg-maroon/8 text-forest px-3 py-1 rounded-full font-semibold">{c.condition}</span>
               <span className="font-body text-xs bg-gold/10 text-gold px-3 py-1 rounded-full font-semibold">{c.duration}</span>
             </div>
             <p className="font-body text-sage text-sm mb-2">Therapies: <span className="text-forest font-semibold">{c.therapy}</span></p>

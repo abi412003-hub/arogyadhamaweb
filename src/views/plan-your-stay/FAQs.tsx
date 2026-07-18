@@ -9,7 +9,7 @@ const FAQ_DATA = [
   {
     category: "Admission & Booking",
     color: "hsl(var(--forest))",
-    bg: "hsl(var(--forest) / 0.07)",
+    bg: "hsl(var(--maroon) / 0.07)",
     items: [
       {
         q: "How do I get admitted to Arogyadhama?",
@@ -62,8 +62,8 @@ const FAQ_DATA = [
   },
   {
     category: "Daily Life & Programme",
-    color: "hsl(168 30% 28%)",
-    bg: "hsl(168 30% 28% / 0.07)",
+    color: "hsl(345 30% 28%)",
+    bg: "hsl(345 30% 28% / 0.07)",
     items: [
       {
         q: "What is the daily schedule like?",
@@ -90,7 +90,7 @@ const FAQ_DATA = [
   {
     category: "Medical & Therapies",
     color: "hsl(var(--sage))",
-    bg: "hsl(var(--sage) / 0.07)",
+    bg: "hsl(var(--maroon-muted) / 0.07)",
     items: [
       {
         q: "Can I continue my current medications during the stay?",
@@ -169,7 +169,7 @@ export default function FAQs() {
     <Layout>
       {/* Hero */}
       <section className="relative pt-28 pb-14 overflow-hidden"
-        style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 60%, hsl(168 35% 24%) 100%)" }}>
+        style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 60%, hsl(345 35% 24%) 100%)" }}>
         <div className="absolute left-0 top-0 h-1 w-full"
           style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)), transparent)" }} />
         <div className="max-w-5xl mx-auto px-4 sm:px-6 relative">
@@ -219,9 +219,9 @@ export default function FAQs() {
           <button onClick={() => setActiveCategory("all")}
             className="font-body text-sm px-4 py-1.5 rounded-full whitespace-nowrap transition-all border"
             style={{
-              background: activeCategory === "all" ? "hsl(var(--forest))" : "white",
-              color: activeCategory === "all" ? "hsl(var(--cream))" : "hsl(var(--forest) / 0.6)",
-              borderColor: activeCategory === "all" ? "hsl(var(--forest))" : "hsl(var(--border))",
+              background: activeCategory === "all" ? "hsl(var(--maroon))" : "white",
+              color: activeCategory === "all" ? "hsl(var(--cream))" : "hsl(var(--maroon) / 0.6)",
+              borderColor: activeCategory === "all" ? "hsl(var(--maroon))" : "hsl(var(--border))",
               fontWeight: activeCategory === "all" ? "600" : "400",
             }}>
             All Categories
@@ -231,7 +231,7 @@ export default function FAQs() {
               className="font-body text-sm px-4 py-1.5 rounded-full whitespace-nowrap transition-all border"
               style={{
                 background: activeCategory === cat.category ? cat.color : "white",
-                color: activeCategory === cat.category ? "hsl(var(--cream))" : "hsl(var(--forest) / 0.6)",
+                color: activeCategory === cat.category ? "hsl(var(--cream))" : "hsl(var(--maroon) / 0.6)",
                 borderColor: activeCategory === cat.category ? cat.color : "hsl(var(--border))",
                 fontWeight: activeCategory === cat.category ? "600" : "400",
               }}>
@@ -282,7 +282,7 @@ export default function FAQs() {
                         <ChevronDown size={14}
                           className="transition-transform duration-200"
                           style={{
-                            color: isOpen ? "hsl(var(--cream))" : "hsl(var(--sage))",
+                            color: isOpen ? "hsl(var(--cream))" : "hsl(var(--maroon-muted))",
                             transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
                           }} />
                       </div>
@@ -309,19 +309,19 @@ export default function FAQs() {
 
         {/* Still have questions CTA */}
         <motion.div className="rounded-3xl p-8 text-center border border-border"
-          style={{ background: "hsl(var(--forest) / 0.04)" }}
+          style={{ background: "hsl(var(--maroon) / 0.04)" }}
           initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <h3 className="font-display font-bold text-forest text-2xl mb-2">Still Have Questions?</h3>
           <p className="font-body text-sage text-sm mb-6">Our team is ready to help — by phone, email, or WhatsApp.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="tel:08022639963"
               className="flex items-center justify-center gap-2 font-body font-semibold px-6 py-3 rounded-xl transition-colors"
-              style={{ background: "hsl(var(--forest))", color: "hsl(var(--cream))" }}>
+              style={{ background: "hsl(var(--maroon))", color: "hsl(var(--cream))" }}>
               Call: 080-2263-9963
             </a>
             <a href="https://wa.me/919972871777" target="_blank" rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 font-body font-semibold px-6 py-3 rounded-xl border-2 transition-colors"
-              style={{ borderColor: "hsl(var(--forest) / 0.3)", color: "hsl(var(--forest))" }}>
+              style={{ borderColor: "hsl(var(--maroon) / 0.3)", color: "hsl(var(--forest))" }}>
               WhatsApp Us
             </a>
             <Link to="/contact"

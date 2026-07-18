@@ -32,7 +32,7 @@ const DIRECTIONS = [
     distance: "~33 km",
     duration: "~55–65 min",
     color: "hsl(var(--forest))",
-    bg: "hsl(var(--forest) / 0.07)",
+    bg: "hsl(var(--maroon) / 0.07)",
     steps: [
       "Exit Bengaluru City Station and head south on Krishnarajendra Road.",
       "Take Bannerghatta Road (one of the main south arteries of Bengaluru).",
@@ -66,7 +66,7 @@ export default function HowToReach() {
     <Layout>
       {/* Hero */}
       <section className="relative pt-28 pb-14 overflow-hidden"
-        style={{ background: "linear-gradient(135deg, hsl(200 50% 12%) 0%, hsl(200 45% 18%) 55%, hsl(168 35% 20%) 100%)" }}>
+        style={{ background: "linear-gradient(135deg, hsl(200 50% 12%) 0%, hsl(200 45% 18%) 55%, hsl(345 35% 20%) 100%)" }}>
         <div className="absolute left-0 top-0 h-1 w-full" style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)), transparent)" }} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
@@ -212,7 +212,7 @@ export default function HowToReach() {
           <motion.div className="bg-white rounded-2xl border border-border shadow-card p-6"
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.08 }}>
             <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
-              style={{ background: "hsl(var(--forest) / 0.08)" }}>
+              style={{ background: "hsl(var(--maroon) / 0.08)" }}>
               <MapPin size={20} className="text-forest" />
             </div>
             <h3 className="font-display font-bold text-forest text-xl mb-2">Campus Entry</h3>
@@ -234,7 +234,7 @@ export default function HowToReach() {
 
         {/* Landmark illustration */}
         <motion.div className="rounded-3xl overflow-hidden border border-border shadow-card"
-          style={{ background: "hsl(var(--forest) / 0.04)", padding: "1.5rem" }}
+          style={{ background: "hsl(var(--maroon) / 0.04)", padding: "1.5rem" }}
           initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div className="flex items-center gap-3 mb-4">
             <Info size={15} className="text-gold" />
@@ -263,7 +263,7 @@ export default function HowToReach() {
       </div>
 
       {/* CTA */}
-      <section className="py-14" style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 60%, hsl(var(--sage)) 100%)" }}>
+      <section className="py-14" style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 60%, hsl(var(--maroon-muted)) 100%)" }}>
         <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="font-display text-3xl text-cream font-bold mb-3">Any Questions?</h2>

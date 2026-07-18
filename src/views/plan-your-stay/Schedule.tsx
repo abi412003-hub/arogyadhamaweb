@@ -154,10 +154,10 @@ const SCHEDULE = [
 
 const CATEGORY_STYLES: Record<string, { bg: string; text: string; border: string; dot: string }> = {
   meditation: { bg: "hsl(258 50% 97%)", text: "hsl(258 50% 35%)", border: "hsl(258 50% 75%)", dot: "hsl(258 50% 45%)" },
-  yoga: { bg: "hsl(var(--forest) / 0.06)", text: "hsl(var(--forest))", border: "hsl(var(--forest) / 0.25)", dot: "hsl(var(--forest))" },
+  yoga: { bg: "hsl(var(--maroon) / 0.06)", text: "hsl(var(--maroon))", border: "hsl(var(--maroon) / 0.25)", dot: "hsl(var(--maroon))" },
   meal: { bg: "hsl(var(--gold) / 0.07)", text: "hsl(43 70% 28%)", border: "hsl(var(--gold) / 0.3)", dot: "hsl(var(--gold))" },
-  diet: { bg: "hsl(160 40% 96%)", text: "hsl(160 50% 25%)", border: "hsl(160 40% 65%)", dot: "hsl(160 50% 38%)" },
-  therapy: { bg: "hsl(var(--sage) / 0.1)", text: "hsl(var(--sage))", border: "hsl(var(--sage) / 0.3)", dot: "hsl(var(--sage))" },
+  diet: { bg: "hsl(345 40% 96%)", text: "hsl(345 50% 25%)", border: "hsl(345 40% 65%)", dot: "hsl(345 50% 38%)" },
+  therapy: { bg: "hsl(var(--maroon-muted) / 0.1)", text: "hsl(var(--maroon-muted))", border: "hsl(var(--maroon-muted) / 0.3)", dot: "hsl(var(--maroon-muted))" },
   community: { bg: "hsl(var(--terracotta) / 0.08)", text: "hsl(27 45% 38%)", border: "hsl(var(--terracotta) / 0.3)", dot: "hsl(var(--terracotta))" },
   education: { bg: "hsl(200 55% 96%)", text: "hsl(200 55% 28%)", border: "hsl(200 55% 70%)", dot: "hsl(200 55% 40%)" },
   nature: { bg: "hsl(90 40% 96%)", text: "hsl(90 40% 28%)", border: "hsl(90 40% 65%)", dot: "hsl(90 40% 38%)" },
@@ -196,7 +196,7 @@ export default function Schedule() {
     <Layout>
       {/* Hero */}
       <section className="relative pt-28 pb-14 overflow-hidden"
-        style={{ background: "linear-gradient(135deg, hsl(150 43% 11%) 0%, hsl(150 40% 17%) 55%, hsl(168 35% 22%) 100%)" }}>
+        style={{ background: "linear-gradient(135deg, hsl(345 56% 12%) 0%, hsl(345 50% 20%) 55%, hsl(345 30% 30%) 100%)" }}>
         <div className="absolute left-0 top-0 h-1 w-full" style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)), transparent)" }} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
@@ -237,7 +237,7 @@ export default function Schedule() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-16">
         <div className="relative">
           {/* Central line */}
-          <div className="absolute left-[88px] sm:left-[100px] top-0 bottom-0 w-0.5" style={{ background: "linear-gradient(to bottom, hsl(var(--gold) / 0.5), hsl(var(--forest) / 0.15))" }} />
+          <div className="absolute left-[88px] sm:left-[100px] top-0 bottom-0 w-0.5" style={{ background: "linear-gradient(to bottom, hsl(var(--gold) / 0.5), hsl(var(--maroon) / 0.15))" }} />
 
           {SCHEDULE.map((item, i) => {
             const styles = CATEGORY_STYLES[item.category];

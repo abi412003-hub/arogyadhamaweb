@@ -92,7 +92,7 @@ export default function StatsSection() {
     <section
       ref={ref}
       className="py-20 relative overflow-hidden"
-      style={{ background: "hsl(var(--forest-dark))" }}
+      style={{ background: "hsl(var(--maroon-dark))" }}
     >
       <LotusPattern />
 

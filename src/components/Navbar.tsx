@@ -189,7 +189,7 @@ export default function Navbar() {
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className={`lg:hidden p-2 rounded-lg transition-colors ${
-                isTransparent ? "text-cream hover:bg-white/10" : "text-forest hover:bg-forest/5"
+                isTransparent ? "text-cream hover:bg-white/10" : "text-forest hover:bg-maroon/5"
               }`}
               aria-label="Toggle menu"
             >
@@ -207,9 +207,9 @@ export default function Navbar() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
             transition={{ type: "tween", duration: 0.3 }}
-            className="lg:hidden fixed inset-0 bg-forest-dark z-[70] flex flex-col"
+            className="lg:hidden fixed inset-0 bg-maroon-dark z-[70] flex flex-col"
           >
-            <div className="flex items-center justify-between p-6 border-b border-forest-light/30">
+            <div className="flex items-center justify-between p-6 border-b border-maroon-light/30">
               <Link to="/" onClick={() => setMobileOpen(false)} className="flex items-center gap-2">
                 <img src={logoMark} alt="Arogyadhama" className="w-14 h-14 object-contain" />
                 <span className="font-display font-bold text-xl text-cream">Arogyadhama</span>
@@ -234,7 +234,7 @@ export default function Navbar() {
                   <Link
                     to={item.href}
                     onClick={() => setMobileOpen(false)}
-                    className="block py-3 border-b border-forest-light/30 font-display text-xl text-cream hover:text-gold transition-colors"
+                    className="block py-3 border-b border-maroon-light/30 font-display text-xl text-cream hover:text-gold transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -243,7 +243,7 @@ export default function Navbar() {
             </div>
 
 
-            <div className="p-6 border-t border-forest-light/30">
+            <div className="p-6 border-t border-maroon-light/30">
               <Link
                 to="/book-now"
                 onClick={() => setMobileOpen(false)}

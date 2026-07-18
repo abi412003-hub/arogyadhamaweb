@@ -24,7 +24,7 @@ function ApproachSection() {
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="bg-white rounded-2xl p-6 border border-border shadow-card">
-          <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ background: "hsl(var(--forest) / 0.08)" }}>
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ background: "hsl(var(--maroon) / 0.08)" }}>
             <Brain size={20} className="text-forest" />
           </div>
           <h4 className="font-display font-semibold text-forest text-base mb-2">Yogic Framework</h4>
@@ -42,7 +42,7 @@ function ApproachSection() {
           </p>
         </div>
       </div>
-      <div className="bg-forest rounded-2xl p-6 md:p-8 relative overflow-hidden">
+      <div className="bg-maroon rounded-2xl p-6 md:p-8 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-32 h-32 rounded-full opacity-10" style={{ background: "hsl(var(--gold))", transform: "translate(30%, -30%)" }} />
         <p className="font-quote italic text-cream/85 text-lg md:text-xl leading-relaxed">
           "The mind is the cause of bondage and the mind is the cause of liberation. Yogic counselling helps the patient see this — and gently, scientifically, choose freedom."
@@ -112,7 +112,7 @@ function ModalitiesSection() {
             transition={{ delay: i * 0.06, duration: 0.4 }}
           >
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-forest flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-maroon flex items-center justify-center flex-shrink-0">
                 <span className="font-display font-bold text-cream text-[10px] text-center leading-none">{t.abbr}</span>
               </div>
               <div>
@@ -215,7 +215,7 @@ export default function YogicCounselling() {
       config={{
         therapyKey: "yogic-counselling",
         breadcrumbLabel: "Yogic Counselling & Psychotherapy",
-        heroGradient: "linear-gradient(135deg, hsl(150 43% 12%) 0%, hsl(150 43% 20%) 50%, hsl(168 25% 32%) 100%)",
+        heroGradient: "linear-gradient(135deg, hsl(345 43% 12%) 0%, hsl(345 43% 20%) 50%, hsl(345 25% 32%) 100%)",
         heroTagline: "Mind · Emotion · Spirit",
         heroTitle: "Yogic Counselling & Psychotherapy",
         heroSubtitle: "A unique integration of timeless yoga psychology with evidence-based modern psychotherapy — for healing that goes beyond symptom relief to self-realisation.",

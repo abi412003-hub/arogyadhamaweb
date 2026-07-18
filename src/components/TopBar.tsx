@@ -4,7 +4,7 @@ import { Link } from "@/lib/router-compat";
 
 export default function TopBar() {
   return (
-    <div className="w-full bg-forest-dark py-2 px-4 z-50">
+    <div className="w-full bg-maroon-dark py-2 px-4 z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-4 text-cream/90 text-sm font-body">
           <a

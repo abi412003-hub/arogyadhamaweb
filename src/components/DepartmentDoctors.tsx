@@ -125,7 +125,7 @@ function DoctorCard({ doc, index }: { doc: ResolvedDoctor; index: number }) {
       transition={{ duration: 0.4, delay: (index % 4) * 0.05 }}
       className="bg-white border border-border rounded-2xl p-5 text-center shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-all"
     >
-      <div className="mx-auto mb-4 w-24 h-24 rounded-full overflow-hidden bg-forest/5 border-2 border-gold/30 flex items-center justify-center">
+      <div className="mx-auto mb-4 w-24 h-24 rounded-full overflow-hidden bg-maroon/5 border-2 border-gold/30 flex items-center justify-center">
         {doc.image ? (
           <img
             src={doc.image}

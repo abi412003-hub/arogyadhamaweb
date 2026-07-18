@@ -86,7 +86,7 @@ export const ALL_DEPTS = [
 function RelatedDepts({ current }: { current: string }) {
   const related = ALL_DEPTS.filter((d) => d.key !== current).slice(0, 4);
   return (
-    <section className="py-20" style={{ background: "hsl(168 15% 97%)" }}>
+    <section className="py-20" style={{ background: "hsl(345 15% 97%)" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <motion.div className="text-center mb-10" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <span className="section-label">Explore Further</span>
@@ -114,7 +114,7 @@ function RelatedDepts({ current }: { current: string }) {
 function BookCTABanner() {
   return (
     <section className="py-16 relative overflow-hidden"
-      style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 60%, hsl(var(--sage)) 100%)" }}>
+      style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 60%, hsl(var(--maroon-muted)) 100%)" }}>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <h2 className="font-display text-3xl md:text-4xl text-cream font-bold mb-4">Ready to Begin Your Healing?</h2>
@@ -148,18 +148,18 @@ function StickySidebar({ sections, active }: { sections: DeptSection[]; active: 
                 onClick={(e) => { e.preventDefault(); document.getElementById(s.id)?.scrollIntoView({ behavior: "smooth", block: "start" }); }}
                 className="flex items-center gap-2.5 px-3 py-2 rounded-lg font-body text-sm transition-all duration-200"
                 style={{
-                  background: active === s.id ? "hsl(var(--forest) / 0.08)" : "transparent",
-                  color: active === s.id ? "hsl(var(--forest))" : "hsl(var(--forest) / 0.55)",
+                  background: active === s.id ? "hsl(var(--maroon) / 0.08)" : "transparent",
+                  color: active === s.id ? "hsl(var(--maroon))" : "hsl(var(--maroon) / 0.55)",
                   fontWeight: active === s.id ? "600" : "400",
                 }}>
                 <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 transition-colors"
-                  style={{ background: active === s.id ? "hsl(var(--gold))" : "hsl(var(--forest) / 0.2)" }} />
+                  style={{ background: active === s.id ? "hsl(var(--gold))" : "hsl(var(--maroon) / 0.2)" }} />
                 {s.label}
               </a>
             ))}
           </nav>
         </div>
-        <div className="rounded-2xl p-5 text-center" style={{ background: "linear-gradient(135deg, hsl(var(--forest)), hsl(var(--sage)))" }}>
+        <div className="rounded-2xl p-5 text-center" style={{ background: "linear-gradient(135deg, hsl(var(--maroon)), hsl(var(--maroon-muted)))" }}>
           <div className="font-display font-bold text-cream text-base mb-1">Ready to Heal?</div>
           <p className="font-body text-cream/70 text-xs mb-4 leading-relaxed">Get a personalised protocol from our specialists.</p>
           <Link to="/book-now" className="block w-full text-center bg-gold text-forest-dark font-body font-semibold text-sm py-2.5 rounded-xl hover:bg-gold-light transition-colors">
@@ -202,7 +202,7 @@ function ClinicalTeamSection({ deptKey }: { deptKey: string }) {
       <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gold/30 shadow-card mb-6 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-1" style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)))" }} />
         <div className="flex flex-col sm:flex-row gap-5 items-start sm:items-center">
-          <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 border-2 border-gold/30" style={{ background: "linear-gradient(135deg, hsl(var(--forest)), hsl(var(--sage)))" }}>
+          <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 border-2 border-gold/30" style={{ background: "linear-gradient(135deg, hsl(var(--maroon)), hsl(var(--maroon-muted)))" }}>
             <img src={drRNagarathna} alt="Dr R Nagarathna" className="w-full h-full object-cover scale-[1.15]" />
           </div>
           <div className="flex-1">
@@ -220,7 +220,7 @@ function ClinicalTeamSection({ deptKey }: { deptKey: string }) {
       <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gold/30 shadow-card mb-8 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-1" style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)))" }} />
         <div className="flex flex-col sm:flex-row gap-5 items-start sm:items-center">
-          <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 border-2 border-gold/30" style={{ background: "linear-gradient(135deg, hsl(var(--forest)), hsl(var(--sage)))" }}>
+          <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 border-2 border-gold/30" style={{ background: "linear-gradient(135deg, hsl(var(--maroon)), hsl(var(--maroon-muted)))" }}>
             <img src={drAmitSingh} alt="Dr Amit Singh" className="w-full h-full object-cover" style={{ objectPosition: "45% 22%" }} />
           </div>
           <div className="flex-1">
@@ -268,7 +268,7 @@ export default function DepartmentPageTemplate({ config }: { config: DeptPageCon
         {config.heroImage ? (
           /* Hero photo — blended into the gradient on its left edge */
           (() => {
-            const blend = config.heroImageBlend ?? "var(--forest-dark)";
+            const blend = config.heroImageBlend ?? "var(--maroon-dark)";
             // Mask fade (not a painted overlay) so the photo dissolves into the hero
             // gradient without a visible seam at the panel's left edge.
             const mask = "linear-gradient(90deg, transparent 0%, black 55%)";
@@ -389,7 +389,7 @@ export function IntegrativeCard({ therapy, color, desc }: { therapy: string; col
 export function TeamCard({ name, qual, role }: { name: string; qual: string; role: string }) {
   return (
     <div className="bg-white rounded-2xl p-6 border border-border shadow-card text-center hover:shadow-card-hover transition-all">
-      <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: "hsl(var(--forest) / 0.08)" }}>
+      <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: "hsl(var(--maroon) / 0.08)" }}>
         <User2 size={28} className="text-forest" />
       </div>
       <h4 className="font-display font-bold text-forest text-base mb-0.5">{name}</h4>

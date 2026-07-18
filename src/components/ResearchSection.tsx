@@ -10,7 +10,7 @@ const sectionVariants = {
 
 export default function ResearchSection() {
   return (
-    <section className="py-24 relative overflow-hidden" style={{ background: "hsl(168 15% 97%)" }}>
+    <section className="py-24 relative overflow-hidden" style={{ background: "hsl(345 15% 97%)" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <motion.div
           className="text-center mb-14"
@@ -35,10 +35,10 @@ export default function ResearchSection() {
             viewport={{ once: true }}
             className="bg-white rounded-3xl p-8 md:p-10 shadow-card relative overflow-hidden"
           >
-            <div className="absolute top-0 right-0 w-48 h-48 rounded-full opacity-5" style={{ background: "hsl(var(--forest))", transform: "translate(30%, -30%)" }} />
+            <div className="absolute top-0 right-0 w-48 h-48 rounded-full opacity-5" style={{ background: "hsl(var(--maroon))", transform: "translate(30%, -30%)" }} />
             
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: "hsl(var(--forest) / 0.1)" }}>
+              <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: "hsl(var(--maroon) / 0.1)" }}>
                 <FlaskConical size={22} className="text-forest" />
               </div>
               <h3 className="font-display font-bold text-forest text-2xl">Research Impact</h3>
@@ -85,7 +85,7 @@ export default function ResearchSection() {
             whileInView="visible"
             viewport={{ once: true }}
             transition={{ delay: 0.15 }}
-            className="bg-forest rounded-3xl p-8 md:p-10 relative overflow-hidden"
+            className="bg-maroon rounded-3xl p-8 md:p-10 relative overflow-hidden"
           >
             <div
               className="absolute top-0 right-0 w-48 h-48 rounded-full opacity-10"

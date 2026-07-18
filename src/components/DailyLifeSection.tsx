@@ -55,9 +55,9 @@ export default function DailyLifeSection() {
               <div
                 className="rounded-xl p-4 border transition-all duration-300 cursor-default h-full"
                 style={{
-                  background: hoveredIndex === i ? "hsl(var(--forest))" : "hsl(0 0% 100%)",
+                  background: hoveredIndex === i ? "hsl(var(--maroon))" : "hsl(0 0% 100%)",
                   borderColor: hoveredIndex === i ? "hsl(var(--gold))" : "hsl(var(--border))",
-                  boxShadow: hoveredIndex === i ? "0 8px 30px hsl(var(--forest) / 0.2)" : "none",
+                  boxShadow: hoveredIndex === i ? "0 8px 30px hsl(var(--maroon) / 0.2)" : "none",
                 }}
               >
                 <div className="flex items-start gap-3">
@@ -69,11 +69,11 @@ export default function DailyLifeSection() {
                   >
                     <Clock
                       size={11}
-                      style={{ color: hoveredIndex === i ? "hsl(var(--gold))" : "hsl(var(--sage))" }}
+                      style={{ color: hoveredIndex === i ? "hsl(var(--gold))" : "hsl(var(--maroon-muted))" }}
                     />
                     <span
                       className="font-body font-semibold text-xs tracking-wide"
-                      style={{ color: hoveredIndex === i ? "hsl(var(--gold))" : "hsl(var(--sage))" }}
+                      style={{ color: hoveredIndex === i ? "hsl(var(--gold))" : "hsl(var(--maroon-muted))" }}
                     >
                       {item.time}
                     </span>
@@ -82,13 +82,13 @@ export default function DailyLifeSection() {
 
                 <h4
                   className="font-display font-semibold text-base mt-3 mb-1.5"
-                  style={{ color: hoveredIndex === i ? "hsl(var(--cream))" : "hsl(var(--forest))" }}
+                  style={{ color: hoveredIndex === i ? "hsl(var(--cream))" : "hsl(var(--maroon))" }}
                 >
                   {item.activity}
                 </h4>
                 <p
                   className="font-body text-xs leading-relaxed"
-                  style={{ color: hoveredIndex === i ? "hsl(var(--cream) / 0.7)" : "hsl(var(--forest) / 0.55)" }}
+                  style={{ color: hoveredIndex === i ? "hsl(var(--cream) / 0.7)" : "hsl(var(--maroon) / 0.55)" }}
                 >
                   {item.desc}
                 </p>

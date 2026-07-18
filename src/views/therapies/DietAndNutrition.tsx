@@ -144,7 +144,7 @@ export default function DietAndNutrition() {
       config={{
         therapyKey: "diet-and-nutrition",
         breadcrumbLabel: "Diet & Nutrition",
-        heroGradient: "linear-gradient(135deg, hsl(105 45% 18%) 0%, hsl(120 40% 26%) 50%, hsl(150 35% 30%) 100%)",
+        heroGradient: "linear-gradient(135deg, hsl(345 45% 18%) 0%, hsl(345 40% 26%) 50%, hsl(345 35% 30%) 100%)",
         heroTagline: "Food as Medicine · Clinical Nutrition",
         heroTitle: "Diet & Nutrition",
         heroSubtitle: "Personalized nutrition plans for holistic health and wellness — sattvic, therapeutic meals designed around your constitution and condition to support every stage of healing.",

@@ -42,7 +42,7 @@ function ScienceSection() {
           </p>
         </div>
       </div>
-      <div className="bg-forest rounded-2xl p-6 md:p-8 relative overflow-hidden">
+      <div className="bg-maroon rounded-2xl p-6 md:p-8 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-32 h-32 rounded-full opacity-10" style={{ background: "hsl(var(--gold))", transform: "translate(30%, -30%)" }} />
         <p className="font-quote italic text-cream/85 text-lg md:text-xl leading-relaxed">
           "Ozone is not a drug — it is an oxidative stimulus that wakes the body's own healing systems. Used precisely, it is one of integrative medicine's most elegant tools."
@@ -112,7 +112,7 @@ function TechniquesSection() {
             transition={{ delay: i * 0.06, duration: 0.4 }}
           >
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-forest flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-maroon flex items-center justify-center flex-shrink-0">
                 <span className="font-display font-bold text-cream text-[10px] text-center leading-none">{t.abbr}</span>
               </div>
               <div>
@@ -190,7 +190,7 @@ function SafetySection() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
         {points.map((p) => (
           <div key={p.title} className="bg-white rounded-2xl p-5 border border-border shadow-card flex gap-4">
-            <div className="w-9 h-9 rounded-lg bg-forest flex items-center justify-center flex-shrink-0">
+            <div className="w-9 h-9 rounded-lg bg-maroon flex items-center justify-center flex-shrink-0">
               <ShieldCheck size={16} className="text-cream" />
             </div>
             <div>

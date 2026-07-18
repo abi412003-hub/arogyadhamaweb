@@ -24,7 +24,7 @@ function AboutSection() {
         <p>Jala Neti (nasal irrigation), a classical Hatha Yoga Shatkarma technique, has been shown in clinical trials to significantly reduce nasal allergy symptoms and sinusitis — as effective as nasal corticosteroid sprays for many patients.</p>
         <p>Our pulmonology team combines these yoga-based interventions with Ayurvedic bronchodilator herbs (Vasaka, Kantakari, Pippali), naturopathic steam inhalation, and conventional pulmonological assessment for a truly comprehensive respiratory care programme.</p>
       </div>
-      <div className="bg-forest rounded-2xl p-6">
+      <div className="bg-maroon rounded-2xl p-6">
         <p className="font-quote italic text-cream/85 text-lg leading-relaxed">
           "Every breath is medicine. Pranayama teaches the respiratory system to work more efficiently — expanding lung capacity, reducing hypersensitivity, and calming the airway smooth muscle that drives bronchospasm."
         </p>

@@ -41,6 +41,12 @@ export default {
           DEFAULT: "hsl(var(--terracotta))",
           dark: "hsl(var(--terracotta-dark))",
         },
+        maroon: {
+          DEFAULT: "hsl(var(--maroon))",
+          light: "hsl(var(--maroon-light))",
+          dark: "hsl(var(--maroon-dark))",
+          muted: "hsl(var(--maroon-muted))",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -104,13 +110,13 @@ export default {
       },
       boxShadow: {
         gold: "0 4px 20px hsl(43 89% 38% / 0.25)",
-        forest: "0 4px 30px hsl(150 43% 16% / 0.15)",
+        forest: "0 4px 30px hsl(345 56% 20% / 0.15)",
         card: "0 2px 20px hsl(150 43% 16% / 0.08)",
         "card-hover": "0 8px 40px hsl(150 43% 16% / 0.15)",
       },
       backgroundImage: {
         "forest-gradient":
-          "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 40%, hsl(var(--forest-light)) 70%, hsl(var(--sage)) 100%)",
+          "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 40%, hsl(var(--maroon-light)) 70%, hsl(var(--maroon-muted)) 100%)",
         "gold-gradient":
           "linear-gradient(135deg, hsl(var(--gold)), hsl(var(--terracotta)))",
         "cream-gradient":

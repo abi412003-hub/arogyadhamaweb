@@ -40,7 +40,7 @@ function AboutSection() {
         ].map((p, i) => (
           <motion.div key={p.label} className="bg-white rounded-xl p-5 border border-border shadow-card"
             initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
-            <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-3" style={{ background: "hsl(var(--forest) / 0.08)" }}>
+            <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-3" style={{ background: "hsl(var(--maroon) / 0.08)" }}>
               <p.icon size={18} className="text-forest" />
             </div>
             <h4 className="font-display font-semibold text-forest text-sm mb-1.5">{p.label}</h4>
@@ -67,7 +67,7 @@ function IntegrativeSection() {
         <IntegrativeCard therapy="Preventive Assessment" color="hsl(var(--gold))"
           desc="Comprehensive health assessment including metabolic markers, HRV analysis, biological age estimation, and functional capacity testing — creating a personalised prevention roadmap." />
       </div>
-      <div className="bg-forest rounded-2xl p-8">
+      <div className="bg-maroon rounded-2xl p-8">
         <p className="font-quote italic text-cream/85 text-xl leading-relaxed text-center">
           "True health is not the absence of disease. It is an abundance of vitality, clarity, joy, and purpose — a state that each human being is capable of, given the right conditions and guidance."
         </p>
@@ -110,7 +110,7 @@ export default function PositiveHealth() {
     <DepartmentPageTemplate config={{
       deptKey: "positive-health",
       breadcrumbLabel: "Positive Health",
-      heroGradient: "linear-gradient(135deg, hsl(150 43% 11%) 0%, hsl(150 40% 18%) 50%, hsl(168 35% 24%) 100%)",
+      heroGradient: "linear-gradient(135deg, hsl(345 56% 12%) 0%, hsl(345 40% 18%) 50%, hsl(345 35% 24%) 100%)",
       heroImage: positiveHealthHero,
       heroImageAlt: "Hands holding a smiling yellow ball",
       heroImageBlend: "150 43% 11%",

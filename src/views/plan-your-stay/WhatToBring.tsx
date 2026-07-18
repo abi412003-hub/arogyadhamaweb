@@ -29,7 +29,7 @@ const CATEGORIES = [
     icon: ShoppingBag,
     label: "Personal Items",
     color: "hsl(var(--sage))",
-    bg: "hsl(var(--sage) / 0.07)",
+    bg: "hsl(var(--maroon-muted) / 0.07)",
     items: [
       "Toiletries (toothbrush, toothpaste, soap, shampoo)",
       "Towels (2–3 sets — laundry available on campus)",
@@ -210,8 +210,8 @@ function OverallProgress({ checked }: { checked: CheckState }) {
 
   const colors =
     pct === 100 ? "hsl(var(--gold))" :
-    pct >= 50 ? "hsl(var(--forest))" :
-    "hsl(var(--sage))";
+    pct >= 50 ? "hsl(var(--maroon))" :
+    "hsl(var(--maroon-muted))";
 
   return (
     <div className="bg-white rounded-2xl border border-border shadow-card p-5 sticky top-24">
@@ -290,7 +290,7 @@ export default function WhatToBring() {
             <button
               onClick={() => downloadChecklist(checked)}
               className="flex items-center gap-2 px-4 py-2 rounded-xl font-body text-sm font-semibold transition-colors"
-              style={{ background: "hsl(var(--forest))", color: "hsl(var(--cream))" }}>
+              style={{ background: "hsl(var(--maroon))", color: "hsl(var(--cream))" }}>
               <Download size={14} /> Download Checklist
             </button>
           </div>

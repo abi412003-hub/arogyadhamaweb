@@ -28,7 +28,7 @@ function PageHero() {
   return (
     <section
       className="relative pt-28 pb-14 overflow-hidden"
-      style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 60%, hsl(var(--sage)) 100%)" }}
+      style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 60%, hsl(var(--maroon-muted)) 100%)" }}
     >
       <div className="absolute left-0 top-0 h-1 w-full" style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)), transparent)" }} />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
@@ -54,7 +54,7 @@ const milestones = [
     subtitle: "The Seed is Planted",
     content:
       "Under the visionary leadership of Dr. H.R. Nagendra and Dr. R. Nagarathna, the Vivekananda Kendra Yoga Therapy, Research & Training Centre (VK YOCTAS) was established in Bengaluru. This marked the beginning of a systematic, scientific exploration of Yoga's therapeutic applications — a bold departure from prevailing medical orthodoxy.",
-    accent: "hsl(var(--sage))",
+    accent: "hsl(var(--maroon-muted))",
     right: false,
   },
   {
@@ -63,7 +63,7 @@ const milestones = [
     subtitle: "Research Deepens",
     content:
       "The organisation expanded its research mandate and was renamed the Vivekananda Kendra Yoga and Gitayana Samsthana (VKYOGAS). Clinical research programmes in Yoga therapy for chronic diseases began in earnest, laying the empirical foundation that would eventually attract international scientific attention.",
-    accent: "hsl(var(--forest-light))",
+    accent: "hsl(var(--maroon-light))",
     right: true,
   },
   {
@@ -72,7 +72,7 @@ const milestones = [
     subtitle: "National Recognition Grows",
     content:
       "As the institution's scope expanded far beyond Yoga alone — encompassing Ayurveda, Naturopathy, and integrative medicine — it was renamed VYASA (Vivekananda Yoga Anusandhana Samsthana). By now, Arogyadhama was treating thousands of patients annually and publishing research in peer-reviewed journals worldwide.",
-    accent: "hsl(var(--forest))",
+    accent: "hsl(var(--maroon))",
     right: false,
   },
   {
@@ -99,7 +99,7 @@ const milestones = [
     subtitle: "56,000 Patients, 7,500 Camps",
     content:
       "When Prime Minister Narendra Modi proposed International Yoga Day to the United Nations — and the UN adopted June 21st unanimously — S-VYASA and Arogyadhama played a pivotal role in designing the official protocol. In a single year, the team conducted 7,500 yoga camps across India, treating over 56,000 diabetic patients — a world record in healthcare outreach.",
-    accent: "hsl(var(--sage))",
+    accent: "hsl(var(--maroon-muted))",
     right: true,
   },
   {
@@ -117,7 +117,7 @@ const milestones = [
     subtitle: "The Journey Continues",
     content:
       "Today, Arogyadhama stands as a 350-bed inpatient hospital treating patients from over 50 countries, with a clinical team of specialists across 11 departments. The research legacy continues: over 400 papers in PubMed, ongoing clinical trials, and a new generation of scientists and healers being trained within the walls of Prashanti Kutiram.",
-    accent: "hsl(var(--forest-dark))",
+    accent: "hsl(var(--maroon-dark))",
     right: true,
   },
 ];
@@ -193,13 +193,13 @@ function TimelineSection() {
           {/* Central vertical line — desktop */}
           <div
             className="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 -translate-x-1/2"
-            style={{ background: "linear-gradient(to bottom, hsl(var(--gold) / 0.2), hsl(var(--forest)), hsl(var(--gold) / 0.2))" }}
+            style={{ background: "linear-gradient(to bottom, hsl(var(--gold) / 0.2), hsl(var(--maroon)), hsl(var(--gold) / 0.2))" }}
           />
 
           {/* Left line — mobile */}
           <div
             className="md:hidden absolute left-3 top-0 bottom-0 w-0.5"
-            style={{ background: "linear-gradient(to bottom, hsl(var(--gold) / 0.3), hsl(var(--forest)), hsl(var(--gold) / 0.3))" }}
+            style={{ background: "linear-gradient(to bottom, hsl(var(--gold) / 0.3), hsl(var(--maroon)), hsl(var(--gold) / 0.3))" }}
           />
 
           <div className="space-y-12 relative">
@@ -235,7 +235,7 @@ export default function AboutHistory() {
       <PageHero />
       <TimelineSection />
       {/* CTA */}
-      <section className="py-16" style={{ background: "hsl(168 15% 97%)" }}>
+      <section className="py-16" style={{ background: "hsl(345 15% 97%)" }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -252,13 +252,13 @@ export default function AboutHistory() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/about/founders"
-                className="bg-forest text-cream font-body font-semibold px-7 py-3 rounded-xl hover:bg-forest-light transition-colors"
+                className="bg-maroon text-cream font-body font-semibold px-7 py-3 rounded-xl hover:bg-maroon-light transition-colors"
               >
                 Meet Our Founders →
               </Link>
               <Link
                 to="/about"
-                className="border-2 border-forest/20 text-forest font-body font-semibold px-7 py-3 rounded-xl hover:border-forest/50 transition-colors"
+                className="border-2 border-maroon/20 text-forest font-body font-semibold px-7 py-3 rounded-xl hover:border-maroon/50 transition-colors"
               >
                 ← About Overview
               </Link>

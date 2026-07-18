@@ -57,8 +57,8 @@ const SEGMENTS = [
     a1: START_MID - HALF + GAP / 2,
     a2: START_MID + HALF - GAP / 2,
     mid: START_MID,
-    fill: "#1B4332",
-    hoverFill: "#2D6A4F",
+    fill: "#4A1622",
+    hoverFill: "#7A2C40",
     img: yogaImg,
   },
   {
@@ -68,8 +68,8 @@ const SEGMENTS = [
     a1: START_MID + SEG_SIZE - HALF + GAP / 2,
     a2: START_MID + SEG_SIZE + HALF - GAP / 2,
     mid: START_MID + SEG_SIZE,
-    fill: "#52796F",
-    hoverFill: "#6A9E94",
+    fill: "#7A5560",
+    hoverFill: "#9E7580",
     img: ayurvedaImg,
   },
   {
@@ -79,8 +79,8 @@ const SEGMENTS = [
     a1: START_MID + 2 * SEG_SIZE - HALF + GAP / 2,
     a2: START_MID + 2 * SEG_SIZE + HALF - GAP / 2,
     mid: START_MID + 2 * SEG_SIZE,
-    fill: "#2C6E49",
-    hoverFill: "#3D9966",
+    fill: "#6E2233",
+    hoverFill: "#96354C",
     img: naturopathyImg,
   },
   {
@@ -112,8 +112,8 @@ const SEGMENTS = [
     a1: START_MID + 5 * SEG_SIZE - HALF + GAP / 2,
     a2: START_MID + 5 * SEG_SIZE + HALF - GAP / 2,
     mid: START_MID + 5 * SEG_SIZE,
-    fill: "#3D5A4A",
-    hoverFill: "#5A8070",
+    fill: "#5A2531",
+    hoverFill: "#855260",
     img: yogicCounsellingImg,
   },
   {
@@ -134,8 +134,8 @@ const SEGMENTS = [
     a1: START_MID + 7 * SEG_SIZE - HALF + GAP / 2,
     a2: START_MID + 7 * SEG_SIZE + HALF - GAP / 2,
     mid: START_MID + 7 * SEG_SIZE,
-    fill: "#5FA83E",
-    hoverFill: "#7CC65A",
+    fill: "#A6425A",
+    hoverFill: "#C46076",
     img: dietImg,
   },
 ];
@@ -151,7 +151,7 @@ function HealingWheel() {
         style={{ overflow: "visible" }}
       >
         {/* Subtle outer ring decoration */}
-        <circle cx={CX} cy={CY} r={OUTER_R + 30} stroke="hsl(var(--sage) / 0.15)" strokeWidth="1" fill="none" strokeDasharray="4 6" />
+        <circle cx={CX} cy={CY} r={OUTER_R + 30} stroke="hsl(var(--maroon-muted) / 0.15)" strokeWidth="1" fill="none" strokeDasharray="4 6" />
         <circle cx={CX} cy={CY} r={OUTER_R + 48} stroke="hsl(var(--gold) / 0.08)" strokeWidth="1" fill="none" strokeDasharray="2 8" />
 
         {/* Connecting spokes */}
@@ -224,7 +224,7 @@ function HealingWheel() {
                 x={labelPos.x}
                 y={labelPos.y}
                 textAnchor="middle"
-                fill={isHov ? s.hoverFill : "hsl(var(--forest))"}
+                fill={isHov ? s.hoverFill : "hsl(var(--maroon))"}
                 fontSize="10.5"
                 fontFamily="'Playfair Display', serif"
                 fontWeight="600"
@@ -245,13 +245,13 @@ function HealingWheel() {
         <circle cx={CX} cy={CY} r={INNER_R - 12} fill="hsl(var(--cream))" stroke="hsl(var(--gold) / 0.3)" strokeWidth="1" />
 
         {/* Center text */}
-        <text x={CX} y={CY - 8} textAnchor="middle" fill="hsl(var(--forest))" fontSize="20" fontFamily="'Playfair Display', serif">
+        <text x={CX} y={CY - 8} textAnchor="middle" fill="hsl(var(--maroon))" fontSize="20" fontFamily="'Playfair Display', serif">
           🧑
         </text>
-        <text x={CX} y={CY + 8} textAnchor="middle" fill="hsl(var(--forest))" fontSize="9" fontFamily="'Source Sans 3', sans-serif" fontWeight="600">
+        <text x={CX} y={CY + 8} textAnchor="middle" fill="hsl(var(--maroon))" fontSize="9" fontFamily="'Source Sans 3', sans-serif" fontWeight="600">
           YOU
         </text>
-        <text x={CX} y={CY + 19} textAnchor="middle" fill="hsl(var(--sage))" fontSize="7.5" fontFamily="'Source Sans 3', sans-serif">
+        <text x={CX} y={CY + 19} textAnchor="middle" fill="hsl(var(--maroon-muted))" fontSize="7.5" fontFamily="'Source Sans 3', sans-serif">
           Patient
         </text>
 
@@ -293,7 +293,7 @@ const therapyCards = [
     title: "Yoga Therapy",
     href: "/therapies/yoga",
     color: "text-forest",
-    iconBg: "hsl(var(--forest) / 0.08)",
+    iconBg: "hsl(var(--maroon) / 0.08)",
     tagline: "Ancient mind-body science backed by modern research",
     details: [
       "Cyclic Meditation & MSRT for deep relaxation",
@@ -301,14 +301,14 @@ const therapyCards = [
       "Om Meditation & Trataka for mental clarity",
       "400+ PubMed-indexed research papers",
     ],
-    borderColor: "hsl(var(--forest))",
+    borderColor: "hsl(var(--maroon))",
   },
   {
     key: "ayurveda",
     title: "Ayurveda",
     href: "/therapies/ayurveda",
     color: "text-sage",
-    iconBg: "hsl(var(--sage) / 0.1)",
+    iconBg: "hsl(var(--maroon-muted) / 0.1)",
     tagline: "Personalised herbal healing for complete systemic balance",
     details: [
       "Panchakarma detoxification protocols",
@@ -316,7 +316,7 @@ const therapyCards = [
       "Herbal formulations from licensed pharmacy",
       "Dietary guidance based on Tridosha theory",
     ],
-    borderColor: "hsl(var(--sage))",
+    borderColor: "hsl(var(--maroon-muted))",
   },
   {
     key: "naturopathy",
@@ -368,7 +368,7 @@ const therapyCards = [
     title: "Yogic Counselling & Psychotherapy",
     href: "/therapies/yogic-counselling",
     color: "text-forest",
-    iconBg: "hsl(var(--forest) / 0.08)",
+    iconBg: "hsl(var(--maroon) / 0.08)",
     tagline: "Mind-centred dialogue rooted in yoga psychology and modern therapeutic science",
     details: [
       "One-to-one counselling guided by yogic principles",
@@ -376,7 +376,7 @@ const therapyCards = [
       "Mindfulness, self-awareness & emotional regulation",
       "Integrates CBT with Patanjali's Yoga Sutras",
     ],
-    borderColor: "hsl(var(--forest))",
+    borderColor: "hsl(var(--maroon))",
   },
   {
     key: "ozone",
@@ -398,7 +398,7 @@ const therapyCards = [
     title: "Diet & Nutrition",
     href: "/therapies/diet-and-nutrition",
     color: "text-green-600",
-    iconBg: "hsl(105 46% 45% / 0.1)",
+    iconBg: "hsl(345 46% 45% / 0.1)",
     tagline: "Personalized nutrition plans for holistic health and wellness",
     details: [
       "Individualised diet charts based on your constitution",
@@ -406,7 +406,7 @@ const therapyCards = [
       "Nutrition support for chronic-disease management",
       "Guidance rooted in Ayurveda and modern dietetics",
     ],
-    borderColor: "hsl(105 46% 45%)",
+    borderColor: "hsl(345 46% 45%)",
   },
 ];
 
@@ -415,9 +415,9 @@ export default function Therapies() {
   return (
     <Layout>
       {/* Hero */}
-      <section className="relative pt-28 pb-14 overflow-hidden bg-forest-dark">
+      <section className="relative pt-28 pb-14 overflow-hidden bg-maroon-dark">
         {/* Subtle gradient accent */}
-        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at top right, hsl(var(--forest) / 0.4), transparent 60%)" }} />
+        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at top right, hsl(var(--maroon) / 0.4), transparent 60%)" }} />
 
         <div className="absolute left-0 top-0 h-1 w-full" style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)), transparent)" }} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
@@ -498,7 +498,7 @@ export default function Therapies() {
       </section>
 
       {/* Therapy Cards */}
-      <section className="py-20" style={{ background: "hsl(168 15% 97%)" }}>
+      <section className="py-20" style={{ background: "hsl(345 15% 97%)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div
             className="text-center mb-14"
@@ -561,7 +561,7 @@ export default function Therapies() {
       {/* CTA */}
       <section
         className="py-16"
-        style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 60%, hsl(var(--sage)) 100%)" }}
+        style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 60%, hsl(var(--maroon-muted)) 100%)" }}
       >
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>

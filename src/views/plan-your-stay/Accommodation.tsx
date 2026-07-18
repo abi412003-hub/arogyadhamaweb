@@ -47,13 +47,13 @@ const ROOMS = [
       { icon: Coffee, label: "Common lounge area" },
     ],
     highlights: ["Yoga kit provided", "Lockers available", "Nursing call facility"],
-    color: "hsl(168 30% 28%)",
-    accentBg: "hsl(168 30% 28% / 0.06)",
-    svgPrimary: "hsl(168 30% 28%)",
-    svgSecondary: "hsl(168 20% 55%)",
+    color: "hsl(345 30% 28%)",
+    accentBg: "hsl(345 30% 28% / 0.06)",
+    svgPrimary: "hsl(345 30% 28%)",
+    svgSecondary: "hsl(345 20% 55%)",
     perPerson: false,
     tier: "Essential",
-    tierBg: "hsl(168 30% 28%)",
+    tierBg: "hsl(345 30% 28%)",
   },
   {
     key: "single",
@@ -70,12 +70,12 @@ const ROOMS = [
     ],
     highlights: ["Wardrobe storage", "Window with natural light", "Reading lamp"],
     color: "hsl(var(--forest))",
-    accentBg: "hsl(var(--forest) / 0.06)",
-    svgPrimary: "hsl(150 43% 16%)",
-    svgSecondary: "hsl(150 35% 35%)",
+    accentBg: "hsl(var(--maroon) / 0.06)",
+    svgPrimary: "hsl(345 43% 16%)",
+    svgSecondary: "hsl(345 35% 35%)",
     perPerson: false,
     tier: "Standard",
-    tierBg: "hsl(150 43% 16%)",
+    tierBg: "hsl(345 43% 16%)",
   },
   {
     key: "double-sharing",
@@ -456,7 +456,7 @@ function ComparisonTable({ currency, rate }: { currency: Currency; rate: number 
     <div className="overflow-x-auto rounded-2xl border border-border shadow-card">
       <table className="w-full" style={{ minWidth: "720px" }}>
         <thead>
-          <tr style={{ background: "hsl(var(--forest))" }}>
+          <tr style={{ background: "hsl(var(--maroon))" }}>
             <th className="font-body font-semibold text-cream text-sm px-5 py-4 text-left w-44">Feature</th>
             {ROOMS.map((r) => (
               <th key={r.key} className="font-body font-semibold text-cream text-xs px-4 py-4 text-center">
@@ -511,7 +511,7 @@ export default function Accommodation() {
     <Layout>
       {/* Hero */}
       <section className="relative pt-28 pb-14 overflow-hidden"
-        style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 60%, hsl(150 35% 24%) 100%)" }}>
+        style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 60%, hsl(345 35% 24%) 100%)" }}>
         <div className="absolute left-0 top-0 h-1 w-full" style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)), transparent)" }} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
@@ -566,7 +566,7 @@ export default function Accommodation() {
               value={currency}
               onChange={(e) => setCurrency(e.target.value as Currency)}
               aria-label="Display currency"
-              className="rounded-lg border border-border bg-white px-3 py-1.5 font-body text-sm font-semibold text-forest focus:outline-none focus:ring-2 focus:ring-forest/30 cursor-pointer"
+              className="rounded-lg border border-border bg-white px-3 py-1.5 font-body text-sm font-semibold text-forest focus:outline-none focus:ring-2 focus:ring-maroon/30 cursor-pointer"
             >
               <option value="USD">$ US Dollar</option>
               <option value="INR">₹ Indian Rupee</option>
@@ -590,7 +590,7 @@ export default function Accommodation() {
       </div>
 
       {/* CTA */}
-      <section className="py-16" style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 60%, hsl(var(--sage)) 100%)" }}>
+      <section className="py-16" style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 60%, hsl(var(--maroon-muted)) 100%)" }}>
         <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="font-display text-3xl text-cream font-bold mb-3">Ready to Reserve?</h2>

@@ -77,8 +77,8 @@ const CONDITIONS = [
     key: "asthma",
     label: "Asthma & COPD",
     icon: Wind,
-    color: "hsl(168 30% 30%)",
-    bg: "hsl(168 30% 30% / 0.08)",
+    color: "hsl(345 30% 30%)",
+    bg: "hsl(345 30% 30% / 0.08)",
     tagline: "Asthma, COPD, bronchitis, sinusitis",
     department: "Pulmonology",
     deptHref: "/departments/pulmonology",
@@ -116,8 +116,8 @@ const CONDITIONS = [
     key: "digestive",
     label: "Digestive Issues",
     icon: Utensils,
-    color: "hsl(150 40% 28%)",
-    bg: "hsl(150 40% 28% / 0.08)",
+    color: "hsl(345 40% 28%)",
+    bg: "hsl(345 40% 28% / 0.08)",
     tagline: "IBS, GERD, fatty liver, constipation",
     department: "Gastroenterology",
     deptHref: "/departments/gastroenterology",
@@ -143,7 +143,7 @@ const CONDITIONS = [
     label: "General Wellness",
     icon: Star,
     color: "hsl(var(--forest))",
-    bg: "hsl(var(--forest) / 0.08)",
+    bg: "hsl(var(--maroon) / 0.08)",
     tagline: "Prevention, vitality & positive health",
     department: "Positive Health",
     deptHref: "/departments/positive-health",
@@ -158,10 +158,10 @@ export default function ConditionNavigator() {
   const active = CONDITIONS.find((c) => c.key === selected) ?? null;
 
   return (
-    <section className="py-24 relative overflow-hidden" style={{ background: "hsl(168 15% 97%)" }}>
+    <section className="py-24 relative overflow-hidden" style={{ background: "hsl(345 15% 97%)" }}>
       {/* Subtle bg pattern */}
       <div className="absolute inset-0 opacity-[0.03]"
-        style={{ backgroundImage: "radial-gradient(circle at 1px 1px, hsl(var(--forest)) 1px, transparent 0)", backgroundSize: "32px 32px" }} />
+        style={{ backgroundImage: "radial-gradient(circle at 1px 1px, hsl(var(--maroon)) 1px, transparent 0)", backgroundSize: "32px 32px" }} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
         {/* Heading */}
@@ -198,7 +198,7 @@ export default function ConditionNavigator() {
                 aria-label={`Show treatment for ${c.label}`}
               >
                 <span className="font-body text-xs font-semibold leading-tight"
-                  style={{ color: isSelected ? c.color : "hsl(var(--forest))" }}>
+                  style={{ color: isSelected ? c.color : "hsl(var(--maroon))" }}>
                   {c.label}
                 </span>
               </motion.button>

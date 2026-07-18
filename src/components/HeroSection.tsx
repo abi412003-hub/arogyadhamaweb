@@ -58,7 +58,7 @@ function MandalaSVG() {
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-forest-dark">
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-maroon-dark">
       {/* Background video */}
       <video
         src="/hero-video.mp4"
@@ -73,13 +73,13 @@ export default function HeroSection() {
       />
 
       {/* Dark overlay for legibility */}
-      <div className="absolute inset-0 bg-forest-dark/50" />
+      <div className="absolute inset-0 bg-maroon-dark/50" />
       {/* Centered scrim so the headline stays legible over bright video frames */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 75% 55% at 50% 42%, hsl(150 50% 6% / 0.62) 0%, transparent 70%)",
+            "radial-gradient(ellipse 75% 55% at 50% 42%, hsl(345 50% 6% / 0.62) 0%, transparent 70%)",
         }}
       />
 
@@ -89,7 +89,7 @@ export default function HeroSection() {
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse at 20% 30%, hsl(168 25% 30% / 0.15) 0%, transparent 55%), radial-gradient(ellipse at 80% 70%, hsl(150 50% 8% / 0.25) 0%, transparent 55%), radial-gradient(ellipse at 60% 20%, hsl(43 89% 38% / 0.05) 0%, transparent 40%)",
+              "radial-gradient(ellipse at 20% 30%, hsl(345 25% 30% / 0.15) 0%, transparent 55%), radial-gradient(ellipse at 80% 70%, hsl(345 50% 8% / 0.25) 0%, transparent 55%), radial-gradient(ellipse at 60% 20%, hsl(43 89% 38% / 0.05) 0%, transparent 40%)",
           }}
         />
       </div>
@@ -130,7 +130,7 @@ export default function HeroSection() {
           className="font-display text-cream leading-[1.2] mb-5 sm:mb-6 mx-auto"
           style={{
             fontSize: "clamp(1.6rem, 4.4vw, 2.6rem)",
-            textShadow: "0 2px 28px hsl(150 50% 6% / 0.6)",
+            textShadow: "0 2px 28px hsl(345 50% 6% / 0.6)",
           }}
         >
           India&apos;s Premier{" "}
@@ -183,7 +183,7 @@ export default function HeroSection() {
             visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
           }}
           className="mt-10 sm:mt-16 mx-auto w-full max-w-3xl rounded-2xl border border-gold/15 px-6 py-6 sm:px-10 sm:py-7"
-          style={{ background: "hsl(var(--forest-dark) / 0.82)", backdropFilter: "blur(8px)" }}
+          style={{ background: "hsl(var(--maroon-dark) / 0.82)", backdropFilter: "blur(8px)" }}
         >
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-y-6 gap-x-4">
             {[

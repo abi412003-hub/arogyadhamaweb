@@ -5,7 +5,7 @@ export default function LoadingScreen() {
   return (
     <motion.div
       className="fixed inset-0 z-[999] flex flex-col items-center justify-center"
-      style={{ background: "hsl(var(--forest-dark))" }}
+      style={{ background: "hsl(var(--maroon-dark))" }}
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.6, ease: "easeInOut" }}

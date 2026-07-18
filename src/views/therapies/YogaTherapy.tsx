@@ -39,7 +39,7 @@ function ScienceSection() {
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div className="bg-white rounded-2xl p-6 border border-border shadow-card">
-          <div className="w-10 h-10 rounded-xl bg-forest/8 flex items-center justify-center mb-4" style={{ background: "hsl(var(--forest) / 0.08)" }}>
+          <div className="w-10 h-10 rounded-xl bg-maroon/8 flex items-center justify-center mb-4" style={{ background: "hsl(var(--maroon) / 0.08)" }}>
             <FlaskConical size={20} className="text-forest" />
           </div>
           <h4 className="font-display font-semibold text-forest text-base mb-2">Research-Backed Protocols</h4>
@@ -57,7 +57,7 @@ function ScienceSection() {
           </p>
         </div>
       </div>
-      <div className="bg-forest rounded-2xl p-6 md:p-8 relative overflow-hidden">
+      <div className="bg-maroon rounded-2xl p-6 md:p-8 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-32 h-32 rounded-full opacity-10" style={{ background: "hsl(var(--gold))", transform: "translate(30%, -30%)" }} />
         <p className="font-quote italic text-cream/85 text-lg md:text-xl leading-relaxed">
           "Yoga therapy at Arogyadhama is not about touching your toes. It's about understanding what your nervous system needs to heal — and giving it exactly that, systematically, scientifically."
@@ -133,7 +133,7 @@ function TechniquesSection() {
             transition={{ delay: i * 0.06, duration: 0.4 }}
           >
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-forest flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-maroon flex items-center justify-center flex-shrink-0">
                 <span className="font-display font-bold text-cream text-[10px] text-center leading-none">{t.abbr}</span>
               </div>
               <div>
@@ -215,7 +215,7 @@ function ResearchSection() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
         {papers.map((p, i) => (
           <div key={p.title} className="bg-white rounded-2xl p-5 border border-border shadow-card flex gap-4">
-            <div className="w-8 h-8 rounded-lg bg-forest flex items-center justify-center flex-shrink-0">
+            <div className="w-8 h-8 rounded-lg bg-maroon flex items-center justify-center flex-shrink-0">
               <BookOpen size={14} className="text-cream" />
             </div>
             <div>
@@ -228,7 +228,7 @@ function ResearchSection() {
       </div>
       <div className="grid grid-cols-3 gap-4 text-center">
         {[{ n: "400+", l: "PubMed Papers" }, { n: "40+", l: "Years of Research" }, { n: "ICMR", l: "Recognised Centre" }].map((s) => (
-          <div key={s.l} className="bg-forest rounded-xl p-4">
+          <div key={s.l} className="bg-maroon rounded-xl p-4">
             <div className="font-display font-bold text-gold text-xl">{s.n}</div>
             <div className="font-body text-cream/70 text-xs mt-0.5">{s.l}</div>
           </div>
@@ -245,7 +245,7 @@ export default function YogaTherapy() {
       config={{
         therapyKey: "yoga",
         breadcrumbLabel: "Yoga Therapy",
-        heroGradient: "linear-gradient(135deg, hsl(150 43% 12%) 0%, hsl(150 43% 18%) 50%, hsl(168 19% 30%) 100%)",
+        heroGradient: "linear-gradient(135deg, hsl(345 43% 12%) 0%, hsl(345 43% 18%) 50%, hsl(345 19% 30%) 100%)",
         heroTagline: "S-VYASA · 400+ Research Papers",
         heroTitle: "Yoga Therapy",
         heroSubtitle: "Ancient mind-body science applied with clinical precision — backed by decades of peer-reviewed research for Non-Communicable Disease management.",

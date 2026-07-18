@@ -24,7 +24,7 @@ function AboutSection() {
         <p>Our approach is grounded in two key principles: (1) the spine heals through movement, not rest — specific, therapeutically designed Yoga asanas restore intervertebral disc hydration, spinal flexibility, and core muscle strength; (2) pain is a biopsychosocial phenomenon — the pain experience is profoundly influenced by stress, catastrophising, and mood, all of which Yoga therapy addresses directly.</p>
         <p>S-VYASA's published research on Yoga for CLBP demonstrates significant reductions in pain scores, disability indices, and analgesic requirements — with improvements maintained at long-term follow-up.</p>
       </div>
-      <div className="bg-forest rounded-2xl p-6">
+      <div className="bg-maroon rounded-2xl p-6">
         <p className="font-quote italic text-cream/85 text-lg leading-relaxed">
           "The spine does not benefit from bed rest. It benefits from intelligent movement — carefully designed yoga asanas that restore disc health, strengthen supporting muscles, and retrain movement patterns."
         </p>

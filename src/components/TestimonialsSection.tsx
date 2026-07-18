@@ -68,12 +68,12 @@ export default function TestimonialsSection() {
   const t = testimonials[current];
 
   return (
-    <section className="py-24 relative overflow-hidden" style={{ background: "hsl(168 15% 97%)" }}>
+    <section className="py-24 relative overflow-hidden" style={{ background: "hsl(345 15% 97%)" }}>
       {/* Background tint */}
       <div
         className="absolute inset-0 opacity-30"
         style={{
-          background: "radial-gradient(ellipse at 50% 100%, hsl(var(--sage) / 0.2) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse at 50% 100%, hsl(var(--maroon-muted) / 0.2) 0%, transparent 70%)",
         }}
       />
 
@@ -134,7 +134,7 @@ export default function TestimonialsSection() {
                   <span className="inline-block bg-gold/10 text-gold font-body text-xs font-semibold px-3 py-1.5 rounded-full">
                     {t.condition}
                   </span>
-                  <button className="w-10 h-10 rounded-full bg-forest flex items-center justify-center text-cream hover:bg-forest-light transition-colors">
+                  <button className="w-10 h-10 rounded-full bg-maroon flex items-center justify-center text-cream hover:bg-maroon-light transition-colors">
                     <Play size={14} fill="currentColor" />
                   </button>
                 </div>
@@ -146,7 +146,7 @@ export default function TestimonialsSection() {
           <div className="flex items-center justify-center gap-4 mt-8">
             <button
               onClick={prev}
-              className="w-11 h-11 rounded-full border-2 border-forest/20 flex items-center justify-center text-forest hover:border-gold hover:text-gold transition-all"
+              className="w-11 h-11 rounded-full border-2 border-maroon/20 flex items-center justify-center text-forest hover:border-gold hover:text-gold transition-all"
             >
               <ChevronLeft size={18} />
             </button>
@@ -162,7 +162,7 @@ export default function TestimonialsSection() {
                     width: i === current ? "24px" : "8px",
                     height: "8px",
                     borderRadius: "4px",
-                    background: i === current ? "hsl(var(--gold))" : "hsl(var(--sage) / 0.3)",
+                    background: i === current ? "hsl(var(--gold))" : "hsl(var(--maroon-muted) / 0.3)",
                   }}
                 />
               ))}
@@ -170,7 +170,7 @@ export default function TestimonialsSection() {
 
             <button
               onClick={next}
-              className="w-11 h-11 rounded-full border-2 border-forest/20 flex items-center justify-center text-forest hover:border-gold hover:text-gold transition-all"
+              className="w-11 h-11 rounded-full border-2 border-maroon/20 flex items-center justify-center text-forest hover:border-gold hover:text-gold transition-all"
             >
               <ChevronRight size={18} />
             </button>

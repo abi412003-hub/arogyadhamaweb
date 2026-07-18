@@ -22,7 +22,7 @@ const CONTACT_CARDS = [
     icon: Phone,
     title: "Call Us",
     color: "hsl(var(--forest))",
-    bg: "hsl(var(--forest) / 0.07)",
+    bg: "hsl(var(--maroon) / 0.07)",
     lines: [
       { label: "General Enquiry", value: "080-2263-9963", href: "tel:08022639963" },
       { label: "IPD Booking", value: "961-134-4691", href: "tel:+919611344691" },
@@ -189,7 +189,7 @@ function EnquiryForm() {
       )}
       <button type="submit" disabled={submitting}
         className="flex items-center gap-2 px-7 py-3.5 rounded-xl font-body font-semibold text-sm transition-colors disabled:opacity-60"
-        style={{ background: "hsl(var(--forest))", color: "hsl(var(--cream))" }}>
+        style={{ background: "hsl(var(--maroon))", color: "hsl(var(--cream))" }}>
         <Send size={15} /> {submitting ? "Sending…" : "Send Message"}
       </button>
     </form>
@@ -201,7 +201,7 @@ export default function Contact() {
     <Layout>
       {/* Hero */}
       <section className="relative pt-28 pb-14 overflow-hidden"
-        style={{ background: "linear-gradient(135deg, hsl(var(--forest-dark)) 0%, hsl(var(--forest)) 60%, hsl(168 35% 24%) 100%)" }}>
+        style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 60%, hsl(345 35% 24%) 100%)" }}>
         <div className="absolute left-0 top-0 h-1 w-full" style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)), transparent)" }} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
@@ -238,7 +238,7 @@ export default function Contact() {
               <motion.div key={h.label}
                 className="bg-white rounded-2xl border border-border shadow-card p-6"
                 initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ background: "hsl(var(--forest) / 0.07)" }}>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ background: "hsl(var(--maroon) / 0.07)" }}>
                   <h.icon size={18} className="text-forest" />
                 </div>
                 <h4 className="font-display font-bold text-forest text-base mb-1">{h.label}</h4>

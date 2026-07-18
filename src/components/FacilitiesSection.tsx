@@ -7,8 +7,8 @@ const facilities = [
     icon: Stethoscope,
     title: "Dispensary",
     desc: "On-campus healthcare and first aid support for all visitors and residents.",
-    tint: "bg-forest/5 text-forest",
-    glow: "hover:shadow-[0_0_40px_-10px_hsl(var(--forest)/0.35)]",
+    tint: "bg-maroon/5 text-forest",
+    glow: "hover:shadow-[0_0_40px_-10px_hsl(var(--maroon)/0.35)]",
   },
   {
     icon: BookOpen,
@@ -28,7 +28,7 @@ const facilities = [
     icon: Library,
     title: "Library",
     desc: "Peaceful learning space with digital and physical knowledge resources.",
-    tint: "bg-emerald-50 text-emerald-600",
+    tint: "bg-maroon/10 text-maroon",
     glow: "hover:shadow-[0_0_40px_-10px_rgba(16,185,129,0.35)]",
   },
   {
@@ -49,13 +49,13 @@ export default function FacilitiesSection() {
         className="absolute inset-0 opacity-60 pointer-events-none"
         style={{
           background:
-            "radial-gradient(60% 50% at 20% 20%, hsl(var(--forest)/0.08), transparent 60%), radial-gradient(50% 45% at 85% 30%, hsl(var(--saffron)/0.10), transparent 60%), radial-gradient(55% 50% at 50% 90%, rgba(37,99,235,0.08), transparent 60%)",
+            "radial-gradient(60% 50% at 20% 20%, hsl(var(--maroon)/0.08), transparent 60%), radial-gradient(50% 45% at 85% 30%, hsl(var(--saffron)/0.10), transparent 60%), radial-gradient(55% 50% at 50% 90%, rgba(37,99,235,0.08), transparent 60%)",
         }}
       />
       <div
         aria-hidden
         className="absolute -top-24 -left-24 w-96 h-96 rounded-full blur-3xl opacity-30 animate-pulse"
-        style={{ background: "hsl(var(--forest)/0.2)" }}
+        style={{ background: "hsl(var(--maroon)/0.2)" }}
       />
       <div
         aria-hidden
@@ -91,7 +91,7 @@ export default function FacilitiesSection() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
                 whileHover={{ y: -6, scale: 1.02 }}
-                className={`group relative rounded-2xl p-6 backdrop-blur-xl bg-white/60 border border-white/60 shadow-sm transition-all duration-300 ${f.glow} hover:border-forest/20`}
+                className={`group relative rounded-2xl p-6 backdrop-blur-xl bg-white/60 border border-white/60 shadow-sm transition-all duration-300 ${f.glow} hover:border-maroon/20`}
               >
                 <div
                   className={`w-14 h-14 rounded-xl ${f.tint} flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110`}
@@ -109,7 +109,7 @@ export default function FacilitiesSection() {
                   className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                   style={{
                     background:
-                      "linear-gradient(135deg, hsl(var(--forest)/0.04), transparent 60%)",
+                      "linear-gradient(135deg, hsl(var(--maroon)/0.04), transparent 60%)",
                   }}
                 />
               </motion.div>
