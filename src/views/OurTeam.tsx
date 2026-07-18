@@ -31,6 +31,10 @@ import sushmitaCT from "@/assets/team/sushmita-c-t.png";
 import vaishaliMathapati from "@/assets/team/vaishali-mathapati.jpg";
 import vaddeVenkataKarthik from "@/assets/team/vadde-venkata-karthik.png";
 import vishwasPapanna from "@/assets/team/vishwas-papanna.jpg";
+import tittyGeorge from "@/assets/team/titty-george.jpg";
+import moodalGiriShankara from "@/assets/team/moodal-giri-shankara.jpg";
+import prajwalRao from "@/assets/team/prajwal-rao.jpg";
+import pallaviV from "@/assets/team/pallavi-v.jpg";
 import bidyalaxmiSoraisham from "@/assets/team/bidyalaxmi-soraisham.jpg";
 import jalandharBhatta from "@/assets/team/jalandhar-bhatta.jpg";
 import kamkhayaNarayan from "@/assets/team/kamkhaya-narayan.jpg";
@@ -325,6 +329,10 @@ const FALLBACKS: Record<string, string> = {
   "vaishali-mathapati": vaishaliMathapati,
   "vadde-venkata-karthik": vaddeVenkataKarthik,
   "vishwas-papanna": vishwasPapanna,
+  "titty-george": tittyGeorge,
+  "moodal-giri-shankara": moodalGiriShankara,
+  "prajwal-rao": prajwalRao,
+  "pallavi-v": pallaviV,
   "bidyalaxmi-soraisham": bidyalaxmiSoraisham,
   "jalandhar-bhatta": jalandharBhatta,
   "kamkhaya-narayan": kamkhayaNarayan,
