@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { Link } from "@/lib/router-compat";
 import Layout from "@/components/Layout";
+import campusAerial from "@/assets/campus-aerial.jpg";
 import {
   ChevronRight, Calculator, BedDouble, Clock3, Backpack,
   MapPin, Calendar, Phone, Leaf, Sun, Heart
@@ -187,64 +188,10 @@ export default function PlanYourStay() {
                 </div>
               </div>
             </motion.div>
-            {/* Illustrated campus placeholder */}
+            {/* Campus aerial photo */}
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
               className="relative h-72 lg:h-96 rounded-3xl overflow-hidden shadow-card-hover">
-              <svg viewBox="0 0 600 400" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
-                <defs>
-                  <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="hsl(200 60% 75%)" />
-                    <stop offset="100%" stopColor="hsl(200 50% 88%)" />
-                  </linearGradient>
-                  <linearGradient id="hillGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="hsl(150 35% 30%)" />
-                    <stop offset="100%" stopColor="hsl(150 43% 20%)" />
-                  </linearGradient>
-                  <linearGradient id="groundGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="hsl(90 40% 55%)" />
-                    <stop offset="100%" stopColor="hsl(90 35% 40%)" />
-                  </linearGradient>
-                </defs>
-                <rect width="600" height="400" fill="url(#skyGrad)" />
-                {/* Sun */}
-                <circle cx="480" cy="70" r="40" fill="hsl(43 89% 70%)" opacity="0.6" />
-                <circle cx="480" cy="70" r="28" fill="hsl(43 89% 80%)" opacity="0.8" />
-                {/* Hills */}
-                <ellipse cx="100" cy="300" rx="200" ry="130" fill="url(#hillGrad)" opacity="0.8" />
-                <ellipse cx="520" cy="320" rx="180" ry="120" fill="url(#hillGrad)" opacity="0.7" />
-                <ellipse cx="300" cy="290" rx="250" ry="110" fill="hsl(150 40% 25%)" opacity="0.9" />
-                {/* Ground */}
-                <rect x="0" y="310" width="600" height="90" fill="url(#groundGrad)" />
-                {/* Buildings */}
-                <rect x="230" y="230" width="60" height="80" rx="3" fill="hsl(43 40% 88%)" />
-                <polygon points="230,230 290,230 260,205" fill="hsl(27 55% 55%)" />
-                <rect x="240" y="265" width="18" height="45" rx="2" fill="hsl(200 60% 70%)" />
-                <rect x="262" y="255" width="20" height="15" rx="1" fill="hsl(200 60% 70%)" />
-
-                <rect x="310" y="240" width="70" height="70" rx="3" fill="hsl(43 40% 92%)" />
-                <polygon points="310,240 380,240 345,215" fill="hsl(0 50% 55%)" />
-                <rect x="318" y="272" width="18" height="38" rx="2" fill="hsl(200 60% 70%)" />
-                <rect x="343" y="258" width="20" height="15" rx="1" fill="hsl(200 60% 70%)" />
-
-                <rect x="165" y="250" width="50" height="60" rx="3" fill="hsl(168 20% 82%)" />
-                <polygon points="165,250 215,250 190,228" fill="hsl(168 35% 50%)" />
-
-                {/* Trees */}
-                {[80, 140, 400, 450, 510].map((x, i) => (
-                  <g key={i}>
-                    <rect x={x + 8} y="295" width="5" height="20" fill="hsl(27 40% 35%)" />
-                    <ellipse cx={x + 10} cy="285" rx="18" ry="25" fill="hsl(150 45% 28%)" />
-                    <ellipse cx={x + 10} cy="280" rx="13" ry="18" fill="hsl(150 40% 35%)" />
-                  </g>
-                ))}
-                {/* Path */}
-                <ellipse cx="300" cy="355" rx="80" ry="10" fill="hsl(43 40% 72%)" opacity="0.7" />
-                <rect x="285" y="310" width="30" height="50" fill="hsl(43 40% 72%)" opacity="0.7" />
-                {/* Label */}
-                <text x="300" y="390" textAnchor="middle" fontFamily="serif" fontSize="12" fill="hsl(150 43% 16%)" opacity="0.7">
-                  Prashanti Kutiram · Bannerghatta Hills
-                </text>
-              </svg>
+              <img src={campusAerial} alt="Aerial view of Prashanti Kutiram campus" className="w-full h-full object-cover" loading="lazy" />
             </motion.div>
           </div>
         </div>
