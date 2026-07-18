@@ -15,6 +15,8 @@ const PHOTO_SLUG: Record<string, string> = {
   single: "ashirwad",
   "double-sharing": "maitri",
   "single-deluxe": "sheshadri",
+  // Restored Double Deluxe card reuses the Single Deluxe (sheshadri) photo set.
+  "semi-deluxe": "sheshadri",
   // Despite the name, this card is the semi-deluxe room -- hence the photo folder.
   "double-deluxe": "semi-deluxe",
   suite: "suites",
@@ -101,7 +103,7 @@ const ROOMS = [
   },
   {
     key: "semi-deluxe",
-    name: "Semi Deluxe",
+    name: "Double Deluxe",
     subName: "Anugraha",
     weeklyRate: 17600,
     capacity: "2 persons, AC (per person rate)",
@@ -118,7 +120,7 @@ const ROOMS = [
     svgPrimary: "hsl(210 45% 28%)",
     svgSecondary: "hsl(210 35% 58%)",
     perPerson: true,
-    tier: "Semi Deluxe",
+    tier: "Double Deluxe",
     tierBg: "hsl(210 45% 36%)",
   },
   {
