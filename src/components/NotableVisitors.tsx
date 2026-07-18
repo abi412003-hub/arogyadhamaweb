@@ -26,7 +26,7 @@ const VISITORS = [
     title: "Chairman Emeritus, Tata Sons",
     context: "Visited Prashanti Kutiram and interacted with the healing community. Shri Tata's interest in Arogyadhama reflects the institution's standing among India's foremost thought leaders.",
     isAward: false,
-    color: "hsl(345 30% 28%)",
+    color: "hsl(345 55% 62%)",
   },
   {
     year: "2017",
@@ -34,7 +34,7 @@ const VISITORS = [
     title: "Spiritual Leader & Founder, Art of Living",
     context: "The renowned spiritual teacher and humanitarian visited the campus, acknowledging the shared mission of bringing the healing wisdom of yoga to every human being on the planet.",
     isAward: false,
-    color: "hsl(258 45% 35%)",
+    color: "hsl(258 55% 62%)",
   },
   {
     year: "2016",

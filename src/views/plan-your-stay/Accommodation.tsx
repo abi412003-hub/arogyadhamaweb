@@ -102,10 +102,10 @@ const ROOMS = [
   {
     key: "single-deluxe",
     name: "Single Deluxe",
-    subName: "Sheshadri Bhavan",
+    subName: "Anugraha",
     weeklyRate: 27500,
     capacity: "Single / Double occupancy (Premium)",
-    desc: "Premium private accommodation in the flagship Sheshadri Bhavan — Arogyadhama's most refined residential block. Upgraded furnishings, garden views, and priority access to all facilities.",
+    desc: "Premium private accommodation in the flagship Anugraha — Arogyadhama's most refined residential block. Upgraded furnishings, garden views, and priority access to all facilities.",
     amenities: [
       { icon: BedDouble, label: "Deluxe king-size bed & premium linen" },
       { icon: ShowerHead, label: "Luxury attached bathroom" },
@@ -124,10 +124,10 @@ const ROOMS = [
   {
     key: "double-deluxe",
     name: "Semi Deluxe",
-    subName: "Sheshadri Bhavan",
+    subName: "Anugraha",
     weeklyRate: 17600,
     capacity: "2 persons (per person rate)",
-    desc: "The deluxe shared option — all the premium amenities of Sheshadri Bhavan at a per-person rate for two. Spacious enough for two to heal comfortably without compromise.",
+    desc: "The deluxe shared option — all the premium amenities of Anugraha at a per-person rate for two. Spacious enough for two to heal comfortably without compromise.",
     amenities: [
       { icon: BedDouble, label: "Two deluxe beds with premium linen" },
       { icon: ShowerHead, label: "Luxury attached bathroom" },

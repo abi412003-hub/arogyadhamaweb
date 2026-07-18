@@ -13,11 +13,11 @@ import researchBanner from "@/assets/research-papers-banner.jpg";
 const ARTICLES = [
   {
     category: "research",
-    title: "How Yoga Therapy Helps Manage Diabetes — Clinical Evidence",
+    title: "Yoga for Bronchial Asthma — A Controlled Clinical Study",
     excerpt:
-      "A landmark multi-centre study involving 56,000 diabetic patients across 7,500 yoga camps demonstrates significant reductions in fasting blood glucose, HbA1c, and lipid profiles — with effects comparable to first-line oral hypoglycaemic agents.",
+      "A controlled study of 106 asthma patients — half trained in integrated yoga (breathing, asanas, pranayama and meditation), half continuing usual treatment. The yoga group showed significantly fewer weekly asthma attacks, reduced reliance on medication, and improved peak expiratory flow, supporting yoga as an effective long-term therapy for bronchial asthma.",
     readTime: "8 min read",
-    tags: ["Diabetes", "Research", "RCT"],
+    tags: ["Asthma", "Research", "Controlled Study"],
     featured: true,
     color: "hsl(var(--forest))",
     bg: "hsl(var(--maroon) / 0.06)",
@@ -190,10 +190,11 @@ function FeaturedArticle() {
               ))}
             </div>
           </div>
-          <button className="self-start flex items-center gap-2 font-body font-semibold text-sm px-5 py-2.5 rounded-xl transition-colors"
+          <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC1417003/" target="_blank" rel="noopener noreferrer"
+            className="self-start flex items-center gap-2 font-body font-semibold text-sm px-5 py-2.5 rounded-xl transition-colors"
             style={{ background: "hsl(var(--maroon))", color: "hsl(var(--cream))" }}>
             Read Article <ArrowRight size={14} />
-          </button>
+          </a>
         </div>
       </div>
     </motion.div>
