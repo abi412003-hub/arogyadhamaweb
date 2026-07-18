@@ -104,8 +104,8 @@ const ROOMS = [
   {
     key: "semi-deluxe",
     name: "Double Deluxe",
-    subName: "Anugraha",
-    weeklyRate: 17600,
+    subName: "Sheshadri",
+    weeklyRate: 22000,
     capacity: "2 persons, AC (per person rate)",
     desc: "An air-conditioned double bedroom shared between two — a step up from standard sharing, with climate control for patients who rest better in cooler comfort.",
     amenities: [
@@ -126,10 +126,10 @@ const ROOMS = [
   {
     key: "single-deluxe",
     name: "Single Deluxe",
-    subName: "Anugraha",
+    subName: "Sheshadri",
     weeklyRate: 27500,
     capacity: "Single / Double occupancy (Premium)",
-    desc: "Premium private accommodation in the flagship Anugraha — Arogyadhama's most refined residential block. Upgraded furnishings, garden views, and priority access to all facilities.",
+    desc: "Premium private accommodation in the flagship Sheshadri — Arogyadhama's most refined residential block. Upgraded furnishings, garden views, and priority access to all facilities.",
     amenities: [
       { icon: BedDouble, label: "Deluxe king-size bed & premium linen" },
       { icon: ShowerHead, label: "Luxury attached bathroom" },
