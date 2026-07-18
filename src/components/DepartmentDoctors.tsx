@@ -13,6 +13,7 @@ import naveenShankar from "@/assets/team/naveen-shankar.jpg";
 import navyaShenoy from "@/assets/team/navya-shenoy.jpg";
 import nibedita from "@/assets/team/nibedita.jpg";
 import padminiTekur from "@/assets/team/padmini-tekur.jpg";
+import pallaviV from "@/assets/team/pallavi-v.jpg";
 import promilaChoudhary from "@/assets/team/promila-choudhary.jpg";
 import ranjiniMurthy from "@/assets/team/ranjini-murthy.jpg";
 import sharadChaudhari from "@/assets/team/sharad-shivajirao-chaudhari.jpg";
@@ -34,6 +35,7 @@ const FALLBACKS: Record<string, string> = {
   "navya-shenoy": navyaShenoy,
   "nibedita": nibedita,
   "padmini-tekur": padminiTekur,
+  "pallavi-v": pallaviV,
   "promila-choudhary": promilaChoudhary,
   "ranjini-murthy": ranjiniMurthy,
   "sharad-shivajirao-chaudhari": sharadChaudhari,
@@ -65,6 +67,7 @@ const NAME_ALIASES: Record<string, string> = {
   "Naveen Sankar": "Naveen Shankar",
   "Sriram Dongre": "Shrirama Dongre",
   "Medini Shirsat": "Medhini Shirsat",
+  "Pallavi": "Pallavi V",
 };
 
 // deptKey (from DepartmentPageTemplate ALL_DEPTS) -> doctor display names
@@ -77,7 +80,7 @@ export const DEPT_DOCTORS_BY_KEY: Record<string, string[]> = {
   rheumatology: ["Arundhati", "Naveen Sankar", "Nagachaitanya"],
   spinal: ["Padmini Tekur", "Sriram Dongre", "Moulya Appanna", "Vishwas Papanna"],
   diabetes: ["Ankita Mishra", "Amshuman R Yadav"],
-  gastroenterology: ["Ranjini Murthy", "Medini Shirsat"],
+  gastroenterology: ["Ranjini Murthy", "Medini Shirsat", "Pallavi"],
   endocrinology: ["Nibedita", "Shishira R"],
   "positive-health": ["Nibedita", "Shishira R"],
 };
