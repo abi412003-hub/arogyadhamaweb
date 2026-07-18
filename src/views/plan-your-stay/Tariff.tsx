@@ -49,7 +49,7 @@ const ROOMS = [
   },
   {
     key: "double-deluxe",
-    name: "Double Deluxe",
+    name: "Semi Deluxe",
     subName: "Sheshadri Bhavan",
     prices: [17600, 34200, 50800, 67400],
     emoji: "🌟",

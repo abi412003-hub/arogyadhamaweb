@@ -29,7 +29,7 @@ const ROOM_OPTIONS = [
   { slug: "ashirwad", name: "Single Room", sub: "Ashirwad Block", inr: 13200, pp: false, label: "Single Room (Ashirwad) — from ₹13,200/week" },
   { slug: "maitri", name: "Double Sharing", sub: "Maitri Block", inr: 11000, pp: true, label: "Double Sharing (Maitri) — from ₹11,000/week per person" },
   { slug: "sheshadri", name: "Single Deluxe", sub: "Sheshadri Bhavan", inr: 27500, pp: false, label: "Single Deluxe (Sheshadri Bhavan) — from ₹27,500/week" },
-  { slug: "semi-deluxe", name: "Double Deluxe", sub: "Sheshadri Bhavan", inr: 17600, pp: true, label: "Double Deluxe (Sheshadri Bhavan) — from ₹17,600/week per person" },
+  { slug: "semi-deluxe", name: "Semi Deluxe", sub: "Sheshadri Bhavan", inr: 17600, pp: true, label: "Semi Deluxe (Sheshadri Bhavan) — from ₹17,600/week per person" },
   { slug: "suites", name: "Suite Sharing", sub: "Premium Block", inr: 30800, pp: true, label: "Suite Sharing — from ₹30,800/week per person" },
 ];
 

@@ -104,7 +104,7 @@ const ROOMS = [
     name: "Single Deluxe",
     subName: "Sheshadri Bhavan",
     weeklyRate: 27500,
-    capacity: "Single occupancy (Premium)",
+    capacity: "Single / Double occupancy (Premium)",
     desc: "Premium private accommodation in the flagship Sheshadri Bhavan — Arogyadhama's most refined residential block. Upgraded furnishings, garden views, and priority access to all facilities.",
     amenities: [
       { icon: BedDouble, label: "Deluxe king-size bed & premium linen" },
@@ -123,7 +123,7 @@ const ROOMS = [
   },
   {
     key: "double-deluxe",
-    name: "Double Deluxe",
+    name: "Semi Deluxe",
     subName: "Sheshadri Bhavan",
     weeklyRate: 17600,
     capacity: "2 persons (per person rate)",
@@ -140,7 +140,7 @@ const ROOMS = [
     svgPrimary: "hsl(200 55% 25%)",
     svgSecondary: "hsl(200 45% 55%)",
     perPerson: true,
-    tier: "Deluxe+",
+    tier: "Semi Deluxe",
     tierBg: "hsl(200 55% 32%)",
   },
   {
