@@ -2,6 +2,7 @@
 import { Wind, Droplets, ShieldCheck, FlaskConical, BookOpen, CheckCircle2 } from "lucide-react";
 import TherapyPageTemplate from "@/components/TherapyPageTemplate";
 import { motion } from "framer-motion";
+import ozoneHero from "@/assets/therapies/ozone-card.jpg";
 
 function SectionHeading({ label, title, subtitle }: { label: string; title: React.ReactNode; subtitle?: string }) {
   return (
@@ -220,6 +221,7 @@ export default function OzoneTherapy() {
         heroGradient: "linear-gradient(135deg, hsl(200 60% 18%) 0%, hsl(200 50% 26%) 50%, hsl(195 40% 38%) 100%)",
         heroTagline: "Oxygenation · Detox · Immunity",
         heroTitle: "Ozone Therapy",
+        heroImage: ozoneHero,
         heroSubtitle: "Medical oxygen-ozone therapy — a precise, physician-administered adjunct that supports cellular oxygenation, immune balance and recovery from chronic conditions.",
         sections: [
           { id: "science", label: "The Science", content: <ScienceSection /> },

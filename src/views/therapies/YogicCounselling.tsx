@@ -2,6 +2,7 @@
 import { Brain, HeartHandshake, Sparkles, BookOpen, Users, CheckCircle2 } from "lucide-react";
 import TherapyPageTemplate from "@/components/TherapyPageTemplate";
 import { motion } from "framer-motion";
+import yogicCounsellingHero from "@/assets/therapies/yogic-counselling-card.jpg";
 
 function SectionHeading({ label, title, subtitle }: { label: string; title: React.ReactNode; subtitle?: string }) {
   return (
@@ -218,6 +219,7 @@ export default function YogicCounselling() {
         heroGradient: "linear-gradient(135deg, hsl(345 43% 12%) 0%, hsl(345 43% 20%) 50%, hsl(345 25% 32%) 100%)",
         heroTagline: "Mind · Emotion · Spirit",
         heroTitle: "Yogic Counselling & Psychotherapy",
+        heroImage: yogicCounsellingHero,
         heroSubtitle: "A unique integration of timeless yoga psychology with evidence-based modern psychotherapy — for healing that goes beyond symptom relief to self-realisation.",
         sections: [
           { id: "approach", label: "Our Approach", content: <ApproachSection /> },

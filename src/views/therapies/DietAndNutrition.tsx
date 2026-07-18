@@ -1,6 +1,7 @@
 "use client";
 import TherapyPageTemplate from "@/components/TherapyPageTemplate";
 import { motion } from "framer-motion";
+import dietHero from "@/assets/therapies/diet-and-nutrition-card.jpg";
 import { CheckCircle2 } from "lucide-react";
 
 function SectionHeading({ label, title, subtitle }: { label: string; title: React.ReactNode; subtitle?: string }) {
@@ -147,6 +148,7 @@ export default function DietAndNutrition() {
         heroGradient: "linear-gradient(135deg, hsl(345 45% 18%) 0%, hsl(345 40% 26%) 50%, hsl(345 35% 30%) 100%)",
         heroTagline: "Food as Medicine · Clinical Nutrition",
         heroTitle: "Diet & Nutrition",
+        heroImage: dietHero,
         heroSubtitle: "Personalized nutrition plans for holistic health and wellness — sattvic, therapeutic meals designed around your constitution and condition to support every stage of healing.",
         sections: [
           { id: "approach", label: "Our Approach", content: <ApproachSection /> },
