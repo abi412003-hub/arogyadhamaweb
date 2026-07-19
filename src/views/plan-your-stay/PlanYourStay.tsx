@@ -61,10 +61,10 @@ const INCLUSIONS = [
 ];
 
 const HIGHLIGHTS = [
-  { stat: "350+", label: "Bed Hospital" },
+  { stat: "600+", label: "Bed Hospital" },
   { stat: "₹6,600", label: "Starting from / week" },
   { stat: "6 nights", label: "Minimum stay" },
-  { stat: "40+", label: "Years of healing" },
+  { stat: "50+", label: "Years of healing" },
 ];
 
 export default function PlanYourStay() {
@@ -174,7 +174,7 @@ export default function PlanYourStay() {
               <h2 className="font-display text-display-md text-forest mt-3 mb-5">Prashanti Kutiram<br /><em className="not-italic text-gold">Abode of Peace</em></h2>
               <div className="space-y-4 font-body text-forest/65 leading-relaxed">
                 <p>Nestled in the serene suburbs of Bengaluru, adjacent to the Bannerghatta hills, Prashanti Kutiram is a 35km sanctuary from the city's chaos — yet accessible when you need it.</p>
-                <p>The campus is a self-contained healing village: 350-bed hospital, treatment centres, vegetable gardens, meditation halls, yoga shala, nature walking paths, and the gentle presence of Bannerghatta wildlife reserve on the boundary.</p>
+                <p>The campus is a self-contained healing village: 600-bed hospital, treatment centres, vegetable gardens, meditation halls, yoga shala, nature walking paths, and the gentle presence of Bannerghatta wildlife reserve on the boundary.</p>
                 <p>Patients describe the campus itself as therapeutic — the birdsong, the clean air, the green canopy, and the profound silence of early morning meditation create conditions for healing that no urban hospital can replicate.</p>
               </div>
               <div className="mt-6 flex flex-wrap gap-4">

@@ -80,18 +80,18 @@ export default function AboutSection() {
               <p>
                 Arogyadhama is the S-VYASA (Swami Vivekananda Yoga Anusandhana Samsthana),
                 Health Division of S-VYASA University Bengaluru. Nestled in the serene campus
-                of Prashanti Kutiram, Bengaluru, our 350-bed inpatient facility stands as a
+                of Prashanti Kutiram, Bengaluru, our 600-bed inpatient facility stands as a
                 beacon of integrative medicine.
               </p>
               <p>
-                For over 40 years, we have been at the frontier of treating Non-Communicable
+                For over 50 years, we have been at the frontier of treating Non-Communicable
                 Diseases (NCDs) through a powerful confluence of Yoga Therapy, Ayurveda,
                 Naturopathy, Acupuncture, Physiotherapy, Psychotherapy, and personalized Diet &
                 Nutrition.
               </p>
               <p>
                 Our approach is not alternative — it is integrative. Every treatment protocol at
-                Arogyadhama is built upon rigorous scientific research. With 400+ papers published
+                Arogyadhama is built upon rigorous scientific research. With 1,000+ papers published
                 in PubMed-indexed journals and recognition from ICMR, we represent the gold
                 standard of evidence-based traditional healing.
               </p>
@@ -138,10 +138,10 @@ export default function AboutSection() {
               }}
             >
               {[
-                { value: 40, label: "Years of Excellence", suffix: "+" },
-                { value: 45000, label: "Patients Healed", suffix: "+" },
-                { value: 350, label: "Bed Capacity", suffix: "" },
-                { value: 400, label: "Research Papers", suffix: "+" },
+                { value: 50, label: "Years of Excellence", suffix: "+" },
+                { value: 1000000, label: "Patients Healed", suffix: "+" },
+                { value: 600, label: "Bed Capacity", suffix: "" },
+                { value: 1000, label: "Research Papers", suffix: "+" },
               ].map((stat) => (
                 <motion.div
                   key={stat.label}

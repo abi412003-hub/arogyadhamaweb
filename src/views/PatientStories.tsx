@@ -244,7 +244,7 @@ export default function PatientStories() {
               Real people, real healing — from New York to Singapore, Arogyadhama's integrative approach has transformed lives across continents.
             </p>
             <div className="flex flex-wrap gap-6 mt-10">
-              {[["45,000+", "Patients Treated"], ["5 Stars", "Average Rating"], ["40+", "Countries Served"]].map(([n, l]) => (
+              {[["1,000,000+", "Patients Treated"], ["5 Stars", "Average Rating"], ["40+", "Countries Served"]].map(([n, l]) => (
                 <div key={l}>
                   <div className="font-display font-bold text-gold text-2xl">{n}</div>
                   <div className="font-body text-cream/60 text-xs">{l}</div>

@@ -299,7 +299,7 @@ const therapyCards = [
       "Cyclic Meditation & MSRT for deep relaxation",
       "Pranayama for nervous system regulation",
       "Om Meditation & Trataka for mental clarity",
-      "400+ PubMed-indexed research papers",
+      "1,000+ PubMed-indexed research papers",
     ],
     borderColor: "hsl(var(--maroon))",
   },
@@ -481,9 +481,9 @@ export default function Therapies() {
               </p>
               <div className="grid grid-cols-2 gap-3 mt-6">
                 {[
-                  { n: "400+", l: "Research Papers" },
-                  { n: "40+", l: "Years of Practice" },
-                  { n: "45,000+", l: "Patients Treated" },
+                  { n: "1,000+", l: "Research Papers" },
+                  { n: "50+", l: "Years of Practice" },
+                  { n: "1,000,000+", l: "Patients Treated" },
                   { n: "11", l: "Departments" },
                 ].map((s) => (
                   <div key={s.l} className="bg-white rounded-xl p-4 border border-border shadow-card text-center">

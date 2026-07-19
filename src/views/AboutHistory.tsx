@@ -113,10 +113,10 @@ const milestones = [
   },
   {
     year: "Present",
-    title: "350 Beds · 400+ Research Papers · 45,000+ Patients",
+    title: "600 Beds · 1,000+ Research Papers · 1,000,000+ Patients",
     subtitle: "The Journey Continues",
     content:
-      "Today, Arogyadhama stands as a 350-bed inpatient hospital treating patients from over 50 countries, with a clinical team of specialists across 11 departments. The research legacy continues: over 400 papers in PubMed, ongoing clinical trials, and a new generation of scientists and healers being trained within the walls of Prashanti Kutiram.",
+      "Today, Arogyadhama stands as a 600-bed inpatient hospital treating patients from over 50 countries, with a clinical team of specialists across 11 departments. The research legacy continues: over 1,000 papers in PubMed, ongoing clinical trials, and a new generation of scientists and healers being trained within the walls of Prashanti Kutiram.",
     accent: "hsl(var(--maroon-dark))",
     right: true,
   },

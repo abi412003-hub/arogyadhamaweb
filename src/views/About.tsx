@@ -318,13 +318,13 @@ function CampusSection() {
                 The healing environment itself is therapeutic. Fresh air, birdsong, open skies, and the proximity of a biodiverse forest create the conditions that Ayurveda and Naturopathy have long prescribed: reconnection with nature as medicine.
               </p>
               <p>
-                Within this 100-acre campus, our 350-bed hospital, yoga halls, meditation gardens, Ayurvedic pharmacy, research laboratories, and residences for faculty and students coexist in harmony. The architectural philosophy reflects the integration we practice — traditional Indian design principles merged with functional modern infrastructure.
+                Within this 100-acre campus, our 600-bed hospital, yoga halls, meditation gardens, Ayurvedic pharmacy, research laboratories, and residences for faculty and students coexist in harmony. The architectural philosophy reflects the integration we practice — traditional Indian design principles merged with functional modern infrastructure.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4 mt-8">
               {[
                 { label: "100+ Acres", sub: "Lush green campus" },
-                { label: "350 Beds", sub: "Inpatient capacity" },
+                { label: "600 Beds", sub: "Inpatient capacity" },
                 { label: "35 km", sub: "From Bengaluru city" },
                 { label: "24/7", sub: "Medical support" },
               ].map((s) => (
@@ -347,10 +347,10 @@ function NumbersSection() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   const stats = [
-    { value: 40, suffix: "+", label: "Years of Excellence", sub: "Since 1981" },
-    { value: 45000, suffix: "+", label: "Patients Treated", sub: "From across the world" },
-    { value: 350, suffix: "", label: "Inpatient Beds", sub: "Full-facility hospital" },
-    { value: 400, suffix: "+", label: "Research Papers", sub: "PubMed indexed" },
+    { value: 50, suffix: "+", label: "Years of Excellence", sub: "Since 1981" },
+    { value: 1000000, suffix: "+", label: "Patients Treated", sub: "From across the world" },
+    { value: 600, suffix: "", label: "Inpatient Beds", sub: "Full-facility hospital" },
+    { value: 1000, suffix: "+", label: "Research Papers", sub: "PubMed indexed" },
     { value: 11, suffix: "", label: "Clinical Depts", sub: "Specialised care" },
     { value: 7500, suffix: "+", label: "Yoga Camps", sub: "Across India" },
   ];

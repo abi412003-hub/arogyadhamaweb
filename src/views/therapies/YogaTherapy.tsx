@@ -44,7 +44,7 @@ function ScienceSection() {
           </div>
           <h4 className="font-display font-semibold text-forest text-base mb-2">Research-Backed Protocols</h4>
           <p className="font-body text-forest/60 text-sm leading-relaxed">
-            S-VYASA has published over 400 papers in PubMed-indexed journals demonstrating the measurable physiological and psychological effects of specific Yoga techniques. Every protocol at Arogyadhama is drawn from this evidence base.
+            S-VYASA has published over 1,000 papers in PubMed-indexed journals demonstrating the measurable physiological and psychological effects of specific Yoga techniques. Every protocol at Arogyadhama is drawn from this evidence base.
           </p>
         </div>
         <div className="bg-white rounded-2xl p-6 border border-border shadow-card">
@@ -227,7 +227,7 @@ function ResearchSection() {
         ))}
       </div>
       <div className="grid grid-cols-3 gap-4 text-center">
-        {[{ n: "400+", l: "PubMed Papers" }, { n: "40+", l: "Years of Research" }, { n: "ICMR", l: "Recognised Centre" }].map((s) => (
+        {[{ n: "1,000+", l: "PubMed Papers" }, { n: "50+", l: "Years of Research" }, { n: "ICMR", l: "Recognised Centre" }].map((s) => (
           <div key={s.l} className="bg-maroon rounded-xl p-4">
             <div className="font-display font-bold text-gold text-xl">{s.n}</div>
             <div className="font-body text-cream/70 text-xs mt-0.5">{s.l}</div>
@@ -246,7 +246,7 @@ export default function YogaTherapy() {
         therapyKey: "yoga",
         breadcrumbLabel: "Yoga Therapy",
         heroGradient: "linear-gradient(135deg, hsl(345 43% 12%) 0%, hsl(345 43% 18%) 50%, hsl(345 19% 30%) 100%)",
-        heroTagline: "S-VYASA · 400+ Research Papers",
+        heroTagline: "S-VYASA · 1,000+ Research Papers",
         heroTitle: "Yoga Therapy",
         heroSubtitle: "Ancient mind-body science applied with clinical precision — backed by decades of peer-reviewed research for Non-Communicable Disease management.",
         heroImage: yogaHero,

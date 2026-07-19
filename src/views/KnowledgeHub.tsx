@@ -158,7 +158,7 @@ function FeaturedArticle() {
               matching the article column, and cover crops only the extended filler */}
           <img
             src={researchBanner}
-            alt="400+ research papers published"
+            alt="1,000+ research papers published"
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div className="absolute top-4 left-4">
@@ -271,7 +271,7 @@ export default function KnowledgeHub() {
               Knowledge Hub
             </h1>
             <p className="font-body text-cream/75 mt-4 max-w-xl leading-relaxed" style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)" }}>
-              Evidence-based insights on integrative healing — drawing from 400+ research papers, decades of clinical experience, and the ancient wisdom of Yoga and Ayurveda.
+              Evidence-based insights on integrative healing — drawing from 1,000+ research papers, decades of clinical experience, and the ancient wisdom of Yoga and Ayurveda.
             </p>
           </motion.div>
         </div>
@@ -296,7 +296,7 @@ export default function KnowledgeHub() {
           <div className="rounded-3xl overflow-hidden border border-border shadow-card">
             <div className="p-8" style={{ background: "hsl(var(--maroon))" }}>
               <div className="grid grid-cols-3 gap-6 text-center mb-6">
-                {[["400+", "Papers in PubMed"], ["40+", "Years of Research"], ["30+", "International Journals"]].map(([n, l]) => (
+                {[["1,000+", "Papers in PubMed"], ["50+", "Years of Research"], ["30+", "International Journals"]].map(([n, l]) => (
                   <div key={l}>
                     <div className="font-display font-bold text-gold text-3xl">{n}</div>
                     <div className="font-body text-cream/65 text-xs mt-1">{l}</div>

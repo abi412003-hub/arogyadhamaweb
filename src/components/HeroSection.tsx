@@ -187,10 +187,10 @@ export default function HeroSection() {
         >
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-y-6 gap-x-4">
             {[
-              { value: "40+", label: "Years of Excellence", sub: "Since 1984" },
-              { value: "45,000+", label: "Patients Treated", sub: "From 50+ countries" },
-              { value: "350", label: "Bed Capacity", sub: "Inpatient facility" },
-              { value: "400+", label: "Research Papers", sub: "PubMed indexed" },
+              { value: "50+", label: "Years of Excellence", sub: "Since 1984" },
+              { value: "1,000,000+", label: "Patients Treated", sub: "From 50+ countries" },
+              { value: "600", label: "Bed Capacity", sub: "Inpatient facility" },
+              { value: "1,000+", label: "Research Papers", sub: "PubMed indexed" },
             ].map((stat) => (
               <div key={stat.label} className="text-center px-2">
                 <div className="font-display text-gold font-bold text-2xl sm:text-3xl md:text-4xl">{stat.value}</div>

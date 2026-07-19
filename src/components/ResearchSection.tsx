@@ -48,7 +48,7 @@ export default function ResearchSection() {
               {[
                 {
                   icon: BookOpen,
-                  title: "400+ PubMed-Indexed Papers",
+                  title: "1,000+ PubMed-Indexed Papers",
                   desc: "Our research on Yoga, Ayurveda, and integrative therapies is published in leading international peer-reviewed journals, establishing Arogyadhama as a global authority in traditional medicine science.",
                 },
                 {

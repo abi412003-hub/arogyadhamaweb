@@ -54,10 +54,10 @@ function LotusPattern() {
 }
 
 const stats = [
-  { value: 40, suffix: "+", label: "Years of Excellence", sub: "Since 1984" },
-  { value: 45000, suffix: "+", label: "Patients Treated", sub: "From 50+ countries" },
-  { value: 350, suffix: "", label: "Bed Capacity", sub: "Inpatient facility" },
-  { value: 400, suffix: "+", label: "Research Papers", sub: "PubMed indexed" },
+  { value: 50, suffix: "+", label: "Years of Excellence", sub: "Since 1984" },
+  { value: 1000000, suffix: "+", label: "Patients Treated", sub: "From 50+ countries" },
+  { value: 600, suffix: "", label: "Bed Capacity", sub: "Inpatient facility" },
+  { value: 1000, suffix: "+", label: "Research Papers", sub: "PubMed indexed" },
   { value: 11, suffix: "", label: "Departments", sub: "Clinical specialisations" },
   { value: 5, suffix: "+", label: "Therapy Systems", sub: "Integrated healing" },
 ];

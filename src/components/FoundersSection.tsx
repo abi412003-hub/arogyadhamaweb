@@ -280,8 +280,8 @@ export const founders = [
       },
       {
         icon: Star,
-        label: "40+ Years in Practice",
-        desc: "Four decades of clinical integrative medicine blending MBBS, MD, and Yoga science",
+        label: "50+ Years in Practice",
+        desc: "Five decades of clinical integrative medicine blending MBBS, MD, and Yoga science",
       },
     ],
     bio: [

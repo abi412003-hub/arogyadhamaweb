@@ -11,7 +11,7 @@ const CONDITIONS = [
   { name: "Insulin Resistance", icon: "🔬", desc: "Metabolic sensitivity restoration" },
   { name: "Male Hypogonadism", icon: "⚕️", desc: "Hormonal support therapy" },
   { name: "Growth Disorders", icon: "📏", desc: "Yoga & nutrition support" },
-  { name: "Hormonal Obesity", icon: "🏃", desc: "Endocrine-based weight management" },
+  { name: "Obesity", icon: "🏃", desc: "weight management" },
 ];
 
 function AboutSection() {
