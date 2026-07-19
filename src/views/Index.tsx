@@ -12,6 +12,7 @@ import NotableVisitors from "@/components/NotableVisitors";
 import DailyLifeSection from "@/components/DailyLifeSection";
 import FacilitiesSection from "@/components/FacilitiesSection";
 import ResearchSection from "@/components/ResearchSection";
+import FelicitationsGallery from "@/components/FelicitationsGallery";
 import NewsletterSection from "@/components/NewsletterSection";
 
 const Index = () => {
@@ -30,6 +31,7 @@ const Index = () => {
         <DailyLifeSection />
         <FacilitiesSection />
         <ResearchSection />
+        <FelicitationsGallery />
         <NewsletterSection />
       </main>
     </Layout>
