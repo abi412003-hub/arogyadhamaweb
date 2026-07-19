@@ -40,8 +40,7 @@ function StatCard({
   return (
     <div className="text-center p-4 bg-white rounded-2xl shadow-card border border-border">
       <div className="font-display text-3xl font-bold text-gold mb-1">
-        {count.toLocaleString()}
-        {suffix}
+        {count.toLocaleString("en-IN")}{suffix}
       </div>
       <div className="font-body text-xs text-sage font-medium tracking-wide">{label}</div>
     </div>

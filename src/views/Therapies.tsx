@@ -483,7 +483,7 @@ export default function Therapies() {
                 {[
                   { n: "1,000+", l: "Research Papers" },
                   { n: "50+", l: "Years of Practice" },
-                  { n: "1,000,000+", l: "Patients Treated" },
+                  { n: "10,00,000+", l: "Patients Treated" },
                   { n: "11", l: "Departments" },
                 ].map((s) => (
                   <div key={s.l} className="bg-white rounded-xl p-4 border border-border shadow-card text-center">

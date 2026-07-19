@@ -58,7 +58,7 @@ export default function Footer() {
               </div>
               <a href="tel:08022639963" className="flex items-center gap-2.5 text-cream/70 hover:text-gold transition-colors">
                 <Phone size={14} className="text-gold flex-shrink-0" />
-                <span>080-2263-9963 | 997-287-1777</span>
+                <span>080-2263-9963 | 997-287-1777 / 961-134-4691</span>
               </a>
               <a href="mailto:info@arogyadhama.org" className="flex items-center gap-2.5 text-cream/70 hover:text-gold transition-colors">
                 <Mail size={14} className="text-gold flex-shrink-0" />

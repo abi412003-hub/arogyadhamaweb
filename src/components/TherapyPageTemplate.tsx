@@ -219,7 +219,7 @@ function StickySidebar({ sections, active }: { sections: TherapySection[]; activ
             href="tel:+919972871777"
             className="block w-full text-center text-cream/70 font-body text-xs mt-2 hover:text-gold transition-colors"
           >
-            or call 997-287-1777
+            or call 997-287-1777 / 961-134-4691
           </a>
         </div>
       </div>

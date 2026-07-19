@@ -357,7 +357,7 @@ function NumbersSection() {
 
   function Counter({ value, suffix, inView }: { value: number; suffix: string; inView: boolean }) {
     const count = useCountUp(value, inView);
-    return <>{count.toLocaleString()}{suffix}</>;
+    return <>{count.toLocaleString("en-IN")}{suffix}</>;
   }
 
   return (

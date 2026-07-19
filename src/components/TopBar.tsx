@@ -20,7 +20,7 @@ export default function TopBar() {
             className="flex items-center gap-1.5 hover:text-gold transition-colors"
           >
             <Phone size={13} />
-            <span>997-287-1777</span>
+            <span>997-287-1777 / 961-134-4691</span>
           </a>
         </div>
         <div className="flex items-center gap-3">

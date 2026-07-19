@@ -81,7 +81,7 @@ export default function FloatingActions() {
               className="absolute right-16 top-1/2 -translate-y-1/2 whitespace-nowrap rounded-xl px-3 py-2 shadow-lg pointer-events-none"
               style={{ background: "hsl(var(--maroon-dark))" }}>
               <p className="font-body text-xs text-cream font-semibold">Chat on WhatsApp</p>
-              <p className="font-body text-[10px] text-cream/60">+91 997-287-1777</p>
+              <p className="font-body text-[10px] text-cream/60">+91 997-287-1777 / 961-134-4691</p>
               {/* Arrow */}
               <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-0 h-0"
                 style={{ borderTop: "6px solid transparent", borderBottom: "6px solid transparent", borderLeft: "6px solid hsl(var(--maroon-dark))" }} />

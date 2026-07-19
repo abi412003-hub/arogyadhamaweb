@@ -246,7 +246,7 @@ export const founders = [
     ],
     bio: [
       "Dr. H. R. Nagendra is the founding father of Arogyadhama and the architect of S-VYASA University. An aerospace engineer by training — with degrees from IIT Bombay — Dr. Nagendra's encounter with Swami Vivekananda's teachings redirected his extraordinary intellect from machines to the human body and mind.",
-      "In 1981, he co-founded the organisation that would become S-VYASA, with a singular conviction: that Yoga could be subjected to scientific scrutiny and, validated thus, could heal conditions that conventional medicine struggled with. Forty years later, that conviction has produced over 400 peer-reviewed papers.",
+      "In 1981, he co-founded the organisation that would become S-VYASA, with a singular conviction: that Yoga could be subjected to scientific scrutiny and, validated thus, could heal conditions that conventional medicine struggled with. Forty years later, that conviction has produced over 1,000 peer-reviewed papers.",
       "Dr. Nagendra's role in the establishment of International Yoga Day was seminal. When Prime Minister Modi proposed the concept to the UN in 2014, it was Dr. Nagendra's team at S-VYASA that designed the evidence-based yoga protocols adopted globally. In 2016, the Government of India recognised his life's work with the Padma Shri.",
       "Today, as President of S-VYASA, Dr. Nagendra continues to lead with the rare combination of scientific rigor and spiritual depth that defines Arogyadhama.",
     ],

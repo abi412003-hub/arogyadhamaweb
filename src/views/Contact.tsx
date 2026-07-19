@@ -53,7 +53,7 @@ const CONTACT_CARDS = [
 const HOURS = [
   { icon: Clock, label: "OPD Hours", detail: "10:30 AM – 12:00 PM · 2:00 PM – 3:30 PM", note: "Closed: 2nd Saturdays, Sundays & Government Holidays" },
   { icon: Calendar, label: "IPD Admissions", detail: "Tuesdays only", note: "Advance booking required · Minimum 6-night stay" },
-  { icon: Video, label: "Virtual Consultations", detail: "By appointment", note: "Call 997-287-1777 to schedule" },
+  { icon: Video, label: "Virtual Consultations", detail: "By appointment", note: "Call 997-287-1777 / 961-134-4691 to schedule" },
 ];
 
 function ContactCard({ card }: { card: typeof CONTACT_CARDS[0] }) {

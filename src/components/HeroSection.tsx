@@ -188,7 +188,7 @@ export default function HeroSection() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-y-6 gap-x-4">
             {[
               { value: "50+", label: "Years of Excellence", sub: "Since 1984" },
-              { value: "1,000,000+", label: "Patients Treated", sub: "From 50+ countries" },
+              { value: "10,00,000+", label: "Patients Treated", sub: "From 50+ countries" },
               { value: "600", label: "Bed Capacity", sub: "Inpatient facility" },
               { value: "1,000+", label: "Research Papers", sub: "PubMed indexed" },
             ].map((stat) => (

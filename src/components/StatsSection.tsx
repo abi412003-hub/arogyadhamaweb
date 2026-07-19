@@ -66,17 +66,17 @@ function StatItem({ stat, inView, i }: { stat: typeof stats[0]; inView: boolean;
   const count = useCountUp(stat.value, inView);
   return (
     <motion.div
-      className="text-center px-4"
+      className="text-center px-2"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: i * 0.1, duration: 0.5 }}
     >
       <div
-        className="font-display font-bold mb-1"
-        style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: "hsl(var(--gold))" }}
+        className="font-display font-bold mb-1 whitespace-nowrap leading-none tabular-nums"
+        style={{ fontSize: "clamp(1.4rem, 2.4vw, 2rem)", color: "hsl(var(--gold))" }}
       >
-        {count.toLocaleString()}{stat.suffix}
+        {count.toLocaleString("en-IN")}{stat.suffix}
       </div>
       <div className="font-body font-semibold text-cream/90 text-sm tracking-wide">{stat.label}</div>
       <div className="font-body text-cream/50 text-xs mt-0.5">{stat.sub}</div>

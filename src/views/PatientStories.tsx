@@ -207,7 +207,7 @@ function ShareStoryCTA() {
             </a>
             <a href="tel:+919972871777"
               className="flex items-center justify-center gap-2 border-2 border-cream/30 text-cream font-body font-semibold px-6 py-3 rounded-xl hover:bg-cream/10 transition-colors">
-              Call: 997-287-1777
+              Call: 997-287-1777 / 961-134-4691
             </a>
           </div>
         </motion.div>
@@ -244,7 +244,7 @@ export default function PatientStories() {
               Real people, real healing — from New York to Singapore, Arogyadhama's integrative approach has transformed lives across continents.
             </p>
             <div className="flex flex-wrap gap-6 mt-10">
-              {[["1,000,000+", "Patients Treated"], ["5 Stars", "Average Rating"], ["40+", "Countries Served"]].map(([n, l]) => (
+              {[["10,00,000+", "Patients Treated"], ["5 Stars", "Average Rating"], ["40+", "Countries Served"]].map(([n, l]) => (
                 <div key={l}>
                   <div className="font-display font-bold text-gold text-2xl">{n}</div>
                   <div className="font-body text-cream/60 text-xs">{l}</div>

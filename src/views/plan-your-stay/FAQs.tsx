@@ -13,7 +13,7 @@ const FAQ_DATA = [
     items: [
       {
         q: "How do I get admitted to Arogyadhama?",
-        a: "Contact us by phone (997-287-1777 for IPD bookings) or fill out the online booking form at /book-now. Our team will contact you shortly to discuss your condition, confirm availability, and guide you through the process.",
+        a: "Contact us by phone (997-287-1777 / 961-134-4691 for IPD bookings) or fill out the online booking form at /book-now. Our team will contact you shortly to discuss your condition, confirm availability, and guide you through the process.",
       },
       {
         q: "When are admissions conducted?",
