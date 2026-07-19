@@ -1,17 +1,44 @@
 "use client";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FELICITATIONS } from "@/lib/felicitations";
 
+// Duplicate the list so the row can loop seamlessly during auto-scroll.
+const ITEMS = [...FELICITATIONS, ...FELICITATIONS];
+
 export default function FelicitationsGallery() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const pausedRef = useRef(false);
 
   function scroll(dir: number) {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({ left: dir * 340, behavior: "smooth" });
     }
   }
+
+  // Continuous auto-scroll (marquee) driven by requestAnimationFrame so the
+  // native scrollLeft — and therefore the arrows and manual scroll — keep working.
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const speed = 0.6; // px per frame (~36px/s at 60fps)
+    let raf = 0;
+    const step = () => {
+      if (!pausedRef.current) {
+        const half = el.scrollWidth / 2; // width of one copy of the list
+        el.scrollLeft += speed;
+        if (half > 0 && el.scrollLeft >= half) {
+          el.scrollLeft -= half; // seamless wrap (both halves are identical)
+        }
+      }
+      raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, []);
 
   return (
     <section className="py-24 bg-cream relative overflow-hidden">
@@ -52,20 +79,18 @@ export default function FelicitationsGallery() {
           </button>
         </div>
 
-        {/* Horizontal scroll */}
+        {/* Horizontal auto-scrolling row (pauses on hover) */}
         <div
           ref={scrollRef}
-          className="flex gap-6 overflow-x-auto pb-4 scroll-smooth snap-x"
+          onMouseEnter={() => (pausedRef.current = true)}
+          onMouseLeave={() => (pausedRef.current = false)}
+          className="flex gap-6 overflow-x-auto pb-4"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
-          {FELICITATIONS.map((f, i) => (
-            <motion.div
-              key={f.src}
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ delay: (i % 6) * 0.05 }}
-              className="flex-shrink-0 w-72 rounded-2xl bg-white shadow-card border border-forest/10 overflow-hidden snap-start flex flex-col hover:shadow-card-hover transition-shadow"
+          {ITEMS.map((f, i) => (
+            <div
+              key={`${f.src}-${i}`}
+              className="flex-shrink-0 w-72 rounded-2xl bg-white shadow-card border border-forest/10 overflow-hidden flex flex-col hover:shadow-card-hover transition-shadow"
             >
               <div className="w-full h-52 bg-forest-dark/5 overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -81,13 +106,13 @@ export default function FelicitationsGallery() {
                   {f.caption}
                 </p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
         {/* Scroll hint */}
         <p className="font-body text-xs text-sage/60 text-center mt-4">
-          ← Scroll to see all distinguished guests &amp; felicitations →
+          Hover to pause · use the arrows to browse
         </p>
       </div>
     </section>
