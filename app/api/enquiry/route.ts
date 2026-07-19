@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createDoc, erpnextConfigured } from "@/lib/erpnext";
+import { mailConfigured, sendMail, renderRows } from "@/lib/mail";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -56,6 +57,40 @@ export async function POST(req: Request) {
     message,
   };
 
+  // Primary delivery: email the enquiry to the Arogyadhama inbox.
+  if (mailConfigured()) {
+    const { html, text } = renderRows([
+      ["Full Name", name],
+      ["Email", email],
+      ["Phone", phone],
+      ["Subject", subject || "General Inquiry"],
+      ["Message", message],
+      ["Received", new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })],
+    ]);
+    try {
+      await sendMail({
+        subject: `New Website Enquiry — ${name}${subject ? ` (${subject})` : ""}`,
+        html: `<p style="font-family:Arial,sans-serif;font-size:14px">A new enquiry was submitted on the Arogyadhama website:</p>${html}`,
+        text: `New website enquiry:\n\n${text}`,
+        replyTo: email,
+      });
+    } catch (e) {
+      console.error("enquiry → email failed:", e);
+      return NextResponse.json(
+        { success: false, error: "Could not send your enquiry. Please try again or call us." },
+        { status: 502 },
+      );
+    }
+    // Best-effort: also record in ERPNext, but don't fail the request if it errors.
+    try {
+      if (erpnextConfigured()) await createDoc(DOCTYPE, doc);
+    } catch (e) {
+      console.error("enquiry → ERPNext failed (non-fatal):", e);
+    }
+    return NextResponse.json({ success: true });
+  }
+
+  // Mail not configured → fall back to the original ERPNext-only behavior.
   try {
     await createDoc(DOCTYPE, doc);
     return NextResponse.json({ success: true });

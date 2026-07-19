@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createDoc, erpnextConfigured } from "@/lib/erpnext";
+import { mailConfigured, sendMail, renderRows } from "@/lib/mail";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -76,6 +77,50 @@ export async function POST(req: Request) {
     subject: `${TYPE_MAP[bookingType] || "Enquiry"} Booking Request`,
   };
 
+  const typeLabel = TYPE_MAP[bookingType] || "Enquiry";
+
+  // Primary delivery: email the booking request to the Arogyadhama inbox.
+  if (mailConfigured()) {
+    const { html, text } = renderRows([
+      ["Booking Type", `${typeLabel} Booking Request`],
+      ["Full Name", name],
+      ["Age", details.age],
+      ["Gender", details.gender],
+      ["Phone", phone],
+      ["Email", email],
+      ["City / Country", details.city],
+      ["Reason for Visit", details.condition],
+      ["Preferred Admission Date", details.preferredDate],
+      ["Preferred Duration", details.weeks],
+      ["Room Preference", details.roomPreference],
+      ["Previous Treatments", details.previousTreatments],
+      ["Current Medications", details.medications],
+      ["Received", new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })],
+    ]);
+    try {
+      await sendMail({
+        subject: `New ${typeLabel} Booking Request — ${name}`,
+        html: `<p style="font-family:Arial,sans-serif;font-size:14px">A new ${typeLabel} booking request was submitted on the Arogyadhama website:</p>${html}`,
+        text: `New ${typeLabel} booking request:\n\n${text}`,
+        replyTo: email,
+      });
+    } catch (e) {
+      console.error("booking → email failed:", e);
+      return NextResponse.json(
+        { success: false, error: "Could not send your request. Please try again or call us." },
+        { status: 502 },
+      );
+    }
+    // Best-effort: also record in ERPNext, but don't fail the request if it errors.
+    try {
+      if (erpnextConfigured()) await createDoc(DOCTYPE, doc);
+    } catch (e) {
+      console.error("booking → ERPNext failed (non-fatal):", e);
+    }
+    return NextResponse.json({ success: true });
+  }
+
+  // Mail not configured → fall back to the original ERPNext-only behavior.
   try {
     await createDoc(DOCTYPE, doc);
     return NextResponse.json({ success: true });
