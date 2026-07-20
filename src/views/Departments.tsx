@@ -156,7 +156,7 @@ const DEPARTMENTS = [
     color: "hsl(43 55% 28%)",
     bg: "hsl(43 55% 28% / 0.08)",
     conditions: ["Thyroid disorders (hypo/hyper)", "PCOS & hormonal imbalances", "Adrenal fatigue & stress hormones"],
-    description: "Lifestyle-based endocrine management through yoga's effect on the HPA axis, Ayurvedic adaptogenic herbs like Ashwagandha, and naturopathic micronutrient protocols.",
+    description: "Integrative hormonal medicine — addressing obesity, thyroid disorders, PCOS, adrenal fatigue, and hormonal restoration through yoga therapy, Ayurveda, and lifestyle medicine.",
   },
   {
     key: "positive-health",

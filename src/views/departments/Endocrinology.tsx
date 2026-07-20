@@ -4,6 +4,7 @@ import endocrinologyHero from "@/assets/departments/endocrinology-hero.jpg";
 import endocrinologyHero2 from "@/assets/departments/endocrinology-hero-2.png";
 
 const CONDITIONS = [
+  { name: "Obesity", icon: "🏃", desc: "weight management" },
   { name: "Hypothyroidism", icon: "🐢", desc: "Thyroid stimulation & hormone balance" },
   { name: "Hyperthyroidism", icon: "⚡", desc: "Calming & regulation protocol" },
   { name: "PCOS / PCOD", icon: "🌸", desc: "Hormonal balance & fertility support" },
@@ -12,7 +13,6 @@ const CONDITIONS = [
   { name: "Insulin Resistance", icon: "🔬", desc: "Metabolic sensitivity restoration" },
   { name: "Male Hypogonadism", icon: "⚕️", desc: "Hormonal support therapy" },
   { name: "Growth Disorders", icon: "📏", desc: "Yoga & nutrition support" },
-  { name: "Obesity", icon: "🏃", desc: "weight management" },
 ];
 
 function AboutSection() {
