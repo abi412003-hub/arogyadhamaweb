@@ -6,7 +6,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const PHONE_RE = /^[\d\s+\-()]{7,20}$/;
+const PHONE_RE = /^\d{10}$/;
 
 // Website enquiries land in the custom "Website Enquiry" doctype in ERPNext.
 const DOCTYPE = process.env.ERPNEXT_ENQUIRY_DOCTYPE || "Website Enquiry";
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: false, error: "Invalid message" }, { status: 400 });
 
   const phone = typeof body.phone === "string" ? body.phone.trim() : "";
-  if (phone && !PHONE_RE.test(phone))
+  if (!PHONE_RE.test(phone))
     return NextResponse.json({ success: false, error: "Invalid phone" }, { status: 400 });
 
   const subject = typeof body.subject === "string" ? body.subject.trim().slice(0, 100) : "";

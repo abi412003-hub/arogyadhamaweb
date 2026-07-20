@@ -95,7 +95,8 @@ function EnquiryForm() {
     const e: Record<string, string> = {};
     if (!form.name.trim() || form.name.trim().length > 100) e.name = "Name is required (max 100 chars)";
     if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Valid email required";
-    if (form.phone && !/^[\d\s\+\-\(\)]{7,20}$/.test(form.phone)) e.phone = "Enter a valid phone number";
+    if (!form.phone.trim()) e.phone = "Phone number is required";
+    else if (!/^\d{10}$/.test(form.phone)) e.phone = "Enter a valid 10-digit phone number";
     if (!form.subject) e.subject = "Please select a subject";
     if (!form.message.trim() || form.message.trim().length < 10) e.message = "Message is required (min 10 chars)";
     if (form.message.length > 2000) e.message = "Message must be under 2000 characters";
@@ -126,6 +127,9 @@ function EnquiryForm() {
     }
   }
 
+  const inputCls = (key: keyof typeof form) =>
+    `w-full px-4 py-3 rounded-xl border font-body text-sm text-forest outline-none transition-colors ${errors[key] ? "border-red-400 bg-red-50" : "border-border focus:border-gold"}`;
+
   function field(key: keyof typeof form, label: string, extra?: React.ReactNode) {
     return (
       <div>
@@ -134,7 +138,7 @@ function EnquiryForm() {
           <input
             type="text" value={form[key]} maxLength={key === "message" ? 2000 : 255}
             onChange={(e) => setForm(f => ({ ...f, [key]: e.target.value }))}
-            className={`w-full px-4 py-3 rounded-xl border font-body text-sm text-forest outline-none transition-colors ${errors[key] ? "border-red-400 bg-red-50" : "border-border focus:border-gold"}`}
+            className={inputCls(key)}
           />
         )}
         {errors[key] && <p className="font-body text-xs text-red-500 mt-1">{errors[key]}</p>}
@@ -156,8 +160,28 @@ function EnquiryForm() {
     <form onSubmit={handleSubmit} noValidate className="space-y-5">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         {field("name", "Full Name *")}
-        {field("email", "Email Address *")}
-        {field("phone", "Phone Number")}
+        {field("email", "Email Address *", (
+          <input
+            type="email" inputMode="email" value={form.email} maxLength={255}
+            placeholder="you@example.com"
+            onChange={(e) => setForm(f => ({ ...f, email: e.target.value }))}
+            className={inputCls("email")}
+          />
+        ))}
+        {field("phone", "Phone Number *", (
+          <input
+            type="tel" inputMode="numeric" value={form.phone} maxLength={10}
+            placeholder="10-digit mobile number"
+            onChange={(e) => {
+              const digits = e.target.value.replace(/\D/g, "").slice(0, 10);
+              // Force the DOM in sync so stray non-digits can't linger when the
+              // cleaned value matches the previous state (React skips that re-render).
+              e.target.value = digits;
+              setForm(f => ({ ...f, phone: digits }));
+            }}
+            className={inputCls("phone")}
+          />
+        ))}
         <div>
           <label className="font-body text-xs font-semibold uppercase tracking-widest text-sage block mb-1.5">Subject *</label>
           <select
