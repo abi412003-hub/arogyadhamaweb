@@ -25,7 +25,7 @@ import positiveHealthImg from "@/assets/departments/positive-health-hero.jpg";
 // "hsl(258 60% 30%)" -> "hsl(258 60% 30% / a)" for department-tinted scrims
 const tint = (c: string, a: number) => c.replace(/\)$/, ` / ${a})`);
 
-const DEPT_FILTERS = ["All", "Chronic Conditions", "Lifestyle Diseases", "Mental Health", "Pain & Mobility"];
+const DEPT_FILTERS = ["All", "Obesity Management", "Chronic Conditions", "Lifestyle Diseases", "Mental Health", "Pain & Mobility"];
 
 const DEPARTMENTS = [
   {
@@ -150,9 +150,9 @@ const DEPARTMENTS = [
     href: "/departments/endocrinology",
     icon: Zap,
     image: [endocrinologyImg, endocrinologyImg2],
-    name: "Endocrinology & Obesity",
+    name: "Endocrinology & Obesity Management",
     tag: "Hormonal Health",
-    filters: ["Lifestyle Diseases"],
+    filters: ["Obesity Management"],
     color: "hsl(43 55% 28%)",
     bg: "hsl(43 55% 28% / 0.08)",
     conditions: ["Thyroid disorders (hypo/hyper)", "PCOS & hormonal imbalances", "Adrenal fatigue & stress hormones"],

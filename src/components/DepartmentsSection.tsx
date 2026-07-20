@@ -72,7 +72,7 @@ const departments = [
   },
   {
     icon: SparklesIcon,
-    name: "Endocrinology & Obesity",
+    name: "Endocrinology & Obesity Management",
     href: "/departments/endocrinology",
     desc: "Hormonal imbalances, PCOS, adrenal & thyroid conditions",
   },
