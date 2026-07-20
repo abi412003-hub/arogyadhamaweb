@@ -1,7 +1,11 @@
 "use client";
+import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "@/lib/router-compat";
 import { ChevronDown } from "lucide-react";
+
+// The hero clip plays a little fast; slow it so visitors can take in the opening.
+const HERO_PLAYBACK_RATE = 0.7;
 
 // SVG Mandala/Lotus decorative pattern
 function MandalaSVG() {
@@ -57,10 +61,22 @@ function MandalaSVG() {
 }
 
 export default function HeroSection() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  // The SSR video autoplays before React hydrates, so its loadedmetadata/play
+  // events fire too early — set the rate on mount (and keep it across loops).
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.playbackRate = HERO_PLAYBACK_RATE;
+    const apply = () => { v.playbackRate = HERO_PLAYBACK_RATE; };
+    v.addEventListener("play", apply);
+    return () => v.removeEventListener("play", apply);
+  }, []);
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-maroon-dark">
       {/* Background video */}
       <video
+        ref={videoRef}
         src="/hero-video.mp4"
         poster="/hero-poster.jpg"
         autoPlay
