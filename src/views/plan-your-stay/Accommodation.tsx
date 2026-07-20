@@ -81,10 +81,10 @@ const ROOMS = [
   },
   {
     key: "double-sharing",
-    name: "Double Sharing",
+    name: "Double Sharing/Triple sharing",
     subName: "Maitri Block",
     weeklyRate: 11000,
-    capacity: "2 persons (per person rate)",
+    capacity: "per person rate",
     desc: "Designed for couples or companions healing together, the Maitri Block's double rooms offer the benefits of privacy with the warmth of a shared experience. Named after the Sanskrit concept of compassionate friendship.",
     amenities: [
       { icon: BedDouble, label: "Two single beds with full linen" },
@@ -467,13 +467,15 @@ function ComparisonTable({ currency, rate }: { currency: Currency; rate: number 
   ];
   // One entry per ROOMS key, in `features` order. A key missing here used to crash
   // the whole page (undefined[fi]), so the lookup below is guarded.
+  // Feature order: [Private room, Attached bathroom, Air conditioning, Garden view, Priority consultations, Sitting area]
   const roomFeatures: Record<string, boolean[]> = {
     dormitory: [false, false, false, false, false, false],
     single: [true, true, false, false, false, false],
-    "double-sharing": [false, true, false, false, false, false],
-    "single-deluxe": [true, true, true, true, true, false],
-    "double-deluxe": [false, true, true, true, true, false],
-    suite: [false, true, true, true, true, true],
+    "double-sharing": [true, true, true, false, false, false],
+    "semi-deluxe": [true, true, true, true, false, true], // Double Deluxe
+    "single-deluxe": [true, true, true, true, false, true], // Single Deluxe
+    "double-deluxe": [true, true, true, true, false, true], // Semi Deluxe
+    suite: [true, true, true, true, true, true], // Suite Sharing
   };
 
   return (
@@ -507,6 +509,7 @@ function ComparisonTable({ currency, rate }: { currency: Currency; rate: number 
       </table>
       <div className="bg-white px-5 py-3 border-t border-border">
         <p className="font-body text-xs text-sage">All rooms include: Yoga kit, 3 sattvic meals/day, medical consultations, yoga therapy sessions. Rates are Tuesday–Monday. Per person charges apply where indicated.</p>
+        <p className="font-body text-xs text-sage mt-1">Note: For Double Sharing air-conditioned rooms, extra charges will be applied.</p>
       </div>
     </div>
   );
