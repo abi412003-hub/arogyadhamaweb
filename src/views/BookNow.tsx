@@ -25,12 +25,13 @@ interface StayDetails { preferredDate: string; weeks: string; roomPreference: st
 // stored/submitted. `slug` also indexes ACCOMMODATION_PHOTOS — note the Double
 // Deluxe card is the semi-deluxe room, hence that slug.
 const ROOM_OPTIONS = [
-  { slug: "dormitory", name: "Dormitory", sub: "Pushpa / Ashwini Ward", inr: 6600, pp: false, label: "Dormitory (Pushpa/Ashwini) — from ₹6,600/week" },
-  { slug: "ashirwad", name: "Single Room", sub: "Ashirwad Block", inr: 13200, pp: false, label: "Single Room (Ashirwad) — from ₹13,200/week" },
-  { slug: "maitri", name: "Double Sharing", sub: "Maitri Block", inr: 11000, pp: true, label: "Double Sharing (Maitri) — from ₹11,000/week per person" },
-  { slug: "sheshadri", name: "Single Deluxe", sub: "Anugraha", inr: 27500, pp: false, label: "Single Deluxe (Anugraha) — from ₹27,500/week" },
-  { slug: "semi-deluxe", name: "Semi Deluxe", sub: "Anugraha", inr: 17600, pp: true, label: "Semi Deluxe (Anugraha) — from ₹17,600/week per person" },
-  { slug: "suites", name: "Suite Sharing", sub: "Premium Block", inr: 30800, pp: true, label: "Suite Sharing — from ₹30,800/week per person" },
+  { slug: "dormitory", photoKey: "dormitory", name: "Dormitory", sub: "Pushpa / Ashwini Ward", inr: 6600, pp: false, label: "Dormitory (Pushpa/Ashwini) — from ₹6,600/week" },
+  { slug: "ashirwad", photoKey: "ashirwad", name: "Single Room", sub: "Ashirwad Block", inr: 13200, pp: false, label: "Single Room (Ashirwad) — from ₹13,200/week" },
+  { slug: "maitri", photoKey: "maitri", name: "Double Sharing", sub: "Maitri Block", inr: 11000, pp: true, label: "Double Sharing (Maitri) — from ₹11,000/week per person" },
+  { slug: "double-deluxe", photoKey: "sheshadri", name: "Double Deluxe", sub: "Sheshadri", inr: 22000, pp: true, label: "Double Deluxe (Sheshadri) — from ₹22,000/week per person" },
+  { slug: "sheshadri", photoKey: "sheshadri", name: "Single Deluxe", sub: "Sheshadri", inr: 27500, pp: false, label: "Single Deluxe (Sheshadri) — from ₹27,500/week" },
+  { slug: "semi-deluxe", photoKey: "semi-deluxe", name: "Semi Deluxe", sub: "Anugraha", inr: 17600, pp: true, label: "Semi Deluxe (Anugraha) — from ₹17,600/week per person" },
+  { slug: "suites", photoKey: "suites", name: "Suite Sharing", sub: "Premium Block", inr: 30800, pp: true, label: "Suite Sharing — from ₹30,800/week per person" },
 ];
 
 // Room prices are the official INR chart; USD is derived from a live daily rate.
@@ -216,7 +217,7 @@ function StepFour({ data, onChange, currency, setCurrency, rate }: {
                 className="relative flex gap-4 items-center text-left rounded-xl border-2 p-3.5 bg-white transition-all duration-200 hover:shadow-card-hover"
                 style={{ borderColor: selected ? "hsl(var(--gold))" : "hsl(var(--border))" }}
               >
-                <RoomThumb photos={ACCOMMODATION_PHOTOS[r.slug] || []} alt={r.name} active={hovered === r.slug} />
+                <RoomThumb photos={ACCOMMODATION_PHOTOS[r.photoKey] || []} alt={r.name} active={hovered === r.slug} />
                 <div className="min-w-0 flex-1">
                   <div className="font-display font-semibold text-forest text-sm leading-tight">{r.name}</div>
                   <div className="font-body text-[11px] text-sage leading-tight">{r.sub}</div>
