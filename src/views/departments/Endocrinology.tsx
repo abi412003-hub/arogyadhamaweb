@@ -58,7 +58,8 @@ export default function Endocrinology() {
       heroImageAlt: "Endocrine health — thyroid gland and metabolic (obesity) conditions",
       heroImageBlend: "43 55% 13%",
       heroTagline: "Hormonal Health · HPA Axis · Lifestyle Medicine",
-      heroTitle: "Department of Endocrinology",
+      heroTitle: "Department of Endocrinology & Obesity",
+      heroTitleClassName: "max-w-2xl",
       heroSubtitle: "Integrative hormonal medicine — addressing thyroid disorders, PCOS, adrenal fatigue, and metabolic endocrine conditions through yoga therapy, Ayurvedic adaptogens, and lifestyle medicine.",
       sections: [
         { id: "about", label: "About", content: <AboutSection /> },

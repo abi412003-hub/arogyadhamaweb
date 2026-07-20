@@ -150,7 +150,7 @@ const DEPARTMENTS = [
     href: "/departments/endocrinology",
     icon: Zap,
     image: [endocrinologyImg, endocrinologyImg2],
-    name: "Endocrinology",
+    name: "Endocrinology & Obesity",
     tag: "Hormonal Health",
     filters: ["Lifestyle Diseases"],
     color: "hsl(43 55% 28%)",

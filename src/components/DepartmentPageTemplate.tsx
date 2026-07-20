@@ -22,6 +22,8 @@ export interface DeptPageConfig {
   breadcrumbLabel: string;
   heroGradient: string;
   heroTitle: string;
+  /** Optional extra classes for the hero <h1> (e.g. "max-w-2xl" to wrap a long title clear of the hero image). */
+  heroTitleClassName?: string;
   heroSubtitle: string;
   heroTagline: string;
   /** One image, or several — multiple images crossfade in a slow slideshow. */
@@ -313,7 +315,7 @@ export default function DepartmentPageTemplate({ config }: { config: DeptPageCon
             <div className="mt-5 inline-block font-body text-xs tracking-[0.3em] uppercase text-gold/80 border border-gold/30 rounded-full px-3 py-1 mb-4">
               {config.heroTagline}
             </div>
-            <h1 className="font-display text-cream font-bold" style={{ fontSize: "clamp(2.2rem, 5vw, 3.8rem)", lineHeight: 1.1 }}>
+            <h1 className={`font-display text-cream font-bold ${config.heroTitleClassName ?? ""}`} style={{ fontSize: "clamp(2.2rem, 5vw, 3.8rem)", lineHeight: 1.1 }}>
               {config.heroTitle}
             </h1>
             <p className="font-body text-cream/75 mt-4 max-w-xl leading-relaxed" style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)" }}>
