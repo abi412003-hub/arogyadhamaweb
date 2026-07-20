@@ -6,7 +6,7 @@ import Layout from "@/components/Layout";
 import { ACCOMMODATION_PHOTOS } from "@/lib/accommodation-photos";
 import {
   ChevronRight, ChevronLeft,
-  CheckCircle2, Phone, Send
+  CheckCircle2, Phone, Send, Info
 } from "lucide-react";
 
 /* ── Types ── */
@@ -283,9 +283,9 @@ function StepFive({ personal, medical, stay, currency, rate }: {
       </div>
       <div className="rounded-2xl p-5 border border-gold/25" style={{ background: "hsl(var(--gold) / 0.06)" }}>
         <div className="flex items-start gap-3">
-          <CheckCircle2 size={18} className="text-gold flex-shrink-0 mt-0.5" />
+          <Info size={18} className="text-gold flex-shrink-0 mt-0.5" />
           <p className="font-body text-sm text-forest/75 leading-relaxed">
-            We have received your request and are processing your reservation. Expect a confirmation shortly!
+            Please review your details above, then click &ldquo;Submit Booking Request&rdquo;. Our team will contact you shortly to confirm your booking and discuss your personalised treatment plan.
           </p>
         </div>
       </div>
