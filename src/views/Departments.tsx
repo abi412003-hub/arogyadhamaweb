@@ -19,6 +19,7 @@ import spinalImg from "@/assets/departments/spinal-hero.jpg";
 import diabetesImg from "@/assets/departments/diabetes-hero.jpg";
 import gastroImg from "@/assets/departments/gastroenterology-hero.jpg";
 import endocrinologyImg from "@/assets/departments/endocrinology-hero.jpg";
+import endocrinologyImg2 from "@/assets/departments/endocrinology-hero-2.png";
 import positiveHealthImg from "@/assets/departments/positive-health-hero.jpg";
 
 // "hsl(258 60% 30%)" -> "hsl(258 60% 30% / a)" for department-tinted scrims
@@ -148,7 +149,7 @@ const DEPARTMENTS = [
     key: "endocrinology",
     href: "/departments/endocrinology",
     icon: Zap,
-    image: endocrinologyImg,
+    image: [endocrinologyImg, endocrinologyImg2],
     name: "Endocrinology",
     tag: "Hormonal Health",
     filters: ["Lifestyle Diseases"],
@@ -252,14 +253,32 @@ export default function Departments() {
                     to={dept.href}
                     className="group relative block rounded-2xl border border-black/5 shadow-card overflow-hidden hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 h-full min-h-[19rem]"
                   >
-                    {/* Background photo */}
-                    <img
-                      src={dept.image}
-                      alt=""
-                      aria-hidden
-                      loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                    />
+                    {/* Background photo — a single image, or a slow crossfade slideshow when an array */}
+                    {(() => {
+                      const imgs = Array.isArray(dept.image) ? dept.image : [dept.image];
+                      const imgCls = "absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105";
+                      const slot = 5; // seconds each image is shown
+                      const cycle = imgs.length * slot;
+                      const slotPct = 100 / imgs.length;
+                      return (
+                        <>
+                          {imgs.length > 1 && (
+                            <style>{`@keyframes deptCardFade { 0% { opacity: 0; } 4% { opacity: 1; } ${slotPct.toFixed(2)}% { opacity: 1; } ${(slotPct + 4).toFixed(2)}% { opacity: 0; } 100% { opacity: 0; } }`}</style>
+                          )}
+                          <img src={imgs[0]} alt="" aria-hidden loading="lazy" className={imgCls} />
+                          {imgs.slice(1).map((src, k) => (
+                            <img
+                              key={src}
+                              src={src}
+                              alt=""
+                              aria-hidden
+                              className={imgCls}
+                              style={{ opacity: 0, animation: `deptCardFade ${cycle}s linear infinite`, animationDelay: `${(k + 1) * slot}s` }}
+                            />
+                          ))}
+                        </>
+                      );
+                    })()}
                     {/* Base scrim: bottom-weighted black (guarantees text legibility over any photo)
                         + department-tinted gradient (brand identity). Photo stays visible toward the top. */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />

@@ -1,6 +1,7 @@
 "use client";
 import DepartmentPageTemplate, { SectionHeading, ConditionGrid, IntegrativeCard, TeamCard } from "@/components/DepartmentPageTemplate";
 import endocrinologyHero from "@/assets/departments/endocrinology-hero.jpg";
+import endocrinologyHero2 from "@/assets/departments/endocrinology-hero-2.png";
 
 const CONDITIONS = [
   { name: "Hypothyroidism", icon: "🐢", desc: "Thyroid stimulation & hormone balance" },
@@ -53,8 +54,8 @@ export default function Endocrinology() {
       deptKey: "endocrinology",
       breadcrumbLabel: "Endocrinology",
       heroGradient: "linear-gradient(135deg, hsl(43 55% 13%) 0%, hsl(43 50% 20%) 50%, hsl(43 40% 26%) 100%)",
-      heroImage: endocrinologyHero,
-      heroImageAlt: "Glowing thyroid gland in a translucent human body",
+      heroImage: [endocrinologyHero, endocrinologyHero2],
+      heroImageAlt: "Endocrine health — thyroid gland and metabolic (obesity) conditions",
       heroImageBlend: "43 55% 13%",
       heroTagline: "Hormonal Health · HPA Axis · Lifestyle Medicine",
       heroTitle: "Department of Endocrinology",
