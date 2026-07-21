@@ -5,6 +5,10 @@ import Providers from "./providers";
 
 const CONVAI_AGENT_ID = "agent_2001kwf3rd9wewcsmcbt5ysm06az"; // "Prashanthi" voice agent
 
+// Google Analytics 4 — the measurement ID is a public identifier, not a secret.
+// Declared once here in the root layout so every route carries exactly one tag.
+const GA_MEASUREMENT_ID = "G-YD0M9KJRVT";
+
 const SITE_URL = "https://www.svyasaarogyadhama.com";
 const TITLE =
   "Arogyadhama — Integrative Medicine Hospital | S-VYASA, Bengaluru";
@@ -45,6 +49,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        {/* Google tag (gtag.js) */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GA_MEASUREMENT_ID}');`}
+        </Script>
+
         <Providers>{children}</Providers>
         {/* ElevenLabs Conversational AI voice agent — "Prashanthi" */}
         <elevenlabs-convai agent-id={CONVAI_AGENT_ID}></elevenlabs-convai>
