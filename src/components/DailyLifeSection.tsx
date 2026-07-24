@@ -5,15 +5,15 @@ import { Link } from "@/lib/router-compat";
 import { Clock } from "lucide-react";
 
 const schedule = [
-  { time: "5:30 AM", activity: "Om Meditation", desc: "Start your day with the sacred sound vibration. The Om resonates through the meditation hall as the campus awakens in the pre-dawn stillness." },
-  { time: "6:00 AM", activity: "Special Technique 1", desc: "Guided therapeutic yoga practice specific to your condition. Carefully prescribed asana sequences with individual attention from yoga therapists." },
-  { time: "7:00 AM", activity: "Maitri Milan", desc: "Community gathering and sharing — a circle of patients sharing their healing journey. One of the most powerful therapeutic elements of the Arogyadhama programme." },
-  { time: "8:00 AM", activity: "Breakfast", desc: "Sattvic, nutritious meals prepared fresh in our therapeutic kitchen — designed by clinical nutritionists to complement your treatment protocol." },
-  { time: "9:00 AM", activity: "Parameters & Consultation", desc: "Daily health check-up and doctor visit. Vital parameters are recorded, progress assessed, and treatment protocols adjusted as needed." },
-  { time: "10:00 AM", activity: "Health Drinks", desc: "Therapeutic herbal and fruit-based drinks to nourish and hydrate — formulated to support your treatment protocol." },
-  { time: "10:15 AM", activity: "Lecture", desc: "Educational session on health, yoga philosophy, and the science of integrative medicine. Topics include stress management, diet, and disease understanding." },
-  { time: "11:00 AM", activity: "Pranayama", desc: "Breathing exercises for vital energy balance. From Nadi Shodhana to Bhastrika — pranayama sessions are adapted to each patient's respiratory capacity and condition." },
-  { time: "12:00 PM", activity: "Special Technique 2", desc: "Condition-specific yoga therapy — the second dedicated therapeutic session of the day, often focused on specific organ systems or pain management." },
+  { time: "5:20 – 5:50 AM", activity: "Om Meditation", desc: "Start your day with the sacred sound vibration. The Om resonates through the meditation hall as the campus awakens in the pre-dawn stillness." },
+  { time: "6:00 – 6:55 AM", activity: "Special Technique 1", desc: "Guided therapeutic yoga practice specific to your condition. Carefully prescribed asana sequences with individual attention from yoga therapists." },
+  { time: "7:00 – 8:00 AM", activity: "Maitri Milan", desc: "Community gathering and sharing — a circle of patients sharing their healing journey. One of the most powerful therapeutic elements of the Arogyadhama programme." },
+  { time: "8:00 – 8:50 AM", activity: "Breakfast", desc: "Sattvic, nutritious meals prepared fresh in our therapeutic kitchen — designed by clinical nutritionists to complement your treatment protocol." },
+  { time: "9:00 – 9:45 AM", activity: "Parameters & Consultation", desc: "Daily health check-up and doctor visit. Vital parameters are recorded, progress assessed, and treatment protocols adjusted as needed." },
+  { time: "9:45 – 10:15 AM", activity: "Health Drinks", desc: "Therapeutic herbal and fruit-based drinks to nourish and hydrate — formulated to support your treatment protocol." },
+  { time: "10:15 – 11:00 AM", activity: "Lecture", desc: "Educational session on health, yoga philosophy, and the science of integrative medicine. Topics include stress management, diet, and disease understanding." },
+  { time: "11:10 AM – 12:00 PM", activity: "Pranayama", desc: "Breathing exercises for vital energy balance. From Nadi Shodhana to Bhastrika — pranayama sessions are adapted to each patient's respiratory capacity and condition." },
+  { time: "12:05 – 12:55 PM", activity: "Special Technique 2", desc: "Condition-specific yoga therapy — the second dedicated therapeutic session of the day, often focused on specific organ systems or pain management." },
 ];
 
 export default function DailyLifeSection() {
