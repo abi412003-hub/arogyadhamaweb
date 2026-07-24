@@ -139,6 +139,7 @@ const SCALE_OVERRIDES: Record<string, string> = {
 };
 
 function getDesignation(member: Member): string {
+  if (member.role) return member.role;
   if (member.designation) return member.designation;
   const q = member.qualifications.toUpperCase();
   if (q.includes("MPT") || q.includes("BPT")) return "Physiotherapist";
@@ -384,11 +385,11 @@ export default function OurTeam() {
   const [selected, setSelected] = useState<Member | null>(null);
 
   // Photos are served from static local assets (FALLBACKS). No remote fetch.
-  const enrich = (list: Member[], withTitle = false): Member[] =>
+  const enrich = (list: Member[], withTitle = false, role?: string): Member[] =>
     list.map((m) => {
       const slug = slugify(m.name);
       const displayName = withTitle && !/^dr\.?\s/i.test(m.name) ? `Dr. ${m.name}` : m.name;
-      return { ...m, name: displayName, image: FALLBACKS[slug] ?? m.image };
+      return { ...m, name: displayName, image: FALLBACKS[slug] ?? m.image, role: role ?? m.role };
     });
 
   const allDoctors = enrich(doctorsBase, true);
@@ -403,13 +404,13 @@ export default function OurTeam() {
       )}
       <TeamSection title="Doctors & Consultants" subtitle="Our Consultants" members={otherDoctors} onOpen={setSelected} />
       <div className="bg-maroon/5 h-px max-w-7xl mx-auto" />
-      <TeamSection title="Yoga Therapists" subtitle="Practice & Therapy" members={enrich(yogaBase)} onOpen={setSelected} />
+      <TeamSection title="Yoga Therapists" subtitle="Practice & Therapy" members={enrich(yogaBase, false, "Yoga Therapist")} onOpen={setSelected} />
       <div className="bg-maroon/5 h-px max-w-7xl mx-auto" />
-      <TeamSection title="Ayurveda Therapists" subtitle="Panchakarma & Therapy" members={enrich(ayurvedaBase)} onOpen={setSelected} />
+      <TeamSection title="Ayurveda Therapists" subtitle="Panchakarma & Therapy" members={enrich(ayurvedaBase, false, "Ayurveda Therapist")} onOpen={setSelected} />
       <div className="bg-maroon/5 h-px max-w-7xl mx-auto" />
-      <TeamSection title="Naturopathy Therapists" subtitle="Naturopathy & Therapy" members={enrich(naturopathyBase)} onOpen={setSelected} />
+      <TeamSection title="Naturopathy Therapists" subtitle="Naturopathy & Therapy" members={enrich(naturopathyBase, false, "Naturopathy Therapist")} onOpen={setSelected} />
       <div className="bg-maroon/5 h-px max-w-7xl mx-auto" />
-      <TeamSection title="Physiotherapists" subtitle="Physiotherapy & Rehabilitation" members={enrich(physioBase)} onOpen={setSelected} />
+      <TeamSection title="Physiotherapists" subtitle="Physiotherapy & Rehabilitation" members={enrich(physioBase, false, "Physiotherapist")} onOpen={setSelected} />
       <BioModal member={selected} onClose={() => setSelected(null)} />
     </Layout>
   );

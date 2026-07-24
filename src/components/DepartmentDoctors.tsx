@@ -79,11 +79,11 @@ const NAME_ALIASES: Record<string, string> = {
 
 // deptKey (from DepartmentPageTemplate ALL_DEPTS) -> doctor display names
 export const DEPT_DOCTORS_BY_KEY: Record<string, string[]> = {
-  neurology: ["Sharad Chaudhary", "Navya", "Sushmitha CT"],
-  oncology: ["Sharad Chaudhary", "Navya", "Sushmitha CT"],
+  neurology: ["Navya", "Sushmitha CT"],
+  oncology: ["Navya", "Sushmitha CT"],
   pulmonology: ["Titty George", "Moodala Giri Shankara", "Medini Shirsat"],
   cardiology: ["Titty George", "Moodala Giri Shankara", "Medini Shirsat"],
-  psychiatry: ["Promila Choudhary", "Vaishali Matapathi", "Vadde Venkata Karthik"],
+  psychiatry: ["Promila Choudhary", "Vadde Venkata Karthik"],
   rheumatology: ["Arundhati Goley", "Naveen Sankar", "Nagachaithanya"],
   spinal: ["Padmini Tekur", "Sriram Dongre", "Moulya Appanna", "Vishwas Papanna"],
   diabetes: ["Ankita Mishra", "Amshuman R Yadav"],
