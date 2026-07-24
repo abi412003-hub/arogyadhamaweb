@@ -102,6 +102,29 @@ const ROOMS = [
     tierBg: "hsl(27 50% 40%)",
   },
   {
+    key: "double-sharing-ac",
+    name: "Double Sharing/Triple sharing (Air Conditioned)",
+    subName: "Maitri Block",
+    weeklyRate: 17600,
+    capacity: "per person rate",
+    desc: "Designed for couples or companions healing together, the Maitri Block's double rooms offer the benefits of privacy with the warmth of a shared experience. Named after the Sanskrit concept of compassionate friendship.",
+    amenities: [
+      { icon: BedDouble, label: "Two single beds with full linen" },
+      { icon: ShowerHead, label: "Shared attached bathroom" },
+      { icon: Utensils, label: "Dining hall meals" },
+      { icon: Users, label: "Ideal for travelling companions" },
+      { icon: Wind, label: "Air conditioning" },
+    ],
+    highlights: ["Wardrobe for each person", "Good natural ventilation", "Community location"],
+    color: "hsl(var(--terracotta))",
+    accentBg: "hsl(var(--terracotta) / 0.07)",
+    svgPrimary: "hsl(27 55% 50%)",
+    svgSecondary: "hsl(27 45% 70%)",
+    perPerson: true,
+    tier: "Companion",
+    tierBg: "hsl(27 50% 40%)",
+  },
+  {
     key: "semi-deluxe",
     name: "Double Deluxe",
     subName: "Sheshadri",
@@ -144,29 +167,6 @@ const ROOMS = [
     perPerson: false,
     tier: "Deluxe",
     tierBg: "hsl(43 70% 28%)",
-  },
-  {
-    key: "double-sharing-ac",
-    name: "Double Sharing/Triple sharing (Air Conditioned)",
-    subName: "Maitri Block",
-    weeklyRate: 17600,
-    capacity: "per person rate",
-    desc: "Designed for couples or companions healing together, the Maitri Block's double rooms offer the benefits of privacy with the warmth of a shared experience. Named after the Sanskrit concept of compassionate friendship.",
-    amenities: [
-      { icon: BedDouble, label: "Two single beds with full linen" },
-      { icon: ShowerHead, label: "Shared attached bathroom" },
-      { icon: Utensils, label: "Dining hall meals" },
-      { icon: Users, label: "Ideal for travelling companions" },
-      { icon: Wind, label: "Air conditioning" },
-    ],
-    highlights: ["Wardrobe for each person", "Good natural ventilation", "Community location"],
-    color: "hsl(var(--terracotta))",
-    accentBg: "hsl(var(--terracotta) / 0.07)",
-    svgPrimary: "hsl(27 55% 50%)",
-    svgSecondary: "hsl(27 45% 70%)",
-    perPerson: true,
-    tier: "Companion",
-    tierBg: "hsl(27 50% 40%)",
   },
   {
     key: "suite",
@@ -577,10 +577,12 @@ export default function Accommodation() {
       <div className="sticky top-16 z-20 border-b border-border bg-white/95 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-1 py-2.5 overflow-x-auto">
           <span className="font-body text-xs text-sage uppercase tracking-widest font-semibold whitespace-nowrap mr-2">Jump to:</span>
-          {ROOMS.map((r) => (
+          {/* Single "Double Sharing/Triple sharing" jump link — the AC variant sits right
+              below the standard one, so this one anchor lands on both cards. */}
+          {ROOMS.filter((r) => r.key !== "double-sharing-ac").map((r) => (
             <a key={r.key} href={`#${r.key}`}
               className="font-body text-sm px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors hover:bg-cream text-forest/60 hover:text-forest">
-              {r.name}
+              {r.key === "double-sharing" ? "Double Sharing/Triple sharing" : r.name}
             </a>
           ))}
           {/* Currency selector — converts every room price to the chosen currency */}
