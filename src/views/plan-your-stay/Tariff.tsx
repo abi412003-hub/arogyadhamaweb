@@ -102,6 +102,9 @@ function fmtPrice(inr: number, currency: Currency, rate: number | null) {
 
 /* ── Table View ── */
 function TableView({ currency, rate }: { currency: Currency; rate: number | null }) {
+  const [tableAC, setTableAC] = useState(false); // Double / Triple Sharing row: false = Non-AC, true = AC
+  const tablePricesFor = (r: typeof ROOMS[0]) =>
+    r.key === "double-sharing" && tableAC ? DOUBLE_SHARING_AC_PRICES : r.prices;
   return (
     <div className="overflow-x-auto rounded-2xl border border-border shadow-card">
       <table className="w-full min-w-[640px]">
@@ -117,10 +120,23 @@ function TableView({ currency, rate }: { currency: Currency; rate: number | null
             <tr key={r.key} className={i % 2 === 0 ? "bg-white" : "bg-cream/40"}>
               <td className="px-5 py-4">
                 <div className="font-display font-semibold text-forest text-sm">{r.name}</div>
-                <div className="font-body text-sage text-xs">{r.subName}{r.perPerson ? " · per person" : ""}</div>
+                <div className="font-body text-sage text-xs flex items-center gap-1.5 flex-wrap">
+                  <span>{r.subName}{r.perPerson ? " · per person" : ""}</span>
+                  {r.key === "double-sharing" && (
+                    <select
+                      value={tableAC ? "ac" : "nonac"}
+                      onChange={(e) => setTableAC(e.target.value === "ac")}
+                      aria-label="AC or Non-AC"
+                      className="rounded-md border border-border bg-white px-1.5 py-0.5 font-body text-[11px] font-semibold text-forest focus:outline-none focus:ring-2 focus:ring-maroon/30 cursor-pointer"
+                    >
+                      <option value="nonac">Non-AC</option>
+                      <option value="ac">AC</option>
+                    </select>
+                  )}
+                </div>
               </td>
               {DURATIONS.map((w, wi) => (
-                <td key={w} className="px-5 py-4 font-body text-forest text-sm font-medium">{fmtPrice(r.prices[wi], currency, rate)}</td>
+                <td key={w} className="px-5 py-4 font-body text-forest text-sm font-medium">{fmtPrice(tablePricesFor(r)[wi], currency, rate)}</td>
               ))}
             </tr>
           ))}
