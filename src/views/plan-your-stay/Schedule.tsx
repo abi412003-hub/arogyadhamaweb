@@ -278,8 +278,8 @@ export default function Schedule() {
                   viewport={{ once: true, margin: "-40px" }} transition={{ duration: 0.5, delay: 0.05 }}>
 
                   {/* Time */}
-                  <div className="w-[88px] sm:w-[100px] flex-shrink-0 text-right pt-4">
-                    <span className="font-body text-xs font-semibold text-sage">{item.time}</span>
+                  <div className="w-[88px] sm:w-[100px] flex-shrink-0 text-right pt-4 pr-4">
+                    <span className="font-body text-xs font-semibold text-sage leading-tight">{item.time}</span>
                   </div>
 
                   {/* Dot on the line */}
