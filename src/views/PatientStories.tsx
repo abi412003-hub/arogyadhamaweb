@@ -3,7 +3,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "@/lib/router-compat";
 import Layout from "@/components/Layout";
-import { ChevronRight, Star, Quote, MapPin, Heart, Play, ArrowRight } from "lucide-react";
+import { ChevronRight, ChevronLeft, Star, Quote, MapPin, Heart, Play, ArrowRight } from "lucide-react";
 
 /* ── Data ── */
 const CONDITION_FILTERS = [
@@ -171,20 +171,81 @@ function TestimonialCard({ t, i }: { t: typeof TESTIMONIALS[0]; i: number }) {
   );
 }
 
-/* ── Featured video placeholder ── */
+/* ── Featured video carousel ── */
+const TESTIMONIAL_VIDEOS = [
+  "/testimonials/v1.mp4",
+  "/testimonials/v2.mp4",
+  "/testimonials/v3.mp4",
+  "/testimonials/v4.mp4",
+  "/testimonials/v5.mp4",
+];
+
 function FeaturedVideo() {
+  const [index, setIndex] = useState(0);
+  const total = TESTIMONIAL_VIDEOS.length;
+  // Wrap around so "next" past the last video returns to the first, and vice versa.
+  const go = (dir: number) => setIndex((i) => (i + dir + total) % total);
+
   return (
-    <div className="relative rounded-3xl overflow-hidden border border-border shadow-card-hover bg-maroon">
-      <video
-        controls
-        playsInline
-        preload="metadata"
-        poster="/testimonials/patient-testimonial-poster.jpg"
-        className="w-full h-auto max-h-[560px] bg-maroon"
-      >
-        <source src="/testimonials/patient-testimonial.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+    <div className="relative">
+      <div className="relative rounded-3xl overflow-hidden border border-border shadow-card-hover bg-maroon">
+        {/* key forces the <video> to reload its source when the index changes */}
+        <video
+          key={index}
+          controls
+          playsInline
+          preload="metadata"
+          className="w-full h-auto max-h-[560px] bg-maroon"
+        >
+          <source src={TESTIMONIAL_VIDEOS[index]} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+
+        {/* Prev / Next arrows */}
+        {total > 1 && (
+          <>
+            <button
+              type="button"
+              onClick={() => go(-1)}
+              aria-label="Previous video"
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full flex items-center justify-center bg-cream/85 text-maroon shadow-card hover:bg-gold hover:text-forest-dark transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
+            >
+              <ChevronLeft size={22} />
+            </button>
+            <button
+              type="button"
+              onClick={() => go(1)}
+              aria-label="Next video"
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full flex items-center justify-center bg-cream/85 text-maroon shadow-card hover:bg-gold hover:text-forest-dark transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
+            >
+              <ChevronRight size={22} />
+            </button>
+            {/* Counter badge */}
+            <div className="absolute top-3 right-3 font-body text-xs font-semibold text-cream px-2.5 py-1 rounded-full bg-black/45">
+              {index + 1} / {total}
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* Dots */}
+      {total > 1 && (
+        <div className="flex items-center justify-center gap-2 mt-4">
+          {TESTIMONIAL_VIDEOS.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setIndex(i)}
+              aria-label={`Go to video ${i + 1}`}
+              className="h-2.5 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-gold"
+              style={{
+                width: i === index ? 28 : 10,
+                background: i === index ? "hsl(var(--gold))" : "hsl(var(--maroon) / 0.25)",
+              }}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
