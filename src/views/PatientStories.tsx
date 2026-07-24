@@ -20,7 +20,7 @@ const TESTIMONIALS = [
     id: 1,
     name: "Ms. Naina",
     location: "New York, USA",
-    condition: "wellness",
+    conditions: ["wellness"],
     conditionLabel: "General Wellness",
     rating: 5,
     quote:
@@ -35,7 +35,7 @@ const TESTIMONIALS = [
     id: 2,
     name: "Mr. Pishu",
     location: "India",
-    condition: "wellness",
+    conditions: ["wellness", "cardiac"],
     conditionLabel: "Multiple Conditions",
     rating: 5,
     quote:
@@ -50,7 +50,7 @@ const TESTIMONIALS = [
     id: 3,
     name: "Ranganath Desai",
     location: "Karnataka, India",
-    condition: "neurological",
+    conditions: ["neurological", "diabetes"],
     conditionLabel: "Paralysis & Diabetes",
     rating: 5,
     quote:
@@ -65,7 +65,7 @@ const TESTIMONIALS = [
     id: 4,
     name: "Ms. Vidya",
     location: "Singapore",
-    condition: "wellness",
+    conditions: ["wellness"],
     conditionLabel: "Holistic Healing",
     rating: 5,
     quote:
@@ -80,7 +80,7 @@ const TESTIMONIALS = [
     id: 5,
     name: "Padmanabhan Ji & Revati Ji",
     location: "Tamil Nadu, India",
-    condition: "pain",
+    conditions: ["pain"],
     conditionLabel: "Pain Management",
     rating: 5,
     quote:
@@ -284,7 +284,7 @@ export default function PatientStories() {
 
   const filtered = activeFilter === "all"
     ? TESTIMONIALS
-    : TESTIMONIALS.filter((t) => t.condition === activeFilter);
+    : TESTIMONIALS.filter((t) => t.conditions.includes(activeFilter));
 
   return (
     <Layout>
