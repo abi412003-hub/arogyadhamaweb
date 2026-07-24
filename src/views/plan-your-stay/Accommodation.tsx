@@ -147,7 +147,7 @@ const ROOMS = [
   },
   {
     key: "double-sharing-ac",
-    name: "Double Sharing/Triple sharing",
+    name: "Double Sharing/Triple sharing (Air Conditioned)",
     subName: "Maitri Block",
     weeklyRate: 17600,
     capacity: "per person rate",
