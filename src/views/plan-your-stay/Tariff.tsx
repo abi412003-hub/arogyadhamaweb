@@ -58,16 +58,6 @@ const ROOMS = [
     amenities: ["Deluxe attached bathroom", "AC room", "Garden view", "Premium furnishings", "Priority consultations"],
   },
   {
-    key: "double-deluxe",
-    name: "Semi Deluxe",
-    subName: "Anugraha",
-    prices: [17600, 34200, 50800, 67400],
-    emoji: "🌟",
-    desc: "Premium shared double room in Anugraha. Superior comfort with all deluxe amenities per person.",
-    amenities: ["Deluxe attached bathroom", "AC room", "Upgraded décor", "Premium furnishings"],
-    perPerson: true,
-  },
-  {
     key: "suite",
     name: "Suite Sharing",
     subName: "Premium Block",

@@ -14,11 +14,11 @@ const PHOTO_SLUG: Record<string, string> = {
   dormitory: "dormitory",
   single: "ashirwad",
   "double-sharing": "maitri",
+  // AC variant of Double Sharing reuses the Maitri photo set.
+  "double-sharing-ac": "maitri",
   "single-deluxe": "sheshadri",
   // Restored Double Deluxe card reuses the Single Deluxe (sheshadri) photo set.
   "semi-deluxe": "sheshadri",
-  // Despite the name, this card is the semi-deluxe room -- hence the photo folder.
-  "double-deluxe": "semi-deluxe",
   suite: "suites",
 };
 
@@ -146,26 +146,27 @@ const ROOMS = [
     tierBg: "hsl(43 70% 28%)",
   },
   {
-    key: "double-deluxe",
-    name: "Semi Deluxe",
-    subName: "Anugraha",
+    key: "double-sharing-ac",
+    name: "Double Sharing/Triple sharing",
+    subName: "Maitri Block",
     weeklyRate: 17600,
-    capacity: "2 persons (per person rate)",
-    desc: "The deluxe shared option — all the premium amenities of Anugraha at a per-person rate for two. Spacious enough for two to heal comfortably without compromise.",
+    capacity: "per person rate",
+    desc: "Designed for couples or companions healing together, the Maitri Block's double rooms offer the benefits of privacy with the warmth of a shared experience. Named after the Sanskrit concept of compassionate friendship.",
     amenities: [
-      { icon: BedDouble, label: "Two deluxe beds with premium linen" },
-      { icon: ShowerHead, label: "Luxury attached bathroom" },
-      { icon: Wind, label: "Air conditioning" },
+      { icon: BedDouble, label: "Two single beds with full linen" },
+      { icon: ShowerHead, label: "Shared attached bathroom" },
       { icon: Utensils, label: "Dining hall meals" },
+      { icon: Users, label: "Ideal for travelling companions" },
+      { icon: Wind, label: "Air conditioning" },
     ],
-    highlights: ["Garden / nature view", "Upgraded décor", "Priority consultations"],
-    color: "hsl(200 55% 32%)",
-    accentBg: "hsl(200 55% 32% / 0.06)",
-    svgPrimary: "hsl(200 55% 25%)",
-    svgSecondary: "hsl(200 45% 55%)",
+    highlights: ["Wardrobe for each person", "Good natural ventilation", "Community location"],
+    color: "hsl(var(--terracotta))",
+    accentBg: "hsl(var(--terracotta) / 0.07)",
+    svgPrimary: "hsl(27 55% 50%)",
+    svgSecondary: "hsl(27 45% 70%)",
     perPerson: true,
-    tier: "Semi Deluxe",
-    tierBg: "hsl(200 55% 32%)",
+    tier: "Companion",
+    tierBg: "hsl(27 50% 40%)",
   },
   {
     key: "suite",
@@ -472,9 +473,9 @@ function ComparisonTable({ currency, rate }: { currency: Currency; rate: number 
     dormitory: [false, false, false, false, false, false],
     single: [true, true, false, false, false, false],
     "double-sharing": [true, true, true, false, false, false],
+    "double-sharing-ac": [true, true, true, false, false, false], // AC Double Sharing
     "semi-deluxe": [true, true, true, true, false, true], // Double Deluxe
     "single-deluxe": [true, true, true, true, false, true], // Single Deluxe
-    "double-deluxe": [true, true, true, true, false, true], // Semi Deluxe
     suite: [true, true, true, true, true, true], // Suite Sharing
   };
 

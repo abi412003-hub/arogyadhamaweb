@@ -30,7 +30,7 @@ const ROOM_OPTIONS = [
   { slug: "maitri", photoKey: "maitri", name: "Double Sharing", sub: "Maitri Block", inr: 11000, pp: true, label: "Double Sharing (Maitri) — from ₹11,000/week per person" },
   { slug: "double-deluxe", photoKey: "sheshadri", name: "Double Deluxe", sub: "Sheshadri", inr: 22000, pp: true, label: "Double Deluxe (Sheshadri) — from ₹22,000/week per person" },
   { slug: "sheshadri", photoKey: "sheshadri", name: "Single Deluxe", sub: "Sheshadri", inr: 27500, pp: false, label: "Single Deluxe (Sheshadri) — from ₹27,500/week" },
-  { slug: "semi-deluxe", photoKey: "semi-deluxe", name: "Semi Deluxe", sub: "Anugraha", inr: 17600, pp: true, label: "Semi Deluxe (Anugraha) — from ₹17,600/week per person" },
+  { slug: "double-sharing-ac", photoKey: "maitri", name: "Double Sharing/Triple sharing (AC)", sub: "Maitri Block", inr: 17600, pp: true, label: "Double Sharing/Triple Sharing AC (Maitri) — from ₹17,600/week per person" },
   { slug: "suites", photoKey: "suites", name: "Suite Sharing", sub: "Premium Block", inr: 30800, pp: true, label: "Suite Sharing — from ₹30,800/week per person" },
 ];
 
