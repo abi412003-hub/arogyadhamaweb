@@ -472,7 +472,7 @@ function ComparisonTable({ currency, rate }: { currency: Currency; rate: number 
   const roomFeatures: Record<string, boolean[]> = {
     dormitory: [false, false, false, false, false, false],
     single: [true, true, false, false, false, false],
-    "double-sharing": [true, true, true, false, false, false],
+    "double-sharing": [true, true, false, false, false, false],
     "double-sharing-ac": [true, true, true, false, false, false], // AC Double Sharing
     "semi-deluxe": [true, true, true, true, false, true], // Double Deluxe
     "single-deluxe": [true, true, true, true, false, true], // Single Deluxe
