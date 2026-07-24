@@ -30,7 +30,7 @@ const ROOMS = [
   },
   {
     key: "double-sharing",
-    name: "Double Sharing",
+    name: "Double / Triple Sharing",
     subName: "Maitri Block",
     prices: [11000, 21000, 31000, 41000],
     emoji: "👥",
@@ -70,6 +70,10 @@ const ROOMS = [
 ];
 
 const DURATIONS = [1, 2, 3, 4];
+
+// The Double / Triple Sharing card offers an AC option. Non-AC uses the room's
+// base `prices`; AC uses this per-person progression (1/2/3/4 weeks) in INR.
+const DOUBLE_SHARING_AC_PRICES = [17600, 34200, 50800, 67400];
 
 const ADD_ONS = [
   { key: "nat-cat1", label: "Naturopathy / Ayurveda Category 1", weeklyRate: 4000, color: "hsl(var(--sage))" },
@@ -139,7 +143,12 @@ export default function Tariff() {
   const [step, setStep] = useState(1);
   const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
   const [weeks, setWeeks] = useState(1);
+  const [acRoom, setAcRoom] = useState(false); // Double / Triple Sharing: false = Non-AC (₹11,000), true = AC (₹17,600)
   const [addOns, setAddOns] = useState<Set<string>>(new Set());
+
+  // Double / Triple Sharing has an AC toggle; every other room uses its base prices.
+  const pricesFor = (r: typeof ROOMS[0]) =>
+    r.key === "double-sharing" && acRoom ? DOUBLE_SHARING_AC_PRICES : r.prices;
   const [currency, setCurrency] = useState<Currency>("INR"); // INR is the official chart figure
   const [rate, setRate] = useState<number | null>(null); // live USD -> INR, null until fetched
 
@@ -158,7 +167,7 @@ export default function Tariff() {
   }, []);
 
   const room = ROOMS.find((r) => r.key === selectedRoom);
-  const accomTotal = room ? room.prices[weeks - 1] : 0; // INR, non-linear per duration
+  const accomTotal = room ? pricesFor(room)[weeks - 1] : 0; // INR, non-linear per duration
   const addOnTotal = Array.from(addOns).reduce((sum, key) => {
     const ao = ADD_ONS.find((a) => a.key === key);
     return sum + (ao ? ao.weeklyRate * weeks : 0);
@@ -273,8 +282,10 @@ export default function Tariff() {
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {ROOMS.map((r) => (
-                      <button key={r.key} onClick={() => { setSelectedRoom(r.key); setStep(Math.max(step, 2)); }}
-                        className="text-left rounded-2xl border-2 p-5 transition-all duration-200 hover:shadow-card"
+                      <div key={r.key} role="button" tabIndex={0}
+                        onClick={() => { setSelectedRoom(r.key); setStep(Math.max(step, 2)); }}
+                        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setSelectedRoom(r.key); setStep(Math.max(step, 2)); } }}
+                        className="cursor-pointer text-left rounded-2xl border-2 p-5 transition-all duration-200 hover:shadow-card focus:outline-none focus:ring-2 focus:ring-maroon/30"
                         style={{
                           borderColor: selectedRoom === r.key ? "hsl(var(--maroon))" : "hsl(var(--border))",
                           background: selectedRoom === r.key ? "hsl(var(--maroon) / 0.04)" : "white",
@@ -283,10 +294,25 @@ export default function Tariff() {
                           <div>
                             <div className="text-2xl mb-1">{r.emoji}</div>
                             <div className="font-display font-bold text-forest text-base">{r.name}</div>
-                            <div className="font-body text-sage text-xs">{r.subName}{r.perPerson ? " · per person" : ""}</div>
+                            <div className="font-body text-sage text-xs flex items-center gap-1.5 flex-wrap">
+                              <span>{r.subName}{r.perPerson ? " · per person" : ""}</span>
+                              {r.key === "double-sharing" && (
+                                <select
+                                  value={acRoom ? "ac" : "nonac"}
+                                  onClick={(e) => e.stopPropagation()}
+                                  onKeyDown={(e) => e.stopPropagation()}
+                                  onChange={(e) => { e.stopPropagation(); setAcRoom(e.target.value === "ac"); setSelectedRoom("double-sharing"); setStep(Math.max(step, 2)); }}
+                                  aria-label="AC or Non-AC"
+                                  className="rounded-md border border-border bg-white px-1.5 py-0.5 font-body text-[11px] font-semibold text-forest focus:outline-none focus:ring-2 focus:ring-maroon/30 cursor-pointer"
+                                >
+                                  <option value="nonac">Non-AC</option>
+                                  <option value="ac">AC</option>
+                                </select>
+                              )}
+                            </div>
                           </div>
                           <div className="text-right">
-                            <div className="font-display font-bold text-gold text-lg">{fmtPrice(r.prices[0], currency, rate)}</div>
+                            <div className="font-display font-bold text-gold text-lg">{fmtPrice(pricesFor(r)[0], currency, rate)}</div>
                             <div className="font-body text-sage text-xs">/week</div>
                           </div>
                         </div>
@@ -301,7 +327,7 @@ export default function Tariff() {
                             <CheckCircle2 size={13} className="text-gold" /> Selected
                           </div>
                         )}
-                      </button>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -328,7 +354,7 @@ export default function Tariff() {
                             <div className="font-body text-sm">{w === 1 ? "Week" : "Weeks"}</div>
                             {selectedRoom && (
                               <div className="font-body text-xs mt-1 opacity-70">
-                                {fmtPrice(ROOMS.find(r => r.key === selectedRoom)!.prices[wi], currency, rate)}
+                                {fmtPrice(pricesFor(ROOMS.find(r => r.key === selectedRoom)!)[wi], currency, rate)}
                               </div>
                             )}
                           </button>

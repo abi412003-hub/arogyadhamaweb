@@ -6,7 +6,7 @@ import { ChevronRight, Moon, Sunrise, Sun, Sunset, Star } from "lucide-react";
 
 const SCHEDULE = [
   {
-    time: "5:30 AM",
+    time: "5:20 – 5:50 AM",
     label: "Om Meditation",
     desc: "Start your day with the sacred sound vibration. The Om resonates through the meditation hall as the campus awakens in the pre-dawn stillness.",
     icon: "🕉️",
@@ -14,7 +14,7 @@ const SCHEDULE = [
     period: "dawn",
   },
   {
-    time: "6:00 AM",
+    time: "6:00 – 6:55 AM",
     label: "Special Technique 1",
     desc: "Guided therapeutic yoga practice specific to your condition. Carefully prescribed asana sequences with individual attention from yoga therapists.",
     icon: "🧘",
@@ -22,7 +22,7 @@ const SCHEDULE = [
     period: "dawn",
   },
   {
-    time: "7:00 AM",
+    time: "7:00 – 8:00 AM",
     label: "Maitri Milan",
     desc: "Community gathering and sharing — a circle of patients sharing their healing journey. One of the most powerful therapeutic elements of the Arogyadhama programme.",
     icon: "🤝",
@@ -30,7 +30,7 @@ const SCHEDULE = [
     period: "morning",
   },
   {
-    time: "8:00 AM",
+    time: "8:00 – 8:50 AM",
     label: "Breakfast",
     desc: "Sattvic, nutritious meals prepared fresh in our therapeutic kitchen — designed by clinical nutritionists to complement your treatment protocol.",
     icon: "🍛",
@@ -38,7 +38,7 @@ const SCHEDULE = [
     period: "morning",
   },
   {
-    time: "9:00 AM",
+    time: "9:00 – 9:45 AM",
     label: "Parameters & Consultation",
     desc: "Daily health check-up and doctor visit. Vital parameters are recorded, progress assessed, and treatment protocols adjusted as needed.",
     icon: "🩺",
@@ -46,7 +46,7 @@ const SCHEDULE = [
     period: "morning",
   },
   {
-    time: "10:00 AM",
+    time: "9:45 – 10:15 AM",
     label: "Health Drinks",
     desc: "Therapeutic herbal and fruit-based drinks to nourish and hydrate — formulated to support your treatment protocol.",
     icon: "🥤",
@@ -54,7 +54,7 @@ const SCHEDULE = [
     period: "morning",
   },
   {
-    time: "10:15 AM",
+    time: "10:15 – 11:00 AM",
     label: "Lecture",
     desc: "Educational session on health, yoga philosophy, and the science of integrative medicine. Topics include stress management, diet, and disease understanding.",
     icon: "📚",
@@ -62,7 +62,7 @@ const SCHEDULE = [
     period: "morning",
   },
   {
-    time: "11:00 AM",
+    time: "11:10 AM – 12:00 PM",
     label: "Pranayama",
     desc: "Breathing exercises for vital energy balance. From Nadi Shodhana to Bhastrika — pranayama sessions are adapted to each patient's respiratory capacity and condition.",
     icon: "🌬️",
@@ -70,7 +70,7 @@ const SCHEDULE = [
     period: "morning",
   },
   {
-    time: "12:00 PM",
+    time: "12:05 – 12:55 PM",
     label: "Special Technique 2",
     desc: "Condition-specific yoga therapy — the second dedicated therapeutic session of the day, often focused on specific organ systems or pain management.",
     icon: "✨",
@@ -86,15 +86,23 @@ const SCHEDULE = [
     period: "afternoon",
   },
   {
-    time: "3:00 PM",
-    label: "Cyclic Meditation",
-    desc: "Arogyadhama's signature deep relaxation technique — alternating movement and stillness to create states of profound physiological rest. Scientifically shown to be more restorative than sleep.",
+    time: "2:30 PM",
+    label: "MSRT",
+    desc: "Mind Sound Resonance Technique — a guided meditation using the vibration of sound to induce deep mental relaxation and calm the nervous system.",
     icon: "🌀",
     category: "meditation",
     period: "afternoon",
   },
   {
-    time: "4:00 PM",
+    time: "3:20 PM",
+    label: "Pranayama-II",
+    desc: "The second pranayama session of the day — breathing practices to balance vital energy (prana), adapted to each patient's respiratory capacity and condition.",
+    icon: "🌬️",
+    category: "yoga",
+    period: "afternoon",
+  },
+  {
+    time: "4:00 – 5:00 PM",
     label: "Special Technique 3",
     desc: "Therapeutic practice tailored to your specific condition — may include Naturopathy treatments, Acupuncture, Physiotherapy, or Ayurvedic procedures.",
     icon: "💆",
@@ -110,7 +118,7 @@ const SCHEDULE = [
     period: "evening",
   },
   {
-    time: "5:15 PM",
+    time: "5:15 – 6:00 PM",
     label: "Tuning to Nature",
     desc: "Outdoor mindfulness walk along the nature paths of Prashanti Kutiram — with the Bannerghatta hills on the horizon and birdsong as your soundtrack.",
     icon: "🌿",
@@ -118,7 +126,7 @@ const SCHEDULE = [
     period: "evening",
   },
   {
-    time: "6:00 PM",
+    time: "6:00 – 6:30 PM",
     label: "Bhajan",
     desc: "Devotional singing for mental peace. The community gathers to sing sacred songs — the vibration of group singing has profound effects on the nervous system and group cohesion.",
     icon: "🎵",
@@ -126,7 +134,7 @@ const SCHEDULE = [
     period: "evening",
   },
   {
-    time: "6:30 PM",
+    time: "6:40 – 7:40 PM",
     label: "Trataka & MSRT",
     desc: "Candle gazing meditation (Trataka) followed by Mind Sound Resonance Technique (MSRT) — a powerful combination for stress reduction and deep mental relaxation.",
     icon: "🕯️",
@@ -134,7 +142,7 @@ const SCHEDULE = [
     period: "evening",
   },
   {
-    time: "7:30 PM",
+    time: "7:40 – 8:30 PM",
     label: "Dinner",
     desc: "Light, easy-to-digest evening meal. Designed to not burden the digestive system overnight, supporting the body's natural nocturnal healing processes.",
     icon: "🫕",
@@ -142,7 +150,7 @@ const SCHEDULE = [
     period: "evening",
   },
   {
-    time: "8:15 PM",
+    time: "8:15 – 9:15 PM",
     label: "Happy Assembly",
     desc: "Community celebration on Wednesday, Friday & Sunday evenings — cultural programs, patient sharing, music, and joyful connection. One of the most cherished aspects of the Arogyadhama experience.",
     icon: "🎉",
