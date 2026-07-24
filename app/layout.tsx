@@ -25,7 +25,14 @@ export const metadata: Metadata = {
   },
   description: DESCRIPTION,
   authors: [{ name: "Arogyadhama, S-VYASA Deemed University" }],
-  icons: { icon: "/favicon.png" },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.png", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/favicon.png",
+  },
   openGraph: {
     type: "website",
     url: SITE_URL,
