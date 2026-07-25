@@ -1,21 +1,24 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "@/lib/router-compat";
 import Layout from "@/components/Layout";
-import { ChevronRight, CheckCircle2, Info, Calendar, Table2, Calculator } from "lucide-react";
+import { ChevronRight, CheckCircle2, Info, Table2, Calculator } from "lucide-react";
+import { useGeoPricing, formatRegionPrice, type PriceCurrency } from "@/hooks/useGeoPricing";
+import RegionPriceGate from "@/components/RegionPriceGate";
 
 /* ── Data ── */
-// prices: [1 week, 2 weeks, 3 weeks, 4 weeks] in USD, per person — verbatim from the
-// official "$ Charges" price sheet. Non-linear: longer stays are discounted. Every tariff
-// is fully inclusive — Yoga, Ayurveda, Naturopathy, Physiotherapy, Acupuncture &
-// Acupressure are all included. Row order follows the printed chart.
+// Two independent per-person price lists (not conversions): INR shown inside India,
+// USD shown outside India. Each is [1 week, 2 weeks, 3 weeks, 4 weeks], cumulative and
+// non-linear (longer stays discounted). Every tariff is fully inclusive — Yoga, Ayurveda,
+// Naturopathy, Physiotherapy, Acupuncture & Acupressure are all included.
 const ROOMS = [
   {
     key: "dormitory",
     name: "Dormitory",
     subName: "Pushpa / Ashwini Ward",
-    prices: [250, 490, 730, 970],
+    pricesINR: [6600, 12200, 17800, 23400],
+    pricesUSD: [250, 490, 730, 970],
     emoji: "🏨",
     desc: "Shared dormitory accommodation with basic amenities. Ideal for budget-conscious patients seeking the full healing experience.",
     amenities: ["Shared bathroom", "Basic furnishings", "Common lounge", "Yoga kit provided"],
@@ -24,7 +27,8 @@ const ROOMS = [
     key: "single",
     name: "Single Room",
     subName: "Ashirwad Block",
-    prices: [500, 900, 1300, 1600],
+    pricesINR: [13200, 25400, 37600, 49800],
+    pricesUSD: [500, 900, 1300, 1600],
     emoji: "🛏️",
     desc: "Private single room with attached bathroom. Comfortable, quiet, and well-suited for solo travellers requiring privacy.",
     amenities: ["Attached bathroom", "Study table", "Wardrobe", "Room service meals"],
@@ -33,7 +37,8 @@ const ROOMS = [
     key: "double-sharing",
     name: "Double / Triple Sharing",
     subName: "Maitri Block",
-    prices: [450, 800, 1150, 1450],
+    pricesINR: [11000, 21000, 31000, 41000],
+    pricesUSD: [450, 800, 1150, 1450],
     emoji: "👥",
     desc: "Shared double room per person. Perfect for couples or companions travelling together for healing.",
     amenities: ["Shared attached bathroom", "Two beds", "Wardrobe", "Room service meals"],
@@ -43,7 +48,8 @@ const ROOMS = [
     key: "semi-deluxe",
     name: "Double Deluxe",
     subName: "Sheshadri",
-    prices: [750, 1350, 1900, 2400],
+    pricesINR: [22000, 43000, 64000, 85000],
+    pricesUSD: [750, 1350, 1900, 2400],
     emoji: "✨",
     desc: "An air-conditioned double bedroom shared between two — a step up from standard sharing, with climate control for cooler comfort.",
     amenities: ["Attached bathroom", "AC room", "Two beds", "Wardrobe for each person"],
@@ -53,7 +59,8 @@ const ROOMS = [
     key: "single-deluxe",
     name: "Single Deluxe",
     subName: "Sheshadri",
-    prices: [750, 1350, 1900, 2400],
+    pricesINR: [27500, 54000, 80500, 107000],
+    pricesUSD: [750, 1350, 1900, 2400],
     emoji: "⭐",
     desc: "Premium single room in the flagship Sheshadri block with upgraded furnishings and garden views.",
     amenities: ["Deluxe attached bathroom", "AC room", "Garden view", "Premium furnishings", "Priority consultations"],
@@ -62,7 +69,8 @@ const ROOMS = [
     key: "suite",
     name: "Suite Sharing",
     subName: "Premium Block",
-    prices: [1000, 1800, 2550, 3200],
+    pricesINR: [30800, 60600, 90400, 120200],
+    pricesUSD: [1000, 1800, 2550, 3200],
     emoji: "👑",
     desc: "The most luxurious option — a suite shared between two, offering the highest comfort level at Arogyadhama.",
     amenities: ["Luxury bathroom", "AC suite", "Sitting area", "Priority everything", "Concierge support"],
@@ -72,33 +80,26 @@ const ROOMS = [
 
 const DURATIONS = [1, 2, 3, 4];
 
-// The Double / Triple Sharing card offers an AC option. Non-AC uses the room's
-// base `prices`; AC uses this per-person progression (1/2/3/4 weeks) in USD.
-const DOUBLE_SHARING_AC_PRICES = [500, 900, 1300, 1600];
+// The Double / Triple Sharing card offers an AC option. Non-AC uses the room's base
+// prices; AC uses this per-person progression (1/2/3/4 weeks), INR and USD lists.
+const DOUBLE_SHARING_AC = {
+  INR: [17600, 34200, 50800, 67400],
+  USD: [500, 900, 1300, 1600],
+};
 
-// Accommodation packages are priced in USD.
-function fmtUSD(n: number) {
-  return "$" + n.toLocaleString("en-US");
+type RoomPrices = { INR: number[]; USD: number[] };
+function roomPrices(r: typeof ROOMS[0], acRoom: boolean): RoomPrices {
+  if (r.key === "double-sharing" && acRoom) return DOUBLE_SHARING_AC;
+  return { INR: r.pricesINR, USD: r.pricesUSD };
 }
-function fmtINR(n: number) {
-  return "₹" + n.toLocaleString("en-IN");
-}
-
-type Currency = "USD" | "INR";
-// Only used before the live daily rate finishes loading (or if the source is down).
-const FALLBACK_RATE = 90;
-// The USD chart is the source of truth; INR is derived from the live daily rate.
-function fmtPrice(usd: number, currency: Currency, rate: number | null) {
-  return currency === "USD"
-    ? fmtUSD(usd)
-    : fmtINR(Math.round(usd * (rate ?? FALLBACK_RATE))); // e.g. $250 × 96 → ₹24,000
+// Region price at a given week index, or "—" while the location is unresolved.
+function priceAt(p: RoomPrices, wi: number, currency: PriceCurrency | null) {
+  return formatRegionPrice(p.INR[wi], p.USD[wi], currency) ?? "—";
 }
 
 /* ── Table View ── */
-function TableView({ currency, rate }: { currency: Currency; rate: number | null }) {
+function TableView({ currency }: { currency: PriceCurrency | null }) {
   const [tableAC, setTableAC] = useState(false); // Double / Triple Sharing row: false = Non-AC, true = AC
-  const tablePricesFor = (r: typeof ROOMS[0]) =>
-    r.key === "double-sharing" && tableAC ? DOUBLE_SHARING_AC_PRICES : r.prices;
   return (
     <div className="overflow-x-auto rounded-2xl border border-border shadow-card">
       <table className="w-full min-w-[640px]">
@@ -110,30 +111,33 @@ function TableView({ currency, rate }: { currency: Currency; rate: number | null
           </tr>
         </thead>
         <tbody>
-          {ROOMS.map((r, i) => (
-            <tr key={r.key} className={i % 2 === 0 ? "bg-white" : "bg-cream/40"}>
-              <td className="px-5 py-4">
-                <div className="font-display font-semibold text-forest text-sm">{r.name}</div>
-                <div className="font-body text-sage text-xs flex items-center gap-1.5 flex-wrap">
-                  <span>{r.subName}{r.perPerson ? " · per person" : ""}</span>
-                  {r.key === "double-sharing" && (
-                    <select
-                      value={tableAC ? "ac" : "nonac"}
-                      onChange={(e) => setTableAC(e.target.value === "ac")}
-                      aria-label="AC or Non-AC"
-                      className="rounded-md border border-border bg-white px-1.5 py-0.5 font-body text-[11px] font-semibold text-forest focus:outline-none focus:ring-2 focus:ring-maroon/30 cursor-pointer"
-                    >
-                      <option value="nonac">Non-AC</option>
-                      <option value="ac">AC</option>
-                    </select>
-                  )}
-                </div>
-              </td>
-              {DURATIONS.map((w, wi) => (
-                <td key={w} className="px-5 py-4 font-body text-forest text-sm font-medium">{fmtPrice(tablePricesFor(r)[wi], currency, rate)}</td>
-              ))}
-            </tr>
-          ))}
+          {ROOMS.map((r, i) => {
+            const p = roomPrices(r, tableAC);
+            return (
+              <tr key={r.key} className={i % 2 === 0 ? "bg-white" : "bg-cream/40"}>
+                <td className="px-5 py-4">
+                  <div className="font-display font-semibold text-forest text-sm">{r.name}</div>
+                  <div className="font-body text-sage text-xs flex items-center gap-1.5 flex-wrap">
+                    <span>{r.subName}{r.perPerson ? " · per person" : ""}</span>
+                    {r.key === "double-sharing" && (
+                      <select
+                        value={tableAC ? "ac" : "nonac"}
+                        onChange={(e) => setTableAC(e.target.value === "ac")}
+                        aria-label="AC or Non-AC"
+                        className="rounded-md border border-border bg-white px-1.5 py-0.5 font-body text-[11px] font-semibold text-forest focus:outline-none focus:ring-2 focus:ring-maroon/30 cursor-pointer"
+                      >
+                        <option value="nonac">Non-AC</option>
+                        <option value="ac">AC</option>
+                      </select>
+                    )}
+                  </div>
+                </td>
+                {DURATIONS.map((w, wi) => (
+                  <td key={w} className="px-5 py-4 font-body text-forest text-sm font-medium">{priceAt(p, wi, currency)}</td>
+                ))}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
       <div className="bg-white px-5 py-4 border-t border-border">
@@ -152,30 +156,14 @@ export default function Tariff() {
   const [step, setStep] = useState(1);
   const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
   const [weeks, setWeeks] = useState(1);
-  const [acRoom, setAcRoom] = useState(false); // Double / Triple Sharing: false = Non-AC ($450), true = AC ($500)
+  const [acRoom, setAcRoom] = useState(false); // Double / Triple Sharing: false = Non-AC, true = AC
 
-  // Double / Triple Sharing has an AC toggle; every other room uses its base prices.
-  const pricesFor = (r: typeof ROOMS[0]) =>
-    r.key === "double-sharing" && acRoom ? DOUBLE_SHARING_AC_PRICES : r.prices;
-  const [currency, setCurrency] = useState<Currency>("INR"); // INR shown by default; derived from the live rate
-  const [rate, setRate] = useState<number | null>(null); // live USD -> INR, null until fetched
-
-  // Fetch today's USD -> INR rate once on mount (cached daily server-side).
-  useEffect(() => {
-    let active = true;
-    fetch("/api/exchange-rate")
-      .then((r) => r.json())
-      .then((d) => {
-        if (active && typeof d?.rate === "number" && d.rate > 0) setRate(d.rate);
-      })
-      .catch(() => {});
-    return () => {
-      active = false;
-    };
-  }, []);
+  // Location decides the currency: India → INR, outside → USD. Prices stay hidden
+  // (rendered as "—" behind the gate) until the region resolves.
+  const { region, status, currency, locate } = useGeoPricing();
 
   const room = ROOMS.find((r) => r.key === selectedRoom);
-  const accomTotal = room ? pricesFor(room)[weeks - 1] : 0; // USD, non-linear per duration
+  const estimate = room ? priceAt(roomPrices(room, acRoom), weeks - 1, currency) : null;
 
   return (
     <Layout>
@@ -229,32 +217,24 @@ export default function Tariff() {
               <Icon size={15} /> {label}
             </button>
           ))}
-          {/* Currency selector — visible in both views, applies to all accommodation prices */}
-          <label className="ml-auto flex items-center gap-2 font-body text-sm text-forest/70">
-            <span className="hidden sm:inline">Currency</span>
-            <select
-              value={currency}
-              onChange={(e) => setCurrency(e.target.value as Currency)}
-              aria-label="Display currency"
-              className="rounded-lg border border-border bg-white px-3 py-2 font-body text-sm font-semibold text-forest focus:outline-none focus:ring-2 focus:ring-maroon/30 cursor-pointer"
-            >
-              <option value="USD">$ US Dollar</option>
-              <option value="INR">₹ Indian Rupee</option>
-            </select>
-          </label>
-          {view === "calculator" && selectedRoom && (
-            <div className="font-display font-bold text-gold text-lg">
-              Total: {fmtPrice(accomTotal, currency, rate)}
+          {view === "calculator" && selectedRoom && currency && (
+            <div className="ml-auto font-display font-bold text-gold text-lg">
+              Total: {estimate}
             </div>
           )}
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
+        {/* Location gate — prices stay hidden until the region resolves */}
+        <div className="mb-8">
+          <RegionPriceGate status={status} region={region} onRetry={locate} />
+        </div>
+
         <AnimatePresence mode="wait">
           {view === "table" ? (
             <motion.div key="table" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-              <TableView currency={currency} rate={rate} />
+              <TableView currency={currency} />
             </motion.div>
           ) : (
             <motion.div key="calc" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
@@ -269,12 +249,6 @@ export default function Tariff() {
                     <div className="w-8 h-8 rounded-full flex items-center justify-center font-body font-bold text-sm text-cream"
                       style={{ background: "hsl(var(--maroon))" }}>1</div>
                     <h2 className="font-display font-bold text-forest text-xl">Choose Your Accommodation</h2>
-                    {currency === "INR" && (
-                      <span className="w-full sm:w-auto sm:ml-1 font-body text-xs text-sage">
-                        Converted at 1 USD = ₹{(rate ?? FALLBACK_RATE).toLocaleString("en-IN", { maximumFractionDigits: 2 })}
-                        {rate ? " · live daily rate" : " · approx."}
-                      </span>
-                    )}
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {ROOMS.map((r) => (
@@ -308,7 +282,7 @@ export default function Tariff() {
                             </div>
                           </div>
                           <div className="text-right">
-                            <div className="font-display font-bold text-gold text-lg">{fmtPrice(pricesFor(r)[0], currency, rate)}</div>
+                            <div className="font-display font-bold text-gold text-lg">{priceAt(roomPrices(r, acRoom), 0, currency)}</div>
                             <div className="font-body text-sage text-xs">/week</div>
                           </div>
                         </div>
@@ -350,7 +324,7 @@ export default function Tariff() {
                             <div className="font-body text-sm">{w === 1 ? "Week" : "Weeks"}</div>
                             {selectedRoom && (
                               <div className="font-body text-xs mt-1 opacity-70">
-                                {fmtPrice(pricesFor(ROOMS.find(r => r.key === selectedRoom)!)[wi], currency, rate)}
+                                {priceAt(roomPrices(ROOMS.find(r => r.key === selectedRoom)!, acRoom), wi, currency)}
                               </div>
                             )}
                           </button>
@@ -370,14 +344,14 @@ export default function Tariff() {
                   <div className="rounded-2xl overflow-hidden shadow-card-hover border border-border">
                     <div className="p-5" style={{ background: "hsl(var(--maroon))" }}>
                       <div className="font-body text-xs tracking-[0.2em] uppercase text-gold/70 mb-1">Your Estimate</div>
-                      <div className="font-display font-bold text-cream text-4xl">{fmtPrice(accomTotal, currency, rate)}</div>
+                      <div className="font-display font-bold text-cream text-4xl">{room ? estimate : (currency ? formatRegionPrice(0, 0, currency) : "—")}</div>
                       {weeks > 0 && <div className="font-body text-cream/60 text-xs mt-1">all-inclusive · for {weeks} week{weeks > 1 ? "s" : ""}</div>}
                     </div>
                     <div className="bg-white p-5 space-y-3">
                       {room ? (
                         <div className="flex justify-between font-body text-sm">
                           <span className="text-forest/60">{room.name} × {weeks}wk{weeks > 1 ? "s" : ""}</span>
-                          <span className="font-semibold text-forest">{fmtPrice(accomTotal, currency, rate)}</span>
+                          <span className="font-semibold text-forest">{estimate}</span>
                         </div>
                       ) : (
                         <p className="font-body text-sage text-sm text-center py-2">Select an accommodation above to begin.</p>

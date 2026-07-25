@@ -8,6 +8,8 @@ import {
   ChevronRight, ChevronLeft,
   CheckCircle2, Phone, Send, Info
 } from "lucide-react";
+import { useGeoPricing, formatRegionPrice, type PriceCurrency, type GeoStatus, type Region } from "@/hooks/useGeoPricing";
+import RegionPriceGate from "@/components/RegionPriceGate";
 
 /* ── Types ── */
 type Gender = "male" | "female" | "other" | "";
@@ -20,26 +22,24 @@ interface PersonalDetails { name: string; age: string; gender: Gender; phone: st
 interface MedicalDetails { condition: string; }
 interface StayDetails { preferredDate: string; weeks: string; roomPreference: string; }
 
-// usd = weekly price per person (per week), from the official "$ Charges" sheet. `label` is
-// the value stored/submitted for the booking. `slug` also indexes ACCOMMODATION_PHOTOS —
-// note the Double Deluxe card is the semi-deluxe room, hence that slug.
+// inr/usd = per-person weekly rate from the two official price sheets (India shows INR,
+// outside India shows USD — decided by live location). `label` is the room name stored/
+// submitted for the booking (no price embedded — the price is region-dependent and shown
+// separately). `slug` also indexes ACCOMMODATION_PHOTOS — note the Double Deluxe card is
+// the semi-deluxe room, hence that slug.
 const ROOM_OPTIONS = [
-  { slug: "dormitory", photoKey: "dormitory", name: "Dormitory", sub: "Pushpa / Ashwini Ward", usd: 250, pp: false, label: "Dormitory (Pushpa/Ashwini) — from $250/week" },
-  { slug: "ashirwad", photoKey: "ashirwad", name: "Single Room", sub: "Ashirwad Block", usd: 500, pp: false, label: "Single Room (Ashirwad) — from $500/week" },
-  { slug: "maitri", photoKey: "maitri", name: "Double Sharing", sub: "Maitri Block", usd: 450, pp: true, label: "Double Sharing (Maitri) — from $450/week per person" },
-  { slug: "double-deluxe", photoKey: "sheshadri", name: "Double Deluxe", sub: "Sheshadri", usd: 750, pp: true, label: "Double Deluxe (Sheshadri) — from $750/week per person" },
-  { slug: "sheshadri", photoKey: "sheshadri", name: "Single Deluxe", sub: "Sheshadri", usd: 750, pp: false, label: "Single Deluxe (Sheshadri) — from $750/week" },
-  { slug: "double-sharing-ac", photoKey: "maitri", name: "Double Sharing/Triple sharing (AC)", sub: "Maitri Block", usd: 500, pp: true, label: "Double Sharing/Triple Sharing AC (Maitri) — from $500/week per person" },
-  { slug: "suites", photoKey: "suites", name: "Suite Sharing", sub: "Premium Block", usd: 1000, pp: true, label: "Suite Sharing — from $1,000/week per person" },
+  { slug: "dormitory", photoKey: "dormitory", name: "Dormitory", sub: "Pushpa / Ashwini Ward", inr: 6600, usd: 250, pp: false, label: "Dormitory (Pushpa/Ashwini)" },
+  { slug: "ashirwad", photoKey: "ashirwad", name: "Single Room", sub: "Ashirwad Block", inr: 13200, usd: 500, pp: false, label: "Single Room (Ashirwad)" },
+  { slug: "maitri", photoKey: "maitri", name: "Double Sharing", sub: "Maitri Block", inr: 11000, usd: 450, pp: true, label: "Double Sharing (Maitri) — per person" },
+  { slug: "double-deluxe", photoKey: "sheshadri", name: "Double Deluxe", sub: "Sheshadri", inr: 22000, usd: 750, pp: true, label: "Double Deluxe (Sheshadri) — per person" },
+  { slug: "sheshadri", photoKey: "sheshadri", name: "Single Deluxe", sub: "Sheshadri", inr: 27500, usd: 750, pp: false, label: "Single Deluxe (Sheshadri)" },
+  { slug: "double-sharing-ac", photoKey: "maitri", name: "Double Sharing/Triple sharing (AC)", sub: "Maitri Block", inr: 17600, usd: 500, pp: true, label: "Double Sharing/Triple Sharing AC (Maitri) — per person" },
+  { slug: "suites", photoKey: "suites", name: "Suite Sharing", sub: "Premium Block", inr: 30800, usd: 1000, pp: true, label: "Suite Sharing — per person" },
 ];
 
-// Room prices are the official USD chart; INR is derived from a live daily rate.
-type Currency = "USD" | "INR";
-const FALLBACK_RATE = 90; // used only before the live rate loads / if the source is down
-function fmtPrice(usd: number, currency: Currency, rate: number | null) {
-  return currency === "USD"
-    ? "$" + usd.toLocaleString("en-US")
-    : "₹" + Math.round(usd * (rate ?? FALLBACK_RATE)).toLocaleString("en-IN"); // $250 × 96 → ₹24,000
+// Region price (India → INR, outside → USD), or "—" while location is unresolved.
+function priceStr(inr: number, usd: number, currency: PriceCurrency | null) {
+  return formatRegionPrice(inr, usd, currency) ?? "—";
 }
 
 const STEP_TITLES = ["Personal Details", "Stay Details", "Confirm"];
@@ -150,9 +150,9 @@ function RoomThumb({ photos, alt, active }: { photos: string[]; alt: string; act
   );
 }
 
-function StepFour({ data, onChange, currency, setCurrency, rate }: {
+function StepFour({ data, onChange, currency, status, region, onRetry }: {
   data: StayDetails; onChange: (d: StayDetails) => void;
-  currency: Currency; setCurrency: (c: Currency) => void; rate: number | null;
+  currency: PriceCurrency | null; status: GeoStatus; region: Region | null; onRetry: () => void;
 }) {
   function set<K extends keyof StayDetails>(k: K, v: string) { onChange({ ...data, [k]: v }); }
   const [hovered, setHovered] = useState<string | null>(null);
@@ -166,26 +166,7 @@ function StepFour({ data, onChange, currency, setCurrency, rate }: {
         <p className="font-body text-xs text-sage mt-1">IPD admissions are on Tuesdays. Minimum 6-night stay required.</p>
       </div>
       <div>
-        <div className="flex items-center justify-between gap-3 flex-wrap mb-1.5">
-          <Label>Preferred Duration</Label>
-          {/* Currency selector — converts the room-preference card prices below */}
-          <label className="flex items-center gap-2 font-body text-xs text-forest/70">
-            {currency === "INR" && (
-              <span className="hidden sm:inline text-sage">
-                1 USD = ₹{(rate ?? FALLBACK_RATE).toLocaleString("en-IN", { maximumFractionDigits: 2 })}{rate ? "" : " (approx.)"}
-              </span>
-            )}
-            <select
-              value={currency}
-              onChange={(e) => setCurrency(e.target.value as Currency)}
-              aria-label="Display currency"
-              className="rounded-lg border border-border bg-white px-2.5 py-1.5 font-body text-xs font-semibold text-forest focus:outline-none focus:ring-2 focus:ring-maroon/30 cursor-pointer"
-            >
-              <option value="USD">$ US Dollar</option>
-              <option value="INR">₹ Indian Rupee</option>
-            </select>
-          </label>
-        </div>
+        <Label>Preferred Duration</Label>
         <div className="flex gap-3 flex-wrap">
           {["1 Week", "2 Weeks", "3 Weeks", "4 Weeks"].map((w) => (
             <button key={w} onClick={() => set("weeks", w)}
@@ -203,6 +184,9 @@ function StepFour({ data, onChange, currency, setCurrency, rate }: {
       </div>
       <div>
         <Label>Room Preference</Label>
+        <div className="mb-3">
+          <RegionPriceGate status={status} region={region} onRetry={onRetry} />
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {ROOM_OPTIONS.map((r) => {
             const selected = data.roomPreference === r.label;
@@ -220,7 +204,7 @@ function StepFour({ data, onChange, currency, setCurrency, rate }: {
                 <div className="min-w-0 flex-1">
                   <div className="font-display font-semibold text-forest text-sm leading-tight">{r.name}</div>
                   <div className="font-body text-[11px] text-sage leading-tight">{r.sub}</div>
-                  <div className="font-body text-xs font-semibold text-gold mt-1">{fmtPrice(r.usd, currency, rate)} / week{r.pp ? " · pp" : ""}</div>
+                  <div className="font-body text-xs font-semibold text-gold mt-1">{priceStr(r.inr, r.usd, currency)} / week{r.pp ? " · pp" : ""}</div>
                 </div>
                 {selected && <CheckCircle2 size={18} className="absolute top-2 right-2 text-gold" />}
               </button>
@@ -242,14 +226,15 @@ function StepFour({ data, onChange, currency, setCurrency, rate }: {
   );
 }
 
-function StepFive({ personal, medical, stay, currency, rate }: {
+function StepFive({ personal, medical, stay, currency }: {
   personal: PersonalDetails; medical: MedicalDetails; stay: StayDetails;
-  currency: Currency; rate: number | null;
+  currency: PriceCurrency | null;
 }) {
-  // Show the room-preference price in the currency chosen on the Stay Details step.
+  // Show the room-preference price for the visitor's region (India → INR, else USD).
   const room = ROOM_OPTIONS.find((o) => o.label === stay.roomPreference);
+  const priceLabel = room ? priceStr(room.inr, room.usd, currency) : null;
   const roomPreferenceDisplay = room
-    ? `${room.label.split(" — from ")[0]} — from ${fmtPrice(room.usd, currency, rate)}/week${room.pp ? " per person" : ""}`
+    ? `${room.label}${priceLabel && priceLabel !== "—" ? ` · from ${priceLabel}/week` : ""}`
     : stay.roomPreference; // e.g. "No preference"
 
   const rows = [
@@ -340,23 +325,9 @@ export default function BookNow() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  // Currency lives here (not inside StepFour) so the choice persists to the Confirm step.
-  const [currency, setCurrency] = useState<Currency>("INR"); // INR shown by default; derived from the live rate
-  const [rate, setRate] = useState<number | null>(null); // live USD -> INR, null until fetched
-
-  // Fetch today's USD -> INR rate once on mount (cached daily server-side).
-  useEffect(() => {
-    let active = true;
-    fetch("/api/exchange-rate")
-      .then((r) => r.json())
-      .then((d) => {
-        if (active && typeof d?.rate === "number" && d.rate > 0) setRate(d.rate);
-      })
-      .catch(() => {});
-    return () => {
-      active = false;
-    };
-  }, []);
+  // Region-based pricing (India → INR, outside → USD) from the visitor's live location.
+  // Resolved once here so it persists across the Stay Details and Confirm steps.
+  const { region, status, currency, locate } = useGeoPricing();
 
   const CONFIRM_STEP = STEP_TITLES.length - 1; // 3
 
@@ -470,8 +441,8 @@ export default function BookNow() {
                     <StepThree data={medical} onChange={setMedical} />
                   </div>
                 )}
-                {step === 1 && <StepFour data={stay} onChange={setStay} currency={currency} setCurrency={setCurrency} rate={rate} />}
-                {step === 2 && <StepFive personal={personal} medical={medical} stay={stay} currency={currency} rate={rate} />}
+                {step === 1 && <StepFour data={stay} onChange={setStay} currency={currency} status={status} region={region} onRetry={locate} />}
+                {step === 2 && <StepFive personal={personal} medical={medical} stay={stay} currency={currency} />}
               </motion.div>
             </AnimatePresence>
 

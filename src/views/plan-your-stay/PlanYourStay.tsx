@@ -7,6 +7,7 @@ import {
   ChevronRight, Calculator, BedDouble, Clock3, Backpack,
   MapPin, Calendar, Phone, Leaf, Sun, Heart
 } from "lucide-react";
+import { useGeoPricing, formatRegionPrice } from "@/hooks/useGeoPricing";
 
 const QUICK_LINKS = [
   {
@@ -60,14 +61,16 @@ const INCLUSIONS = [
   { icon: Phone, label: "24/7 Nursing Support" },
 ];
 
-const HIGHLIGHTS = [
-  { stat: "600+", label: "Bed Hospital" },
-  { stat: "$250", label: "Starting from / week" },
-  { stat: "6 nights", label: "Minimum stay" },
-  { stat: "50+", label: "Years of healing" },
-];
-
 export default function PlanYourStay() {
+  // Starting-price stat follows the visitor's region (India ₹6,600 / outside $250),
+  // hidden as "—" until the live location resolves.
+  const { currency } = useGeoPricing();
+  const HIGHLIGHTS = [
+    { stat: "600+", label: "Bed Hospital" },
+    { stat: formatRegionPrice(6600, 250, currency) ?? "—", label: "Starting from / week" },
+    { stat: "6 nights", label: "Minimum stay" },
+    { stat: "50+", label: "Years of healing" },
+  ];
   return (
     <Layout>
       {/* Hero */}
@@ -109,7 +112,7 @@ export default function PlanYourStay() {
             {/* Stats row */}
             <div className="flex flex-wrap gap-6 mt-10">
               {HIGHLIGHTS.map((h, i) => (
-                <motion.div key={h.stat} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.08 }}>
+                <motion.div key={h.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.08 }}>
                   <div className="font-display font-bold text-gold text-2xl">{h.stat}</div>
                   <div className="font-body text-cream/60 text-xs">{h.label}</div>
                 </motion.div>
