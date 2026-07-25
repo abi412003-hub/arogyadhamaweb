@@ -40,7 +40,7 @@ const FAQ_DATA = [
     items: [
       {
         q: "What is included in the tariff?",
-        a: "All tariffs include accommodation, three sattvic vegetarian meals daily, yoga therapy sessions, medical consultations with our doctors, and a yoga kit. Additional therapies (Naturopathy, Ayurveda, Physiotherapy, Acupuncture) are charged separately as per category.",
+        a: "Every tariff is fully inclusive — accommodation, three sattvic vegetarian meals daily, medical consultations with our doctors, a yoga kit, and all therapies (Yoga, Ayurveda, Naturopathy, Physiotherapy, Acupuncture & Acupressure) as advised by the consulting doctor. Charges are per person.",
       },
       {
         q: "What is the minimum duration of stay?",

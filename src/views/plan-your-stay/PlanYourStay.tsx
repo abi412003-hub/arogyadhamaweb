@@ -55,14 +55,14 @@ const INCLUSIONS = [
   { icon: BedDouble, label: "Accommodation" },
   { icon: Leaf, label: "Sattvic Meals (3/day)" },
   { icon: Heart, label: "Medical Consultations" },
-  { icon: Sun, label: "Yoga Therapy Sessions" },
+  { icon: Sun, label: "All Therapies Included" },
   { icon: Calendar, label: "Yoga Kit Provided" },
   { icon: Phone, label: "24/7 Nursing Support" },
 ];
 
 const HIGHLIGHTS = [
   { stat: "600+", label: "Bed Hospital" },
-  { stat: "₹6,600", label: "Starting from / week" },
+  { stat: "$250", label: "Starting from / week" },
   { stat: "6 nights", label: "Minimum stay" },
   { stat: "50+", label: "Years of healing" },
 ];

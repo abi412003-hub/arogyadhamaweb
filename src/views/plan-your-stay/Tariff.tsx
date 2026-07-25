@@ -6,15 +6,16 @@ import Layout from "@/components/Layout";
 import { ChevronRight, CheckCircle2, Info, Calendar, Table2, Calculator } from "lucide-react";
 
 /* ── Data ── */
-// prices: [1 week, 2 weeks, 3 weeks, 4 weeks] in INR, per person — verbatim from the
-// official "Yoga Therapy Charges" card (effective 13 Aug 2024). Non-linear: longer
-// stays are discounted. Row order follows the printed chart.
+// prices: [1 week, 2 weeks, 3 weeks, 4 weeks] in USD, per person — verbatim from the
+// official "$ Charges" price sheet. Non-linear: longer stays are discounted. Every tariff
+// is fully inclusive — Yoga, Ayurveda, Naturopathy, Physiotherapy, Acupuncture &
+// Acupressure are all included. Row order follows the printed chart.
 const ROOMS = [
   {
     key: "dormitory",
     name: "Dormitory",
     subName: "Pushpa / Ashwini Ward",
-    prices: [6600, 12200, 17800, 23400],
+    prices: [250, 490, 730, 970],
     emoji: "🏨",
     desc: "Shared dormitory accommodation with basic amenities. Ideal for budget-conscious patients seeking the full healing experience.",
     amenities: ["Shared bathroom", "Basic furnishings", "Common lounge", "Yoga kit provided"],
@@ -23,7 +24,7 @@ const ROOMS = [
     key: "single",
     name: "Single Room",
     subName: "Ashirwad Block",
-    prices: [13200, 25400, 37600, 49800],
+    prices: [500, 900, 1300, 1600],
     emoji: "🛏️",
     desc: "Private single room with attached bathroom. Comfortable, quiet, and well-suited for solo travellers requiring privacy.",
     amenities: ["Attached bathroom", "Study table", "Wardrobe", "Room service meals"],
@@ -32,7 +33,7 @@ const ROOMS = [
     key: "double-sharing",
     name: "Double / Triple Sharing",
     subName: "Maitri Block",
-    prices: [11000, 21000, 31000, 41000],
+    prices: [450, 800, 1150, 1450],
     emoji: "👥",
     desc: "Shared double room per person. Perfect for couples or companions travelling together for healing.",
     amenities: ["Shared attached bathroom", "Two beds", "Wardrobe", "Room service meals"],
@@ -42,7 +43,7 @@ const ROOMS = [
     key: "semi-deluxe",
     name: "Double Deluxe",
     subName: "Sheshadri",
-    prices: [22000, 43000, 64000, 85000],
+    prices: [750, 1350, 1900, 2400],
     emoji: "✨",
     desc: "An air-conditioned double bedroom shared between two — a step up from standard sharing, with climate control for cooler comfort.",
     amenities: ["Attached bathroom", "AC room", "Two beds", "Wardrobe for each person"],
@@ -52,7 +53,7 @@ const ROOMS = [
     key: "single-deluxe",
     name: "Single Deluxe",
     subName: "Sheshadri",
-    prices: [27500, 54000, 80500, 107000],
+    prices: [750, 1350, 1900, 2400],
     emoji: "⭐",
     desc: "Premium single room in the flagship Sheshadri block with upgraded furnishings and garden views.",
     amenities: ["Deluxe attached bathroom", "AC room", "Garden view", "Premium furnishings", "Priority consultations"],
@@ -61,7 +62,7 @@ const ROOMS = [
     key: "suite",
     name: "Suite Sharing",
     subName: "Premium Block",
-    prices: [30800, 60600, 90400, 120200],
+    prices: [1000, 1800, 2550, 3200],
     emoji: "👑",
     desc: "The most luxurious option — a suite shared between two, offering the highest comfort level at Arogyadhama.",
     amenities: ["Luxury bathroom", "AC suite", "Sitting area", "Priority everything", "Concierge support"],
@@ -72,17 +73,10 @@ const ROOMS = [
 const DURATIONS = [1, 2, 3, 4];
 
 // The Double / Triple Sharing card offers an AC option. Non-AC uses the room's
-// base `prices`; AC uses this per-person progression (1/2/3/4 weeks) in INR.
-const DOUBLE_SHARING_AC_PRICES = [17600, 34200, 50800, 67400];
+// base `prices`; AC uses this per-person progression (1/2/3/4 weeks) in USD.
+const DOUBLE_SHARING_AC_PRICES = [500, 900, 1300, 1600];
 
-const ADD_ONS = [
-  { key: "nat-cat1", label: "Naturopathy / Ayurveda Category 1", weeklyRate: 4000, color: "hsl(var(--sage))" },
-  { key: "nat-cat2", label: "Naturopathy / Ayurveda Category 2", weeklyRate: 6000, color: "hsl(var(--sage))" },
-  { key: "physio-cat1", label: "Physiotherapy / Acupuncture Category 1", weeklyRate: 3000, color: "hsl(var(--terracotta))" },
-  { key: "physio-cat2", label: "Physiotherapy / Acupuncture Category 2", weeklyRate: 4000, color: "hsl(var(--terracotta))" },
-];
-
-// Accommodation packages and therapy add-ons are both priced in INR.
+// Accommodation packages are priced in USD.
 function fmtUSD(n: number) {
   return "$" + n.toLocaleString("en-US");
 }
@@ -93,11 +87,11 @@ function fmtINR(n: number) {
 type Currency = "USD" | "INR";
 // Only used before the live daily rate finishes loading (or if the source is down).
 const FALLBACK_RATE = 90;
-// The INR chart is the source of truth; USD is derived from the live daily rate.
-function fmtPrice(inr: number, currency: Currency, rate: number | null) {
-  return currency === "INR"
-    ? fmtINR(inr)
-    : fmtUSD(Math.round(inr / (rate ?? FALLBACK_RATE))); // e.g. 6,600 ÷ 95 → $69
+// The USD chart is the source of truth; INR is derived from the live daily rate.
+function fmtPrice(usd: number, currency: Currency, rate: number | null) {
+  return currency === "USD"
+    ? fmtUSD(usd)
+    : fmtINR(Math.round(usd * (rate ?? FALLBACK_RATE))); // e.g. $250 × 96 → ₹24,000
 }
 
 /* ── Table View ── */
@@ -144,9 +138,8 @@ function TableView({ currency, rate }: { currency: Currency; rate: number | null
       </table>
       <div className="bg-white px-5 py-4 border-t border-border">
         <div className="font-body text-xs text-sage space-y-1">
-          <p>• Tariff is from Tuesday to Monday (minimum 6 nights). • All prices include accommodation, three sattvic meals daily, yoga therapy sessions, medical consultations, and yoga kit.</p>
-          <p>• Additional therapies (Naturopathy/Ayurveda: ₹4,000–6,000/week · Physiotherapy/Acupuncture: ₹3,000–4,000/week) charged separately.</p>
-          <p>• Bill settlement required one day before discharge.</p>
+          <p>• Tariff is from Tuesday to Monday (minimum 6 nights). • Every package is fully inclusive — accommodation, three sattvic meals daily, and all therapies (Yoga, Ayurveda, Naturopathy, Physiotherapy, Acupuncture & Acupressure), medical consultations, and yoga kit.</p>
+          <p>• Charges are per person. Bill settlement required one day before discharge.</p>
         </div>
       </div>
     </div>
@@ -159,13 +152,12 @@ export default function Tariff() {
   const [step, setStep] = useState(1);
   const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
   const [weeks, setWeeks] = useState(1);
-  const [acRoom, setAcRoom] = useState(false); // Double / Triple Sharing: false = Non-AC (₹11,000), true = AC (₹17,600)
-  const [addOns, setAddOns] = useState<Set<string>>(new Set());
+  const [acRoom, setAcRoom] = useState(false); // Double / Triple Sharing: false = Non-AC ($450), true = AC ($500)
 
   // Double / Triple Sharing has an AC toggle; every other room uses its base prices.
   const pricesFor = (r: typeof ROOMS[0]) =>
     r.key === "double-sharing" && acRoom ? DOUBLE_SHARING_AC_PRICES : r.prices;
-  const [currency, setCurrency] = useState<Currency>("INR"); // INR is the official chart figure
+  const [currency, setCurrency] = useState<Currency>("INR"); // INR shown by default; derived from the live rate
   const [rate, setRate] = useState<number | null>(null); // live USD -> INR, null until fetched
 
   // Fetch today's USD -> INR rate once on mount (cached daily server-side).
@@ -183,19 +175,7 @@ export default function Tariff() {
   }, []);
 
   const room = ROOMS.find((r) => r.key === selectedRoom);
-  const accomTotal = room ? pricesFor(room)[weeks - 1] : 0; // INR, non-linear per duration
-  const addOnTotal = Array.from(addOns).reduce((sum, key) => {
-    const ao = ADD_ONS.find((a) => a.key === key);
-    return sum + (ao ? ao.weeklyRate * weeks : 0);
-  }, 0); // INR — therapies are billed separately, so they stay out of the accommodation total
-
-  function toggleAddOn(key: string) {
-    setAddOns((prev) => {
-      const next = new Set(prev);
-      next.has(key) ? next.delete(key) : next.add(key);
-      return next;
-    });
-  }
+  const accomTotal = room ? pricesFor(room)[weeks - 1] : 0; // USD, non-linear per duration
 
   return (
     <Layout>
@@ -227,7 +207,7 @@ export default function Tariff() {
         <div className="flex items-start gap-3 rounded-2xl border px-5 py-4" style={{ background: "hsl(var(--gold-pale))", borderColor: "hsl(var(--gold) / 0.3)" }}>
           <Info size={18} className="text-gold flex-shrink-0 mt-0.5" />
           <p className="font-body text-sm italic leading-relaxed" style={{ color: "hsl(var(--forest))" }}>
-            Yoga therapy includes food and accommodation only. Charges for external therapies such as Ayurveda, Naturopathy, Acupuncture, Physiotherapy, and Ozone Therapy will be applicable if advised by the consulting doctor.
+            Every package is fully inclusive — the tariff covers accommodation, three sattvic meals daily, and all therapies (Yoga, Ayurveda, Naturopathy, Physiotherapy, Acupuncture &amp; Acupressure) as advised by the consulting doctor. All charges are per person.
           </p>
         </div>
       </div>
@@ -289,7 +269,7 @@ export default function Tariff() {
                     <div className="w-8 h-8 rounded-full flex items-center justify-center font-body font-bold text-sm text-cream"
                       style={{ background: "hsl(var(--maroon))" }}>1</div>
                     <h2 className="font-display font-bold text-forest text-xl">Choose Your Accommodation</h2>
-                    {currency === "USD" && (
+                    {currency === "INR" && (
                       <span className="w-full sm:w-auto sm:ml-1 font-body text-xs text-sage">
                         Converted at 1 USD = ₹{(rate ?? FALLBACK_RATE).toLocaleString("en-IN", { maximumFractionDigits: 2 })}
                         {rate ? " · live daily rate" : " · approx."}
@@ -359,7 +339,7 @@ export default function Tariff() {
                       </div>
                       <div className="flex flex-wrap gap-3">
                         {DURATIONS.map((w, wi) => (
-                          <button key={w} onClick={() => { setWeeks(w); setStep(Math.max(step, 3)); }}
+                          <button key={w} onClick={() => setWeeks(w)}
                             className="rounded-xl border-2 px-6 py-4 text-center transition-all duration-200 min-w-[120px]"
                             style={{
                               borderColor: weeks === w ? "hsl(var(--maroon))" : "hsl(var(--border))",
@@ -382,45 +362,6 @@ export default function Tariff() {
                     </motion.div>
                   )}
                 </AnimatePresence>
-
-                {/* Step 3: Add-ons */}
-                <AnimatePresence>
-                  {step >= 3 && (
-                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-                      <div className="flex items-center gap-3 mb-6">
-                        <div className="w-8 h-8 rounded-full flex items-center justify-center font-body font-bold text-sm text-cream"
-                          style={{ background: "hsl(var(--maroon))" }}>3</div>
-                        <h2 className="font-display font-bold text-forest text-xl">Add Therapies <span className="font-body font-normal text-sage text-base">(Optional)</span></h2>
-                      </div>
-                      <div className="space-y-3">
-                        {ADD_ONS.map((ao) => (
-                          <button key={ao.key} onClick={() => toggleAddOn(ao.key)}
-                            className="w-full text-left flex items-center gap-4 rounded-xl border-2 p-5 transition-all duration-200"
-                            style={{
-                              borderColor: addOns.has(ao.key) ? ao.color : "hsl(var(--border))",
-                              background: addOns.has(ao.key) ? `${ao.color.replace(")", " / 0.05)")}` : "white",
-                            }}>
-                            <div className="w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors"
-                              style={{
-                                borderColor: addOns.has(ao.key) ? ao.color : "hsl(var(--border))",
-                                background: addOns.has(ao.key) ? ao.color : "transparent",
-                              }}>
-                              {addOns.has(ao.key) && <CheckCircle2 size={12} className="text-white" />}
-                            </div>
-                            <div className="flex-1">
-                              <div className="font-body font-semibold text-forest text-sm">{ao.label}</div>
-                              <div className="font-body text-sage text-xs">{fmtINR(ao.weeklyRate)}/week · billed separately</div>
-                            </div>
-                            <div className="text-right font-display font-bold" style={{ color: ao.color }}>
-                              {fmtINR(ao.weeklyRate * weeks)}
-                              <div className="font-body font-normal text-xs text-sage">for {weeks} wk{weeks > 1 ? "s" : ""}</div>
-                            </div>
-                          </button>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
               </div>
 
               {/* Sticky Summary */}
@@ -430,34 +371,14 @@ export default function Tariff() {
                     <div className="p-5" style={{ background: "hsl(var(--maroon))" }}>
                       <div className="font-body text-xs tracking-[0.2em] uppercase text-gold/70 mb-1">Your Estimate</div>
                       <div className="font-display font-bold text-cream text-4xl">{fmtPrice(accomTotal, currency, rate)}</div>
-                      {weeks > 0 && <div className="font-body text-cream/60 text-xs mt-1">accommodation · for {weeks} week{weeks > 1 ? "s" : ""}</div>}
+                      {weeks > 0 && <div className="font-body text-cream/60 text-xs mt-1">all-inclusive · for {weeks} week{weeks > 1 ? "s" : ""}</div>}
                     </div>
                     <div className="bg-white p-5 space-y-3">
                       {room ? (
-                        <>
-                          <div className="flex justify-between font-body text-sm">
-                            <span className="text-forest/60">{room.name} × {weeks}wk{weeks > 1 ? "s" : ""}</span>
-                            <span className="font-semibold text-forest">{fmtPrice(accomTotal, currency, rate)}</span>
-                          </div>
-                          {addOns.size > 0 && (
-                            <div className="border-t border-border pt-3 space-y-2">
-                              <div className="font-body text-[11px] uppercase tracking-wide text-sage">Therapies — billed separately (₹)</div>
-                              {Array.from(addOns).map((key) => {
-                                const ao = ADD_ONS.find((a) => a.key === key);
-                                return ao ? (
-                                  <div key={key} className="flex justify-between font-body text-sm">
-                                    <span className="text-forest/60 text-xs leading-tight max-w-[200px]">{ao.label} × {weeks}wk</span>
-                                    <span className="font-semibold text-forest">{fmtINR(ao.weeklyRate * weeks)}</span>
-                                  </div>
-                                ) : null;
-                              })}
-                              <div className="flex justify-between font-body font-bold pt-1">
-                                <span className="text-forest">Therapies subtotal</span>
-                                <span className="text-sage">{fmtINR(addOnTotal)}</span>
-                              </div>
-                            </div>
-                          )}
-                        </>
+                        <div className="flex justify-between font-body text-sm">
+                          <span className="text-forest/60">{room.name} × {weeks}wk{weeks > 1 ? "s" : ""}</span>
+                          <span className="font-semibold text-forest">{fmtPrice(accomTotal, currency, rate)}</span>
+                        </div>
                       ) : (
                         <p className="font-body text-sage text-sm text-center py-2">Select an accommodation above to begin.</p>
                       )}
@@ -466,7 +387,7 @@ export default function Tariff() {
                     {/* What's included */}
                     <div className="bg-cream/40 px-5 pb-5">
                       <div className="font-body text-xs tracking-widest uppercase text-sage font-semibold mb-3 pt-4">Included in all packages</div>
-                      {["Accommodation", "3 Sattvic meals daily", "Medical consultations", "Yoga therapy sessions", "Yoga kit"].map((inc) => (
+                      {["Accommodation", "3 Sattvic meals daily", "Yoga, Ayurveda & Naturopathy", "Physiotherapy, Acupuncture & Acupressure", "Medical consultations", "Yoga kit"].map((inc) => (
                         <div key={inc} className="flex items-center gap-2 mb-1.5">
                           <CheckCircle2 size={12} className="text-gold flex-shrink-0" />
                           <span className="font-body text-forest/70 text-xs">{inc}</span>
