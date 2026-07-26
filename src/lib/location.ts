@@ -29,4 +29,9 @@ export const MAPS_EMBED_SRC =
 export const MAPS_PLACE_URL =
   `https://www.google.com/maps/search/?api=1&query=${CAMPUS.lat},${CAMPUS.lng}`;
 
+// Directions to campus (Maps URLs API). Origin defaults to the visitor's
+// current location; destination is the campus coordinates.
+export const MAPS_DIR_URL =
+  `https://www.google.com/maps/dir/?api=1&destination=${CAMPUS.lat},${CAMPUS.lng}`;
+
 export const WAZE_URL = `https://waze.com/ul?ll=${CAMPUS.lat},${CAMPUS.lng}&navigate=yes`;

@@ -2,6 +2,7 @@
 import { Link } from "@/lib/router-compat";
 import { Phone, Mail, MapPin, Facebook, Youtube, Instagram, Twitter } from "lucide-react";
 import logoMark from "@/assets/arogyadhama-logo.png";
+import { MAPS_DIR_URL } from "@/lib/location";
 
 function LotusIcon({ className = "" }: { className?: string }) {
   return (
@@ -121,7 +122,7 @@ export default function Footer() {
             </h4>
             <div className="space-y-3 mb-6">
               <Link to="/contact" className="block font-body text-sm text-cream/60 hover:text-gold transition-colors">Contact Us</Link>
-              <Link to="/contact" className="block font-body text-sm text-cream/60 hover:text-gold transition-colors">Get Directions</Link>
+              <a href={MAPS_DIR_URL} target="_blank" rel="noopener noreferrer" className="block font-body text-sm text-cream/60 hover:text-gold transition-colors">Get Directions</a>
             </div>
             <div className="flex gap-3 mb-6">
               {[
