@@ -21,7 +21,9 @@ const PHOTO_SLUG: Record<string, string> = {
   "single-deluxe": "sheshadri",
   // Restored Double Deluxe card reuses the Single Deluxe (sheshadri) photo set.
   "semi-deluxe": "sheshadri",
-  suite: "suites",
+  // Suite split into Non-AC (vishwas photos) and AC (vatika photos) -- separate sets.
+  "suite-nonac": "suites-nonac",
+  "suite-ac": "suites-ac",
 };
 
 // Two independent per-person price lists: INR shown inside India, USD shown outside.
@@ -174,8 +176,31 @@ const ROOMS = [
     tierBg: "hsl(43 70% 28%)",
   },
   {
-    key: "suite",
-    name: "Suite Sharing",
+    key: "suite-nonac",
+    name: "Suite Sharing (Non-AC)",
+    subName: "Premium Block",
+    weeklyRateINR: 30800,
+    weeklyRateUSD: 1000,
+    capacity: "2 persons (per person rate)",
+    desc: "The pinnacle of comfort at Arogyadhama — a suite shared between two, offering the highest quality accommodation, services, and attention available on campus.",
+    amenities: [
+      { icon: BedDouble, label: "Suite-grade beds & luxury linen" },
+      { icon: ShowerHead, label: "Premium en-suite bathroom" },
+      { icon: Wind, label: "Ceiling fan & natural ventilation" },
+      { icon: Star, label: "Concierge support" },
+    ],
+    highlights: ["Separate sitting area", "Premium furnishings", "Priority everything", "VIP scheduling", "Complimentary yoga kit upgrade"],
+    color: "hsl(258 50% 35%)",
+    accentBg: "hsl(258 50% 35% / 0.06)",
+    svgPrimary: "hsl(258 45% 28%)",
+    svgSecondary: "hsl(258 40% 60%)",
+    perPerson: true,
+    tier: "Suite · Non-AC",
+    tierBg: "hsl(258 50% 35%)",
+  },
+  {
+    key: "suite-ac",
+    name: "Suite Sharing (AC)",
     subName: "Premium Block",
     weeklyRateINR: 30800,
     weeklyRateUSD: 1000,
@@ -193,7 +218,7 @@ const ROOMS = [
     svgPrimary: "hsl(258 45% 28%)",
     svgSecondary: "hsl(258 40% 60%)",
     perPerson: true,
-    tier: "Suite",
+    tier: "Suite · AC",
     tierBg: "hsl(258 50% 35%)",
   },
 ];
@@ -202,7 +227,7 @@ const ROOMS = [
 function RoomIllustration({ room }: { room: typeof ROOMS[0] }) {
   const p = room.svgPrimary;
   const s = room.svgSecondary;
-  const isSuite = room.key === "suite";
+  const isSuite = room.key.startsWith("suite");
   const isDeluxe = room.key === "single-deluxe" || room.key === "double-deluxe";
 
   return (
@@ -482,7 +507,8 @@ function ComparisonTable({ currency }: { currency: PriceCurrency | null }) {
     "double-sharing-ac": [true, true, true, false, false, false], // AC Double Sharing
     "semi-deluxe": [true, true, true, true, false, true], // Double Deluxe
     "single-deluxe": [true, true, true, true, false, true], // Single Deluxe
-    suite: [true, true, true, true, true, true], // Suite Sharing
+    "suite-nonac": [true, true, false, true, true, true], // Suite Sharing (Non-AC)
+    "suite-ac": [true, true, true, true, true, true], // Suite Sharing (AC)
   };
 
   return (

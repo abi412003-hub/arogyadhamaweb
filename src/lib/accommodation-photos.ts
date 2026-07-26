@@ -40,15 +40,30 @@ export const ACCOMMODATION_PHOTOS: Record<string, string[]> = {
     "/accommodation/sheshadri/17.jpg",
     "/accommodation/sheshadri/18.jpg"
   ],
-  "suites": [
-    "/accommodation/suites/01.jpg",
-    "/accommodation/suites/02.jpg",
-    "/accommodation/suites/04.jpg",
-    "/accommodation/suites/06.jpg",
-    "/accommodation/suites/07.jpg",
-    "/accommodation/suites/09.jpg",
-    "/accommodation/suites/11.jpg",
-    "/accommodation/suites/12.jpg",
-    "/accommodation/suites/16.jpg"
+  "suites-nonac": [
+    "/accommodation/suites-nonac/01.jpg",
+    "/accommodation/suites-nonac/02.jpg",
+    "/accommodation/suites-nonac/03.jpg",
+    "/accommodation/suites-nonac/04.jpg",
+    "/accommodation/suites-nonac/05.jpg",
+    "/accommodation/suites-nonac/06.jpg",
+    "/accommodation/suites-nonac/07.jpg",
+    "/accommodation/suites-nonac/08.jpg",
+    "/accommodation/suites-nonac/09.jpg",
+    "/accommodation/suites-nonac/10.jpg",
+    "/accommodation/suites-nonac/11.jpg"
+  ],
+  "suites-ac": [
+    "/accommodation/suites-ac/01.jpg",
+    "/accommodation/suites-ac/02.jpg",
+    "/accommodation/suites-ac/03.jpg",
+    "/accommodation/suites-ac/04.jpg",
+    "/accommodation/suites-ac/05.jpg",
+    "/accommodation/suites-ac/06.jpg",
+    "/accommodation/suites-ac/07.jpg",
+    "/accommodation/suites-ac/08.jpg",
+    "/accommodation/suites-ac/09.jpg",
+    "/accommodation/suites-ac/10.jpg",
+    "/accommodation/suites-ac/11.jpg"
   ]
 };
