@@ -48,10 +48,7 @@ export const ACCOMMODATION_PHOTOS: Record<string, string[]> = {
     "/accommodation/suites-nonac/05.jpg",
     "/accommodation/suites-nonac/06.jpg",
     "/accommodation/suites-nonac/07.jpg",
-    "/accommodation/suites-nonac/08.jpg",
-    "/accommodation/suites-nonac/09.jpg",
-    "/accommodation/suites-nonac/10.jpg",
-    "/accommodation/suites-nonac/11.jpg"
+    "/accommodation/suites-nonac/08.jpg"
   ],
   "suites-ac": [
     "/accommodation/suites-ac/01.jpg",
@@ -63,7 +60,6 @@ export const ACCOMMODATION_PHOTOS: Record<string, string[]> = {
     "/accommodation/suites-ac/07.jpg",
     "/accommodation/suites-ac/08.jpg",
     "/accommodation/suites-ac/09.jpg",
-    "/accommodation/suites-ac/10.jpg",
-    "/accommodation/suites-ac/11.jpg"
+    "/accommodation/suites-ac/10.jpg"
   ]
 };
