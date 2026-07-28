@@ -143,8 +143,8 @@ const SCHEDULE = [
   },
   {
     time: "6:40 – 7:40 PM",
-    label: "Trataka & MSRT",
-    desc: "Candle gazing meditation (Trataka) followed by Mind Sound Resonance Technique (MSRT) — a powerful combination for stress reduction and deep mental relaxation.",
+    label: "Trataka & CM",
+    desc: "Candle gazing meditation (Trataka) followed by Cyclic Meditation (CM) — a powerful combination for stress reduction and deep mental relaxation.",
     icon: "🕯️",
     category: "meditation",
     period: "evening",
