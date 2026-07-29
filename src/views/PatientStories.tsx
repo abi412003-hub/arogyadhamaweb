@@ -178,6 +178,10 @@ const TESTIMONIAL_VIDEOS = [
   "/testimonials/v3.mp4",
   "/testimonials/v4.mp4",
   "/testimonials/v5.mp4",
+  "/testimonials/v6.mp4",
+  "/testimonials/v7.mp4",
+  "/testimonials/v8.mp4",
+  "/testimonials/v9.mp4",
   "/testimonials/patient-testimonial.mp4", // original featured testimonial, kept in the carousel
 ];
 
