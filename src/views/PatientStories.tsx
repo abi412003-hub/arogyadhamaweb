@@ -173,16 +173,17 @@ function TestimonialCard({ t, i }: { t: typeof TESTIMONIALS[0]; i: number }) {
 
 /* ── Featured video carousel ── */
 const TESTIMONIAL_VIDEOS = [
-  "/testimonials/v1.mp4",
-  "/testimonials/v2.mp4",
-  "/testimonials/v3.mp4",
-  "/testimonials/v4.mp4",
-  "/testimonials/v5.mp4",
+  // Interleaved: each original video (1-5) placed right after the newer ones (6-10).
   "/testimonials/v6.mp4",
+  "/testimonials/v1.mp4",
   "/testimonials/v7.mp4",
+  "/testimonials/v2.mp4",
   "/testimonials/v8.mp4",
+  "/testimonials/v3.mp4",
   "/testimonials/v9.mp4",
+  "/testimonials/v4.mp4",
   "/testimonials/patient-testimonial.mp4", // original featured testimonial, kept in the carousel
+  "/testimonials/v5.mp4",
 ];
 
 function FeaturedVideo() {
