@@ -126,7 +126,7 @@ export default function Footer() {
             </div>
             <div className="flex gap-3 mb-6">
               {[
-                { Icon: Facebook, label: "Facebook", href: "#" },
+                { Icon: Facebook, label: "Facebook", href: "https://www.facebook.com/share/1HWXBq4tXj/?mibextid=wwXIfr" },
                 { Icon: Youtube, label: "YouTube", href: "#" },
                 { Icon: Instagram, label: "Instagram", href: "https://www.instagram.com/svyasa_arogyadhama" },
                 { Icon: Twitter, label: "Twitter", href: "#" },
