@@ -126,15 +126,17 @@ export default function Footer() {
             </div>
             <div className="flex gap-3 mb-6">
               {[
-                { Icon: Facebook, label: "Facebook" },
-                { Icon: Youtube, label: "YouTube" },
-                { Icon: Instagram, label: "Instagram" },
-                { Icon: Twitter, label: "Twitter" },
-              ].map(({ Icon, label }) => (
+                { Icon: Facebook, label: "Facebook", href: "#" },
+                { Icon: Youtube, label: "YouTube", href: "#" },
+                { Icon: Instagram, label: "Instagram", href: "https://www.instagram.com/svyasa_arogyadhama" },
+                { Icon: Twitter, label: "Twitter", href: "#" },
+              ].map(({ Icon, label, href }) => (
                 <a
                   key={label}
-                  href="#"
+                  href={href}
                   aria-label={label}
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                  rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
                   className="w-9 h-9 rounded-lg bg-maroon-light/40 flex items-center justify-center text-cream/60 hover:text-gold hover:bg-maroon-light transition-all"
                 >
                   <Icon size={16} />
