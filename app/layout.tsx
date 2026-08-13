@@ -3,8 +3,6 @@ import Script from "next/script";
 import "./globals.css";
 import Providers from "./providers";
 
-const CONVAI_AGENT_ID = "agent_2001kwf3rd9wewcsmcbt5ysm06az"; // "Prashanthi" voice agent
-
 // Google Analytics 4 — the measurement ID is a public identifier, not a secret.
 // Declared once here in the root layout so every route carries exactly one tag.
 const GA_MEASUREMENT_ID = "G-YD0M9KJRVT";
@@ -69,13 +67,6 @@ gtag('config', '${GA_MEASUREMENT_ID}');`}
         </Script>
 
         <Providers>{children}</Providers>
-        {/* ElevenLabs Conversational AI voice agent — "Prashanthi" */}
-        <elevenlabs-convai agent-id={CONVAI_AGENT_ID}></elevenlabs-convai>
-        <Script
-          src="https://elevenlabs.io/convai-widget/index.js"
-          strategy="afterInteractive"
-          async
-        />
       </body>
     </html>
   );
