@@ -118,18 +118,21 @@ const RESEARCH_PAPERS = [
     journal: "Diabetes Care",
     year: "2015",
     authors: "Nagarathna R, Nagendra HR, et al.",
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC8231281/",
   },
   {
     title: "Yoga's effect on blood pressure: A systematic review and meta-analysis",
     journal: "Journal of Clinical Hypertension",
     year: "2019",
     authors: "S-VYASA Research Team",
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC8452415/",
   },
   {
     title: "Cyclic Meditation increases the occurrence of theta EEG bursts",
     journal: "International Journal of Yoga",
     year: "2010",
     authors: "Sarang SP, Telles S",
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC2934575/",
   },
   {
     title: "MSRT reduces anxiety and improves quality of sleep in healthy adults",
@@ -308,22 +311,34 @@ export default function KnowledgeHub() {
               </p>
             </div>
             <div className="bg-white divide-y divide-border">
-              {RESEARCH_PAPERS.map((p) => (
-                <div key={p.title} className="p-6 flex items-start gap-4 hover:bg-cream/30 transition-colors group">
-                  <FlaskConical size={18} className="text-gold flex-shrink-0 mt-0.5" />
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-body font-semibold text-forest text-sm leading-snug mb-1 group-hover:text-gold transition-colors">
-                      {p.title}
-                    </h4>
-                    <div className="flex flex-wrap gap-x-3 gap-y-0.5">
-                      <span className="font-body text-xs text-gold">{p.journal}</span>
-                      <span className="font-body text-xs text-sage">{p.authors}</span>
-                      <span className="font-body text-xs text-sage">{p.year}</span>
+              {RESEARCH_PAPERS.map((p) => {
+                const rowClass = "p-6 flex items-start gap-4 hover:bg-cream/30 transition-colors group";
+                const content = (
+                  <>
+                    <FlaskConical size={18} className="text-gold flex-shrink-0 mt-0.5" />
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-body font-semibold text-forest text-sm leading-snug mb-1 group-hover:text-gold transition-colors">
+                        {p.title}
+                      </h4>
+                      <div className="flex flex-wrap gap-x-3 gap-y-0.5">
+                        <span className="font-body text-xs text-gold">{p.journal}</span>
+                        <span className="font-body text-xs text-sage">{p.authors}</span>
+                        <span className="font-body text-xs text-sage">{p.year}</span>
+                      </div>
                     </div>
+                    <ExternalLink size={14} className="text-sage flex-shrink-0 group-hover:text-gold transition-colors mt-0.5" />
+                  </>
+                );
+                return "url" in p && p.url ? (
+                  <a key={p.title} href={p.url} target="_blank" rel="noopener noreferrer" className={rowClass}>
+                    {content}
+                  </a>
+                ) : (
+                  <div key={p.title} className={rowClass}>
+                    {content}
                   </div>
-                  <ExternalLink size={14} className="text-sage flex-shrink-0 group-hover:text-gold transition-colors mt-0.5" />
-                </div>
-              ))}
+                );
+              })}
               <div className="p-6 bg-cream/20 text-center">
                 <Link to="/knowledge-hub/research-papers"
                   className="inline-flex items-center gap-2 font-body text-sm font-semibold text-forest hover:text-gold transition-colors">
