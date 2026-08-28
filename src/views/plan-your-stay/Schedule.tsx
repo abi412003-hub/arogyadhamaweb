@@ -94,14 +94,6 @@ const SCHEDULE = [
     period: "afternoon",
   },
   {
-    time: "3:00 PM",
-    label: "Cyclic Meditation",
-    desc: "Arogyadhama's signature deep relaxation technique — alternating movement and stillness to create states of profound physiological rest. Scientifically shown to be more restorative than sleep.",
-    icon: "🌀",
-    category: "meditation",
-    period: "afternoon",
-  },
-  {
     time: "3:20 PM",
     label: "Pranayama-II",
     desc: "The second pranayama session of the day — breathing practices to balance vital energy (prana), adapted to each patient's respiratory capacity and condition.",
@@ -143,8 +135,8 @@ const SCHEDULE = [
   },
   {
     time: "6:40 – 7:40 PM",
-    label: "Trataka & CM",
-    desc: "Candle gazing meditation (Trataka) followed by Cyclic Meditation (CM) — a powerful combination for stress reduction and deep mental relaxation.",
+    label: "Trataka & Cyclic Meditation",
+    desc: "Candle gazing meditation (Trataka) followed by Cyclic Meditation — a powerful combination for stress reduction and deep mental relaxation.",
     icon: "🕯️",
     category: "meditation",
     period: "evening",
