@@ -9,6 +9,10 @@ import {
   Send, Loader2, HeartHandshake,
 } from "lucide-react";
 
+// next.config.mjs sets `disableStaticImages` + an asset/resource rule, so this
+// resolves to a plain URL string for a normal <img src>, not a next/image object.
+import heroImg from "@/assets/anuvartana-hero.jpg";
+
 /* =========================================================
    Anuvartana — The Arogyadhama Aftercare Program
    Copy on this page is taken from the client's "Website Content"
@@ -288,9 +292,6 @@ function CardBackdrop({ variant, uid, color }: { variant: string; uid: string; c
 }
 
 function HeroArtwork() {
-  const petals = Array.from({ length: 12 }, (_, i) => i * 30);
-  const spokes = Array.from({ length: 24 }, (_, i) => i * 15);
-
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
       {/* Soft depth glows */}
@@ -313,88 +314,9 @@ function HeroArtwork() {
         <rect width="100%" height="100%" fill="url(#ac-dots)" opacity="0.35" />
       </svg>
 
-      {/* Mandala — right side, desktop only */}
-      <div className="hidden md:block absolute right-[-7rem] top-1/2 -translate-y-1/2">
-        <motion.svg
-          viewBox="0 0 600 600"
-          className="w-[34rem] h-[34rem] lg:w-[42rem] lg:h-[42rem]"
-          fill="none"
-          initial={{ opacity: 0, rotate: -8, scale: 0.94 }}
-          animate={{ opacity: 1, rotate: 0, scale: 1 }}
-          transition={{ duration: 1.4, ease: "easeOut" }}
-        >
-          {/* Concentric rings */}
-          {[275, 232, 189, 146, 103, 60].map((r, i) => (
-            <circle
-              key={r}
-              cx="300"
-              cy="300"
-              r={r}
-              stroke="hsl(51 97% 94%)"
-              strokeWidth={i % 2 === 0 ? 1 : 0.6}
-              opacity={0.10 - i * 0.008}
-            />
-          ))}
-          {/* Radiating spokes — coordinates rounded so SSR and client markup match exactly */}
-          {spokes.map((a) => (
-            <line
-              key={`s${a}`}
-              x1={polar(a, 60).x}
-              y1={polar(a, 60).y}
-              x2={polar(a, 275).x}
-              y2={polar(a, 275).y}
-              stroke="hsl(43 89% 60%)"
-              strokeWidth="0.5"
-              opacity="0.10"
-            />
-          ))}
-          {/* Outer petal ring */}
-          {petals.map((a) => (
-            <path
-              key={`p1${a}`}
-              d="M300 300 C 268 236, 268 168, 300 118 C 332 168, 332 236, 300 300 Z"
-              transform={`rotate(${a} 300 300)`}
-              stroke="hsl(51 97% 94%)"
-              strokeWidth="0.9"
-              opacity="0.085"
-            />
-          ))}
-          {/* Inner petal ring, counter-rotated */}
-          {petals.map((a) => (
-            <path
-              key={`p2${a}`}
-              d="M300 300 C 282 264, 282 226, 300 198 C 318 226, 318 264, 300 300 Z"
-              transform={`rotate(${a + 15} 300 300)`}
-              stroke="hsl(43 89% 60%)"
-              strokeWidth="0.8"
-              opacity="0.11"
-            />
-          ))}
-          {/* Lotus buds around the rim */}
-          {Array.from({ length: 8 }, (_, i) => i * 45).map((a) => {
-            const { x, y } = polar(a, 275);
-            return (
-              <g key={`b${a}`} transform={`translate(${x} ${y}) rotate(${a + 90}) scale(0.62)`} opacity="0.16">
-                <path
-                  d="M0 10 C0 10 -10 2 -10 -6 C-10 -12 -5 -16 0 -14 C5 -16 10 -12 10 -6 C10 2 0 10 0 10Z"
-                  fill="hsl(43 89% 62%)"
-                />
-                <path
-                  d="M0 10 C0 10 -16 4 -18 -6 C-19 -12 -13 -15 -8 -12 C-6 -11 -3 -6 0 10Z"
-                  fill="hsl(51 97% 94%)"
-                  opacity="0.55"
-                />
-                <path
-                  d="M0 10 C0 10 16 4 18 -6 C19 -12 13 -15 8 -12 C6 -11 3 -6 0 10Z"
-                  fill="hsl(51 97% 94%)"
-                  opacity="0.55"
-                />
-              </g>
-            );
-          })}
-          <circle cx="300" cy="300" r="26" fill="hsl(43 89% 60%)" opacity="0.10" />
-        </motion.svg>
-      </div>
+      {/* The mandala that used to sit here is gone: the hero photo now occupies
+          the same right-hand region and the two would collide. The glows and dot
+          texture above stay — they are full-bleed and sit quietly under the text. */}
 
       {/* Bottom fade into the page */}
       <div
@@ -626,6 +548,27 @@ export default function AfterCare() {
           style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)), transparent)" }}
         />
         <HeroArtwork />
+
+        {/* Hero photo — same treatment as the department pages: a right-hand
+            panel whose left edge is dissolved by a mask (not a painted overlay),
+            so it melts into the maroon gradient with no visible seam. */}
+        {(() => {
+          const mask = "linear-gradient(90deg, transparent 0%, black 55%)";
+          return (
+            <div
+              className="absolute inset-y-0 right-0 w-[48%] hidden md:block pointer-events-none"
+              style={{ WebkitMaskImage: mask, maskImage: mask }}
+            >
+              <img
+                src={heroImg}
+                alt=""
+                aria-hidden
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0" style={{ background: "hsl(var(--maroon-dark) / 0.25)" }} />
+            </div>
+          );
+        })()}
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
