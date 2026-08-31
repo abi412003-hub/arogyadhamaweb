@@ -38,7 +38,7 @@ const navItems = [
       { label: "Tariff & Plans", href: "/plan-your-stay/tariff" },
       { label: "Daily Schedule", href: "/plan-your-stay/schedule" },
       { label: "Accommodation", href: "/plan-your-stay/accommodation" },
-      { label: "After Care", href: "/plan-your-stay/after-care" },
+      { label: "After Care Program", href: "/plan-your-stay/after-care" },
     ],
   },
   { label: "Knowledge Hub", href: "/knowledge-hub" },
