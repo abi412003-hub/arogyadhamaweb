@@ -9,6 +9,12 @@ import {
   Send, Loader2, HeartHandshake,
 } from "lucide-react";
 
+// next.config.mjs sets `disableStaticImages` + an asset/resource rule, so these
+// resolve to plain URL strings for a normal <img src>, not next/image objects.
+import dietImg from "@/assets/therapies/diet-and-nutrition-card.jpg";
+import yogaImg from "@/assets/therapies/yoga-card.jpg";
+import campusImg from "@/assets/campus-entrance.jpg";
+
 /* =========================================================
    Anuvartana — The Arogyadhama Aftercare Program
    Copy on this page is taken from the client's "Website Content"
@@ -56,6 +62,7 @@ const INCLUDED = [
     icon: Leaf,
     title: "Personalised Wellness Plans",
     desc: "Covering yoga, Ayurvedic diet and naturopathic practices for home.",
+    image: dietImg,
     color: "hsl(var(--forest))",
     bg: "hsl(var(--maroon) / 0.08)",
   },
@@ -70,6 +77,7 @@ const INCLUDED = [
     icon: Library,
     title: "A Digital Library",
     desc: "Guided yoga, meditation and pranayama tutorials, available whenever you need them.",
+    image: yogaImg,
     color: "hsl(var(--gold))",
     bg: "hsl(var(--gold) / 0.08)",
   },
@@ -77,6 +85,7 @@ const INCLUDED = [
     icon: MessageCircle,
     title: "Community & Newsletters",
     desc: "A supportive online community and regular wellness newsletters.",
+    image: campusImg,
     color: "hsl(var(--terracotta))",
     bg: "hsl(var(--terracotta) / 0.08)",
   },
@@ -576,15 +585,48 @@ export default function AfterCare() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.07 }}
               >
-                <div className="group flex flex-col h-full bg-white rounded-2xl p-7 border border-border shadow-card hover:shadow-card-hover hover:-translate-y-1.5 transition-all duration-300">
-                  <div
-                    className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform"
-                    style={{ background: item.bg }}
-                  >
-                    <item.icon size={22} style={{ color: item.color }} />
+                <div className="group flex flex-col h-full bg-white rounded-2xl overflow-hidden border border-border shadow-card hover:shadow-card-hover hover:-translate-y-1.5 transition-all duration-300">
+                  {/* Banner: photo where one honestly depicts the heading,
+                      brand gradient where none exists. */}
+                  <div className="relative aspect-[3/2] overflow-hidden">
+                    {item.image ? (
+                      <img
+                        src={item.image}
+                        alt=""
+                        aria-hidden
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                      />
+                    ) : (
+                      <div
+                        className="h-full w-full flex items-center justify-center"
+                        style={{
+                          background: `linear-gradient(145deg, ${item.color} 0%, hsl(var(--maroon-dark)) 130%)`,
+                        }}
+                      >
+                        <item.icon size={44} className="text-cream/35" strokeWidth={1.25} />
+                      </div>
+                    )}
+                    {/* Unifying maroon scrim so photos and gradients share one palette */}
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        background:
+                          "linear-gradient(to top, hsl(var(--maroon-dark) / 0.42) 0%, hsl(var(--maroon-dark) / 0.06) 55%, transparent 100%)",
+                      }}
+                    />
                   </div>
-                  <h3 className="font-display font-bold text-forest text-xl mb-2">{item.title}</h3>
-                  <p className="font-body text-forest/60 text-sm leading-relaxed flex-1">{item.desc}</p>
+
+                  <div className="flex flex-1 flex-col px-7 pb-7">
+                    <div
+                      className="relative z-10 -mt-6 mb-4 w-12 h-12 rounded-xl flex items-center justify-center shadow-card group-hover:scale-110 transition-transform"
+                      style={{ background: "hsl(var(--cream))", border: `1px solid ${item.color}25` }}
+                    >
+                      <item.icon size={22} style={{ color: item.color }} />
+                    </div>
+                    <h3 className="font-display font-bold text-forest text-xl mb-2">{item.title}</h3>
+                    <p className="font-body text-forest/60 text-sm leading-relaxed flex-1">{item.desc}</p>
+                  </div>
                 </div>
               </motion.div>
             ))}
