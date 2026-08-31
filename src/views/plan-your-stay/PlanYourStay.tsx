@@ -53,7 +53,7 @@ const QUICK_LINKS = [
   {
     href: "/plan-your-stay/after-care",
     icon: HeartHandshake,
-    title: "Anuvartana — Aftercare",
+    title: "After Care",
     desc: "The Arogyadhama Aftercare Program — stay connected to the doctors, therapists and practices that helped you heal.",
     color: "hsl(258 50% 35%)",
     bg: "hsl(258 50% 35% / 0.08)",
