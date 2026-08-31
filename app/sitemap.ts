@@ -33,6 +33,7 @@ const ROUTES = [
   "/plan-your-stay/schedule",
   "/plan-your-stay/accommodation",
   "/plan-your-stay/what-to-bring",
+  "/plan-your-stay/after-care",
   "/plan-your-stay/how-to-reach",
   "/plan-your-stay/faqs",
   "/knowledge-hub",

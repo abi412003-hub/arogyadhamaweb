@@ -5,7 +5,7 @@ import Layout from "@/components/Layout";
 import campusAerial from "@/assets/campus-aerial.jpg";
 import {
   ChevronRight, Calculator, BedDouble, Clock3, Backpack,
-  MapPin, Calendar, Phone, Leaf, Sun, Heart
+  MapPin, Calendar, Phone, Leaf, Sun, Heart, HeartHandshake
 } from "lucide-react";
 import { useGeoPricing, formatRegionPrice } from "@/hooks/useGeoPricing";
 
@@ -49,6 +49,14 @@ const QUICK_LINKS = [
     desc: "Directions from Bengaluru Airport, City Station, and Majestic — with cab contacts and campus map.",
     color: "hsl(200 60% 35%)",
     bg: "hsl(200 60% 35% / 0.08)",
+  },
+  {
+    href: "/plan-your-stay/after-care",
+    icon: HeartHandshake,
+    title: "After Care Programme",
+    desc: "Your healing continues at home — structured follow-up, home protocol, tele-reviews and lifelong support.",
+    color: "hsl(258 50% 35%)",
+    bg: "hsl(258 50% 35% / 0.08)",
   },
 ];
 
