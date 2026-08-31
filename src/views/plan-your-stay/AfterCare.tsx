@@ -429,6 +429,13 @@ function EOIForm() {
     if (!form.name.trim()) e.name = "Please enter your full name";
     if (!/^\d{10}$/.test(form.phone.trim())) e.phone = "Enter a 10-digit contact number";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) e.email = "Enter a valid email address";
+    // A required Age that accepts "abc" is no gate — check it's a plausible number.
+    const age = Number(form.age.trim());
+    if (!/^\d{1,3}$/.test(form.age.trim()) || age < 1 || age > 120) e.age = "Enter a valid age";
+    if (!form.gender) e.gender = "Please select an option";
+    if (!form.completedProgram) e.completedProgram = "Please select Yes or No";
+    if (!form.mode) e.mode = "Please select a mode";
+    if (!form.program) e.program = "Please select a programme";
     if (!consent) e.consent = "Please give your consent to continue";
     return e;
   }
@@ -542,16 +549,16 @@ function EOIForm() {
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {text("name", "Full Name *")}
-        {text("age", "Age", { max: 10 })}
-        {select("gender", "Gender", ["Female", "Male", "Other", "Prefer not to say"])}
+        {text("age", "Age *", { max: 10 })}
+        {select("gender", "Gender *", ["Female", "Male", "Other", "Prefer not to say"])}
         {text("phone", "Contact Number *", { max: 10, placeholder: "10-digit mobile number" })}
         {text("email", "Email Address *")}
         {text("city", "City / Location", { max: 120 })}
-        {select("completedProgram", "Programme Completed at Arogyadhama", ["Yes", "No"])}
+        {select("completedProgram", "Programme Completed at Arogyadhama *", ["Yes", "No"])}
         {text("datesOfStay", "Approximate Dates of Stay", { max: 120, placeholder: "e.g. March 2026" })}
         {area("condition", "Primary Health Concern / Condition", 2)}
-        {select("mode", "Preferred Mode of Sessions", ["Online", "In-person"])}
-        {select("program", "Preferred Programme", ["Maintenance Program", "Early Recovery Program"])}
+        {select("mode", "Preferred Mode of Sessions *", ["Online", "In-person"])}
+        {select("program", "Preferred Programme *", ["Maintenance Program", "Early Recovery Program"])}
         {text("timing", "Preferred Days & Timing for Sessions", { max: 200 })}
         {text("hearAbout", "How Did You Hear About Us?", { max: 200 })}
         {area("notes", "Additional Notes / Questions")}

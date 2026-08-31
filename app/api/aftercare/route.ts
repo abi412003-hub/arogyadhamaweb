@@ -6,6 +6,15 @@ export const dynamic = "force-dynamic";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_RE = /^\d{10}$/;
+const AGE_RE = /^\d{1,3}$/;
+
+// Allowed values for the four dropdowns. These must stay in step with the
+// select() option lists in src/views/plan-your-stay/AfterCare.tsx. Accepting
+// only these keeps a crafted POST from writing arbitrary text into the sheet.
+const GENDERS = ["Female", "Male", "Other", "Prefer not to say"];
+const YES_NO = ["Yes", "No"];
+const MODES = ["Online", "In-person"];
+const PROGRAMS = ["Maintenance Program", "Early Recovery Program"];
 
 // Google Apps Script Web App that appends a row to the
 // "Arogyadhama — Anuvartana Aftercare EOI" sheet. Optional: when unset the
@@ -39,6 +48,35 @@ export async function POST(req: Request) {
   if (!PHONE_RE.test(phone))
     return NextResponse.json({ success: false, error: "Invalid phone" }, { status: 400 });
 
+  const age = str(body.age, 10);
+  if (!AGE_RE.test(age) || Number(age) < 1 || Number(age) > 120)
+    return NextResponse.json({ success: false, error: "Invalid age" }, { status: 400 });
+
+  const gender = str(body.gender, 40);
+  if (!GENDERS.includes(gender))
+    return NextResponse.json({ success: false, error: "Invalid gender" }, { status: 400 });
+
+  const completedProgram = str(body.completedProgram, 10);
+  if (!YES_NO.includes(completedProgram))
+    return NextResponse.json(
+      { success: false, error: "Invalid value for programme completed" },
+      { status: 400 },
+    );
+
+  const mode = str(body.mode, 40);
+  if (!MODES.includes(mode))
+    return NextResponse.json(
+      { success: false, error: "Invalid preferred mode of sessions" },
+      { status: 400 },
+    );
+
+  const program = str(body.program, 60);
+  if (!PROGRAMS.includes(program))
+    return NextResponse.json(
+      { success: false, error: "Invalid preferred programme" },
+      { status: 400 },
+    );
+
   if (body.consent !== true)
     return NextResponse.json(
       { success: false, error: "Consent is required to submit this form." },
@@ -46,14 +84,9 @@ export async function POST(req: Request) {
     );
 
   // ── Optional ──
-  const age = str(body.age, 10);
-  const gender = str(body.gender, 40);
   const city = str(body.city, 120);
-  const completedProgram = str(body.completedProgram, 10);
   const datesOfStay = str(body.datesOfStay, 120);
   const condition = str(body.condition, 1000);
-  const mode = str(body.mode, 40);
-  const program = str(body.program, 60);
   const timing = str(body.timing, 200);
   const hearAbout = str(body.hearAbout, 200);
   const notes = str(body.notes, 2000);
