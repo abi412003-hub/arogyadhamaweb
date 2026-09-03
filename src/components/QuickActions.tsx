@@ -35,8 +35,9 @@ export default function QuickActions() {
           <motion.div
             key={card.title}
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 + i * 0.1, duration: 0.5 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ delay: i * 0.1, duration: 0.5 }}
           >
             <Link
               to={card.href}
