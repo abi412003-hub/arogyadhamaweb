@@ -73,7 +73,7 @@ export default function AboutSection() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="font-display text-display-lg text-forest mb-6">
-              Four Decades of Integrative Healing
+              Five Decades of Integrative Healing
             </h2>
             <div className="space-y-4 font-body text-forest/70 leading-relaxed text-base">
               <p>

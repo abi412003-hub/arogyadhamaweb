@@ -17,7 +17,7 @@ const stats = [
   { value: "50+", label: "Years of Excellence", sub: "Since 1984" },
   { value: "10,00,000+", label: "Patients Treated", sub: "From 50+ countries" },
   { value: "600", label: "Bed Capacity", sub: "Inpatient facility" },
-  { value: "1,000+", label: "Research Papers", sub: "PubMed indexed" },
+  { value: "1,500+", label: "Research Papers", sub: "PubMed indexed" },
 ];
 
 export default function HeroSection() {
