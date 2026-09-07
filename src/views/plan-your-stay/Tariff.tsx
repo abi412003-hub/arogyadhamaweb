@@ -361,7 +361,7 @@ export default function Tariff() {
                     {/* What's included */}
                     <div className="bg-cream/40 px-5 pb-5">
                       <div className="font-body text-xs tracking-widest uppercase text-sage font-semibold mb-3 pt-4">Included in all packages</div>
-                      {["Accommodation", "3 Sattvic meals daily", "Yoga, Ayurveda & Naturopathy", "Physiotherapy, Acupuncture & Acupressure", "Medical consultations", "Yoga kit"].map((inc) => (
+                      {["Accommodation", "3 Sattvic meals daily", "Yoga", "Medical consultations", "Yoga kit"].map((inc) => (
                         <div key={inc} className="flex items-center gap-2 mb-1.5">
                           <CheckCircle2 size={12} className="text-gold flex-shrink-0" />
                           <span className="font-body text-forest/70 text-xs">{inc}</span>
