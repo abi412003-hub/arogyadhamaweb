@@ -350,7 +350,7 @@ function NumbersSection() {
     { value: 50, suffix: "+", label: "Years of Excellence", sub: "Since 1981" },
     { value: 1000000, suffix: "+", label: "Patients Treated", sub: "From across the world" },
     { value: 600, suffix: "", label: "Inpatient Beds", sub: "Full-facility hospital" },
-    { value: 1000, suffix: "+", label: "Research Papers", sub: "PubMed indexed" },
+    { value: 1500, suffix: "+", label: "Research Papers", sub: "PubMed indexed" },
     { value: 11, suffix: "", label: "Clinical Depts", sub: "Specialised care" },
     { value: 7500, suffix: "+", label: "Yoga Camps", sub: "Across India" },
   ];
