@@ -541,7 +541,7 @@ function ComparisonTable({ currency }: { currency: PriceCurrency | null }) {
         </tbody>
       </table>
       <div className="bg-white px-5 py-3 border-t border-border">
-        <p className="font-body text-xs text-sage">Every room is fully inclusive: accommodation, 3 sattvic meals/day, all therapies (Yoga, Ayurveda, Naturopathy, Physiotherapy, Acupuncture &amp; Acupressure), medical consultations, and yoga kit. Rates are Tuesday–Monday. Per person charges apply where indicated.</p>
+        <p className="font-body text-xs text-sage">Every room is fully inclusive: accommodation, 3 sattvic meals/day, only Yoga therapies (Ayurveda, Naturopathy, Physiotherapy, Acupuncture &amp; Acupressure), medical consultations, and yoga kit. Rates are Tuesday–Monday. Per person charges apply where indicated.</p>
       </div>
     </div>
   );

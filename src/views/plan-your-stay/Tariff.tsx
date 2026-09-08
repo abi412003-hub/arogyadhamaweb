@@ -142,7 +142,7 @@ function TableView({ currency }: { currency: PriceCurrency | null }) {
       </table>
       <div className="bg-white px-5 py-4 border-t border-border">
         <div className="font-body text-xs text-sage space-y-1">
-          <p>• Tariff is from Tuesday to Monday (minimum 6 nights). • Every package is fully inclusive — accommodation, three sattvic meals daily, and all therapies (Yoga, Ayurveda, Naturopathy, Physiotherapy, Acupuncture & Acupressure), medical consultations, and yoga kit.</p>
+          <p>• Tariff is from Tuesday to Monday (minimum 6 nights). • Every package is fully inclusive — accommodation, three sattvic meals daily, and only Yoga therapies (Ayurveda, Naturopathy, Physiotherapy, Acupuncture & Acupressure), medical consultations, and yoga kit.</p>
           <p>• Charges are per person. Bill settlement required one day before discharge.</p>
         </div>
       </div>
@@ -195,7 +195,7 @@ export default function Tariff() {
         <div className="flex items-start gap-3 rounded-2xl border px-5 py-4" style={{ background: "hsl(var(--gold-pale))", borderColor: "hsl(var(--gold) / 0.3)" }}>
           <Info size={18} className="text-gold flex-shrink-0 mt-0.5" />
           <p className="font-body text-sm italic leading-relaxed" style={{ color: "hsl(var(--forest))" }}>
-            Every package is fully inclusive — the tariff covers accommodation, three sattvic meals daily, and all therapies (Yoga, Ayurveda, Naturopathy, Physiotherapy, Acupuncture &amp; Acupressure) as advised by the consulting doctor. All charges are per person.
+            Every package is fully inclusive — the tariff covers accommodation, three sattvic meals daily, and only Yoga therapies (Ayurveda, Naturopathy, Physiotherapy, Acupuncture &amp; Acupressure) as advised by the consulting doctor. All charges are per person.
           </p>
         </div>
       </div>
