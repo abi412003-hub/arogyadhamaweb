@@ -5,7 +5,7 @@ import Layout from "@/components/Layout";
 import campusAerial from "@/assets/campus-aerial.jpg";
 import {
   ChevronRight, Calculator, BedDouble, Clock3, Backpack,
-  MapPin, Calendar, Phone, Leaf, Sun, Heart, HeartHandshake
+  MapPin, Calendar, Phone, Leaf, Heart, HeartHandshake
 } from "lucide-react";
 import { useGeoPricing, formatRegionPrice } from "@/hooks/useGeoPricing";
 
@@ -64,7 +64,6 @@ const INCLUSIONS = [
   { icon: BedDouble, label: "Accommodation" },
   { icon: Leaf, label: "Sattvic Meals (3/day)" },
   { icon: Heart, label: "Medical Consultations" },
-  { icon: Sun, label: "All Therapies Included" },
   { icon: Calendar, label: "Yoga Kit Provided" },
   { icon: Phone, label: "24/7 Nursing Support" },
 ];

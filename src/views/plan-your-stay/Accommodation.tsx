@@ -34,7 +34,7 @@ function priceStr(inr: number, usd: number, currency: PriceCurrency | null) {
 
 /* ── Data ── */
 // weeklyRateINR / weeklyRateUSD: per person, week-1 rate from the official price sheets.
-// Every package is fully inclusive (all therapies included). Row order follows the chart.
+// Row order follows the chart.
 const ROOMS = [
   {
     key: "dormitory",
