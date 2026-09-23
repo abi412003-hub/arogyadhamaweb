@@ -14,7 +14,10 @@ import heroImg from "@/assets/anuvartana-hero.jpg";
 import doctorImg from "@/assets/anuvartana/doctor-consultation.jpg";
 import dietImg from "@/assets/therapies/diet-and-nutrition-card.jpg";
 import yogaImg from "@/assets/therapies/yoga-card.jpg";
-import lecturesImg from "@/assets/anuvartana/recorded-lectures.jpg";
+import lecture1 from "@/assets/anuvartana/lecture-1.jpg";
+import lecture2 from "@/assets/anuvartana/lecture-2.jpg";
+import lecture3 from "@/assets/anuvartana/lecture-3.jpg";
+import lecture4 from "@/assets/anuvartana/lecture-4.jpg";
 import counsellorImg from "@/assets/anuvartana/counsellor-support.jpg";
 
 /* =========================================================
@@ -54,7 +57,7 @@ const INCLUDED = [
   {
     icon: Library,
     title: "Recorded lectures & classes",
-    img: lecturesImg,
+    art: "library",
     desc: "Revisit educational sessions, expert talks and recorded classes at your convenience.",
     color: "hsl(var(--gold))",
   },
@@ -113,6 +116,78 @@ function CardPhoto({ src }: { src: string }) {
         style={{
           background:
             "linear-gradient(to top, hsl(var(--maroon-dark) / 0.92) 0%, hsl(var(--maroon-dark) / 0.6) 42%, hsl(var(--maroon-dark) / 0.08) 100%)",
+        }}
+      />
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────
+   Recorded-library art — a tilted, floating wall of class
+   recordings (real Arogyadhama session frames) with play buttons,
+   progress bars and durations. Ornamental only.
+   ───────────────────────────────────────────────────────── */
+const LIBRARY_TILES = [
+  { src: lecture1, time: "42:15", progress: 0.72, pos: { left: "8%", top: "10%" }, delay: 0 },
+  { src: lecture2, time: "18:40", progress: 0.35, pos: { left: "52%", top: "4%" }, delay: 0.8 },
+  { src: lecture3, time: "25:05", progress: 0.9, pos: { left: "14%", top: "48%" }, delay: 1.6 },
+  { src: lecture4, time: "31:20", progress: 0.55, pos: { left: "56%", top: "42%" }, delay: 2.4 },
+];
+
+function VideoLibraryArt() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div
+        className="absolute inset-0"
+        style={{ background: "linear-gradient(150deg, hsl(345 45% 22%) 0%, hsl(var(--maroon-dark)) 70%)" }}
+      />
+      <div
+        className="absolute -top-16 -right-10 h-64 w-64 rounded-full blur-3xl"
+        style={{ background: "hsl(43 89% 55% / 0.28)" }}
+      />
+      <div className="absolute inset-x-0 top-0 h-[62%]" style={{ perspective: "900px" }}>
+        <div
+          className="absolute inset-0 transition-transform duration-700 group-hover:[transform:rotateX(8deg)_rotateY(-8deg)_rotateZ(2deg)_scale(1.04)]"
+          style={{ transform: "rotateX(12deg) rotateY(-14deg) rotateZ(3deg) scale(0.95)", transformStyle: "preserve-3d" }}
+        >
+          {LIBRARY_TILES.map((t, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-[36%] aspect-video overflow-hidden rounded-lg border border-cream/25 shadow-[0_12px_30px_rgba(0,0,0,0.45)]"
+              style={t.pos}
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 4, delay: t.delay, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <img src={t.src} alt="" loading="lazy" className="h-full w-full object-cover" />
+              <div className="absolute inset-0 bg-black/25" />
+              {/* play button */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span
+                  className="flex h-7 w-7 items-center justify-center rounded-full shadow-lg"
+                  style={{ background: "hsl(43 89% 55% / 0.95)" }}
+                >
+                  <span
+                    className="ml-0.5 block h-0 w-0 border-y-[5px] border-l-[8px] border-y-transparent"
+                    style={{ borderLeftColor: "hsl(var(--maroon-dark))" }}
+                  />
+                </span>
+              </div>
+              {/* duration + progress */}
+              <span className="absolute right-1 top-1 rounded bg-black/65 px-1 font-body text-[9px] font-semibold text-white">
+                {t.time}
+              </span>
+              <div className="absolute inset-x-0 bottom-0 h-[3px] bg-white/25">
+                <div className="h-full" style={{ width: `${t.progress * 100}%`, background: "hsl(43 89% 55%)" }} />
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(to top, hsl(var(--maroon-dark) / 0.95) 0%, hsl(var(--maroon-dark) / 0.55) 38%, transparent 62%)",
         }}
       />
     </div>
@@ -539,7 +614,7 @@ export default function AfterCare() {
                 transition={{ delay: i * 0.07 }}
               >
                 <div className="group relative flex h-full min-h-[17rem] flex-col justify-end overflow-hidden rounded-2xl p-7 border border-black/5 shadow-card hover:shadow-card-hover hover:-translate-y-1.5 transition-all duration-300">
-                  <CardPhoto src={item.img} />
+                  {item.art === "library" ? <VideoLibraryArt /> : <CardPhoto src={item.img!} />}
 
                   <span className="absolute left-0 top-0 h-1 w-full z-10" style={{ background: item.color }} />
                   <span className="absolute right-6 top-5 z-10 font-display font-bold text-cream/40 text-3xl">
