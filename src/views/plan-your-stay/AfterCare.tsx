@@ -526,7 +526,7 @@ export default function AfterCare() {
     <Layout>
       {/* ── Hero ── */}
       <section
-        className="relative pt-28 pb-16 md:pb-24 overflow-hidden"
+        className="relative pt-28 pb-16 overflow-hidden"
         style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 60%, hsl(345 35% 24%) 100%)" }}
       >
         <div
@@ -535,31 +535,39 @@ export default function AfterCare() {
         />
         <HeroArtwork />
 
-        {/* Hero photo — right-hand panel whose left edge is dissolved by a mask
-            so it melts into the maroon gradient. The couple sits left of centre
-            in the source image, so it is anchored left and the fade kept short. */}
+        {/* Hero photo — same right-hand panel as the department pages. The mask
+            fades in gradually, so the woman on the left of the photo stays
+            slightly see-through against the maroon while the man is solid. */}
         {(() => {
-          const mask = "linear-gradient(90deg, transparent 0%, black 30%)";
+          const mask =
+            "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.45) 22%, rgba(0,0,0,0.85) 45%, black 65%)";
           return (
             <div
-              className="absolute inset-y-0 right-0 w-[52%] hidden md:block pointer-events-none"
+              className="absolute inset-y-0 right-0 w-[48%] hidden md:block pointer-events-none overflow-hidden"
               style={{ WebkitMaskImage: mask, maskImage: mask }}
             >
-              <img
+              <motion.img
                 src={heroImg}
                 alt=""
                 aria-hidden
                 className="w-full h-full object-cover"
-                style={{ objectPosition: "30% center" }}
+                style={{ objectPosition: "35% 40%" }}
+                initial={{ scale: 1.08 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 8, ease: "easeOut" }}
               />
-              <div className="absolute inset-0" style={{ background: "hsl(var(--maroon-dark) / 0.15)" }} />
+              <div className="absolute inset-0" style={{ background: "hsl(var(--maroon-dark) / 0.18)" }} />
+              <div
+                className="absolute inset-0"
+                style={{ background: "linear-gradient(to top, hsl(var(--maroon-dark) / 0.35), transparent 40%)" }}
+              />
             </div>
           );
         })()}
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <motion.div
-            className="md:max-w-[46%]"
+            className="md:max-w-[50%]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -572,34 +580,34 @@ export default function AfterCare() {
               <span className="text-cream/90">Anuvartana</span>
             </nav>
 
-            <div className="inline-block font-body text-xs tracking-[0.3em] uppercase text-gold/80 border border-gold/30 rounded-full px-3 py-1 mb-5">
+            <div className="inline-block font-body text-xs tracking-[0.3em] uppercase text-gold/80 border border-gold/30 rounded-full px-3 py-1 mb-4">
               Continuing Care Programme
             </div>
 
             <h1
               className="font-display text-cream font-bold"
-              style={{ fontSize: "clamp(2.6rem, 6vw, 4.6rem)", lineHeight: 1.05 }}
+              style={{ fontSize: "clamp(2.2rem, 5vw, 3.8rem)", lineHeight: 1.1 }}
             >
               Anuvartana
             </h1>
-            <p className="font-display text-gold mt-2" style={{ fontSize: "clamp(1.1rem, 2.4vw, 1.7rem)" }}>
+            <p className="font-display text-gold mt-2" style={{ fontSize: "clamp(1rem, 2vw, 1.35rem)" }}>
               Your Arogyadhama practice, continued at home.
             </p>
 
-            <p className="font-body text-cream/75 mt-6 leading-relaxed" style={{ fontSize: "clamp(1rem, 1.8vw, 1.1rem)" }}>
+            <p className="font-body text-cream/75 mt-4 max-w-xl leading-relaxed" style={{ fontSize: "clamp(0.95rem, 1.6vw, 1.05rem)" }}>
               Returning home brings a change in routine. Anuvartana helps you continue the practices
               introduced during your stay at Arogyadhama, with professional guidance, live sessions and
               support from your care team.
             </p>
 
-            <div className="flex flex-wrap gap-2.5 mt-8">
+            <div className="flex flex-wrap gap-2 mt-6">
               {HERO_CHIPS.map((c, i) => (
                 <motion.span
                   key={c}
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.25 + i * 0.09 }}
-                  className="font-body text-sm text-cream/85 border border-cream/25 rounded-full px-4 py-1.5"
+                  className="font-body text-xs text-cream/85 border border-cream/25 rounded-full px-3 py-1"
                   style={{ background: "hsl(51 97% 94% / 0.06)" }}
                 >
                   {c}
@@ -609,7 +617,7 @@ export default function AfterCare() {
 
             <a
               href="#register"
-              className="inline-flex items-center gap-2 mt-9 bg-gold text-forest-dark font-body font-semibold px-7 py-3.5 rounded-xl hover:bg-gold-light transition-colors shadow-gold"
+              className="inline-flex items-center gap-2 mt-7 bg-gold text-forest-dark font-body font-semibold text-sm px-5 py-2.5 rounded-xl hover:bg-gold-light transition-colors shadow-gold"
             >
               Register your interest <ArrowRight size={16} />
             </a>
@@ -619,7 +627,7 @@ export default function AfterCare() {
           <img
             src={heroImg}
             alt="A couple practising yoga at home, following a live online session on a laptop"
-            className="md:hidden mt-10 w-full aspect-[4/3] object-cover rounded-2xl border border-cream/15"
+            className="md:hidden mt-8 w-full aspect-[16/10] object-cover rounded-2xl border border-cream/15"
             style={{ objectPosition: "30% center" }}
           />
         </div>
