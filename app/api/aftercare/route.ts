@@ -13,8 +13,8 @@ const AGE_RE = /^\d{1,3}$/;
 // only these keeps a crafted POST from writing arbitrary text into the sheet.
 const GENDERS = ["Female", "Male", "Other", "Prefer not to say"];
 const YES_NO = ["Yes", "No"];
-const MODES = ["Online", "In-person"];
-const PROGRAMS = ["Maintenance Program", "Early Recovery Program"];
+const MODES = ["Online", "In-person"]; // form now always sends "Online"
+const PROGRAMS = ["Group", "1-to-1"];
 
 // Google Apps Script Web App that appends a row to the
 // "Arogyadhama — Anuvartana Aftercare EOI" sheet. Optional: when unset the
@@ -145,7 +145,7 @@ export async function POST(req: Request) {
       ["Approximate Dates of Stay", datesOfStay],
       ["Primary Health Concern / Condition", condition],
       ["Preferred Mode of Sessions", mode],
-      ["Preferred Programme", program],
+      ["Preferred Plan", program],
       ["Preferred Days & Timing", timing],
       ["How Did You Hear About Us", hearAbout],
       ["Additional Notes / Questions", notes],

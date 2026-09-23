@@ -4,9 +4,8 @@ import { motion } from "framer-motion";
 import { Link } from "@/lib/router-compat";
 import Layout from "@/components/Layout";
 import {
-  ChevronRight, Users, Video, ClipboardList, TrendingUp,
-  Leaf, Library, MessageCircle, Activity, Phone, Check,
-  Send, Loader2, HeartHandshake,
+  ChevronRight, Users, User, Video, Leaf, Library, MessageCircle,
+  Stethoscope, Phone, Check, Send, Loader2, ArrowRight, CalendarDays,
 } from "lucide-react";
 
 // next.config.mjs sets `disableStaticImages` + an asset/resource rule, so this
@@ -14,111 +13,81 @@ import {
 import heroImg from "@/assets/anuvartana-hero.jpg";
 
 /* =========================================================
-   Anuvartana — The Arogyadhama Aftercare Program
-   Copy on this page is taken from the client's "Website Content"
-   document. Please keep it in sync with that source.
+   Anuvartana — Continuing Care Programme
+   Copy on this page is condensed from the client's
+   "Arogyadhama Anuvartana" brochure. Please keep it in sync
+   with that source.
    ========================================================= */
 
 const PHONE_DISPLAY = "+91 85904 90955";
 const PHONE_RAW = "+918590490955";
 
-const HERO_CHIPS = ["Online or In-person", "Monthly Consultations", "Personalised Plans"];
-
-const WHY_CHOOSE = [
-  {
-    icon: Users,
-    title: "The same expert team",
-    desc: "Stay connected to the Yoga Therapists, Counsellors, BNYS and Ayurveda Doctors who know your journey.",
-    color: "hsl(var(--forest))",
-    bg: "hsl(var(--maroon) / 0.07)",
-  },
-  {
-    icon: Video,
-    title: "Flexible, wherever you are",
-    desc: "Support that fits your life, with sessions available online (via Skype or Zoom) or in person at our facility.",
-    color: "hsl(var(--sage))",
-    bg: "hsl(var(--maroon-muted) / 0.07)",
-  },
-  {
-    icon: ClipboardList,
-    title: "A plan built around you",
-    desc: "A personalised wellness plan tailored to your condition, your goals and your progress.",
-    color: "hsl(var(--gold))",
-    bg: "hsl(var(--gold) / 0.07)",
-  },
-  {
-    icon: TrendingUp,
-    title: "Motivation that lasts",
-    desc: "Ongoing motivation and accountability to help healthy habits become lasting ones.",
-    color: "hsl(var(--terracotta))",
-    bg: "hsl(var(--terracotta) / 0.07)",
-  },
-];
+const HERO_CHIPS = ["Online · Live", "4–12 weeks", "6 days a week", "English · Hindi · Kannada"];
 
 const INCLUDED = [
   {
+    icon: Stethoscope,
+    title: "Doctor consultations",
+    variant: "pulse",
+    desc: "Ayurveda and Naturopathy consultations review your case and guide your lifestyle, diet and yoga therapy practice.",
+    color: "hsl(258 50% 35%)",
+  },
+  {
     icon: Leaf,
-    title: "Personalised Wellness Plans",
+    title: "Personalised diet guidance",
     variant: "botanical",
-    desc: "Covering yoga, Ayurvedic diet and naturopathic practices for home.",
+    desc: "A practical diet chart and food guidance to carry the healthy habits from your stay into daily life.",
     color: "hsl(var(--forest))",
-    bg: "hsl(var(--maroon) / 0.08)",
   },
   {
     icon: Video,
-    title: "Monthly Virtual Consultations",
+    title: "Yoga therapy practice modules",
     variant: "screen",
-    desc: "To monitor your progress and fine-tune your plan.",
+    desc: "Modules and practice lists planned for your condition, so you can practise independently alongside live sessions.",
     color: "hsl(var(--sage))",
-    bg: "hsl(var(--maroon-muted) / 0.08)",
   },
   {
     icon: Library,
-    title: "A Digital Library",
+    title: "Recorded lectures & classes",
     variant: "library",
-    desc: "Guided yoga, meditation and pranayama tutorials, available whenever you need them.",
+    desc: "Revisit educational sessions, expert talks and recorded classes at your convenience.",
     color: "hsl(var(--gold))",
-    bg: "hsl(var(--gold) / 0.08)",
   },
   {
     icon: MessageCircle,
-    title: "Community & Newsletters",
+    title: "Counsellor support",
     variant: "community",
-    desc: "A supportive online community and regular wellness newsletters.",
+    desc: "Your Yoga Counsellor offers emotional and motivational support, follows your progress and keeps you on track.",
     color: "hsl(var(--terracotta))",
-    bg: "hsl(var(--terracotta) / 0.08)",
-  },
-  {
-    icon: Activity,
-    title: "Health Monitoring",
-    variant: "pulse",
-    desc: "Simple self-assessment tools backed by expert guidance.",
-    color: "hsl(258 50% 35%)",
-    bg: "hsl(258 50% 35% / 0.08)",
   },
 ];
 
-const STEPS = [
+const PLANS = [
   {
-    n: 1,
-    title: "Express your interest",
-    desc: "Fill in the form below and our team will reach out to you.",
+    icon: Users,
+    name: "Group",
+    lines: ["Guided yoga therapy in a group.", "Fixed session timings."],
   },
   {
-    n: 2,
-    title: "Enrol in the programme that suits you",
-    desc: "Choose between the Maintenance Program and the Early Recovery Program.",
+    icon: User,
+    name: "1-to-1",
+    lines: ["Personalised individual yoga therapy.", "Flexible session timings."],
   },
-  {
-    n: 3,
-    title: "Receive your personalised plan",
-    desc: "Along with a calendar of scheduled online or in-person sessions.",
-  },
-  {
-    n: 4,
-    title: "Stay supported",
-    desc: "With monthly follow-ups, progress reviews, and a caring community by your side.",
-  },
+];
+
+const BOTH_PLANS = [
+  "Ayurveda and Naturopathy consultations",
+  "Diet chart and practical food guidance",
+  "Structured modules and practice lists",
+  "Lectures, expert talks and recorded classes",
+  "Progress tracking, follow-ups and guidance",
+];
+
+const COUNSELLOR_POINTS = [
+  "Track progress and regularity",
+  "Address queries and challenges",
+  "Coordinate with doctors and the care team",
+  "Manage scheduling and reminders",
 ];
 
 /* ─────────────────────────────────────────────────────────
@@ -332,7 +301,9 @@ function HeroArtwork() {
    ───────────────────────────────────────────────────────── */
 const EMPTY = {
   name: "", age: "", gender: "", phone: "", email: "", city: "",
-  completedProgram: "", datesOfStay: "", condition: "", mode: "",
+  completedProgram: "", datesOfStay: "", condition: "",
+  // Anuvartana is online-only; kept as a fixed value so the API and sheet columns are unchanged.
+  mode: "Online",
   program: "", timing: "", hearAbout: "", notes: "",
 };
 
@@ -356,8 +327,7 @@ function EOIForm() {
     if (!/^\d{1,3}$/.test(form.age.trim()) || age < 1 || age > 120) e.age = "Enter a valid age";
     if (!form.gender) e.gender = "Please select an option";
     if (!form.completedProgram) e.completedProgram = "Please select Yes or No";
-    if (!form.mode) e.mode = "Please select a mode";
-    if (!form.program) e.program = "Please select a programme";
+    if (!form.program) e.program = "Please select a plan";
     if (!consent) e.consent = "Please give your consent to continue";
     return e;
   }
@@ -456,7 +426,7 @@ function EOIForm() {
         </div>
         <h3 className="font-display font-bold text-forest text-2xl mb-3">Thank you — we have your details.</h3>
         <p className="font-body text-forest/65 leading-relaxed max-w-md mx-auto">
-          A member of our Aftercare team will contact you shortly to discuss the right programme for you.
+          A member of our care team will contact you shortly to discuss the right programme for you.
           If you would rather speak to us now, call or WhatsApp {PHONE_DISPLAY}.
         </p>
       </div>
@@ -479,8 +449,7 @@ function EOIForm() {
         {select("completedProgram", "Programme Completed at Arogyadhama *", ["Yes", "No"])}
         {text("datesOfStay", "Approximate Dates of Stay", { max: 120, placeholder: "e.g. March 2026" })}
         {area("condition", "Primary Health Concern / Condition", 2)}
-        {select("mode", "Preferred Mode of Sessions *", ["Online", "In-person"])}
-        {select("program", "Preferred Programme *", ["Maintenance Program", "Early Recovery Program"])}
+        {select("program", "Preferred Plan *", ["Group", "1-to-1"])}
         {text("timing", "Preferred Days & Timing for Sessions", { max: 200 })}
         {text("hearAbout", "How Did You Hear About Us?", { max: 200 })}
         {area("notes", "Additional Notes / Questions")}
@@ -503,7 +472,7 @@ function EOIForm() {
             {consent && <Check size={11} className="text-cream" />}
           </span>
           <span className="font-body text-sm text-forest/70 leading-relaxed">
-            I consent to Arogyadhama contacting me regarding the Aftercare Program and to the use of my
+            I consent to Arogyadhama contacting me regarding the Anuvartana programme and to the use of my
             details for this purpose.
           </span>
         </button>
@@ -535,12 +504,29 @@ function EOIForm() {
 /* ─────────────────────────────────────────────────────────
    Page
    ───────────────────────────────────────────────────────── */
+const fadeUp = {
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+} as const;
+
+function StepBadge({ n }: { n: string }) {
+  return (
+    <div
+      className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 font-display font-bold text-xl"
+      style={{ background: "hsl(var(--maroon))", color: "hsl(var(--cream))" }}
+    >
+      {n}
+    </div>
+  );
+}
+
 export default function AfterCare() {
   return (
     <Layout>
       {/* ── Hero ── */}
       <section
-        className="relative pt-28 pb-20 overflow-hidden"
+        className="relative pt-28 pb-16 md:pb-24 overflow-hidden"
         style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 60%, hsl(345 35% 24%) 100%)" }}
       >
         <div
@@ -549,14 +535,14 @@ export default function AfterCare() {
         />
         <HeroArtwork />
 
-        {/* Hero photo — same treatment as the department pages: a right-hand
-            panel whose left edge is dissolved by a mask (not a painted overlay),
-            so it melts into the maroon gradient with no visible seam. */}
+        {/* Hero photo — right-hand panel whose left edge is dissolved by a mask
+            so it melts into the maroon gradient. The couple sits left of centre
+            in the source image, so it is anchored left and the fade kept short. */}
         {(() => {
-          const mask = "linear-gradient(90deg, transparent 0%, black 55%)";
+          const mask = "linear-gradient(90deg, transparent 0%, black 30%)";
           return (
             <div
-              className="absolute inset-y-0 right-0 w-[48%] hidden md:block pointer-events-none"
+              className="absolute inset-y-0 right-0 w-[52%] hidden md:block pointer-events-none"
               style={{ WebkitMaskImage: mask, maskImage: mask }}
             >
               <img
@@ -564,14 +550,20 @@ export default function AfterCare() {
                 alt=""
                 aria-hidden
                 className="w-full h-full object-cover"
+                style={{ objectPosition: "30% center" }}
               />
-              <div className="absolute inset-0" style={{ background: "hsl(var(--maroon-dark) / 0.25)" }} />
+              <div className="absolute inset-0" style={{ background: "hsl(var(--maroon-dark) / 0.15)" }} />
             </div>
           );
         })()}
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+          <motion.div
+            className="md:max-w-[46%]"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
             <nav className="flex items-center gap-1.5 font-body text-xs text-cream/60 mb-5">
               <Link to="/" className="hover:text-gold transition-colors">Home</Link>
               <ChevronRight size={12} />
@@ -581,7 +573,7 @@ export default function AfterCare() {
             </nav>
 
             <div className="inline-block font-body text-xs tracking-[0.3em] uppercase text-gold/80 border border-gold/30 rounded-full px-3 py-1 mb-5">
-              Continuing the Journey
+              Continuing Care Programme
             </div>
 
             <h1
@@ -591,16 +583,16 @@ export default function AfterCare() {
               Anuvartana
             </h1>
             <p className="font-display text-gold mt-2" style={{ fontSize: "clamp(1.1rem, 2.4vw, 1.7rem)" }}>
-              The Arogyadhama Aftercare Program
+              Your Arogyadhama practice, continued at home.
             </p>
 
-            <p className="font-body text-cream/75 mt-6 max-w-2xl leading-relaxed" style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)" }}>
-              The journey to lasting wellness continues long after your stay at Arogyadhama. Anuvartana
-              keeps you connected to the doctors, therapists and practices that helped you heal — through
-              personalised online and in-person support designed around your life.
+            <p className="font-body text-cream/75 mt-6 leading-relaxed" style={{ fontSize: "clamp(1rem, 1.8vw, 1.1rem)" }}>
+              Returning home brings a change in routine. Anuvartana helps you continue the practices
+              introduced during your stay at Arogyadhama, with professional guidance, live sessions and
+              support from your care team.
             </p>
 
-            <div className="flex flex-wrap gap-3 mt-9">
+            <div className="flex flex-wrap gap-2.5 mt-8">
               {HERO_CHIPS.map((c, i) => (
                 <motion.span
                   key={c}
@@ -614,65 +606,46 @@ export default function AfterCare() {
                 </motion.span>
               ))}
             </div>
+
+            <a
+              href="#register"
+              className="inline-flex items-center gap-2 mt-9 bg-gold text-forest-dark font-body font-semibold px-7 py-3.5 rounded-xl hover:bg-gold-light transition-colors shadow-gold"
+            >
+              Register your interest <ArrowRight size={16} />
+            </a>
           </motion.div>
+
+          {/* Mobile: the photo panel is hidden, so show it as a banner instead */}
+          <img
+            src={heroImg}
+            alt="A couple practising yoga at home, following a live online session on a laptop"
+            className="md:hidden mt-10 w-full aspect-[4/3] object-cover rounded-2xl border border-cream/15"
+            style={{ objectPosition: "30% center" }}
+          />
         </div>
       </section>
 
-      {/* ── Your Healing Doesn't End at Discharge ── */}
-      <section className="py-20 bg-cream">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <span className="section-label">Anuvartana</span>
-            <h2 className="font-display text-display-md text-forest mt-3 mb-6">
-              Your Healing Doesn&rsquo;t End at Discharge<br />
-              <em className="not-italic text-gold">It Continues With Us</em>
-            </h2>
-            <p className="font-quote text-2xl text-forest/80 italic leading-relaxed">
-              Anuvartana &mdash; &ldquo;continuing the journey&rdquo;
-            </p>
-          </motion.div>
-        </div>
+      {/* ── Intro band ── */}
+      <section className="py-16 md:py-20 bg-cream">
+        <motion.div className="max-w-3xl mx-auto px-4 sm:px-6 text-center" {...fadeUp}>
+          <span className="section-label">Anuvartana</span>
+          <h2 className="font-display text-display-md text-forest mt-3 mb-5">
+            Structured holistic care.<br />
+            <em className="not-italic text-gold">Continued at home.</em>
+          </h2>
+          <p className="font-body text-forest/65 leading-relaxed max-w-2xl mx-auto">
+            Sessions led by Doctors and Yoga Therapists, with a dedicated counsellor and care team to help
+            you keep a consistent routine in the weeks after your stay.
+          </p>
+        </motion.div>
       </section>
 
-      {/* ── Why Choose Anuvartana ── */}
+      {/* ── What the programme includes ── */}
       <section className="py-20" style={{ background: "hsl(345 15% 97%)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <span className="section-label">Why It Matters</span>
-            <h2 className="font-display text-display-md text-forest mt-3">Why Choose Anuvartana</h2>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {WHY_CHOOSE.map((item, i) => (
-              <motion.div
-                key={item.title}
-                className="bg-white rounded-2xl border border-border shadow-card p-7 flex gap-4"
-                initial={{ opacity: 0, y: 22 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.07 }}
-              >
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                  style={{ background: item.bg, border: `1.5px solid ${item.color}25` }}
-                >
-                  <item.icon size={20} style={{ color: item.color }} />
-                </div>
-                <div>
-                  <h3 className="font-display font-bold text-forest text-lg mb-1.5">{item.title}</h3>
-                  <p className="font-body text-sm text-forest/65 leading-relaxed">{item.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── What's Included ── */}
-      <section className="py-20 bg-cream">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+          <motion.div className="text-center mb-12" {...fadeUp}>
             <span className="section-label">The Programme</span>
-            <h2 className="font-display text-display-md text-forest mt-3">What&rsquo;s Included</h2>
+            <h2 className="font-display text-display-md text-forest mt-3">What the Programme Includes</h2>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {INCLUDED.map((item, i) => (
@@ -686,8 +659,10 @@ export default function AfterCare() {
                 <div className="group relative flex h-full min-h-[17rem] flex-col justify-end overflow-hidden rounded-2xl p-7 border border-black/5 shadow-card hover:shadow-card-hover hover:-translate-y-1.5 transition-all duration-300">
                   <CardBackdrop variant={item.variant} uid={item.variant} color={item.color} />
 
-                  {/* Top accent picks up the card's own colour */}
                   <span className="absolute left-0 top-0 h-1 w-full z-10" style={{ background: item.color }} />
+                  <span className="absolute right-6 top-5 z-10 font-display font-bold text-cream/40 text-3xl">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
 
                   <div className="relative z-10">
                     <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 border border-cream/25 group-hover:scale-110 transition-transform"
@@ -708,76 +683,167 @@ export default function AfterCare() {
         </div>
       </section>
 
-      {/* ── Who Can Join ── */}
-      <section className="py-16" style={{ background: "hsl(var(--cream-dark))" }}>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+      {/* ── Choose your plan ── */}
+      <section className="py-20 bg-cream">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <motion.div className="text-center mb-12" {...fadeUp}>
+            <span className="section-label">Two Plans</span>
+            <h2 className="font-display text-display-md text-forest mt-3 mb-4">Choose Your Plan</h2>
+            <p className="font-body text-sage max-w-xl mx-auto leading-relaxed">
+              Two ways to continue your care at home, with continuing-care support included in both.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {PLANS.map((p, i) => (
+              <motion.div
+                key={p.name}
+                className="relative bg-white rounded-2xl border border-border shadow-card p-8 overflow-hidden"
+                initial={{ opacity: 0, y: 22 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+              >
+                <span className="absolute left-0 top-0 h-1 w-full" style={{ background: "hsl(var(--maroon))" }} />
+                <div className="flex items-center gap-4 mb-5">
+                  <div
+                    className="w-12 h-12 rounded-xl flex items-center justify-center"
+                    style={{ background: "hsl(var(--maroon) / 0.08)" }}
+                  >
+                    <p.icon size={22} style={{ color: "hsl(var(--forest))" }} />
+                  </div>
+                  <h3 className="font-display font-bold text-forest text-3xl">{p.name}</h3>
+                </div>
+                {p.lines.map((l) => (
+                  <p key={l} className="font-body text-forest/70 leading-relaxed">{l}</p>
+                ))}
+                <div className="flex items-center gap-2 mt-6 pt-5 border-t border-border font-body text-sm text-sage">
+                  <CalendarDays size={16} className="text-gold" />
+                  Package duration: 1 month or 3 months
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
           <motion.div
-            className="bg-white rounded-3xl border border-border shadow-card p-8 md:p-11 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            className="mt-6 rounded-2xl p-8 md:p-10"
+            style={{ background: "hsl(345 15% 97%)", border: "1px solid hsl(var(--border))" }}
+            {...fadeUp}
           >
-            <div
-              className="w-14 h-14 rounded-2xl mx-auto flex items-center justify-center mb-5"
-              style={{ background: "hsl(var(--maroon) / 0.08)" }}
-            >
-              <HeartHandshake size={24} style={{ color: "hsl(var(--forest))" }} />
-            </div>
-            <h2 className="font-display font-bold text-forest text-2xl md:text-3xl mb-4">Who Can Join</h2>
-            <p className="font-body text-forest/65 leading-relaxed max-w-2xl mx-auto">
-              The Aftercare Program is open to anyone who has completed a yoga therapy or wellness programme
-              at Arogyadhama and wishes to sustain their progress with continued expert guidance.
+            <h3 className="font-body text-xs font-semibold uppercase tracking-widest text-sage mb-5">
+              Included in both plans
+            </h3>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
+              {BOTH_PLANS.map((b) => (
+                <li key={b} className="flex items-start gap-3 font-body text-forest/80">
+                  <span
+                    className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+                    style={{ background: "hsl(var(--maroon))" }}
+                  >
+                    <Check size={11} className="text-cream" />
+                  </span>
+                  {b}
+                </li>
+              ))}
+            </ul>
+            <p className="font-body text-sm text-forest/60 leading-relaxed mt-7 pt-6 border-t border-border">
+              <strong className="text-forest">Choosing a plan:</strong> Doctors determine programme allocation
+              based on your condition, severity and preference for group or one-to-one practice.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* ── How It Works ── */}
+      {/* ── How your programme works ── */}
       <section className="py-20" style={{ background: "hsl(345 15% 97%)" }}>
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <span className="section-label">Getting Started</span>
-            <h2 className="font-display text-display-md text-forest mt-3">How It Works</h2>
+          <motion.div className="text-center mb-12" {...fadeUp}>
+            <span className="section-label">Your Care Journey</span>
+            <h2 className="font-display text-display-md text-forest mt-3">How Your Programme Works</h2>
           </motion.div>
 
           <div className="relative">
             <div className="absolute left-[27px] top-4 bottom-4 w-px hidden sm:block" style={{ background: "hsl(var(--border))" }} />
             <div className="space-y-5">
-              {STEPS.map((s, i) => (
-                <motion.div
-                  key={s.n}
-                  className="relative flex gap-5 items-start bg-white rounded-2xl border border-border shadow-card p-6"
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                >
-                  <div
-                    className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 font-display font-bold text-xl"
-                    style={{ background: "hsl(var(--maroon))", color: "hsl(var(--cream))" }}
-                  >
-                    {s.n}
+              {/* 01 */}
+              <motion.div className="relative flex flex-col sm:flex-row gap-5 items-start bg-white rounded-2xl border border-border shadow-card p-6" {...fadeUp}>
+                <StepBadge n="01" />
+                <div className="pt-1.5 flex-1 w-full">
+                  <h3 className="font-display font-bold text-forest text-lg mb-1">Medical onboarding</h3>
+                  <p className="font-body text-sm text-forest/65 leading-relaxed">
+                    Your continuing-care journey begins with doctor consultations.
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                    {[
+                      { who: "BNYS Doctor", what: "Naturopathy consultation", desc: "Case review, discharge summary, diet outline and clearance on the intensity of yoga therapy practices." },
+                      { who: "BAMS Doctor", what: "Ayurveda consultation", desc: "Guidance related to medicines and lifestyle." },
+                    ].map((d) => (
+                      <div key={d.who} className="rounded-xl p-4" style={{ background: "hsl(var(--maroon) / 0.05)" }}>
+                        <div className="font-body text-xs font-semibold uppercase tracking-widest text-gold">{d.who}</div>
+                        <div className="font-display font-bold text-forest mt-1">{d.what}</div>
+                        <p className="font-body text-sm text-forest/65 leading-relaxed mt-1">{d.desc}</p>
+                      </div>
+                    ))}
                   </div>
-                  <div className="pt-1.5">
-                    <h3 className="font-display font-bold text-forest text-lg mb-1">{s.title}</h3>
-                    <p className="font-body text-sm text-forest/65 leading-relaxed">{s.desc}</p>
-                  </div>
-                </motion.div>
-              ))}
+                </div>
+              </motion.div>
+
+              {/* 02 */}
+              <motion.div className="relative flex flex-col sm:flex-row gap-5 items-start bg-white rounded-2xl border border-border shadow-card p-6" {...fadeUp}>
+                <StepBadge n="02" />
+                <div className="pt-1.5">
+                  <h3 className="font-display font-bold text-forest text-lg mb-1">Programme allocation</h3>
+                  <p className="font-body text-sm text-forest/65 leading-relaxed">
+                    Doctors determine the appropriate mode of continuing care based on your condition and severity
+                    (mild, moderate or severe), taking into account your preference for group or one-to-one practice.
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* 03 */}
+              <motion.div className="relative flex flex-col sm:flex-row gap-5 items-start bg-white rounded-2xl border border-border shadow-card p-6" {...fadeUp}>
+                <StepBadge n="03" />
+                <div className="pt-1.5">
+                  <h3 className="font-display font-bold text-forest text-lg mb-1">Care coordinator &amp; counsellor support</h3>
+                  <p className="font-body text-sm text-forest/65 leading-relaxed">
+                    Your Yoga Counsellor offers emotional and motivational support and stays connected throughout
+                    your programme to:
+                  </p>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 mt-3">
+                    {COUNSELLOR_POINTS.map((pt) => (
+                      <li key={pt} className="flex items-start gap-2 font-body text-sm text-forest/75">
+                        <Check size={15} className="text-gold flex-shrink-0 mt-0.5" /> {pt}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+
+              {/* 04 */}
+              <motion.div className="relative flex flex-col sm:flex-row gap-5 items-start bg-white rounded-2xl border border-border shadow-card p-6" {...fadeUp}>
+                <StepBadge n="04" />
+                <div className="pt-1.5">
+                  <h3 className="font-display font-bold text-forest text-lg mb-1">Recorded learning</h3>
+                  <p className="font-body text-sm text-forest/65 leading-relaxed">
+                    Access recorded lectures, expert talks and classes beyond live sessions, and revisit important
+                    teachings on yoga therapy, lifestyle and related practices.
+                  </p>
+                </div>
+              </motion.div>
             </div>
           </div>
         </div>
       </section>
 
       {/* ── Register Your Interest ── */}
-      <section id="register" className="py-20 bg-cream">
+      <section id="register" className="py-20 bg-cream scroll-mt-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <motion.div className="text-center mb-10" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+          <motion.div className="text-center mb-10" {...fadeUp}>
             <span className="section-label">Expression of Interest</span>
             <h2 className="font-display text-display-md text-forest mt-3 mb-4">Register Your Interest</h2>
             <p className="font-body text-sage max-w-xl mx-auto leading-relaxed">
-              Ready to continue your wellness journey? Complete the form below and a member of our Aftercare
-              team will contact you to discuss the right programme for you.
+              Ready to continue your practice at home? Complete the form below and a member of our care
+              team will contact you to discuss the right plan for you.
             </p>
           </motion.div>
 
@@ -792,33 +858,29 @@ export default function AfterCare() {
         className="py-16"
         style={{ background: "linear-gradient(135deg, hsl(var(--maroon-dark)) 0%, hsl(var(--maroon)) 60%, hsl(var(--maroon-muted)) 100%)" }}
       >
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <h2 className="font-display text-3xl md:text-4xl text-cream font-bold mb-4">How to Reach Us</h2>
-            <p className="font-body text-cream/70 mb-8">
-              Prefer to speak with us directly? Our Aftercare team is happy to help.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href={`tel:${PHONE_RAW}`}
-                className="flex items-center justify-center gap-2 bg-gold text-forest-dark font-body font-semibold px-7 py-3.5 rounded-xl hover:bg-gold-light transition-colors shadow-gold"
-              >
-                <Phone size={16} /> {PHONE_DISPLAY}
-              </a>
-              <a
-                href={`https://wa.me/${PHONE_RAW.replace("+", "")}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 border-2 border-cream/40 text-cream font-body font-semibold px-7 py-3.5 rounded-xl hover:bg-cream/10 transition-colors"
-              >
-                <MessageCircle size={16} /> WhatsApp Us
-              </a>
-            </div>
-            <p className="font-quote text-xl text-cream/70 italic mt-10 leading-relaxed">
-              Arogyadhama &mdash; where recovery is an ongoing journey, and so is our care.
-            </p>
-          </motion.div>
-        </div>
+        <motion.div className="max-w-3xl mx-auto px-4 sm:px-6 text-center" {...fadeUp}>
+          <h2 className="font-display text-3xl md:text-4xl text-cream font-bold mb-4">Guidance for the weeks ahead</h2>
+          <p className="font-body text-cream/70 mb-8">
+            Professional guidance, structured practice and ongoing support to help you maintain a consistent
+            routine at home. Prefer to speak with us directly?
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href={`tel:${PHONE_RAW}`}
+              className="flex items-center justify-center gap-2 bg-gold text-forest-dark font-body font-semibold px-7 py-3.5 rounded-xl hover:bg-gold-light transition-colors shadow-gold"
+            >
+              <Phone size={16} /> {PHONE_DISPLAY}
+            </a>
+            <a
+              href={`https://wa.me/${PHONE_RAW.replace("+", "")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 border-2 border-cream/40 text-cream font-body font-semibold px-7 py-3.5 rounded-xl hover:bg-cream/10 transition-colors"
+            >
+              <MessageCircle size={16} /> WhatsApp Us
+            </a>
+          </div>
+        </motion.div>
       </section>
     </Layout>
   );

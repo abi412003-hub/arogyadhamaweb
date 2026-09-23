@@ -54,7 +54,7 @@ const QUICK_LINKS = [
     href: "/plan-your-stay/after-care",
     icon: HeartHandshake,
     title: "After Care Program",
-    desc: "The Arogyadhama Aftercare Program — stay connected to the doctors, therapists and practices that helped you heal.",
+    desc: "Anuvartana — your Arogyadhama practice continued at home, with live online sessions, doctor guidance and counsellor support.",
     color: "hsl(258 50% 35%)",
     bg: "hsl(258 50% 35% / 0.08)",
   },
