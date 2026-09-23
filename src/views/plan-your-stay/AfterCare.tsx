@@ -11,6 +11,11 @@ import {
 // next.config.mjs sets `disableStaticImages` + an asset/resource rule, so this
 // resolves to a plain URL string for a normal <img src>, not a next/image object.
 import heroImg from "@/assets/anuvartana-hero.jpg";
+import doctorImg from "@/assets/anuvartana/doctor-consultation.jpg";
+import dietImg from "@/assets/therapies/diet-and-nutrition-card.jpg";
+import yogaImg from "@/assets/therapies/yoga-card.jpg";
+import lecturesImg from "@/assets/anuvartana/recorded-lectures.jpg";
+import counsellorImg from "@/assets/anuvartana/counsellor-support.jpg";
 
 /* =========================================================
    Anuvartana — Continuing Care Programme
@@ -28,35 +33,35 @@ const INCLUDED = [
   {
     icon: Stethoscope,
     title: "Doctor consultations",
-    variant: "pulse",
+    img: doctorImg,
     desc: "Ayurveda and Naturopathy consultations review your case and guide your lifestyle, diet and yoga therapy practice.",
     color: "hsl(258 50% 35%)",
   },
   {
     icon: Leaf,
     title: "Personalised diet guidance",
-    variant: "botanical",
+    img: dietImg,
     desc: "A practical diet chart and food guidance to carry the healthy habits from your stay into daily life.",
     color: "hsl(var(--forest))",
   },
   {
     icon: Video,
     title: "Yoga therapy practice modules",
-    variant: "screen",
+    img: yogaImg,
     desc: "Modules and practice lists planned for your condition, so you can practise independently alongside live sessions.",
     color: "hsl(var(--sage))",
   },
   {
     icon: Library,
     title: "Recorded lectures & classes",
-    variant: "library",
+    img: lecturesImg,
     desc: "Revisit educational sessions, expert talks and recorded classes at your convenience.",
     color: "hsl(var(--gold))",
   },
   {
     icon: MessageCircle,
     title: "Counsellor support",
-    variant: "community",
+    img: counsellorImg,
     desc: "Your Yoga Counsellor offers emotional and motivational support, follows your progress and keeps you on track.",
     color: "hsl(var(--terracotta))",
   },
@@ -91,175 +96,30 @@ const COUNSELLOR_POINTS = [
 ];
 
 /* ─────────────────────────────────────────────────────────
-   Hero backdrop — layered decorative artwork over the maroon
-   gradient. Purely ornamental: pointer-events-none, and the
-   heavier layers are hidden below md.
+   Card photo — fills a "What the Programme Includes" card, with a
+   bottom-weighted scrim so the white text stays legible.
    ───────────────────────────────────────────────────────── */
-/**
- * Point on a circle centred at (300,300), rounded to 2dp.
- * Rounding matters: unrounded floats serialise differently on the server and
- * the client, which React reports as a hydration mismatch.
- */
-function polar(angleDeg: number, radius: number) {
-  const rad = (angleDeg * Math.PI) / 180;
-  return {
-    x: +(300 + Math.cos(rad) * radius).toFixed(2),
-    y: +(300 + Math.sin(rad) * radius).toFixed(2),
-  };
-}
-
-/* ─────────────────────────────────────────────────────────
-   Card backdrops — each "What's Included" card gets its own
-   motif drawn to match its wording. Ornamental only.
-
-   Two things matter here:
-   · every gradient/pattern id is suffixed with the card's uid,
-     otherwise all five cards reuse the first card's <defs>;
-   · coordinates are literal or rounded, so SSR and client
-     markup match exactly (see polar() above).
-   ───────────────────────────────────────────────────────── */
-const GOLD = "hsl(43 89% 62%)";
-const CREAM = "hsl(51 97% 94%)";
-
-function Motif({ variant, uid }: { variant: string; uid: string }) {
-  const s = { fill: "none", stroke: GOLD, strokeWidth: 1.4 } as const;
-
-  if (variant === "botanical") {
-    // Leaf fronds + herb sprigs + mortar-bowl arc
-    return (
-      <g opacity="0.5">
-        {[0, 1, 2].map((i) => (
-          <g key={i} transform={`translate(${230 + i * 62} ${70 + i * 34}) rotate(${-24 + i * 20})`} opacity={0.9 - i * 0.2}>
-            <path d="M0 0 C 26 -34, 26 -86, 0 -116 C -26 -86, -26 -34, 0 0 Z" {...s} />
-            <line x1="0" y1="0" x2="0" y2="-116" stroke={CREAM} strokeWidth="0.8" opacity="0.7" />
-            {[-24, -48, -72, -96].map((y) => (
-              <g key={y}>
-                <line x1="0" y1={y} x2="14" y2={y - 12} stroke={CREAM} strokeWidth="0.6" opacity="0.6" />
-                <line x1="0" y1={y} x2="-14" y2={y - 12} stroke={CREAM} strokeWidth="0.6" opacity="0.6" />
-              </g>
-            ))}
-          </g>
-        ))}
-        <path d="M96 176 A 54 54 0 0 0 204 176" {...s} stroke={CREAM} opacity="0.55" />
-        <line x1="88" y1="176" x2="212" y2="176" stroke={CREAM} strokeWidth="1.2" opacity="0.55" />
-      </g>
-    );
-  }
-
-  if (variant === "screen") {
-    // Video frame + soundwave + radiating signal arcs
-    const bars = [16, 34, 22, 48, 30, 58, 26, 40, 18];
-    return (
-      <g opacity="0.55">
-        <rect x="186" y="52" width="176" height="112" rx="12" {...s} />
-        <path d="M362 84 L 402 62 L 402 154 L 362 132 Z" {...s} opacity="0.8" />
-        {bars.map((h, i) => (
-          <line key={i} x1={208 + i * 17} y1={108 - h / 2} x2={208 + i * 17} y2={108 + h / 2}
-            stroke={CREAM} strokeWidth="2.4" strokeLinecap="round" opacity="0.7" />
-        ))}
-        {[34, 56, 78].map((r, i) => (
-          <path key={r} d={`M96 ${196 - r} A ${r} ${r} 0 0 0 96 ${196 + r}`} {...s} opacity={0.5 - i * 0.12} />
-        ))}
-      </g>
-    );
-  }
-
-  if (variant === "library") {
-    // Stacked page bars + play triangle + lotus glyph
-    const rows = [172, 214, 138, 196, 156];
-    return (
-      <g opacity="0.55">
-        {rows.map((w, i) => (
-          <rect key={i} x="196" y={44 + i * 30} width={w} height="16" rx="4" {...s}
-            opacity={0.85 - i * 0.1} />
-        ))}
-        <circle cx="118" cy="150" r="42" {...s} opacity="0.6" />
-        <path d="M106 130 L 140 150 L 106 170 Z" fill={CREAM} opacity="0.28" stroke="none" />
-        <g transform="translate(392 196)" opacity="0.7">
-          <path d="M0 8 C0 8 -18 -2 -18 -18 C-18 -30 -8 -36 0 -30 C8 -36 18 -30 18 -18 C18 -2 0 8 0 8Z" {...s} />
-        </g>
-      </g>
-    );
-  }
-
-  if (variant === "community") {
-    // Linked-node constellation + folded envelope
-    const nodes = [[112, 66], [196, 44], [268, 92], [148, 132], [232, 168], [318, 140], [86, 176]];
-    const links = [[0, 1], [1, 2], [0, 3], [3, 4], [2, 5], [4, 5], [3, 6], [0, 6]];
-    return (
-      <g opacity="0.55">
-        {links.map(([a, b], i) => (
-          <line key={i} x1={nodes[a][0]} y1={nodes[a][1]} x2={nodes[b][0]} y2={nodes[b][1]}
-            stroke={CREAM} strokeWidth="0.9" opacity="0.5" />
-        ))}
-        {nodes.map(([x, y], i) => (
-          <circle key={i} cx={x} cy={y} r={i % 3 === 0 ? 9 : 6} {...s} opacity="0.9" />
-        ))}
-        <g transform="translate(322 176)" opacity="0.8">
-          <rect x="0" y="0" width="92" height="60" rx="6" {...s} />
-          <path d="M0 6 L 46 40 L 92 6" {...s} stroke={CREAM} opacity="0.7" />
-        </g>
-      </g>
-    );
-  }
-
-  // pulse — ECG line + ring gauge + tick marks
-  return (
-    <g opacity="0.55">
-      <path
-        d="M40 132 L 118 132 L 136 92 L 158 176 L 182 60 L 204 132 L 268 132"
-        {...s}
-        strokeWidth="2.2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <circle cx="352" cy="112" r="52" {...s} stroke={CREAM} opacity="0.35" />
-      <path d="M352 60 A 52 52 0 0 1 396 138" {...s} strokeWidth="3.4" strokeLinecap="round" />
-      <circle cx="352" cy="112" r="7" fill={GOLD} opacity="0.5" stroke="none" />
-      {[0, 1, 2, 3, 4, 5].map((i) => (
-        <line key={i} x1={64 + i * 44} y1="204" x2={64 + i * 44} y2={i % 2 === 0 ? 186 : 194}
-          stroke={CREAM} strokeWidth="1.2" opacity="0.45" />
-      ))}
-    </g>
-  );
-}
-
-function CardBackdrop({ variant, uid, color }: { variant: string; uid: string; color: string }) {
-  // Glow nudged per card so the five don't look stamped from one template.
-  const glow = { botanical: ["74%", "26%"], screen: ["24%", "22%"], library: ["70%", "74%"], community: ["30%", "76%"], pulse: ["82%", "44%"] }[variant] ?? ["50%", "50%"];
-
+function CardPhoto({ src }: { src: string }) {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      <div
-        className="absolute inset-0"
-        style={{ background: `linear-gradient(145deg, ${color} 0%, hsl(var(--maroon-dark)) 130%)` }}
+      <img
+        src={src}
+        alt=""
+        loading="lazy"
+        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
       />
-      <svg viewBox="0 0 460 230" className="absolute inset-0 h-full w-full" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <radialGradient id={`acg-${uid}`} cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="hsl(43 89% 60%)" stopOpacity="0.30" />
-            <stop offset="100%" stopColor="hsl(43 89% 60%)" stopOpacity="0" />
-          </radialGradient>
-          <pattern id={`acd-${uid}`} width="16" height="16" patternUnits="userSpaceOnUse">
-            <circle cx="1.2" cy="1.2" r="0.9" fill={CREAM} opacity="0.18" />
-          </pattern>
-        </defs>
-        <ellipse cx={glow[0]} cy={glow[1]} rx="210" ry="170" fill={`url(#acg-${uid})`} />
-        <rect width="100%" height="100%" fill={`url(#acd-${uid})`} opacity="0.5" />
-        <Motif variant={variant} uid={uid} />
-      </svg>
-      {/* Bottom-weighted scrim keeps the white text legible over the busiest artwork */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(to top, hsl(var(--maroon-dark) / 0.88) 0%, hsl(var(--maroon-dark) / 0.55) 45%, hsl(var(--maroon-dark) / 0.12) 100%)",
+            "linear-gradient(to top, hsl(var(--maroon-dark) / 0.92) 0%, hsl(var(--maroon-dark) / 0.6) 42%, hsl(var(--maroon-dark) / 0.08) 100%)",
         }}
       />
     </div>
   );
 }
 
+/* Hero backdrop — soft glows and dot texture over the maroon gradient. Ornamental only. */
 function HeroArtwork() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
@@ -543,7 +403,7 @@ export default function AfterCare() {
             "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.45) 22%, rgba(0,0,0,0.85) 45%, black 65%)";
           return (
             <div
-              className="absolute inset-y-0 right-0 w-[48%] hidden md:block pointer-events-none overflow-hidden"
+              className="absolute right-0 bottom-0 top-24 w-[48%] hidden md:block pointer-events-none overflow-hidden"
               style={{ WebkitMaskImage: mask, maskImage: mask }}
             >
               <motion.img
@@ -551,12 +411,23 @@ export default function AfterCare() {
                 alt=""
                 aria-hidden
                 className="w-full h-full object-cover"
-                style={{ objectPosition: "35% 40%" }}
-                initial={{ scale: 1.08 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 8, ease: "easeOut" }}
+                style={{ objectPosition: "35% 30%" }}
+                initial={{ scale: 1.08, filter: "brightness(1.25) saturate(1.1)" }}
+                animate={{ scale: 1, filter: "brightness(1) saturate(1)" }}
+                transition={{ duration: 4, delay: 0.6, ease: "easeOut" }}
               />
-              <div className="absolute inset-0" style={{ background: "hsl(var(--maroon-dark) / 0.18)" }} />
+              {/* Light-to-dark reveal: the maroon tint settles in over 4s */}
+              <motion.div
+                className="absolute inset-0"
+                style={{ background: "hsl(var(--maroon-dark) / 0.22)" }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 4, delay: 0.6, ease: "easeOut" }}
+              />
+              <div
+                className="absolute inset-0"
+                style={{ background: "linear-gradient(to bottom, hsl(var(--maroon-dark) / 0.35), transparent 18%)" }}
+              />
               <div
                 className="absolute inset-0"
                 style={{ background: "linear-gradient(to top, hsl(var(--maroon-dark) / 0.35), transparent 40%)" }}
@@ -624,11 +495,14 @@ export default function AfterCare() {
           </motion.div>
 
           {/* Mobile: the photo panel is hidden, so show it as a banner instead */}
-          <img
+          <motion.img
+            initial={{ filter: "brightness(1.25) saturate(1.1)" }}
+            animate={{ filter: "brightness(1) saturate(1)" }}
+            transition={{ duration: 4, delay: 0.6, ease: "easeOut" }}
             src={heroImg}
             alt="A couple practising yoga at home, following a live online session on a laptop"
             className="md:hidden mt-8 w-full aspect-[16/10] object-cover rounded-2xl border border-cream/15"
-            style={{ objectPosition: "30% center" }}
+            style={{ objectPosition: "35% 30%" }}
           />
         </div>
       </section>
@@ -665,7 +539,7 @@ export default function AfterCare() {
                 transition={{ delay: i * 0.07 }}
               >
                 <div className="group relative flex h-full min-h-[17rem] flex-col justify-end overflow-hidden rounded-2xl p-7 border border-black/5 shadow-card hover:shadow-card-hover hover:-translate-y-1.5 transition-all duration-300">
-                  <CardBackdrop variant={item.variant} uid={item.variant} color={item.color} />
+                  <CardPhoto src={item.img} />
 
                   <span className="absolute left-0 top-0 h-1 w-full z-10" style={{ background: item.color }} />
                   <span className="absolute right-6 top-5 z-10 font-display font-bold text-cream/40 text-3xl">
