@@ -173,6 +173,9 @@ function TestimonialCard({ t, i }: { t: typeof TESTIMONIALS[0]; i: number }) {
 
 /* ── Featured video carousel ── */
 const TESTIMONIAL_VIDEOS = [
+  // Newest testimonials (v10, v11) lead the carousel.
+  "/testimonials/v10.mp4",
+  "/testimonials/v11.mp4",
   // Interleaved: each original video (1-5) placed right after the newer ones (6-10).
   "/testimonials/v6.mp4",
   "/testimonials/v1.mp4",
