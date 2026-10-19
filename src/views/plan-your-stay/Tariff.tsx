@@ -5,7 +5,6 @@ import { Link } from "@/lib/router-compat";
 import Layout from "@/components/Layout";
 import { ChevronRight, CheckCircle2, Info, Table2, Calculator } from "lucide-react";
 import { useGeoPricing, formatRegionPrice, type PriceCurrency } from "@/hooks/useGeoPricing";
-import RegionPriceGate from "@/components/RegionPriceGate";
 
 /* ── Data ── */
 // Two independent per-person price lists (not conversions): INR shown inside India,
@@ -92,7 +91,7 @@ function roomPrices(r: typeof ROOMS[0], acRoom: boolean): RoomPrices {
   if (r.key === "double-sharing" && acRoom) return DOUBLE_SHARING_AC;
   return { INR: r.pricesINR, USD: r.pricesUSD };
 }
-// Region price at a given week index, or "—" while the location is unresolved.
+// Region price at a given week index, or "—" until the time zone is read.
 function priceAt(p: RoomPrices, wi: number, currency: PriceCurrency | null) {
   return formatRegionPrice(p.INR[wi], p.USD[wi], currency) ?? "—";
 }
@@ -158,9 +157,8 @@ export default function Tariff() {
   const [weeks, setWeeks] = useState(1);
   const [acRoom, setAcRoom] = useState(false); // Double / Triple Sharing: false = Non-AC, true = AC
 
-  // Location decides the currency: India → INR, outside → USD. Prices stay hidden
-  // (rendered as "—" behind the gate) until the region resolves.
-  const { region, status, currency, locate } = useGeoPricing();
+  // Device time zone decides the currency: IST → INR, any other → USD.
+  const { currency } = useGeoPricing();
 
   const room = ROOMS.find((r) => r.key === selectedRoom);
   const estimate = room ? priceAt(roomPrices(room, acRoom), weeks - 1, currency) : null;
@@ -226,11 +224,6 @@ export default function Tariff() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
-        {/* Location gate — prices stay hidden until the region resolves */}
-        <div className="mb-8">
-          <RegionPriceGate status={status} region={region} onRetry={locate} />
-        </div>
-
         <AnimatePresence mode="wait">
           {view === "table" ? (
             <motion.div key="table" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>

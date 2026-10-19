@@ -8,8 +8,7 @@ import {
   ChevronRight, ChevronLeft,
   CheckCircle2, Phone, Send, Info
 } from "lucide-react";
-import { useGeoPricing, formatRegionPrice, type PriceCurrency, type GeoStatus, type Region } from "@/hooks/useGeoPricing";
-import RegionPriceGate from "@/components/RegionPriceGate";
+import { useGeoPricing, formatRegionPrice, type PriceCurrency } from "@/hooks/useGeoPricing";
 
 /* ── Types ── */
 type Gender = "male" | "female" | "other" | "";
@@ -38,7 +37,7 @@ const ROOM_OPTIONS = [
   { slug: "suite-ac", photoKey: "suites-ac", name: "Suite Sharing (AC)", sub: "Premium Block", inr: 30800, usd: 1000, pp: true, label: "Suite Sharing (AC) — per person" },
 ];
 
-// Region price (India → INR, outside → USD), or "—" while location is unresolved.
+// Region price (India → INR, outside → USD), or "—" until the time zone is read.
 function priceStr(inr: number, usd: number, currency: PriceCurrency | null) {
   return formatRegionPrice(inr, usd, currency) ?? "—";
 }
@@ -151,9 +150,9 @@ function RoomThumb({ photos, alt, active }: { photos: string[]; alt: string; act
   );
 }
 
-function StepFour({ data, onChange, currency, status, region, onRetry }: {
+function StepFour({ data, onChange, currency }: {
   data: StayDetails; onChange: (d: StayDetails) => void;
-  currency: PriceCurrency | null; status: GeoStatus; region: Region | null; onRetry: () => void;
+  currency: PriceCurrency | null;
 }) {
   function set<K extends keyof StayDetails>(k: K, v: string) { onChange({ ...data, [k]: v }); }
   const [hovered, setHovered] = useState<string | null>(null);
@@ -185,9 +184,6 @@ function StepFour({ data, onChange, currency, status, region, onRetry }: {
       </div>
       <div>
         <Label>Room Preference</Label>
-        <div className="mb-3">
-          <RegionPriceGate status={status} region={region} onRetry={onRetry} />
-        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {ROOM_OPTIONS.map((r) => {
             const selected = data.roomPreference === r.label;
@@ -326,9 +322,9 @@ export default function BookNow() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  // Region-based pricing (India → INR, outside → USD) from the visitor's live location.
+  // Region-based pricing (India → INR, outside → USD) from the device time zone.
   // Resolved once here so it persists across the Stay Details and Confirm steps.
-  const { region, status, currency, locate } = useGeoPricing();
+  const { currency } = useGeoPricing();
 
   const CONFIRM_STEP = STEP_TITLES.length - 1; // 3
 
@@ -442,7 +438,7 @@ export default function BookNow() {
                     <StepThree data={medical} onChange={setMedical} />
                   </div>
                 )}
-                {step === 1 && <StepFour data={stay} onChange={setStay} currency={currency} status={status} region={region} onRetry={locate} />}
+                {step === 1 && <StepFour data={stay} onChange={setStay} currency={currency} />}
                 {step === 2 && <StepFive personal={personal} medical={medical} stay={stay} currency={currency} />}
               </motion.div>
             </AnimatePresence>

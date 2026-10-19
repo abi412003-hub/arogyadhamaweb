@@ -9,7 +9,6 @@ import {
 } from "lucide-react";
 import { ACCOMMODATION_PHOTOS } from "@/lib/accommodation-photos";
 import { useGeoPricing, formatRegionPrice, type PriceCurrency } from "@/hooks/useGeoPricing";
-import RegionPriceGate from "@/components/RegionPriceGate";
 
 // Maps each room to its real photo folder in public/accommodation
 const PHOTO_SLUG: Record<string, string> = {
@@ -27,7 +26,7 @@ const PHOTO_SLUG: Record<string, string> = {
 };
 
 // Two independent per-person price lists: INR shown inside India, USD shown outside.
-// Region comes from the visitor's live location; prices stay hidden ("—") until resolved.
+// Currency comes from the device time zone (IST → INR); "—" until it is read.
 function priceStr(inr: number, usd: number, currency: PriceCurrency | null) {
   return formatRegionPrice(inr, usd, currency) ?? "—";
 }
@@ -549,9 +548,8 @@ function ComparisonTable({ currency }: { currency: PriceCurrency | null }) {
 
 /* ── Main ── */
 export default function Accommodation() {
-  // Location decides the currency: India → INR, outside → USD. Prices stay hidden
-  // (rendered as "—" behind the gate) until the region resolves.
-  const { region, status, currency, locate } = useGeoPricing();
+  // Device time zone decides the currency: IST → INR, any other → USD.
+  const { currency } = useGeoPricing();
   const startingINR = Math.min(...ROOMS.map((r) => r.weeklyRateINR));
   const startingUSD = Math.min(...ROOMS.map((r) => r.weeklyRateUSD));
 
@@ -606,11 +604,6 @@ export default function Accommodation() {
             </a>
           ))}
         </div>
-      </div>
-
-      {/* Location gate — prices stay hidden until the region resolves */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-8">
-        <RegionPriceGate status={status} region={region} onRetry={locate} />
       </div>
 
       {/* Room Cards */}
