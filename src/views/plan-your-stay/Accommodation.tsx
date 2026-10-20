@@ -156,7 +156,7 @@ const ROOMS = [
     name: "Single Deluxe",
     subName: "Sheshadri",
     weeklyRateINR: 27500,
-    weeklyRateUSD: 750,
+    weeklyRateUSD: 850,
     capacity: "Single / Double occupancy (Premium)",
     desc: "Premium private accommodation in the flagship Sheshadri — Arogyadhama's most refined residential block. Upgraded furnishings, garden views, and priority access to all facilities.",
     amenities: [

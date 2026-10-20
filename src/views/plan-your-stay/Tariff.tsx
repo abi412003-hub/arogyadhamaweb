@@ -44,6 +44,16 @@ const ROOMS = [
     perPerson: true,
   },
   {
+    key: "single-deluxe",
+    name: "Single Deluxe",
+    subName: "Sheshadri",
+    pricesINR: [27500, 54000, 80500, 107000],
+    pricesUSD: [850, 1550, 2150, 2750],
+    emoji: "⭐",
+    desc: "Premium single room in the flagship Sheshadri block with upgraded furnishings and garden views.",
+    amenities: ["Deluxe attached bathroom", "AC room", "Garden view", "Premium furnishings", "Priority consultations"],
+  },
+  {
     key: "semi-deluxe",
     name: "Double Deluxe",
     subName: "Sheshadri",
@@ -53,16 +63,6 @@ const ROOMS = [
     desc: "An air-conditioned double bedroom shared between two — a step up from standard sharing, with climate control for cooler comfort.",
     amenities: ["Attached bathroom", "AC room", "Two beds", "Wardrobe for each person"],
     perPerson: true,
-  },
-  {
-    key: "single-deluxe",
-    name: "Single Deluxe",
-    subName: "Sheshadri",
-    pricesINR: [27500, 54000, 80500, 107000],
-    pricesUSD: [750, 1350, 1900, 2400],
-    emoji: "⭐",
-    desc: "Premium single room in the flagship Sheshadri block with upgraded furnishings and garden views.",
-    amenities: ["Deluxe attached bathroom", "AC room", "Garden view", "Premium furnishings", "Priority consultations"],
   },
   {
     key: "suite",

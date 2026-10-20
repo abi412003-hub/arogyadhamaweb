@@ -31,7 +31,7 @@ const ROOM_OPTIONS = [
   { slug: "ashirwad", photoKey: "ashirwad", name: "Single Room", sub: "Ashirwad Block", inr: 13200, usd: 500, pp: false, label: "Single Room (Ashirwad)" },
   { slug: "maitri", photoKey: "maitri", name: "Double Sharing", sub: "Maitri Block", inr: 11000, usd: 450, pp: true, label: "Double Sharing (Maitri) — per person" },
   { slug: "double-deluxe", photoKey: "sheshadri", name: "Double Deluxe", sub: "Sheshadri", inr: 22000, usd: 750, pp: true, label: "Double Deluxe (Sheshadri) — per person" },
-  { slug: "sheshadri", photoKey: "sheshadri", name: "Single Deluxe", sub: "Sheshadri", inr: 27500, usd: 750, pp: false, label: "Single Deluxe (Sheshadri)" },
+  { slug: "sheshadri", photoKey: "sheshadri", name: "Single Deluxe", sub: "Sheshadri", inr: 27500, usd: 850, pp: false, label: "Single Deluxe (Sheshadri)" },
   { slug: "double-sharing-ac", photoKey: "maitri", name: "Double Sharing/Triple sharing (AC)", sub: "Maitri Block", inr: 17600, usd: 500, pp: true, label: "Double Sharing/Triple Sharing AC (Maitri) — per person" },
   { slug: "suite-nonac", photoKey: "suites-nonac", name: "Suite Sharing (Non-AC)", sub: "Premium Block", inr: 30800, usd: 1000, pp: true, label: "Suite Sharing (Non-AC) — per person" },
   { slug: "suite-ac", photoKey: "suites-ac", name: "Suite Sharing (AC)", sub: "Premium Block", inr: 30800, usd: 1000, pp: true, label: "Suite Sharing (AC) — per person" },
