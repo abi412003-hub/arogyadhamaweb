@@ -3,7 +3,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "@/lib/router-compat";
 import Layout from "@/components/Layout";
-import { ChevronRight, CheckCircle2, Info, Table2, Calculator } from "lucide-react";
+import { ChevronRight, CheckCircle2, Info, Table2, Calculator, Eye } from "lucide-react";
 import { useGeoPricing, formatRegionPrice, type PriceCurrency } from "@/hooks/useGeoPricing";
 
 /* ── Data ── */
@@ -200,7 +200,7 @@ export default function Tariff() {
 
       {/* Toggle */}
       <div className="sticky top-16 z-20 border-b border-border bg-white/95 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-2 py-3">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-wrap items-center gap-2 py-3">
           {[
             { v: "calculator", icon: Calculator, label: "Interactive Calculator" },
             { v: "table", icon: Table2, label: "Full Table View" },
@@ -215,6 +215,12 @@ export default function Tariff() {
               <Icon size={15} /> {label}
             </button>
           ))}
+          {/* Official price sheet (PDF) — opens in the browser's PDF viewer in a new tab. */}
+          <a href="/price-list.pdf" target="_blank" rel="noopener noreferrer"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg font-body text-sm transition-all hover:bg-cream"
+            style={{ color: "hsl(var(--maroon) / 0.6)" }}>
+            <Eye size={15} /> Price List
+          </a>
           {view === "calculator" && selectedRoom && currency && (
             <div className="ml-auto font-display font-bold text-gold text-lg">
               Total: {estimate}
