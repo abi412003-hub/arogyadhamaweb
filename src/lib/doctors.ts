@@ -39,7 +39,6 @@ export const doctors: Member[] = [
   { name: "Aishwarya Sahu", qualifications: "BPT, MPT" },
   { name: "Praveen Kumar T R", qualifications: "BPT, MPT", bio: "Physiotherapist and Musculoskeletal Specialist bridging clinical expertise and academic excellence. With specialized training in Musculoskeletal Science, two years of dedicated clinical practice, and a year of academic experience, he is committed to delivering evidence-based patient care and shaping the future of physiotherapy education." },
   { name: "Kritika Gupta", qualifications: "BAMS", bio: "Dr. Kritika Gupta (BAMS) is a dedicated Ayurvedic physician passionate about holistic healing and patient-centered care. With knowledge of classical Ayurvedic principles and practical clinical exposure, she focuses on promoting wellness through natural therapies, lifestyle modification, and preventive healthcare. She has experience assisting in Ayurvedic treatments and Panchakarma therapies while ensuring compassionate and comfortable care for patients. Her area of interest lies particularly in Panchakarma therapies and holistic wellness management. Alongside her clinical approach, she believes in creating awareness about Ayurveda as a sustainable and effective way of living. Committed to continuous learning and professional growth, she strives to combine traditional Ayurvedic wisdom with modern healthcare understanding to improve patients' overall quality of life." },
-  { name: "Krupa A", qualifications: "BNYS", bio: "BNYS graduate from S-VYASA Deemed to be University with training in integrative health sciences, combining naturopathy, yoga therapy, psychology, and expressive arts. Experienced in holistic patient care through clinical practice at S-VYASA Arogyadhama and multidisciplinary exposure at leading healthcare institutions including NIMHANS and Narayana Health. Passionate about integrative wellness, community health education, and creative therapeutic approaches, with experience in research, counseling, yoga outreach, and expressive arts therapy. Known for compassionate communication and a patient-centered approach to holistic healing." },
   { name: "Vishwas Papanna", qualifications: "BNYS, MD (Acu)", bio: "Dr. Vishwas Papanna specialises in yoga and naturopathy. He pursued his UG degree in Bachelor of Naturopathy and Yogic Sciences from SSYNM, S-VYASA Deemed to be University, and also completed his Integrative Medicine course from NIMHANS. He has expertise in lifestyle correction, holistic health, and acupuncture, and currently works as a Residential Medical Officer at Arogyadhama Holistic Health Research Center, S-VYASA. His approach leans more toward prevention than cure through lifestyle modifications such as diet, yoga, and meditation." },
 ];
 
@@ -79,7 +78,6 @@ export const ayurvedaTherapists: Member[] = [
 ];
 
 export const naturopathyTherapists: Member[] = [
-  { name: "Manjappa", qualifications: "Naturopathy Therapist & Surabhi Block Manager" },
   { name: "Anjali Pacherwal", qualifications: "Naturopathy Therapist" },
   { name: "Guddu Kumar", qualifications: "Naturopathy Therapist" },
   { name: "Hari N G", qualifications: "Naturopathy Therapist" },

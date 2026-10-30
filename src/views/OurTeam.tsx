@@ -10,7 +10,6 @@ import drAmitSingh from "@/assets/team/dr-amit-singh.jpg";
 import amshumanYadav from "@/assets/team/amshuman-r-yadav.jpg";
 import ankitaMishra from "@/assets/team/ankita-mishra.jpg";
 import aparSaoji from "@/assets/team/apar-saoji.jpg";
-import krupaA from "@/assets/team/krupa-a.jpg";
 import arundatiGoley from "@/assets/team/arundati-goley.jpg";
 import nagachaitanya from "@/assets/team/nagachaitanya.jpg";
 import kritikaGupta from "@/assets/team/kritika-gupta.jpg";
@@ -69,7 +68,6 @@ import anjaliPacherwal from "@/assets/team/anjali-pacherwal.jpg";
 import gudduKumar from "@/assets/team/guddu-kumar.jpg";
 import hariNG from "@/assets/team/hari-n-g.jpg";
 import kiranKumari from "@/assets/team/kiran-kumari.jpg";
-import manjappa from "@/assets/team/manjappa.jpg";
 import ranjini from "@/assets/team/ranjini.jpg";
 import saraswatiKumari from "@/assets/team/saraswati-kumari.jpg";
 import shivani from "@/assets/team/shivani.jpg";
@@ -309,7 +307,6 @@ const FALLBACKS: Record<string, string> = {
   "amshuman-r-yadav": amshumanYadav,
   "ankita-mishra": ankitaMishra,
   "apar-saoji": aparSaoji,
-  "krupa-a": krupaA,
   "arundhati-goley": arundatiGoley,
   "nagachaithanya": nagachaitanya,
   "kritika-gupta": kritikaGupta,
@@ -368,7 +365,6 @@ const FALLBACKS: Record<string, string> = {
   "guddu-kumar": gudduKumar,
   "hari-n-g": hariNG,
   "kiran-kumari": kiranKumari,
-  "manjappa": manjappa,
   "ranjini": ranjini,
   "saraswati-kumari": saraswatiKumari,
   "shivani": shivani,
