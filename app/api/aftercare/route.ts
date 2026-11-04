@@ -27,6 +27,35 @@ function str(v: unknown, max: number): string {
   return typeof v === "string" ? v.trim().slice(0, max) : "";
 }
 
+/**
+ * POST one row to the Apps Script web app and return why it failed, or null if
+ * the row was saved. Apps Script answers HTTP 200 even when doPost fails and
+ * reports the outcome in the body, so only `{ "ok": true }` counts as saved.
+ */
+async function appendRow(url: string, row: string[]): Promise<string | null> {
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ secret: SHEET_SECRET, row }),
+      cache: "no-store",
+    });
+    const reply = await res.text();
+    if (!res.ok) return `HTTP ${res.status}`;
+
+    let data: { ok?: unknown; error?: unknown };
+    try {
+      data = JSON.parse(reply);
+    } catch {
+      // e.g. a Google sign-in page, when the web app's access setting changes.
+      return `unexpected reply: ${reply.slice(0, 120)}`;
+    }
+    return data?.ok === true ? null : String(data?.error ?? "no ok flag in reply");
+  } catch (e) {
+    return e instanceof Error ? e.message : String(e);
+  }
+}
+
 export async function POST(req: Request) {
   let body: Record<string, unknown>;
   try {
@@ -116,21 +145,16 @@ export async function POST(req: Request) {
   ];
 
   // ── 1. Append to the Google Sheet (best effort — never fails the request) ──
-  let sheetOk = false;
+  let sheetError: string | null = "sheet webhook not configured";
   if (SHEET_URL) {
-    try {
-      const res = await fetch(SHEET_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ secret: SHEET_SECRET, row }),
-        cache: "no-store",
-      });
-      sheetOk = res.ok;
-      if (!res.ok) console.error("aftercare → sheet HTTP", res.status);
-    } catch (e) {
-      console.error("aftercare → sheet failed (non-fatal):", e);
+    sheetError = await appendRow(SHEET_URL, row);
+    if (sheetError) {
+      console.error("aftercare → sheet failed, retrying:", sheetError);
+      sheetError = await appendRow(SHEET_URL, row);
     }
+    if (sheetError) console.error("aftercare → sheet failed (non-fatal):", sheetError);
   }
+  const sheetOk = sheetError === null;
 
   // ── 2. Email the Arogyadhama inbox ──
   if (mailConfigured()) {
@@ -150,7 +174,7 @@ export async function POST(req: Request) {
       ["How Did You Hear About Us", hearAbout],
       ["Additional Notes / Questions", notes],
       ["Consent Given", "Yes"],
-      ["Saved to Sheet", sheetOk ? "Yes" : "No"],
+      ["Saved to Sheet", sheetOk ? "Yes" : `No — ${sheetError}`],
       ["Received", submittedAt],
     ]);
     try {
