@@ -22,6 +22,10 @@ const PROGRAMS = ["Group", "1-to-1"];
 const SHEET_URL = process.env.ANUVARTANA_SHEET_WEBHOOK_URL;
 const SHEET_SECRET = process.env.ANUVARTANA_SHEET_SECRET;
 
+// Who receives After Care emails (comma-separated). Applies to this form only;
+// when unset, mail goes to the Arogyadhama inbox.
+const AFTERCARE_MAIL_TO = process.env.MAIL_TO;
+
 /** Trim + hard-cap a free-text field. */
 function str(v: unknown, max: number): string {
   return typeof v === "string" ? v.trim().slice(0, max) : "";
@@ -179,6 +183,7 @@ export async function POST(req: Request) {
     ]);
     try {
       await sendMail({
+        to: AFTERCARE_MAIL_TO,
         subject: `Anuvartana Aftercare — Expression of Interest — ${name}`,
         html: `<p style="font-family:Arial,sans-serif;font-size:14px">A new Anuvartana Aftercare enquiry was submitted on the Arogyadhama website:</p>${html}`,
         text: `New Anuvartana Aftercare expression of interest:\n\n${text}`,

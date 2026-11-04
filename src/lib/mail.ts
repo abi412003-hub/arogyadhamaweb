@@ -7,8 +7,10 @@
 // Optional env:
 //   SMTP_HOST   default "smtp.gmail.com"
 //   SMTP_PORT   default 465 (SSL)
-//   MAIL_TO     recipient, default "arogyadhama@svyasa.edu.in"
 //   MAIL_FROM   From header, default SMTP_USER
+//
+// Recipients: mail goes to DEFAULT_TO unless the caller passes `to`. The After
+// Care route passes MAIL_TO; booking and enquiry mail always uses DEFAULT_TO.
 
 import nodemailer, { type Transporter } from "nodemailer";
 
@@ -16,7 +18,7 @@ const SMTP_USER = process.env.SMTP_USER;
 const SMTP_PASS = process.env.SMTP_PASS;
 const SMTP_HOST = process.env.SMTP_HOST || "smtp.gmail.com";
 const SMTP_PORT = Number(process.env.SMTP_PORT || 465);
-const MAIL_TO = process.env.MAIL_TO || "arogyadhama@svyasa.edu.in";
+const DEFAULT_TO = "arogyadhama@svyasa.edu.in";
 const MAIL_FROM = process.env.MAIL_FROM || SMTP_USER;
 
 export function mailConfigured(): boolean {
@@ -59,8 +61,10 @@ ${shown
   return { html, text };
 }
 
-/** Send an email to the Arogyadhama inbox. Throws if not configured or on transport error. */
+/** Send an email, by default to the Arogyadhama inbox. Throws if not configured or on transport error. */
 export async function sendMail(opts: {
+  /** Recipient, or a comma-separated list. Defaults to the Arogyadhama inbox. */
+  to?: string;
   subject: string;
   html: string;
   text: string;
@@ -71,7 +75,7 @@ export async function sendMail(opts: {
   }
   await transporter().sendMail({
     from: MAIL_FROM,
-    to: MAIL_TO,
+    to: opts.to || DEFAULT_TO,
     subject: opts.subject,
     text: opts.text,
     html: opts.html,
