@@ -4,6 +4,8 @@ import { Link, useLocation } from "@/lib/router-compat";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
 import logoMark from "@/assets/arogyadhama-logo.png";
+import AccountMenu from "@/components/AccountMenu";
+import { useParticipant } from "@/hooks/useParticipant";
 
 const navItems = [
   {
@@ -80,6 +82,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const location = useLocation();
+  const { profile } = useParticipant();
 
   const isHome = location.pathname === "/";
 
@@ -180,7 +183,8 @@ export default function Navbar() {
           </div>
 
           {/* CTA + Mobile toggle */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <AccountMenu transparent={isTransparent} />
             <Link
               to="/book-now"
               className="hidden lg:block bg-gold text-forest-dark font-body font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-gold-light transition-colors shadow-gold"
@@ -244,7 +248,33 @@ export default function Navbar() {
             </div>
 
 
-            <div className="p-6 border-t border-maroon-light/30">
+            <div className="p-6 border-t border-maroon-light/30 space-y-3">
+              {profile ? (
+                <Link
+                  to="/profile"
+                  onClick={() => setMobileOpen(false)}
+                  className="block w-full text-center border border-cream/30 text-cream font-body font-semibold py-3 rounded-xl hover:bg-white/10 transition-colors"
+                >
+                  My Profile
+                </Link>
+              ) : (
+                <div className="grid grid-cols-2 gap-3">
+                  <Link
+                    to="/account?tab=login"
+                    onClick={() => setMobileOpen(false)}
+                    className="text-center border border-cream/30 text-cream font-body font-semibold py-3 rounded-xl hover:bg-white/10 transition-colors"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/account?tab=register"
+                    onClick={() => setMobileOpen(false)}
+                    className="text-center border border-gold/50 text-gold-light font-body font-semibold py-3 rounded-xl hover:bg-gold/10 transition-colors"
+                  >
+                    Register
+                  </Link>
+                </div>
+              )}
               <Link
                 to="/book-now"
                 onClick={() => setMobileOpen(false)}
