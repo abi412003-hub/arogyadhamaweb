@@ -97,6 +97,20 @@ export async function getDoc(
   }
 }
 
+/** List documents matching Frappe-style filters, e.g. [["mobile", "like", "%98765%"]]. */
+export async function getList(
+  doctype: string,
+  opts: { filters?: unknown[]; fields?: string[]; limit?: number } = {},
+): Promise<Record<string, any>[]> {
+  const q = new URLSearchParams({
+    fields: JSON.stringify(opts.fields ?? ["name"]),
+    filters: JSON.stringify(opts.filters ?? []),
+    limit_page_length: String(opts.limit ?? 20),
+  });
+  const data = await frappeRequest("GET", `${resource(doctype)}?${q}`);
+  return Array.isArray(data) ? data : [];
+}
+
 /** Update fields on an existing document. Returns the updated doc. */
 export async function updateDoc(
   doctype: string,

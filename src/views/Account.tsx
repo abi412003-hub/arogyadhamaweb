@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight, ArrowLeft, Check, Lock, Mail, Phone, Smartphone, Sparkles,
-  ShieldCheck, UserRound, Loader2, ChevronDown,
+  ShieldCheck, UserRound, Loader2, ChevronDown, Clock, CheckCircle2,
 } from "lucide-react";
 import { toast } from "sonner";
 import Layout from "@/components/Layout";
@@ -45,7 +45,7 @@ const EMPTY_DETAILS: Details = {
 export default function Account() {
   const params = useSearchParams();
   const router = useRouter();
-  const { profile, loading, setProfile } = useParticipant();
+  const { profile, loading, refresh } = useParticipant();
 
   const [mode, setMode] = useState<Mode>(params.get("tab") === "login" ? "login" : "register");
   const [step, setStep] = useState<Step>("mobile");
@@ -55,6 +55,10 @@ export default function Account() {
   const [details, setDetails] = useState<Details>(EMPTY_DETAILS);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<ReactNode>("");
+  // Amber "awaiting reception approval" message (not an error the user made).
+  const [notice, setNotice] = useState<ReactNode>("");
+  // Set once a registration has been submitted: shows the "awaiting approval" screen.
+  const [submittedName, setSubmittedName] = useState("");
 
   // Follow ?tab= when the header menu links here while the page is open.
   useEffect(() => {
@@ -77,37 +81,54 @@ export default function Account() {
     setStep("mobile");
     setOtp("");
     setError("");
+    setNotice("");
+    setSubmittedName("");
   }
 
-  function finish(p: ParticipantProfile, message: string) {
-    setProfile(p);
-    toast.success(message);
-    router.push("/profile");
+  // Turn an API refusal into the right message (codes from src/lib/participants.ts).
+  function showRefusal(data: any, fallback: string) {
+    const code = data?.code;
+    if (code === "pending") {
+      setStep("mobile");
+      setNotice(data.error);
+    } else if (code === "not_registered") {
+      setStep("mobile");
+      setError(<>This number is not registered. <button type="button" className="underline font-semibold" onClick={() => switchMode("register")}>Register now</button></>);
+    } else if (code === "exists" && !/awaiting/i.test(data.error || "")) {
+      setError(<>This number is already registered. <button type="button" className="underline font-semibold" onClick={() => switchMode("login")}>Sign in instead</button></>);
+    } else if (code === "exists") {
+      setNotice(data.error);
+    } else {
+      if (code === "rejected" || code === "inactive") setStep("mobile");
+      setError(data?.error || fallback);
+    }
   }
 
   async function requestOtp(e?: FormEvent) {
     e?.preventDefault();
     if (!mobileValid) return;
-    setBusy(true); setError("");
+    setBusy(true); setError(""); setNotice("");
     const r = await post("/api/auth/request-otp", { mode, countryCode, mobile });
     setBusy(false);
     if (r.ok) { setOtp(""); setStep("otp"); return; }
-    if (r.data?.code === "exists")
-      setError(<>This number is already registered. <button type="button" className="underline font-semibold" onClick={() => switchMode("login")}>Sign in instead</button></>);
-    else if (r.data?.code === "not_found")
-      setError(<>No account for this number yet. <button type="button" className="underline font-semibold" onClick={() => switchMode("register")}>Register now</button></>);
-    else setError(r.data?.error || "Something went wrong. Please try again.");
+    showRefusal(r.data, "Something went wrong. Please try again.");
   }
 
   async function submitOtp(e?: FormEvent) {
     e?.preventDefault();
     if (otp.length !== OTP_LENGTH) return;
-    setBusy(true); setError("");
+    setBusy(true); setError(""); setNotice("");
     if (mode === "login") {
       const r = await post("/api/auth/login", { countryCode, mobile, otp });
+      if (r.ok) {
+        await refresh().catch(() => null);
+        setBusy(false);
+        toast.success("Welcome back!");
+        router.push("/profile");
+        return;
+      }
       setBusy(false);
-      if (r.ok) return finish(r.data.profile, "Welcome back!");
-      setError(r.data?.error || "Could not sign you in.");
+      showRefusal(r.data, "Could not sign you in.");
       return;
     }
     const r = await post("/api/auth/verify-otp", { countryCode, mobile, otp });
@@ -122,9 +143,14 @@ export default function Account() {
     setBusy(true); setError("");
     const r = await post("/api/auth/register", { countryCode, mobile, otp, ...details });
     setBusy(false);
-    if (r.ok) return finish(r.data.profile, "Registration complete — welcome to Arogyadhama!");
+    if (r.ok) {
+      setSubmittedName(r.data.fullName || details.fullName);
+      setDetails(EMPTY_DETAILS);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
     if (r.data?.code === "bad_otp") { setStep("otp"); setOtp(""); }
-    setError(r.data?.error || "Could not complete registration.");
+    showRefusal(r.data, "Could not complete registration.");
   }
 
   const set = (k: keyof Details) => (e: { target: { value: string } }) =>
@@ -141,6 +167,8 @@ export default function Account() {
             <div className="min-w-0 p-5 sm:p-10 lg:p-12">
               {!loading && profile ? (
                 <SignedIn profile={profile} />
+              ) : submittedName ? (
+                <Submitted name={submittedName} mobile={prettyMobile} onSignIn={() => switchMode("login")} />
               ) : (
                 <>
                   {/* Tabs */}
@@ -176,7 +204,7 @@ export default function Account() {
                       ? "Enter your mobile number to begin registration for Prashanti Kutiram."
                       : "Sign in with the mobile number you registered with.")}
                     {step === "otp" && <>Enter the {OTP_LENGTH}-digit OTP for <span className="font-semibold text-forest">{prettyMobile}</span>.</>}
-                    {step === "details" && "Tell us a little about yourself to complete your participant profile."}
+                    {step === "details" && "Tell us a little about yourself. Reception will approve your registration before you can sign in."}
                   </p>
 
                   <AnimatePresence mode="wait">
@@ -227,6 +255,7 @@ export default function Account() {
                           </div>
 
                           <ErrorLine error={error} />
+                          <NoticeLine notice={notice} />
                           <PrimaryButton disabled={!mobileValid || busy} busy={busy}>
                             {mode === "register" ? "Request OTP to Register" : "Request OTP to Sign In"}
                           </PrimaryButton>
@@ -261,6 +290,7 @@ export default function Account() {
                           </div>
 
                           <ErrorLine error={error} />
+                          <NoticeLine notice={notice} />
                           <PrimaryButton disabled={otp.length !== OTP_LENGTH || busy} busy={busy}>
                             {mode === "register" ? "Verify & Continue" : "Verify & Sign In"}
                           </PrimaryButton>
@@ -322,6 +352,7 @@ export default function Account() {
                           </FieldGroup>
 
                           <ErrorLine error={error} />
+                          <NoticeLine notice={notice} />
                           <PrimaryButton disabled={busy || details.fullName.trim().length < 2} busy={busy}>
                             Create my account
                           </PrimaryButton>
@@ -379,6 +410,65 @@ function ErrorLine({ error }: { error: ReactNode }) {
     <p role="alert" className="mt-4 px-3.5 py-2.5 rounded-xl bg-red-50 border border-red-200 font-body text-sm text-red-700">
       {error}
     </p>
+  );
+}
+
+function NoticeLine({ notice }: { notice: ReactNode }) {
+  if (!notice) return null;
+  return (
+    <p role="status" className="mt-4 flex gap-2.5 px-3.5 py-3 rounded-xl bg-gold-pale/60 border border-gold/30 font-body text-sm text-forest">
+      <Clock size={17} className="text-gold shrink-0 mt-0.5" />
+      <span>{notice}</span>
+    </p>
+  );
+}
+
+function Submitted({ name, mobile, onSignIn }: { name: string; mobile: string; onSignIn: () => void }) {
+  const steps = [
+    "Reception reviews your details and links your patient record.",
+    "Once approved, sign in here with your mobile number and OTP.",
+    "Your dashboard then shows your patient profile and a link to the Patient App.",
+  ];
+  return (
+    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="py-4">
+      <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-cream shadow-forest" style={{ background: MAROON_GRADIENT }}>
+        <CheckCircle2 size={30} />
+      </div>
+      <div className="mt-6 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-gold/30 bg-gold-pale/60">
+        <Clock size={13} className="text-gold" />
+        <span className="font-body text-[11px] font-bold tracking-[0.16em] uppercase text-forest">Awaiting reception approval</span>
+      </div>
+      <h1 className="mt-4 font-display font-bold text-forest" style={{ fontSize: "clamp(1.8rem, 3.4vw, 2.4rem)", lineHeight: 1.15 }}>
+        Registration submitted
+      </h1>
+      <p className="mt-2 font-body text-sage text-[15px]">
+        Thank you, <span className="font-semibold text-forest">{name}</span>. Your registration for{" "}
+        <span className="font-semibold text-forest">{mobile}</span> has been sent to the Arogyadhama reception.
+      </p>
+
+      <ol className="mt-7 space-y-3">
+        {steps.map((s, i) => (
+          <li key={s} className="flex gap-3 font-body text-[15px] text-forest/80">
+            <span className="w-6 h-6 shrink-0 rounded-full bg-maroon/[0.06] border border-maroon/15 text-maroon text-xs font-bold flex items-center justify-center">{i + 1}</span>
+            {s}
+          </li>
+        ))}
+      </ol>
+
+      <div className="mt-8 flex flex-wrap gap-3">
+        <button
+          type="button"
+          onClick={onSignIn}
+          className="inline-flex items-center gap-2 px-6 h-12 rounded-xl font-body font-semibold text-cream hover:brightness-110 transition-all"
+          style={{ background: MAROON_GRADIENT }}
+        >
+          Go to Sign In <ArrowRight size={16} />
+        </button>
+        <Link to="/" className="inline-flex items-center gap-2 px-6 h-12 rounded-xl border border-maroon/15 font-body font-semibold text-maroon hover:bg-maroon/5 transition-colors">
+          Back to home
+        </Link>
+      </div>
+    </motion.div>
   );
 }
 

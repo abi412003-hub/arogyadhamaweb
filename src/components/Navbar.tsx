@@ -255,7 +255,7 @@ export default function Navbar() {
                   onClick={() => setMobileOpen(false)}
                   className="block w-full text-center border border-cream/30 text-cream font-body font-semibold py-3 rounded-xl hover:bg-white/10 transition-colors"
                 >
-                  My Profile
+                  My Dashboard
                 </Link>
               ) : (
                 <div className="grid grid-cols-2 gap-3">

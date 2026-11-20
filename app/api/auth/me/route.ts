@@ -1,11 +1,18 @@
 import { NextResponse } from "next/server";
-import { findParticipant, toProfile } from "@/lib/participants";
+import {
+  PATIENT_APP_URL,
+  accessState,
+  findParticipant,
+  getPatientProfile,
+  type PatientProfile,
+  toProfile,
+} from "@/lib/participants";
 import { clearSessionCookie, getSession } from "@/lib/session";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-/** The signed-in participant's profile, read fresh from Frappe. */
+/** The signed-in participant's profile (and linked Patient record), read fresh from Frappe. */
 export async function GET(req: Request) {
   const session = getSession(req);
   // Signed out is a normal state (every page asks), so answer 200 rather than 401.
@@ -13,11 +20,25 @@ export async function GET(req: Request) {
 
   try {
     const doc = await findParticipant(session.name);
-    if (!doc || doc.status === "Inactive")
-      return clearSessionCookie(
-        NextResponse.json({ success: true, profile: null }),
-      );
-    return NextResponse.json({ success: true, profile: toProfile(doc) });
+    // Deleted, deactivated or no-longer-approved accounts lose their session.
+    if (!doc || accessState(doc) !== "approved")
+      return clearSessionCookie(NextResponse.json({ success: true, profile: null }));
+
+    let patient: PatientProfile | null = null;
+    if (doc.patient) {
+      try {
+        patient = await getPatientProfile(doc.patient);
+      } catch (e) {
+        console.error("auth/me: Patient lookup failed (non-fatal):", e);
+      }
+    }
+
+    return NextResponse.json({
+      success: true,
+      profile: toProfile(doc),
+      patient,
+      patientAppUrl: PATIENT_APP_URL,
+    });
   } catch (e) {
     console.error("auth/me failed:", e);
     return NextResponse.json(

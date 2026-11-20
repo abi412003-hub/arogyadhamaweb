@@ -45,6 +45,27 @@ const fields = [
   f("source", "Data", "Source", { default: "Website" }),
   f("last_login", "Datetime", "Last Login", { read_only: 1 }),
 
+  // Reception approval (also added to an existing install by update-frappe-doctype-approval.mjs).
+  f("sb_approval", "Section Break", "Reception Approval"),
+  f("approval_status", "Select", "Approval Status", {
+    options: "Pending Approval\nApproved\nRejected",
+    default: "Pending Approval",
+    reqd: 1,
+    in_list_view: 1,
+    in_standard_filter: 1,
+    description: "Only Approved users can sign in to the website dashboard.",
+  }),
+  f("patient", "Link", "Patient", {
+    options: "Patient",
+    in_list_view: 1,
+    description: "Auto-filled when exactly one Patient has this mobile. Check or choose before approving.",
+  }),
+  f("patient_name", "Data", "Patient Name", { read_only: 1, fetch_from: "patient.patient_name" }),
+  f("cb_approval", "Column Break", ""),
+  f("reception_remarks", "Small Text", "Reception Remarks", {
+    description: "Shown to the person if the registration is rejected.",
+  }),
+
   f("sb_personal", "Section Break", "Personal Details"),
   f("email", "Data", "Email", { options: "Email", in_list_view: 1 }),
   f("gender", "Select", "Gender", { options: "\nMale\nFemale\nOther" }),

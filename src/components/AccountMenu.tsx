@@ -13,7 +13,8 @@ const MAROON_GRADIENT =
 export default function AccountMenu({ transparent }: { transparent: boolean }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const { profile, logout } = useParticipant();
+  const { profile, patient, logout } = useParticipant();
+  const name = patient?.name || profile?.fullName || "";
   const location = useLocation();
   const router = useRouter();
 
@@ -50,7 +51,7 @@ export default function AccountMenu({ transparent }: { transparent: boolean }) {
               }`
         }`}
       >
-        {profile ? initials(profile.fullName) : <UserRound size={19} />}
+        {profile ? initials(name) : <UserRound size={19} />}
       </button>
 
       <AnimatePresence>
@@ -67,15 +68,15 @@ export default function AccountMenu({ transparent }: { transparent: boolean }) {
               <>
                 <div className="flex items-center gap-3 px-2.5 pt-1.5 pb-3 border-b border-maroon/10">
                   <span className="w-10 h-10 rounded-xl bg-gold text-forest-dark font-display font-bold text-sm flex items-center justify-center shrink-0">
-                    {initials(profile.fullName)}
+                    {initials(name)}
                   </span>
                   <div className="min-w-0">
-                    <p className="font-body font-semibold text-forest truncate">{profile.fullName}</p>
+                    <p className="font-body font-semibold text-forest truncate">{name}</p>
                     <p className="font-body text-xs text-sage">{profile.countryCode} {profile.mobile}</p>
                   </div>
                 </div>
                 <div className="pt-2 space-y-0.5">
-                  <MenuLink to="/profile" icon={<UserRound size={16} />}>My Profile</MenuLink>
+                  <MenuLink to="/profile" icon={<UserRound size={16} />}>My Dashboard</MenuLink>
                   <MenuLink to="/book-now" icon={<CalendarDays size={16} />}>Book your stay</MenuLink>
                   <button
                     role="menuitem"

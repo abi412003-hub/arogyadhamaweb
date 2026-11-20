@@ -2,7 +2,9 @@ import { NextResponse } from "next/server";
 import { updateDoc } from "@/lib/erpnext";
 import { verifyOtp } from "@/lib/otp";
 import {
+  NOT_REGISTERED,
   PARTICIPANT_DOCTYPE,
+  accessDenied,
   findParticipant,
   frappeNow,
   parseMobile,
@@ -37,17 +39,15 @@ export async function POST(req: Request) {
     const doc = await findParticipant(m.loginId);
     if (!doc)
       return NextResponse.json(
-        {
-          success: false,
-          code: "not_found",
-          error: "No account found for this mobile number. Please register first.",
-        },
-        { status: 404 },
+        { success: false, code: NOT_REGISTERED.code, error: NOT_REGISTERED.error },
+        { status: NOT_REGISTERED.status },
       );
-    if (doc.status === "Inactive")
+    // Only registrations approved by reception may sign in.
+    const denied = accessDenied(doc);
+    if (denied)
       return NextResponse.json(
-        { success: false, error: "This account is inactive. Please contact the help desk." },
-        { status: 403 },
+        { success: false, code: denied.code, error: denied.error },
+        { status: denied.status },
       );
 
     let current = doc;

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { erpnextConfigured } from "@/lib/erpnext";
 import { sendOtp } from "@/lib/otp";
-import { findParticipant, parseMobile } from "@/lib/participants";
+import { NOT_REGISTERED, accessDenied, findParticipant, parseMobile } from "@/lib/participants";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -35,24 +35,34 @@ export async function POST(req: Request) {
 
   try {
     const existing = await findParticipant(m.loginId);
-    if (mode === "register" && existing)
+
+    if (mode === "register" && existing) {
+      const pending = existing.approval_status !== "Approved" && existing.approval_status !== "Rejected";
       return NextResponse.json(
         {
           success: false,
           code: "exists",
-          error: "This mobile number is already registered. Please sign in instead.",
+          error: pending
+            ? "This mobile number is already registered and is awaiting approval from reception."
+            : "This mobile number is already registered. Please sign in instead.",
         },
         { status: 409 },
       );
-    if (mode === "login" && !existing)
-      return NextResponse.json(
-        {
-          success: false,
-          code: "not_found",
-          error: "No account found for this mobile number. Please register first.",
-        },
-        { status: 404 },
-      );
+    }
+
+    if (mode === "login") {
+      if (!existing)
+        return NextResponse.json(
+          { success: false, code: NOT_REGISTERED.code, error: NOT_REGISTERED.error },
+          { status: NOT_REGISTERED.status },
+        );
+      const denied = accessDenied(existing);
+      if (denied)
+        return NextResponse.json(
+          { success: false, code: denied.code, error: denied.error },
+          { status: denied.status },
+        );
+    }
 
     await sendOtp(m.loginId);
     return NextResponse.json({ success: true });

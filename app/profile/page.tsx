@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Page from "@/views/Profile";
 
 export const metadata: Metadata = {
-  title: "My Profile",
+  title: "My Dashboard",
   robots: { index: false, follow: false },
 };
 

@@ -1,14 +1,48 @@
 import { NextResponse } from "next/server";
 import { createDoc, FrappeError } from "@/lib/erpnext";
+import { mailConfigured, renderRows, sendMail } from "@/lib/mail";
 import { verifyOtp } from "@/lib/otp";
 import {
   PARTICIPANT_DOCTYPE,
   findParticipant,
-  frappeNow,
+  findPatientByMobile,
   parseMobile,
-  toProfile,
 } from "@/lib/participants";
-import { setSessionCookie } from "@/lib/session";
+
+// A new registration is stored as "Pending Approval" and does NOT sign the person
+// in: reception approves it in Frappe (Website Registered User → Approval Status)
+// before the website dashboard opens for them.
+
+/** Best-effort heads-up to the reception inbox so the registration gets approved. */
+async function notifyReception(doc: Record<string, unknown>, docName: string) {
+  if (!mailConfigured()) return;
+  const deskBase = (process.env.ERPNEXT_URL || "").replace(/\/$/, "");
+  const deskLink = deskBase
+    ? `${deskBase}/app/website-registered-user/${encodeURIComponent(docName)}`
+    : "";
+  const { html, text } = renderRows([
+    ["Full Name", String(doc.full_name ?? "")],
+    ["Mobile", `${doc.country_code ?? ""} ${doc.mobile ?? ""}`],
+    ["Email", String(doc.email ?? "")],
+    ["City", String(doc.city ?? "")],
+    ["Health concern", String(doc.health_concern ?? "")],
+    ["Matched Patient", doc.patient ? String(doc.patient) : "None found — please link one"],
+    ["Received", new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })],
+  ]);
+  try {
+    await sendMail({
+      subject: `Website registration awaiting approval — ${doc.full_name}`,
+      html: `<p style="font-family:Arial,sans-serif;font-size:14px">A new participant registered on the Arogyadhama website and is waiting for reception approval.</p>${html}${
+        deskLink
+          ? `<p style="font-family:Arial,sans-serif;font-size:14px">Approve it in Frappe: <a href="${deskLink}">${deskLink}</a> (set <b>Approval Status</b> to <b>Approved</b> and check the <b>Patient</b> link).</p>`
+          : ""
+      }`,
+      text: `New website registration awaiting approval:\n\n${text}${deskLink ? `\n\nApprove in Frappe: ${deskLink}` : ""}`,
+    });
+  } catch (e) {
+    console.error("auth/register → reception email failed (non-fatal):", e);
+  }
+}
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -71,8 +105,8 @@ export async function POST(req: Request) {
     mobile: m.mobile,
     mobile_verified: 1,
     status: "Active",
+    approval_status: "Pending Approval",
     source: "Website",
-    last_login: frappeNow(),
     email: email || undefined,
     gender: gender || undefined,
     date_of_birth: dob || undefined,
@@ -95,9 +129,15 @@ export async function POST(req: Request) {
         { status: 409 },
       );
 
+    // Pre-link the Patient record when exactly one has this mobile; reception checks it.
+    const patient = await findPatientByMobile(m.mobile);
+    if (patient) doc.patient = patient;
+
     const created = await createDoc(PARTICIPANT_DOCTYPE, doc);
-    const res = NextResponse.json({ success: true, profile: toProfile(created) });
-    return setSessionCookie(res, String(created.name ?? m.loginId));
+    await notifyReception(doc, String(created.name ?? m.loginId));
+
+    // No session: the dashboard opens only after reception approves.
+    return NextResponse.json({ success: true, pending: true, fullName });
   } catch (e) {
     console.error("auth/register failed:", e);
     if (e instanceof FrappeError && e.status === 409)
