@@ -7,6 +7,7 @@ import {
   type PatientProfile,
   toProfile,
 } from "@/lib/participants";
+import { handoffEnabled } from "@/lib/patient-handoff";
 import { clearSessionCookie, getSession } from "@/lib/session";
 
 export const runtime = "nodejs";
@@ -38,6 +39,8 @@ export async function GET(req: Request) {
       profile: toProfile(doc),
       patient,
       patientAppUrl: PATIENT_APP_URL,
+      // True when "Open Patient App" signs them straight in (see src/lib/patient-handoff.ts).
+      patientAppHandoff: handoffEnabled() && Boolean(doc.patient),
     });
   } catch (e) {
     console.error("auth/me failed:", e);

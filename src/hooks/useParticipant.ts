@@ -46,6 +46,8 @@ interface Me {
   profile: ParticipantProfile;
   patient: LinkedPatient | null;
   patientAppUrl: string;
+  /** "Open Patient App" signs them straight in via /api/auth/patient-app. */
+  patientAppHandoff: boolean;
 }
 
 const KEY = ["participant"];
@@ -61,6 +63,7 @@ async function fetchMe(): Promise<Me | null> {
     profile: data.profile,
     patient: data.patient ?? null,
     patientAppUrl: data.patientAppUrl || DEFAULT_APP_URL,
+    patientAppHandoff: data.patientAppHandoff === true,
   };
 }
 
@@ -79,6 +82,7 @@ export function useParticipant() {
     profile: query.data?.profile ?? null,
     patient: query.data?.patient ?? null,
     patientAppUrl: query.data?.patientAppUrl ?? DEFAULT_APP_URL,
+    patientAppHandoff: query.data?.patientAppHandoff ?? false,
     loading: query.isLoading,
     error: query.error as Error | null,
     /** Re-read the session from the server (after sign-in). */

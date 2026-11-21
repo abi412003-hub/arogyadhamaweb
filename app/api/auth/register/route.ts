@@ -20,6 +20,10 @@ async function notifyReception(doc: Record<string, unknown>, docName: string) {
   const deskLink = deskBase
     ? `${deskBase}/app/website-registered-user/${encodeURIComponent(docName)}`
     : "";
+  // The Reception Suite's Registrations page approves in one step (links the Patient and sets up
+  // the patient-app login too), so point reception there when its URL is configured.
+  const suiteBase = (process.env.RECEPTION_SUITE_URL || "").trim().replace(/\/$/, "");
+  const suiteLink = suiteBase ? `${suiteBase}/registrations` : "";
   const { html, text } = renderRows([
     ["Full Name", String(doc.full_name ?? "")],
     ["Mobile", `${doc.country_code ?? ""} ${doc.mobile ?? ""}`],
@@ -33,11 +37,19 @@ async function notifyReception(doc: Record<string, unknown>, docName: string) {
     await sendMail({
       subject: `Website registration awaiting approval — ${doc.full_name}`,
       html: `<p style="font-family:Arial,sans-serif;font-size:14px">A new participant registered on the Arogyadhama website and is waiting for reception approval.</p>${html}${
-        deskLink
-          ? `<p style="font-family:Arial,sans-serif;font-size:14px">Approve it in Frappe: <a href="${deskLink}">${deskLink}</a> (set <b>Approval Status</b> to <b>Approved</b> and check the <b>Patient</b> link).</p>`
-          : ""
+        suiteLink
+          ? `<p style="font-family:Arial,sans-serif;font-size:14px">Approve it in the Reception Suite: <a href="${suiteLink}">${suiteLink}</a> (Registrations).</p>`
+          : deskLink
+            ? `<p style="font-family:Arial,sans-serif;font-size:14px">Approve it in Frappe: <a href="${deskLink}">${deskLink}</a> (set <b>Approval Status</b> to <b>Approved</b> and check the <b>Patient</b> link).</p>`
+            : ""
       }`,
-      text: `New website registration awaiting approval:\n\n${text}${deskLink ? `\n\nApprove in Frappe: ${deskLink}` : ""}`,
+      text: `New website registration awaiting approval:\n\n${text}${
+        suiteLink
+          ? `\n\nApprove in the Reception Suite: ${suiteLink}`
+          : deskLink
+            ? `\n\nApprove in Frappe: ${deskLink}`
+            : ""
+      }`,
     });
   } catch (e) {
     console.error("auth/register → reception email failed (non-fatal):", e);

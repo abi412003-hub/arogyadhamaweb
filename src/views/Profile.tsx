@@ -37,7 +37,7 @@ const dobWithAge = (dob: string) =>
 
 export default function Profile() {
   const router = useRouter();
-  const { profile, patient, patientAppUrl, loading, error, logout } = useParticipant();
+  const { profile, patient, patientAppUrl, patientAppHandoff, loading, error, logout } = useParticipant();
 
   useEffect(() => {
     if (!loading && !profile && !error) router.replace("/account?tab=login");
@@ -137,11 +137,14 @@ export default function Profile() {
                   <div className="flex-1 min-w-0">
                     <p className="font-body font-bold text-forest">Arogyadhama Patient App</p>
                     <p className="font-body text-sm text-forest/60">
-                      Therapy schedule, diet, vitals and reports. Sign in with the email and password given by reception.
+                      {patientAppHandoff
+                        ? "Therapy schedule, diet, vitals and reports. Opens signed in to your patient record."
+                        : "Therapy schedule, diet, vitals and reports. Sign in with the email and password sent to you after reception approved your registration."}
                     </p>
                   </div>
+                  {/* A plain <a>, not next/link: nothing may prefetch the hand-off and mint tokens. */}
                   <a
-                    href={patientAppUrl}
+                    href={patientAppHandoff ? "/api/auth/patient-app" : patientAppUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl font-body font-semibold text-cream hover:brightness-110 transition-all shrink-0"

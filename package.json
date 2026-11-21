@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "check:handoff": "node scripts/check-handoff.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
