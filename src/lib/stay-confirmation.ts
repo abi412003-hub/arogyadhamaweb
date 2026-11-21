@@ -112,11 +112,16 @@ export interface ConfirmationRun {
   failed: string[];
 }
 
-/** Email every approved stay whose confirmation hasn't gone out yet (admission not in the past). */
-export async function runStayConfirmations(limit = 20): Promise<ConfirmationRun> {
+/**
+ * Email every approved stay whose confirmation hasn't gone out yet (admission not in the past).
+ * With `loginId`, only that one registration — what the Reception Suite asks for the moment it
+ * approves, so the mail arrives right away rather than at the next cron tick.
+ */
+export async function runStayConfirmations(limit = 20, loginId?: string): Promise<ConfirmationRun> {
   if (!mailConfigured()) return { configured: false, checked: 0, sent: [], failed: [] };
   const rows = await getList(PARTICIPANT_DOCTYPE, {
     filters: [
+      ...(loginId ? [["name", "=", loginId]] : []),
       ["approval_status", "=", "Approved"],
       ["admission_date", "is", "set"],
       ["admission_date", ">=", campusToday()],
