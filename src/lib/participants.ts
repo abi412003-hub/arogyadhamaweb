@@ -42,18 +42,18 @@ export function accessState(doc: Record<string, any>): AccessState {
   return "pending";
 }
 
-/** Why a registered user may not sign in yet — `null` when they may. */
+/**
+ * Why a registered user may not sign in — `null` when they may.
+ *
+ * Pending registrations DO sign in: their dashboard is where they request a stay, and the request
+ * goes to reception with the registration. Only approval unlocks the linked Patient record and the
+ * Patient App; rejected and inactive accounts stay out.
+ */
 export function accessDenied(doc: Record<string, any>): { status: number; code: string; error: string } | null {
   switch (accessState(doc)) {
     case "approved":
-      return null;
     case "pending":
-      return {
-        status: 403,
-        code: "pending",
-        error:
-          "Your registration is awaiting approval from reception. You can sign in once it has been approved.",
-      };
+      return null;
     case "rejected": {
       const remarks = typeof doc.reception_remarks === "string" ? doc.reception_remarks.trim() : "";
       return {
@@ -150,11 +150,45 @@ export function toProfile(doc: Record<string, any>) {
     emergencyContactPhone: doc.emergency_contact_phone ?? "",
     status: doc.status ?? "",
     approvalStatus: doc.approval_status ?? "",
-    patientId: doc.patient ?? "",
+    access: accessState(doc),
+    // The linked Patient is reception's to confirm, so it is only revealed once approved.
+    patientId: accessState(doc) === "approved" ? doc.patient ?? "" : "",
     memberSince: doc.creation ?? "",
     lastLogin: doc.last_login ?? "",
+    booking: toBooking(doc),
   };
 }
+
+export const BOOKING_FIELDS = [
+  "booking_programme",
+  "booking_room",
+  "booking_weeks",
+  "admission_date",
+  "checkout_date",
+  "booking_tariff",
+  "booking_notes",
+  "booking_requested_on",
+  "confirmation_emailed_on",
+] as const;
+
+/** The stay request saved on the registration, or null when none has been made. */
+export function toBooking(doc: Record<string, any>) {
+  if (!doc.admission_date || !doc.booking_room) return null;
+  return {
+    programme: String(doc.booking_programme ?? ""),
+    room: String(doc.booking_room ?? ""),
+    weeks: Number(doc.booking_weeks) || 0,
+    admissionDate: String(doc.admission_date ?? ""),
+    checkoutDate: String(doc.checkout_date ?? ""),
+    tariff: String(doc.booking_tariff ?? ""),
+    notes: String(doc.booking_notes ?? ""),
+    requestedOn: String(doc.booking_requested_on ?? ""),
+    confirmed: accessState(doc) === "approved",
+    confirmationEmailed: Boolean(doc.confirmation_emailed_on),
+  };
+}
+
+export type Booking = NonNullable<ReturnType<typeof toBooking>>;
 
 export type Profile = ReturnType<typeof toProfile>;
 

@@ -37,14 +37,11 @@ export async function POST(req: Request) {
     const existing = await findParticipant(m.loginId);
 
     if (mode === "register" && existing) {
-      const pending = existing.approval_status !== "Approved" && existing.approval_status !== "Rejected";
       return NextResponse.json(
         {
           success: false,
           code: "exists",
-          error: pending
-            ? "This mobile number is already registered and is awaiting approval from reception."
-            : "This mobile number is already registered. Please sign in instead.",
+          error: "This mobile number is already registered. Please sign in instead.",
         },
         { status: 409 },
       );

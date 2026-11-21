@@ -1,15 +1,16 @@
 "use client";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import {
-  BadgeCheck, BedDouble, CalendarDays, ChevronRight, ClipboardList, Clock, Droplet,
-  ExternalLink, HeartPulse, Loader2, LogOut, Mail, MapPin, Phone, ShieldAlert,
-  Smartphone, Stethoscope, UserRound,
+  BadgeCheck, BedDouble, ChevronRight, ClipboardList, Droplet, ExternalLink, HeartPulse, Hourglass,
+  Loader2, Lock, LogOut, Mail, MapPin, Phone, ShieldAlert, Smartphone, Stethoscope, UserRound,
 } from "lucide-react";
+import { toast } from "sonner";
 import Layout from "@/components/Layout";
 import { Link } from "@/lib/router-compat";
 import { initials, useParticipant, type LinkedPatient } from "@/hooks/useParticipant";
+import { BookingRequested, StayBookingForm, StayConfirmed } from "@/components/stay/StayBooking";
 
 const TINT = "hsl(345 15% 97%)";
 const MAROON_GRADIENT =
@@ -35,9 +36,18 @@ function age(dob: string) {
 const dobWithAge = (dob: string) =>
   dob ? `${formatDate(dob)}${age(dob) ? ` · ${age(dob)}` : ""}` : "";
 
+/**
+ * The participant dashboard.
+ *
+ *  - Registered, not yet approved, no stay request: the stay-booking form.
+ *  - Request sent: "awaiting reception confirmation" (it can still be changed).
+ *  - Approved by reception (in the Reception Suite): "please visit our campus on <date>", the
+ *    linked Patient record, and the Patient App button, which stays locked until then.
+ */
 export default function Profile() {
   const router = useRouter();
-  const { profile, patient, patientAppUrl, patientAppHandoff, loading, error, logout } = useParticipant();
+  const { profile, patient, patientAppUrl, patientAppHandoff, loading, error, logout, refresh } = useParticipant();
+  const [editing, setEditing] = useState(false);
 
   useEffect(() => {
     if (!loading && !profile && !error) router.replace("/account?tab=login");
@@ -48,12 +58,15 @@ export default function Profile() {
     router.push("/account?tab=login");
   }
 
+  const approved = profile?.access === "approved";
+  const booking = profile?.booking ?? null;
+  const showForm = Boolean(profile && !approved && (!booking || editing));
   const displayName = patient?.name || profile?.fullName || "";
 
   return (
     <Layout>
       <section className="pt-28 md:pt-32 pb-16 md:pb-24 min-h-[70vh]" style={{ background: TINT }}>
-        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+        <div className={`${showForm ? "max-w-6xl" : "max-w-4xl"} mx-auto px-4 sm:px-6`}>
           <nav className="flex items-center gap-1.5 font-body text-xs text-forest/50 mb-5">
             <Link to="/" className="hover:text-maroon transition-colors">Home</Link>
             <ChevronRight size={12} />
@@ -62,103 +75,161 @@ export default function Profile() {
 
           {loading || (!profile && !error) ? (
             <div className="flex items-center justify-center gap-3 py-24 font-body text-sage">
-              <Loader2 className="animate-spin" size={20} /> Loading your profile…
+              <Loader2 className="animate-spin" size={20} /> Loading your dashboard…
             </div>
           ) : error ? (
             <div className="rounded-2xl bg-white border border-maroon/10 p-8 text-center font-body text-forest/70">
-              We couldn't load your profile right now. Please refresh the page or try again later.
+              We couldn&apos;t load your dashboard right now. Please refresh the page or try again later.
             </div>
           ) : profile ? (
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35 }}
-              className="rounded-[28px] overflow-hidden bg-white border border-maroon/10 shadow-forest"
-            >
-              {/* Header band */}
-              <div className="relative px-6 sm:px-8 pt-8 pb-16 text-cream" style={{ background: MAROON_GRADIENT }}>
-                <div className="absolute left-0 top-0 h-1 w-full" style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)), transparent)" }} />
-                <div className="pointer-events-none absolute -top-20 -right-16 w-56 h-56 rounded-full border border-gold/15" />
-                <p className="section-label text-gold-light">Participant Dashboard</p>
-                <p className="mt-1 font-body text-sm text-cream/70">S-VYASA Arogyadhama · Prashanti Kutiram</p>
-              </div>
-
-              <div className="relative z-10 px-6 sm:px-8 -mt-8">
-                <div className="flex flex-col sm:flex-row sm:items-end gap-4">
-                  <div className="w-24 h-24 rounded-3xl bg-gold text-forest-dark font-display font-bold text-3xl flex items-center justify-center ring-4 ring-white shadow-gold shrink-0">
-                    {initials(displayName)}
-                  </div>
-                  <div className="flex-1 min-w-0 sm:pb-0.5">
-                    <h1 className="font-display font-bold text-forest text-2xl sm:text-3xl leading-tight break-words">
-                      {displayName}
-                    </h1>
-                    <div className="mt-1.5 flex flex-wrap items-center gap-2 font-body text-sm">
-                      {patient && (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-maroon text-cream text-xs font-semibold">
-                          <ClipboardList size={12} /> {patient.id}
-                        </span>
-                      )}
-                      <span className="text-forest/70">{profile.countryCode} {profile.mobile}</span>
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-maroon/[0.06] text-maroon text-xs font-semibold">
-                        <BadgeCheck size={13} /> Approved by reception
-                      </span>
+            <div className="space-y-6">
+              {/* Header */}
+              <motion.div
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35 }}
+                className="rounded-[28px] overflow-hidden bg-white border border-maroon/10 shadow-forest"
+              >
+                <div className="relative px-6 sm:px-8 pt-8 pb-16 text-cream" style={{ background: MAROON_GRADIENT }}>
+                  <div className="absolute left-0 top-0 h-1 w-full" style={{ background: "linear-gradient(90deg, hsl(var(--gold)), hsl(var(--terracotta)), transparent)" }} />
+                  <div className="pointer-events-none absolute -top-20 -right-16 w-56 h-56 rounded-full border border-gold/15" />
+                  <p className="section-label text-gold-light">Participant Dashboard</p>
+                  <p className="mt-1 font-body text-sm text-cream/70">S-VYASA Arogyadhama · Prashanti Kutiram</p>
+                </div>
+                <div className="relative z-10 px-6 sm:px-8 -mt-8 pb-7">
+                  <div className="flex flex-col sm:flex-row sm:items-end gap-4">
+                    <div className="w-24 h-24 rounded-3xl bg-gold text-forest-dark font-display font-bold text-3xl flex items-center justify-center ring-4 ring-white shadow-gold shrink-0">
+                      {initials(displayName)}
                     </div>
+                    <div className="flex-1 min-w-0 sm:pb-0.5">
+                      <h1 className="font-display font-bold text-forest text-2xl sm:text-3xl leading-tight break-words">{displayName}</h1>
+                      <div className="mt-1.5 flex flex-wrap items-center gap-2 font-body text-sm">
+                        {patient && (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-maroon text-cream text-xs font-semibold">
+                            <ClipboardList size={12} /> {patient.id}
+                          </span>
+                        )}
+                        <span className="text-forest/70">{profile.countryCode} {profile.mobile}</span>
+                        {approved ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-maroon/[0.06] text-maroon text-xs font-semibold">
+                            <BadgeCheck size={13} /> Approved by reception
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gold-pale text-forest text-xs font-semibold">
+                            <Hourglass size={12} /> {booking ? "Awaiting reception confirmation" : "Registered · stay not yet requested"}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <button
+                      onClick={onLogout}
+                      className="self-start sm:self-end inline-flex items-center justify-center gap-2 h-10 px-4 rounded-xl border border-maroon/15 font-body text-sm font-semibold text-maroon hover:bg-maroon/5 transition-colors"
+                    >
+                      <LogOut size={15} /> Sign out
+                    </button>
+                  </div>
+                  <div className="mt-6 grid grid-cols-2 gap-3">
+                    <Stat label="Member since" value={formatDate(profile.memberSince) || "—"} />
+                    <Stat label="Last sign-in" value={formatDate(profile.lastLogin) || "—"} />
                   </div>
                 </div>
+              </motion.div>
 
-                <div className="mt-6 grid grid-cols-2 gap-3">
-                  <Stat label="Member since" value={formatDate(profile.memberSince) || "—"} />
-                  <Stat label="Last sign-in" value={formatDate(profile.lastLogin) || "—"} />
-                </div>
-              </div>
+              {/* Stay: request form / awaiting confirmation / confirmed */}
+              {showForm ? (
+                <>
+                  {!booking && (
+                    <div className="px-1">
+                      <p className="section-label text-gold">Book your stay</p>
+                      <h2 className="mt-1 font-display font-bold text-forest text-2xl sm:text-3xl">Request your residential programme</h2>
+                      <p className="mt-1 font-body text-sm text-forest/60 max-w-2xl">
+                        Choose a programme, accommodation and admission Tuesday. Reception reviews your registration and request
+                        together; once confirmed, we will ask you to visit the campus on your date.
+                      </p>
+                    </div>
+                  )}
+                  <StayBookingForm
+                    profile={profile}
+                    existing={booking}
+                    onCancel={booking ? () => setEditing(false) : undefined}
+                    onSubmitted={async () => {
+                      setEditing(false);
+                      toast.success("Booking request sent to reception");
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                      await refresh().catch(() => null);
+                    }}
+                  />
+                </>
+              ) : approved && booking ? (
+                <StayConfirmed booking={booking} email={profile.email} />
+              ) : booking ? (
+                <BookingRequested booking={booking} onChange={() => setEditing(true)} />
+              ) : null}
 
-              {/* Patient record */}
-              <div className="px-6 sm:px-8 pt-8">
-                {patient ? (
-                  <PatientCard patient={patient} />
-                ) : (
-                  <div className="flex gap-3 p-4 rounded-2xl bg-gold-pale/50 border border-gold/30 font-body text-sm text-forest">
-                    <Clock size={18} className="text-gold shrink-0 mt-0.5" />
-                    <p>
+              {/* Patient record (approved only) */}
+              {approved && (
+                <div className="rounded-[28px] bg-white border border-maroon/10 shadow-card p-6 sm:p-8">
+                  {patient ? (
+                    <PatientCard patient={patient} />
+                  ) : (
+                    <p className="flex gap-3 font-body text-sm text-forest/70">
+                      <Stethoscope size={18} className="text-maroon shrink-0" />
                       Your patient record will appear here once reception links it to your registration.
-                      For help, contact the help desk at{" "}
-                      <a href="tel:+919972871777" className="font-semibold underline hover:text-maroon">997-287-1777</a>.
                     </p>
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
+              )}
 
-              {/* Patient App */}
-              <div className="px-6 sm:px-8 pt-4">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-4 p-5 rounded-2xl border border-maroon/10" style={{ background: TINT }}>
-                  <span className="w-12 h-12 rounded-2xl flex items-center justify-center text-cream shrink-0" style={{ background: MAROON_GRADIENT }}>
-                    <Smartphone size={22} />
+              {/* Patient App: unlocked by reception approval */}
+              {!showForm && (
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4 p-5 sm:p-6 rounded-[24px] bg-white border border-maroon/10 shadow-card">
+                  <span
+                    className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${approved ? "text-cream" : "bg-maroon/[0.06] text-forest/35"}`}
+                    style={approved ? { background: MAROON_GRADIENT } : undefined}
+                  >
+                    {approved ? <Smartphone size={22} /> : <Lock size={20} />}
                   </span>
                   <div className="flex-1 min-w-0">
                     <p className="font-body font-bold text-forest">Arogyadhama Patient App</p>
                     <p className="font-body text-sm text-forest/60">
-                      {patientAppHandoff
-                        ? "Therapy schedule, diet, vitals and reports. Opens signed in to your patient record."
-                        : "Therapy schedule, diet, vitals and reports. Sign in with the email and password sent to you after reception approved your registration."}
+                      {!approved
+                        ? "Unlocks once reception confirms your stay. Your login (email and password) is emailed to you then."
+                        : patientAppHandoff
+                          ? "Therapy schedule, diet, vitals and reports. Opens signed in to your patient record."
+                          : "Therapy schedule, diet, vitals and reports. Sign in with the email and password we emailed you."}
                     </p>
                   </div>
-                  {/* A plain <a>, not next/link: nothing may prefetch the hand-off and mint tokens. */}
-                  <a
-                    href={patientAppHandoff ? "/api/auth/patient-app" : patientAppUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl font-body font-semibold text-cream hover:brightness-110 transition-all shrink-0"
-                    style={{ background: MAROON_GRADIENT }}
-                  >
-                    Open Patient App <ExternalLink size={15} />
-                  </a>
+                  {approved ? (
+                    // A plain <a>, not next/link: nothing may prefetch the hand-off and mint tokens.
+                    <a
+                      href={patientAppHandoff ? "/api/auth/patient-app" : `${patientAppUrl.replace(/\/$/, "")}/login`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl font-body font-semibold text-cream hover:brightness-110 transition-all shrink-0"
+                      style={{ background: MAROON_GRADIENT }}
+                    >
+                      Open Patient App <ExternalLink size={15} />
+                    </a>
+                  ) : (
+                    <span
+                      aria-disabled="true"
+                      className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl font-body font-semibold bg-maroon/[0.06] text-forest/40 shrink-0 cursor-not-allowed"
+                    >
+                      <Lock size={14} /> Open Patient App
+                    </span>
+                  )}
                 </div>
-              </div>
+              )}
 
-              {/* Website registration details */}
-              <div className="px-6 sm:px-8 pt-8">
+              {/* Registration details */}
+              <div className="rounded-[28px] bg-white border border-maroon/10 shadow-card p-6 sm:p-8">
                 <p className="section-label text-gold mb-3">Your registration details</p>
                 <div className="grid sm:grid-cols-2 gap-4">
+                  <Section icon={<UserRound size={16} />} title="Contact">
+                    <Row label="Mobile" value={`${profile.countryCode} ${profile.mobile}`} icon={<Phone size={13} />} />
+                    <Row label="Email" value={profile.email} icon={<Mail size={13} />} />
+                    <Row label="Date of birth" value={dobWithAge(profile.dateOfBirth)} />
+                  </Section>
                   <Section icon={<MapPin size={16} />} title="Address">
                     <Row label="City" value={profile.city} />
                     <Row label="State" value={profile.state} />
@@ -168,34 +239,18 @@ export default function Profile() {
                     <Row label="Name" value={profile.emergencyContactName} />
                     <Row label="Phone" value={profile.emergencyContactPhone} icon={<Phone size={13} />} />
                   </Section>
-                  <Section icon={<HeartPulse size={16} />} title="Health concern" className="sm:col-span-2">
+                  <Section icon={<HeartPulse size={16} />} title="Health concern">
                     <p className="font-body text-sm text-forest/80 whitespace-pre-line">
                       {profile.healthConcern || <span className="text-forest/40">Not provided</span>}
                     </p>
                   </Section>
                 </div>
+                <p className="mt-5 font-body text-xs text-forest/50">
+                  To update these details, please contact the help desk at{" "}
+                  <a href="mailto:info@arogyadhama.org" className="underline hover:text-maroon">info@arogyadhama.org</a>.
+                </p>
               </div>
-
-              <div className="px-6 sm:px-8 py-8 flex flex-col sm:flex-row gap-3">
-                <Link
-                  to="/book-now"
-                  className="flex-1 inline-flex items-center justify-center gap-2 h-12 rounded-xl font-body font-semibold bg-gold text-forest-dark hover:bg-gold-light transition-colors"
-                >
-                  <CalendarDays size={17} /> Book your stay
-                </Link>
-                <button
-                  onClick={onLogout}
-                  className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-xl border border-maroon/15 font-body font-semibold text-maroon hover:bg-maroon/5 transition-colors"
-                >
-                  <LogOut size={16} /> Sign out
-                </button>
-              </div>
-
-              <p className="px-6 sm:px-8 pb-7 -mt-2 font-body text-xs text-forest/50">
-                To update these details, please contact the help desk at{" "}
-                <a href="mailto:info@arogyadhama.org" className="underline hover:text-maroon">info@arogyadhama.org</a>.
-              </p>
-            </motion.div>
+            </div>
           ) : null}
         </div>
       </section>

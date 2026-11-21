@@ -13,7 +13,13 @@ import { clearSessionCookie, getSession } from "@/lib/session";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-/** The signed-in participant's profile (and linked Patient record), read fresh from Frappe. */
+/**
+ * The signed-in participant's profile, read fresh from Frappe.
+ *
+ * Pending registrations get their profile and stay request (the dashboard shows the booking form
+ * or "awaiting confirmation"). The linked Patient record and the Patient App only open once
+ * reception has approved.
+ */
 export async function GET(req: Request) {
   const session = getSession(req);
   // Signed out is a normal state (every page asks), so answer 200 rather than 401.
@@ -21,12 +27,14 @@ export async function GET(req: Request) {
 
   try {
     const doc = await findParticipant(session.name);
-    // Deleted, deactivated or no-longer-approved accounts lose their session.
-    if (!doc || accessState(doc) !== "approved")
+    // Deleted, deactivated or rejected accounts lose their session.
+    const state = doc ? accessState(doc) : null;
+    if (!doc || (state !== "approved" && state !== "pending"))
       return clearSessionCookie(NextResponse.json({ success: true, profile: null }));
 
+    const approved = state === "approved";
     let patient: PatientProfile | null = null;
-    if (doc.patient) {
+    if (approved && doc.patient) {
       try {
         patient = await getPatientProfile(doc.patient);
       } catch (e) {
@@ -40,7 +48,7 @@ export async function GET(req: Request) {
       patient,
       patientAppUrl: PATIENT_APP_URL,
       // True when "Open Patient App" signs them straight in (see src/lib/patient-handoff.ts).
-      patientAppHandoff: handoffEnabled() && Boolean(doc.patient),
+      patientAppHandoff: approved && handoffEnabled() && Boolean(doc.patient),
     });
   } catch (e) {
     console.error("auth/me failed:", e);

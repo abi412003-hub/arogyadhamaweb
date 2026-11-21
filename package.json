@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "check:handoff": "node scripts/check-handoff.mjs"
+    "check:handoff": "node scripts/check-handoff.mjs",
+    "check:stay-booking": "node --import ./scripts/ts-ext-hook.mjs scripts/check-stay-booking.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

@@ -57,8 +57,6 @@ export default function Account() {
   const [error, setError] = useState<ReactNode>("");
   // Amber "awaiting reception approval" message (not an error the user made).
   const [notice, setNotice] = useState<ReactNode>("");
-  // Set once a registration has been submitted: shows the "awaiting approval" screen.
-  const [submittedName, setSubmittedName] = useState("");
 
   // Follow ?tab= when the header menu links here while the page is open.
   useEffect(() => {
@@ -82,7 +80,6 @@ export default function Account() {
     setOtp("");
     setError("");
     setNotice("");
-    setSubmittedName("");
   }
 
   // Turn an API refusal into the right message (codes from src/lib/participants.ts).
@@ -144,9 +141,11 @@ export default function Account() {
     const r = await post("/api/auth/register", { countryCode, mobile, otp, ...details });
     setBusy(false);
     if (r.ok) {
-      setSubmittedName(r.data.fullName || details.fullName);
+      // Registered and signed in: the dashboard opens on the stay-booking form.
       setDetails(EMPTY_DETAILS);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      await refresh().catch(() => null);
+      toast.success("Registration complete — now request your stay");
+      router.push("/profile");
       return;
     }
     if (r.data?.code === "bad_otp") { setStep("otp"); setOtp(""); }
@@ -167,8 +166,6 @@ export default function Account() {
             <div className="min-w-0 p-5 sm:p-10 lg:p-12">
               {!loading && profile ? (
                 <SignedIn profile={profile} />
-              ) : submittedName ? (
-                <Submitted name={submittedName} mobile={prettyMobile} onSignIn={() => switchMode("login")} />
               ) : (
                 <>
                   {/* Tabs */}
@@ -204,7 +201,7 @@ export default function Account() {
                       ? "Enter your mobile number to begin registration for Prashanti Kutiram."
                       : "Sign in with the mobile number you registered with.")}
                     {step === "otp" && <>Enter the {OTP_LENGTH}-digit OTP for <span className="font-semibold text-forest">{prettyMobile}</span>.</>}
-                    {step === "details" && "Tell us a little about yourself. Reception will approve your registration before you can sign in."}
+                    {step === "details" && "Tell us a little about yourself. Next, you'll request your stay from your dashboard — reception confirms it."}
                   </p>
 
                   <AnimatePresence mode="wait">
@@ -420,55 +417,6 @@ function NoticeLine({ notice }: { notice: ReactNode }) {
       <Clock size={17} className="text-gold shrink-0 mt-0.5" />
       <span>{notice}</span>
     </p>
-  );
-}
-
-function Submitted({ name, mobile, onSignIn }: { name: string; mobile: string; onSignIn: () => void }) {
-  const steps = [
-    "Reception reviews your details and links your patient record.",
-    "Once approved, sign in here with your mobile number and OTP.",
-    "Your dashboard then shows your patient profile and a link to the Patient App.",
-  ];
-  return (
-    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="py-4">
-      <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-cream shadow-forest" style={{ background: MAROON_GRADIENT }}>
-        <CheckCircle2 size={30} />
-      </div>
-      <div className="mt-6 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-gold/30 bg-gold-pale/60">
-        <Clock size={13} className="text-gold" />
-        <span className="font-body text-[11px] font-bold tracking-[0.16em] uppercase text-forest">Awaiting reception approval</span>
-      </div>
-      <h1 className="mt-4 font-display font-bold text-forest" style={{ fontSize: "clamp(1.8rem, 3.4vw, 2.4rem)", lineHeight: 1.15 }}>
-        Registration submitted
-      </h1>
-      <p className="mt-2 font-body text-sage text-[15px]">
-        Thank you, <span className="font-semibold text-forest">{name}</span>. Your registration for{" "}
-        <span className="font-semibold text-forest">{mobile}</span> has been sent to the Arogyadhama reception.
-      </p>
-
-      <ol className="mt-7 space-y-3">
-        {steps.map((s, i) => (
-          <li key={s} className="flex gap-3 font-body text-[15px] text-forest/80">
-            <span className="w-6 h-6 shrink-0 rounded-full bg-maroon/[0.06] border border-maroon/15 text-maroon text-xs font-bold flex items-center justify-center">{i + 1}</span>
-            {s}
-          </li>
-        ))}
-      </ol>
-
-      <div className="mt-8 flex flex-wrap gap-3">
-        <button
-          type="button"
-          onClick={onSignIn}
-          className="inline-flex items-center gap-2 px-6 h-12 rounded-xl font-body font-semibold text-cream hover:brightness-110 transition-all"
-          style={{ background: MAROON_GRADIENT }}
-        >
-          Go to Sign In <ArrowRight size={16} />
-        </button>
-        <Link to="/" className="inline-flex items-center gap-2 px-6 h-12 rounded-xl border border-maroon/15 font-body font-semibold text-maroon hover:bg-maroon/5 transition-colors">
-          Back to home
-        </Link>
-      </div>
-    </motion.div>
   );
 }
 

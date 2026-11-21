@@ -5,8 +5,10 @@ import { Link } from "@/lib/router-compat";
 import Layout from "@/components/Layout";
 import { ChevronRight, CheckCircle2, Info, Table2, Calculator, Eye } from "lucide-react";
 import { useGeoPricing, formatRegionPrice, type PriceCurrency } from "@/hooks/useGeoPricing";
+import { ROOM_RATES } from "@/lib/tariff-rates";
 
 /* ── Data ── */
+// Prices come from src/lib/tariff-rates.ts — the same numbers the dashboard booking form uses.
 // Two independent per-person price lists (not conversions): INR shown inside India,
 // USD shown outside India. Each is [1 week, 2 weeks, 3 weeks, 4 weeks], cumulative and
 // non-linear (longer stays discounted). Every tariff is fully inclusive — Yoga, Ayurveda,
@@ -16,8 +18,8 @@ const ROOMS = [
     key: "dormitory",
     name: "Dormitory",
     subName: "Pushpa / Ashwini Ward",
-    pricesINR: [6600, 12200, 17800, 23400],
-    pricesUSD: [250, 490, 730, 970],
+    pricesINR: [...ROOM_RATES.dormitory.INR],
+    pricesUSD: [...ROOM_RATES.dormitory.USD],
     emoji: "🏨",
     desc: "Shared dormitory accommodation with basic amenities. Ideal for budget-conscious patients seeking the full healing experience.",
     amenities: ["Shared bathroom", "Basic furnishings", "Common lounge", "Yoga kit provided"],
@@ -26,8 +28,8 @@ const ROOMS = [
     key: "single",
     name: "Single Room",
     subName: "Ashirwad Block",
-    pricesINR: [13200, 25400, 37600, 49800],
-    pricesUSD: [500, 900, 1300, 1600],
+    pricesINR: [...ROOM_RATES.single.INR],
+    pricesUSD: [...ROOM_RATES.single.USD],
     emoji: "🛏️",
     desc: "Private single room with attached bathroom. Comfortable, quiet, and well-suited for solo travellers requiring privacy.",
     amenities: ["Attached bathroom", "Study table", "Wardrobe", "Room service meals"],
@@ -36,8 +38,8 @@ const ROOMS = [
     key: "double-sharing",
     name: "Double / Triple Sharing",
     subName: "Maitri Block",
-    pricesINR: [11000, 21000, 31000, 41000],
-    pricesUSD: [450, 800, 1150, 1450],
+    pricesINR: [...ROOM_RATES["double-sharing"].INR],
+    pricesUSD: [...ROOM_RATES["double-sharing"].USD],
     emoji: "👥",
     desc: "Shared double room per person. Perfect for couples or companions travelling together for healing.",
     amenities: ["Shared attached bathroom", "Two beds", "Wardrobe", "Room service meals"],
@@ -47,8 +49,8 @@ const ROOMS = [
     key: "single-deluxe",
     name: "Single Deluxe",
     subName: "Sheshadri",
-    pricesINR: [27500, 54000, 80500, 107000],
-    pricesUSD: [850, 1550, 2150, 2750],
+    pricesINR: [...ROOM_RATES["single-deluxe"].INR],
+    pricesUSD: [...ROOM_RATES["single-deluxe"].USD],
     emoji: "⭐",
     desc: "Premium single room in the flagship Sheshadri block with upgraded furnishings and garden views.",
     amenities: ["Deluxe attached bathroom", "AC room", "Garden view", "Premium furnishings", "Priority consultations"],
@@ -57,8 +59,8 @@ const ROOMS = [
     key: "semi-deluxe",
     name: "Double Deluxe",
     subName: "Sheshadri",
-    pricesINR: [22000, 43000, 64000, 85000],
-    pricesUSD: [750, 1350, 1900, 2400],
+    pricesINR: [...ROOM_RATES["semi-deluxe"].INR],
+    pricesUSD: [...ROOM_RATES["semi-deluxe"].USD],
     emoji: "✨",
     desc: "An air-conditioned double bedroom shared between two — a step up from standard sharing, with climate control for cooler comfort.",
     amenities: ["Attached bathroom", "AC room", "Two beds", "Wardrobe for each person"],
@@ -68,8 +70,8 @@ const ROOMS = [
     key: "suite",
     name: "Suite Sharing",
     subName: "Premium Block",
-    pricesINR: [30800, 60600, 90400, 120200],
-    pricesUSD: [1000, 1800, 2550, 3200],
+    pricesINR: [...ROOM_RATES.suite.INR],
+    pricesUSD: [...ROOM_RATES.suite.USD],
     emoji: "👑",
     desc: "The most luxurious option — a suite shared between two, offering the highest comfort level at Arogyadhama.",
     amenities: ["Luxury bathroom", "AC suite", "Sitting area", "Priority everything", "Concierge support"],
@@ -82,8 +84,8 @@ const DURATIONS = [1, 2, 3, 4];
 // The Double / Triple Sharing card offers an AC option. Non-AC uses the room's base
 // prices; AC uses this per-person progression (1/2/3/4 weeks), INR and USD lists.
 const DOUBLE_SHARING_AC = {
-  INR: [17600, 34200, 50800, 67400],
-  USD: [500, 900, 1300, 1600],
+  INR: [...ROOM_RATES["double-sharing-ac"].INR],
+  USD: [...ROOM_RATES["double-sharing-ac"].USD],
 };
 
 type RoomPrices = { INR: number[]; USD: number[] };

@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { createDoc, FrappeError } from "@/lib/erpnext";
-import { mailConfigured, renderRows, sendMail } from "@/lib/mail";
 import { verifyOtp } from "@/lib/otp";
 import {
   PARTICIPANT_DOCTYPE,
@@ -8,53 +7,12 @@ import {
   findPatientByMobile,
   parseMobile,
 } from "@/lib/participants";
+import { setSessionCookie } from "@/lib/session";
 
-// A new registration is stored as "Pending Approval" and does NOT sign the person
-// in: reception approves it in Frappe (Website Registered User → Approval Status)
-// before the website dashboard opens for them.
-
-/** Best-effort heads-up to the reception inbox so the registration gets approved. */
-async function notifyReception(doc: Record<string, unknown>, docName: string) {
-  if (!mailConfigured()) return;
-  const deskBase = (process.env.ERPNEXT_URL || "").replace(/\/$/, "");
-  const deskLink = deskBase
-    ? `${deskBase}/app/website-registered-user/${encodeURIComponent(docName)}`
-    : "";
-  // The Reception Suite's Registrations page approves in one step (links the Patient and sets up
-  // the patient-app login too), so point reception there when its URL is configured.
-  const suiteBase = (process.env.RECEPTION_SUITE_URL || "").trim().replace(/\/$/, "");
-  const suiteLink = suiteBase ? `${suiteBase}/registrations` : "";
-  const { html, text } = renderRows([
-    ["Full Name", String(doc.full_name ?? "")],
-    ["Mobile", `${doc.country_code ?? ""} ${doc.mobile ?? ""}`],
-    ["Email", String(doc.email ?? "")],
-    ["City", String(doc.city ?? "")],
-    ["Health concern", String(doc.health_concern ?? "")],
-    ["Matched Patient", doc.patient ? String(doc.patient) : "None found — please link one"],
-    ["Received", new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })],
-  ]);
-  try {
-    await sendMail({
-      subject: `Website registration awaiting approval — ${doc.full_name}`,
-      html: `<p style="font-family:Arial,sans-serif;font-size:14px">A new participant registered on the Arogyadhama website and is waiting for reception approval.</p>${html}${
-        suiteLink
-          ? `<p style="font-family:Arial,sans-serif;font-size:14px">Approve it in the Reception Suite: <a href="${suiteLink}">${suiteLink}</a> (Registrations).</p>`
-          : deskLink
-            ? `<p style="font-family:Arial,sans-serif;font-size:14px">Approve it in Frappe: <a href="${deskLink}">${deskLink}</a> (set <b>Approval Status</b> to <b>Approved</b> and check the <b>Patient</b> link).</p>`
-            : ""
-      }`,
-      text: `New website registration awaiting approval:\n\n${text}${
-        suiteLink
-          ? `\n\nApprove in the Reception Suite: ${suiteLink}`
-          : deskLink
-            ? `\n\nApprove in Frappe: ${deskLink}`
-            : ""
-      }`,
-    });
-  } catch (e) {
-    console.error("auth/register → reception email failed (non-fatal):", e);
-  }
-}
+// A new registration is stored as "Pending Approval" and signs the person straight in: their
+// dashboard is where they request a stay (POST /api/stay-booking). Reception then approves the
+// registration and the stay together in the Reception Suite; only approval unlocks the linked
+// Patient record and the Patient App. Reception is emailed when the stay is requested.
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -146,10 +104,10 @@ export async function POST(req: Request) {
     if (patient) doc.patient = patient;
 
     const created = await createDoc(PARTICIPANT_DOCTYPE, doc);
-    await notifyReception(doc, String(created.name ?? m.loginId));
 
-    // No session: the dashboard opens only after reception approves.
-    return NextResponse.json({ success: true, pending: true, fullName });
+    // Signed in, pending: the dashboard shows the stay-booking form next.
+    const res = NextResponse.json({ success: true, pending: true, fullName });
+    return setSessionCookie(res, String(created.name ?? m.loginId));
   } catch (e) {
     console.error("auth/register failed:", e);
     if (e instanceof FrappeError && e.status === 409)

@@ -19,9 +19,26 @@ export interface ParticipantProfile {
   emergencyContactPhone: string;
   status: string;
   approvalStatus: string;
+  /** "pending" until reception approves the registration (and stay request) — then "approved". */
+  access: "approved" | "pending" | "rejected" | "inactive";
   patientId: string;
   memberSince: string;
   lastLogin: string;
+  booking: StayBooking | null;
+}
+
+/** Mirrors `toBooking()` in src/lib/participants.ts. */
+export interface StayBooking {
+  programme: string;
+  room: string;
+  weeks: number;
+  admissionDate: string;
+  checkoutDate: string;
+  tariff: string;
+  notes: string;
+  requestedOn: string;
+  confirmed: boolean;
+  confirmationEmailed: boolean;
 }
 
 /** Mirrors `getPatientProfile()` in src/lib/participants.ts. */
